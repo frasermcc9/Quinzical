@@ -1,7 +1,6 @@
 package quinzical.impl.bindings;
 
 import com.google.inject.AbstractModule;
-import quinzical.Test;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.interfaces.models.QuestionCollection;
 

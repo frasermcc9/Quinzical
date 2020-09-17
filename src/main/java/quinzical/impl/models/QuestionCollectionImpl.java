@@ -13,25 +13,22 @@ import java.util.Map;
 
 public class QuestionCollectionImpl implements QuestionCollection {
 
-    public static String questionDataFileUrl = System.getProperty("user.dir") + "/questions/question.qdb";
-
     private Map<String, List<Question>> questionMap;
-
-
+    
     public QuestionCollectionImpl() {
         try {
-            FileInputStream fileIn = new FileInputStream(questionDataFileUrl);
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/questions/question.qdb");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            Object h = in.readObject();
-            if (h instanceof HashMap) {
+            Object obj = in.readObject();
+            if (obj instanceof HashMap) {
                 @SuppressWarnings("unchecked")
-                Map<String, List<Question>> map = (Map<String, List<Question>>) in.readObject();
+                Map<String, List<Question>> map = (Map<String, List<Question>>) obj;
                 this.questionMap = map;
             }
             in.close();
             fileIn.close();
         } catch (IOException | ClassNotFoundException i) {
-            System.out.println(i.getMessage());
+            System.out.println("Error: " + i.getMessage());
         }
     }
 
