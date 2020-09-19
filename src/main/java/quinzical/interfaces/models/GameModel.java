@@ -1,2 +1,5 @@
-package quinzical.interfaces.models;public interface GameModel {
+package quinzical.interfaces.models;
+
+public interface GameModel {
+    void generateNewGameQuestionSet();
 }

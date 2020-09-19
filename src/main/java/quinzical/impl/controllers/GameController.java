@@ -5,8 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import quinzical.impl.constants.GameScene;
+import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
-import quinzical.interfaces.models.SceneRegistry;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +15,9 @@ public class GameController {
 
     @Inject
     private SceneHandler sceneHandler;
-    
+    @Inject
+    private GameModel gameModel;
+
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -31,6 +33,6 @@ public class GameController {
     @FXML
     void initialize() {
         assert btnMenu != null : "fx:id=\"btnMenu\" was not injected: check your FXML file 'game.fxml'.";
-
+        gameModel.generateNewGameQuestionSet();
     }
 }
