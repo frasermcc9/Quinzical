@@ -1,7 +1,7 @@
 package quinzical.interfaces.models;
 
-import javafx.scene.Scene;
+import quinzical.impl.constants.GameScene;
 
 public interface SceneHandler {
-    void setActiveScene(Scene scene);
+    void setActiveScene(GameScene scene);
 }
