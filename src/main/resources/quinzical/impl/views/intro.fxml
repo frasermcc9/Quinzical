@@ -9,16 +9,16 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.IntroController">
-    <AnchorPane prefHeight="749.0" prefWidth="1227.0" style="-fx-background-color: #232323;">
+    <AnchorPane fx:id="background" prefHeight="749.0" prefWidth="1227.0" style="-fx-background-color: #232323;">
         <ImageView fx:id="imgTitle" fitHeight="363.0" fitWidth="908.0" layoutX="126.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../../images/title.png" />
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </ImageView>
-        <Button fx:id="btnPractice" layoutX="407.0" layoutY="539.0" mnemonicParsing="false" onAction="#btnPracticeClick" prefHeight="149.0" prefWidth="414.0" style="-fx-background-color: #30ff83; -fx-background-radius: 20;" text="PRACTICE">
+        <Button fx:id="btnPractice" layoutX="489.0" layoutY="560.0" mnemonicParsing="false" onAction="#btnPracticeClick" prefHeight="90.0" prefWidth="250.0" style="-fx-background-color: #30ff83; -fx-background-radius: 20;" text="PRACTICE">
             <font>
-                <Font name="Segoe UI Semibold" size="65.0" />
+                <Font name="System Bold" size="36.0" />
             </font>
             <cursor>
                 <Cursor fx:constant="HAND" />
@@ -26,12 +26,22 @@
         </Button>
         <Button fx:id="btnPlay" layoutX="375.0" layoutY="323.0" mnemonicParsing="false" onAction="#btnPlayClick" prefHeight="172.0" prefWidth="478.0" style="-fx-background-color: #fcba03; -fx-background-radius: 20;" text="PLAY">
             <font>
-                <Font name="Segoe UI Semibold" size="65.0" />
+                <Font name="System Bold" size="64.0" />
             </font>
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
+      <ImageView fx:id="btnSun" fitHeight="57.0" fitWidth="57.0" layoutX="14.0" layoutY="678.0" onMouseClicked="#btnSunClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btnNight" fitHeight="47.0" fitWidth="47.0" layoutX="80.0" layoutY="683.0" onMouseClicked="#btnMoonClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/moon.png" />
+         </image>
+      </ImageView>
         <cursor>
             <Cursor fx:constant="DEFAULT" />
         </cursor>
