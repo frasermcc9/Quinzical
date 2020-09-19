@@ -56,11 +56,10 @@ public class GameController extends PrimarySceneController {
         sceneHandler.on(GameEvent.LIGHT_THEME_ENABLED, () -> setTheme(Theme.LIGHT));
         sceneHandler.on(GameEvent.DARK_THEME_ENABLED, () -> setTheme(Theme.DARK));
 
-        sceneHandler.on(GameEvent.BOARD_DISPLAYED,
-            () -> {
-                gameModel.generateNewGameQuestionSet();
-                boardLoaderStrategyFactory.createStrategy().injectComponents(paneHeader, paneContent).loadBoard();
-            });
+        sceneHandler.on(GameEvent.BOARD_DISPLAYED, () -> {
+            gameModel.generateNewGameQuestionSet();
+            boardLoaderStrategyFactory.createStrategy().injectComponents(paneHeader, paneContent).loadBoard();
+        });
     }
 
     @Override
