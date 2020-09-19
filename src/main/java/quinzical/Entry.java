@@ -9,24 +9,24 @@ import javafx.stage.Stage;
 import quinzical.impl.bindings.MainModule;
 import quinzical.impl.controllers.IntroController;
 import quinzical.interfaces.models.QuestionCollection;
+import quinzical.interfaces.models.SceneHandler;
 
 //mvn clean compile assembly:single
 
 public class Entry extends Application {
 
-    Injector injector = Guice.createInjector(new MainModule());
-
     @Override
     public void start(Stage stage) throws Exception {
-        QuestionCollection t = injector.getInstance(QuestionCollection.class);
+        Injector injector = Guice.createInjector(new MainModule(stage));
+        SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
         //Load the views and controllers
         FXMLLoader introLoader = new FXMLLoader(getClass().getClassLoader().getResource("quinzical/impl/views/intro" +
             ".fxml"));
         Scene introScene = introLoader.load();
         IntroController introController = introLoader.getController();
-
-        stage.setScene(introScene);
+        
+        sceneHandler.setActiveScene(introScene);
         stage.setTitle("Quinzical");
         stage.show();
     }
