@@ -24,7 +24,7 @@ public class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy 
 
         List<String> chosen = allCategories.subList(0, 5);
 
-        Map<String, List<GameQuestion>> boardQuestions = new HashMap<>();
+        Map<String, List<GameQuestion>> boardQuestions = new LinkedHashMap<>();
         chosen.forEach(e -> boardQuestions.put(e, new ArrayList<>()));
         boardQuestions.forEach((k, v) -> {
             List<Question> availableQuestions = new ArrayList<>(questions.get(k));

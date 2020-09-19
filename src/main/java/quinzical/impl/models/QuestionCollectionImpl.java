@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class QuestionCollectionImpl implements QuestionCollection {
             if (obj instanceof HashMap) {
                 @SuppressWarnings("unchecked")
                 Map<String, List<Question>> map = (Map<String, List<Question>>) obj;
-                this.questionMap = map;
+                this.questionMap = new LinkedHashMap<>(map);
             }
             in.close();
             fileIn.close();
@@ -36,6 +37,6 @@ public class QuestionCollectionImpl implements QuestionCollection {
 
     @Override
     public Map<String, List<Question>> getQuestions() {
-        return new HashMap<>(this.questionMap);
+        return new LinkedHashMap<>(this.questionMap);
     }
 }

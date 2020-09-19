@@ -81,7 +81,7 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
 
                 final int qIndex = j;
                 btn.setOnAction(e -> {
-                    gameModel.activateQuestion(ques);
+                    gameModel.activateQuestion(cat, qIndex);
                 });
             }
         });
