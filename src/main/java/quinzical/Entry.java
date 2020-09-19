@@ -7,26 +7,45 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import quinzical.impl.bindings.MainModule;
+import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.GameController;
 import quinzical.impl.controllers.IntroController;
-import quinzical.interfaces.models.QuestionCollection;
+import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.models.SceneRegistry;
 
 //mvn clean compile assembly:single
 
 public class Entry extends Application {
 
-    Injector injector = Guice.createInjector(new MainModule());
+    SceneRegistry sceneRegistry;
 
     @Override
     public void start(Stage stage) throws Exception {
-        QuestionCollection t = injector.getInstance(QuestionCollection.class);
+
+        Injector injector = Guice.createInjector(new MainModule(stage));
+        SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
         //Load the views and controllers
-        FXMLLoader introLoader = new FXMLLoader(getClass().getClassLoader().getResource("quinzical/impl/views/intro" +
-            ".fxml"));
+        final String path = "quinzical/impl/views/";
+
+        FXMLLoader introLoader = new FXMLLoader(getClass().getClassLoader().getResource(path + "intro.fxml"));
+        introLoader.setControllerFactory(injector::getInstance);
         Scene introScene = introLoader.load();
         IntroController introController = introLoader.getController();
 
-        stage.setScene(introScene);
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getClassLoader().getResource(path + "game.fxml"));
+        gameLoader.setControllerFactory(injector::getInstance);
+        Scene gameScene = gameLoader.load();
+        GameController gameController = gameLoader.getController();
+
+
+        sceneRegistry = injector.getInstance(SceneRegistry.class);
+        sceneRegistry.addScene(GameScene.INTRO, introScene);
+        sceneRegistry.addScene(GameScene.GAME, gameScene);
+
+
+        sceneHandler.setActiveScene(GameScene.INTRO);
+
         stage.setTitle("Quinzical");
         stage.show();
     }
