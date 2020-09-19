@@ -1,6 +1,6 @@
 package quinzical.impl.strategies.questiongenerator;
 
-import quinzical.impl.questionparser.Question;
+import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
 
@@ -18,12 +18,18 @@ public class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrat
     }
 
     @Override
-    public Map<String, List<Question>> generateQuestions() {
+    public Map<String, List<GameQuestion>> generateQuestions() {
 
-        Map<String, List<Question>> questions = new HashMap<>();
+        Map<String, List<GameQuestion>> questions = new HashMap<>();
 
         questionCollection.getQuestions().forEach((k, v) -> {
-            questions.put(k, new ArrayList<>(v));
+            List<GameQuestion> list = new ArrayList<>();
+            v.forEach(q -> {
+                GameQuestion question = new GameQuestion(q);
+                question.setAnswerable(true);
+                list.add(new GameQuestion(question));
+            });
+            questions.put(k, new ArrayList<>(list));
         });
 
         return questions;
