@@ -1,12 +1,16 @@
 package quinzical.impl.controllers;
 
+import com.google.inject.Inject;
 import javafx.scene.layout.AnchorPane;
+import quinzical.impl.constants.GameEvent;
+import quinzical.interfaces.models.SceneHandler;
 
 enum Theme {
     DARK, LIGHT
 }
 
-public abstract class PrimaryScene {
+public abstract class PrimarySceneController {
+
     protected abstract AnchorPane getBackground();
 
     public void setBackground(String colourHex) {
