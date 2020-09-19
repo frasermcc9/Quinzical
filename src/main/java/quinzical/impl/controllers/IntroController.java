@@ -39,6 +39,7 @@ public class IntroController extends PrimarySceneController {
     @FXML
     void btnPlayClick(ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.GAME);
+        sceneHandler.emit(GameEvent.BOARD_DISPLAYED);
     }
 
     @FXML

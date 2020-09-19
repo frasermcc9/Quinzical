@@ -6,11 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import quinzical.impl.constants.GameEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,11 +23,14 @@ public class GameController extends PrimarySceneController {
     private GameModel gameModel;
     @Inject
     private SceneHandler sceneHandler;
-    
+    @Inject
+    private BoardLoaderStrategyFactory boardLoaderStrategyFactory;
+
     @FXML
     private ResourceBundle resources;
     @FXML
     private URL location;
+
     @FXML
     private AnchorPane background;
     @FXML
@@ -34,6 +39,10 @@ public class GameController extends PrimarySceneController {
     private Label labelEarnings;
     @FXML
     private Label labelEarningsVal;
+    @FXML
+    private Pane paneHeader;
+    @FXML
+    private Pane paneContent;
 
     @FXML
     void btnMenuClick(ActionEvent event) {
@@ -43,11 +52,15 @@ public class GameController extends PrimarySceneController {
     @FXML
     void initialize() {
         assert btnMenu != null : "fx:id=\"btnMenu\" was not injected: check your FXML file 'game.fxml'.";
-        
+
         sceneHandler.on(GameEvent.LIGHT_THEME_ENABLED, () -> setTheme(Theme.LIGHT));
         sceneHandler.on(GameEvent.DARK_THEME_ENABLED, () -> setTheme(Theme.DARK));
-        
-        gameModel.generateNewGameQuestionSet();
+
+        sceneHandler.on(GameEvent.BOARD_DISPLAYED,
+            () -> {
+                gameModel.generateNewGameQuestionSet();
+                boardLoaderStrategyFactory.createStrategy().injectComponents(paneHeader, paneContent).loadBoard();
+            });
     }
 
     @Override
