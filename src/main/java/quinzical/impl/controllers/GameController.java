@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import quinzical.impl.constants.GameEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
@@ -14,13 +15,13 @@ import quinzical.interfaces.models.SceneHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController extends PrimaryScene {
+public class GameController extends PrimarySceneController {
 
-    @Inject
-    private SceneHandler sceneHandler;
     @Inject
     private GameModel gameModel;
-
+    @Inject
+    private SceneHandler sceneHandler;
+    
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -42,6 +43,10 @@ public class GameController extends PrimaryScene {
     @FXML
     void initialize() {
         assert btnMenu != null : "fx:id=\"btnMenu\" was not injected: check your FXML file 'game.fxml'.";
+        
+        sceneHandler.on(GameEvent.LIGHT_THEME_ENABLED, () -> setTheme(Theme.LIGHT));
+        sceneHandler.on(GameEvent.DARK_THEME_ENABLED, () -> setTheme(Theme.DARK));
+        
         gameModel.generateNewGameQuestionSet();
     }
 

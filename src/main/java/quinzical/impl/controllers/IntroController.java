@@ -7,14 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import quinzical.impl.constants.GameEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.SceneHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class IntroController extends PrimaryScene {
-
+public class IntroController extends PrimarySceneController {
 
     @Inject
     private SceneHandler sceneHandler;
@@ -48,12 +48,12 @@ public class IntroController extends PrimaryScene {
 
     @FXML
     void btnMoonClicked(MouseEvent event) {
-        setTheme(Theme.DARK);
+        sceneHandler.emit(GameEvent.DARK_THEME_ENABLED);
     }
 
     @FXML
     void btnSunClicked(MouseEvent event) {
-        setTheme(Theme.LIGHT);
+        sceneHandler.emit(GameEvent.LIGHT_THEME_ENABLED);
     }
 
     @FXML
@@ -61,6 +61,9 @@ public class IntroController extends PrimaryScene {
         assert imgTitle != null : "fx:id=\"imgTitle\" was not injected: check your FXML file 'intro.fxml'.";
         assert btnPractice != null : "fx:id=\"btnPractice\" was not injected: check your FXML file 'intro.fxml'.";
         assert btnPlay != null : "fx:id=\"btnPlay\" was not injected: check your FXML file 'intro.fxml'.";
+
+        sceneHandler.on(GameEvent.LIGHT_THEME_ENABLED, () -> setTheme(Theme.LIGHT));
+        sceneHandler.on(GameEvent.DARK_THEME_ENABLED, () -> setTheme(Theme.DARK));
     }
 
 
