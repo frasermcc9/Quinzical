@@ -2,11 +2,13 @@ package quinzical.impl.bindings;
 
 import com.google.inject.AbstractModule;
 import javafx.stage.Stage;
+import quinzical.impl.events.EventEmitterImpl;
 import quinzical.impl.models.GameModelImpl;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.SceneHandlerImpl;
 import quinzical.impl.models.SceneRegistryImpl;
 import quinzical.impl.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
+import quinzical.interfaces.events.EventEmitter;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
@@ -30,6 +32,8 @@ public class MainModule extends AbstractModule {
         bind(SceneRegistry.class).to(SceneRegistryImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
+
+        bind(EventEmitter.class).to(EventEmitterImpl.class);
 
         bind(Stage.class).toInstance(stage);
     }
