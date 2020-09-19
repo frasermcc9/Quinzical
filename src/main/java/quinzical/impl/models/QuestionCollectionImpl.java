@@ -1,6 +1,7 @@
 package quinzical.impl.models;
 
 
+import com.google.inject.Singleton;
 import quinzical.impl.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
 
@@ -11,10 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Singleton
 public class QuestionCollectionImpl implements QuestionCollection {
 
     private Map<String, List<Question>> questionMap;
-    
+
     public QuestionCollectionImpl() {
         try {
             FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/questions/question.qdb");
@@ -34,6 +36,6 @@ public class QuestionCollectionImpl implements QuestionCollection {
 
     @Override
     public Map<String, List<Question>> getQuestions() {
-        return this.questionMap;
+        return new HashMap<>(this.questionMap);
     }
 }
