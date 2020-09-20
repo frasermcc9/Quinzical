@@ -2,7 +2,7 @@ package quinzical.interfaces.strategies.questiongenerator;
 
 public interface QuestionGeneratorStrategyFactory {
 
-    QuestionGeneratorStrategy createStrategy();
+    QuestionGeneratorStrategy createGameQuestionStratgey();
 
     QuestionGeneratorStrategy createPracticeQuestionStrategy();
     
