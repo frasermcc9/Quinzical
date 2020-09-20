@@ -13,9 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import quinzical.interfaces.factories.BoardComponentFactory;
 
+/**
+ * Factory to create base styles for programmatically added components.
+ */
 public class BoardComponentFactoryImpl implements BoardComponentFactory {
     /**
-     * Creates a vbox with the required parameters that all VBoxes conform to.
+     * Creates a vbox with the required parameters that all VBoxes of the game
+     * board conform to.
      *
      * @return a new VBox.
      */
@@ -25,7 +29,8 @@ public class BoardComponentFactoryImpl implements BoardComponentFactory {
     }
 
     /**
-     * Creates a button with the required parameters that all buttons conform to.
+     * Creates a button with the required parameters that all buttons of the game
+     * board conform to.
      *
      * @return a new button.
      */
@@ -33,20 +38,21 @@ public class BoardComponentFactoryImpl implements BoardComponentFactory {
     public Button createButton() {
         Button b = new Button();
         b.setTextFill(Color.rgb(242, 178, 2));
-        b.setStyle("-fx-background-color: #2029d6;-fx-border-color: #000000;" +
-            "-fx-border-width: 3px;-fx-border-insets: -1;-fx-font-weight: bold;-fx-font-size: " +
-            "32;-fx-font-family: Impact;-fx-cursor: hand;");
+        b.setStyle("-fx-background-color: #2029d6;-fx-border-color: #000000;"
+                + "-fx-border-width: 3px;-fx-border-insets: -1;-fx-font-weight: bold;-fx-font-size: "
+                + "32;-fx-font-family: Impact;-fx-cursor: hand;");
         b.setEffect(new DropShadow());
-        b.backgroundProperty().bind(Bindings
-            .when(b.hoverProperty())
-            .then(new Background(new BackgroundFill(Color.rgb(24, 31, 163), null, null)))
-            .otherwise(new Background(new BackgroundFill(Color.rgb(32, 41, 214), null, null))));
+        b.backgroundProperty()
+                .bind(Bindings.when(b.hoverProperty())
+                        .then(new Background(new BackgroundFill(Color.rgb(24, 31, 163), null, null)))
+                        .otherwise(new Background(new BackgroundFill(Color.rgb(32, 41, 214), null, null))));
 
         return b;
     }
 
     /**
-     * Creates a button with the required parameters that all labels conform to.
+     * Creates a button with the required parameters that all labels of the game
+     * board conform to.
      *
      * @return a new label.
      */

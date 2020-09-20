@@ -17,6 +17,10 @@ import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Game view. This is the view that contains the
+ * question board.
+ */
 public class GameController extends PrimarySceneController {
 
     @Inject
@@ -44,29 +48,56 @@ public class GameController extends PrimarySceneController {
     @FXML
     private Pane paneContent;
 
+    /**
+     * Fires when the menu button is clicked. Changes the active scene back to the
+     * intro scene.
+     *
+     * @param event
+     */
     @FXML
     void btnMenuClick(ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
+    /**
+     * Called when the FXML is finished loading.
+     */
     @FXML
     void initialize() {
         assert btnMenu != null : "fx:id=\"btnMenu\" was not injected: check your FXML file 'game.fxml'.";
 
+        listen();
+    }
+
+    /**
+     * Listen for events from the SceneHandler.
+     */
+    private void listen() {
+        // Listen for theme changes.
         sceneHandler.on(GameEvent.LIGHT_THEME_ENABLED, () -> setTheme(Theme.LIGHT));
         sceneHandler.on(GameEvent.DARK_THEME_ENABLED, () -> setTheme(Theme.DARK));
 
-        sceneHandler.on(GameEvent.BOARD_DISPLAYED, () -> {
+        // Listen for when the board needs to be fully refreshed
+        sceneHandler.on(GameEvent.FULL_BOARD_REFRESH, () -> {
+            // Regenerate questions
             gameModel.generateNewGameQuestionSet();
+            // Creates the layout of all the question buttons and headers.
             boardLoaderStrategyFactory.createStrategy().injectComponents(paneHeader, paneContent).loadBoard();
         });
     }
 
+    /**
+     * Implements abstract method. Returns the scene background for theme
+     * changing.
+     */
     @Override
     protected AnchorPane getBackground() {
         return this.background;
     }
 
+    /**
+     * Overrides virtual method (optional hook).
+     */
     @Override
     public void setLabelTextColour(String colourHex) {
         labelEarnings.setTextFill(Color.web(colourHex));

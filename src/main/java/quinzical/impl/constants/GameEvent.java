@@ -1,11 +1,10 @@
 package quinzical.impl.constants;
 
 /**
- * All game events that can be emitted
+ * All valid game events that can be emitted and listened for.
  */
 public enum GameEvent {
-    DARK_THEME_ENABLED,
-    LIGHT_THEME_ENABLED,
+    DARK_THEME_ENABLED, LIGHT_THEME_ENABLED,
 
-    BOARD_DISPLAYED,
+    FULL_BOARD_REFRESH,
 }

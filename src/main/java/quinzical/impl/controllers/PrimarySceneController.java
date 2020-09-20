@@ -1,22 +1,41 @@
 package quinzical.impl.controllers;
 
-import com.google.inject.Inject;
 import javafx.scene.layout.AnchorPane;
-import quinzical.impl.constants.GameEvent;
-import quinzical.interfaces.models.SceneHandler;
 
 enum Theme {
     DARK, LIGHT
 }
 
+/**
+ * Abstract class for all main scenes (i.e. those that are loaded onto the
+ * application main stage).
+ */
 public abstract class PrimarySceneController {
 
+    /**
+     * Get the background of the scene.
+     *
+     * @return the background AnchorPane
+     */
     protected abstract AnchorPane getBackground();
 
+    /**
+     * Adjusts the background for the theme.
+     *
+     * @param colourHex the hex code of the colour
+     */
     public void setBackground(String colourHex) {
-        getBackground().setStyle("-fx-background-color: " + colourHex);
+        String currentStyle = getBackground().getStyle();
+        // Removes the current background color property
+        currentStyle = currentStyle.replaceAll("-fx-background-color: #[\\dabcdef]+;?", "");
+        getBackground().setStyle(currentStyle + "-fx-background-color: " + colourHex + ";");
     }
 
+    /**
+     * Template method to set the theme of the game.
+     *
+     * @param t
+     */
     public void setTheme(Theme t) {
         switch (t) {
             case DARK:
@@ -30,8 +49,14 @@ public abstract class PrimarySceneController {
         }
     }
 
+    /**
+     * Is called on a theme change to set the label text to the input colour from
+     * the {@link PrimarySceneController#setTheme(Theme)} template method.
+     *
+     * @param colourHex the colour that the labels should be changed to.
+     */
     public void setLabelTextColour(String colourHex) {
-        //Virtual
+        // Virtual
     }
 
 }

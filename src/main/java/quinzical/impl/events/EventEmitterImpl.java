@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Base event emitter class. Classes that extend this class can emit events, and other classes can observe those events
- * and run code when they occur.
+ * Base event emitter class. Classes that extend or delegate to this class can
+ * emit events, and other classes can observe those events and run code when
+ * they occur.
  */
 public class EventEmitterImpl implements EventEmitter {
     /**
@@ -27,7 +28,10 @@ public class EventEmitterImpl implements EventEmitter {
     }
 
     /**
-     * Listens to an event for this class.
+     * Listens to an event for this object.
+     *
+     * Essentially adds a function to the named event. When this event is
+     * emitted, then the function will run.
      *
      * @param event the event to listen for
      * @param cb    the function to call when this event occurs
@@ -41,7 +45,11 @@ public class EventEmitterImpl implements EventEmitter {
     }
 
     /**
-     * emits an event, which will execute all functions that were bound to the event with the on method.
+     * Emits an event, which will execute all functions that were bound to the event
+     * with the on method.
+     *
+     * Essentially, when emit is called, every function stored in the map bound to
+     * the emitted event will run.
      *
      * @param event the event to emit
      * @return whether there was any event that was emitted

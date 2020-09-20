@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Strategy for creating the practice set of questions.
+ */
 public class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 
     private QuestionCollection questionCollection;

@@ -18,17 +18,28 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
 
     private final BoardComponentFactory boardComponentFactory;
-
     private final GameModel gameModel;
 
     private Pane header;
     private Pane content;
 
+    /**
+     * Construct the strategy with the component factory to create components, and
+     * the game model to get the questions from.
+     *
+     * @param boardComponentFactory
+     * @param gameModel
+     */
     public DefaultBoardLoaderStrategy(BoardComponentFactory boardComponentFactory, GameModel gameModel) {
         this.boardComponentFactory = boardComponentFactory;
         this.gameModel = gameModel;
     }
 
+    /**
+     * Loads the category headers into the header pane.
+     *
+     * @param questionMap
+     */
     private void loadHeader(Map<String, List<GameQuestion>> questionMap) {
         header.getChildren().clear();
         int categoryCount = questionMap.size();
@@ -47,6 +58,11 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
 
     }
 
+    /**
+     * Loads the buttons into the content pane.
+     *
+     * @param questionMap
+     */
     private void loadContent(Map<String, List<GameQuestion>> questionMap) {
         content.getChildren().clear();
 
@@ -87,6 +103,9 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
         });
     }
 
+    /**
+     * Inject the components that the new components should be added to.
+     */
     @Override
     public BoardLoaderStrategy injectComponents(Pane header, Pane content) {
         this.content = content;
@@ -95,6 +114,9 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
         return this;
     }
 
+    /**
+     * Load the components.
+     */
     @Override
     public void loadBoard() {
 

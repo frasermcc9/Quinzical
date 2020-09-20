@@ -24,16 +24,25 @@ public class GameModelImpl implements GameModel {
 
     private Map<String, List<GameQuestion>> boardQuestions;
 
+    /**
+     * Returns map containing the questions for the current game.
+     */
     @Override
     public Map<String, List<GameQuestion>> getBoardQuestions() {
         return boardQuestions;
     }
 
+    /**
+     * Generates a new set of questions.
+     */
     @Override
     public void generateNewGameQuestionSet() {
-        this.boardQuestions = questionGeneratorStrategyFactory.createStrategy().generateQuestions();
+        this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStratgey().generateQuestions();
     }
 
+    /**
+     * Sets the active question in the game.
+     */
     @Override
     public void activateQuestion(String category, int questionIdx) {
         List<GameQuestion> gameQuestions = boardQuestions.get(category);

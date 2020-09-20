@@ -19,9 +19,15 @@ import quinzical.interfaces.models.SceneRegistry;
 import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
+/**
+ * This class binds concrete implementations to interfaces. It decides, when a
+ * class requires an interface injection with the @Inject annotation, which
+ * concrete implementation to give it.
+ */
 public class MainModule extends AbstractModule {
 
     private final Stage stage;
+
     public MainModule(Stage stage) {
         this.stage = stage;
     }
@@ -43,4 +49,3 @@ public class MainModule extends AbstractModule {
         bind(Stage.class).toInstance(stage);
     }
 }
-
