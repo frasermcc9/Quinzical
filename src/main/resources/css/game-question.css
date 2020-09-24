@@ -1,0 +1,37 @@
+.label {
+    -fx-text-fill: #e3e3e3;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
+    -fx-font-size: 32;
+    -fx-alignment: TOP_CENTER;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.text-area {
+    text-area-background: #343434;
+    -fx-text-fill: #ffffff;
+    -fx-opacity: 0.9;
+    -fx-font-size: 32;
+    -fx-font-weight: bold;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background;
+}
+
+.text-area *.text {
+    -fx-text-alignment: center;
+    -fx-opacity: 1;
+}
+
+.submit-button {
+    -fx-background-color: #213c57;
+}
+
+
+.pass-button {
+    -fx-background-color: #572121;
+}
+.pass-button:hover {
+    -fx-background-color: #eda8a8;
+}
