@@ -1,11 +1,10 @@
 package quinzical.impl.models.structures;
 
-import quinzical.impl.questionparser.Question;
+import quinzical.impl.util.questionparser.Question;
 
 /**
- * Extension of question that adds functionality to make them useful for the
- * game. Adds support for checking if the question is answered, answerable, and
- * its value.
+ * Extension of question that adds functionality to make them useful for the game. Adds support for checking if the
+ * question is answered, answerable, and its value.
  */
 public class GameQuestion extends Question {
     private static final long serialVersionUID = 1L;
@@ -15,13 +14,17 @@ public class GameQuestion extends Question {
     private transient int value = 0;
 
     /**
-     * Game questions are constructed by passing the normal question into the
-     * constructor.
+     * Game questions are constructed by passing the normal question into the constructor.
      *
      * @param question the question to transform into a game question.
      */
     public GameQuestion(Question question) {
         super(question);
+    }
+
+    public void answer() {
+        this.answerable = false;
+        this.answered = true;
     }
 
     public int getValue() {
