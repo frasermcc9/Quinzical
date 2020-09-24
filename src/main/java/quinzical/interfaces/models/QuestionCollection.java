@@ -1,6 +1,6 @@
 package quinzical.interfaces.models;
 
-import quinzical.impl.questionparser.Question;
+import quinzical.impl.util.questionparser.Question;
 
 import java.util.List;
 import java.util.Map;

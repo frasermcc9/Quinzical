@@ -1,4 +1,4 @@
-package quinzical.impl.questionparser;
+package quinzical.impl.util.questionparser;
 
 import javax.swing.*;
 import java.io.File;

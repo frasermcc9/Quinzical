@@ -1,4 +1,4 @@
-package quinzical.impl.strategies.boardloader;
+package quinzical.impl.util.strategies.boardloader;
 
 import com.google.inject.Inject;
 

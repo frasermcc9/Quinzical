@@ -1,4 +1,4 @@
-package quinzical.impl.strategies.questiongenerator;
+package quinzical.impl.util.strategies.questiongenerator;
 
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuestionCollection;

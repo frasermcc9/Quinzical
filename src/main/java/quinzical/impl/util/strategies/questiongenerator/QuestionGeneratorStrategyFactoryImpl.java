@@ -1,4 +1,4 @@
-package quinzical.impl.strategies.questiongenerator;
+package quinzical.impl.util.strategies.questiongenerator;
 
 import com.google.inject.Inject;
 import quinzical.interfaces.models.QuestionCollection;

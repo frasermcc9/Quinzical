@@ -1,4 +1,4 @@
-package quinzical.impl.factories;
+package quinzical.impl.util.factories;
 
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;

@@ -1,7 +1,7 @@
-package quinzical.impl.strategies.questiongenerator;
+package quinzical.impl.util.strategies.questiongenerator;
 
 import quinzical.impl.models.structures.GameQuestion;
-import quinzical.impl.questionparser.Question;
+import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
 
