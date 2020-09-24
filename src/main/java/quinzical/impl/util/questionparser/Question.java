@@ -1,4 +1,4 @@
-package quinzical.impl.questionparser;
+package quinzical.impl.util.questionparser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,10 +28,25 @@ public class Question implements Serializable {
         this.prompt = q.prompt;
     }
 
-    public void addSolution(String[] solutions) {
+    public Question addSolution(String[] solutions) {
         Solution s = new Solution(solutions);
         this.solutions.add(s);
+        return this;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public List<Solution> getSolutions() {
+        return solutions;
     }
     
+    public List<Solution> getSolutionsCopy(){
+        return new ArrayList<>(solutions);
+    }
 
+    public String getPrompt() {
+        return prompt;
+    }
 }
