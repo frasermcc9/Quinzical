@@ -1,4 +1,4 @@
-package quinzical.impl.questionparser;
+package quinzical.impl.util.questionparser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,5 +23,9 @@ public class Solution implements Serializable {
             s = s.trim();
             variants.add(s);
         }
+    }
+
+    public List<String> getVariants() {
+        return new ArrayList<>(variants);
     }
 }
