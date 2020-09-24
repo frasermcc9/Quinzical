@@ -1,4 +1,4 @@
-package quinzical.impl.strategies.boardloader;
+package quinzical.impl.util.strategies.boardloader;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Deprecated
 public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
 
     private final BoardComponentFactory boardComponentFactory;
@@ -24,8 +25,8 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
     private Pane content;
 
     /**
-     * Construct the strategy with the component factory to create components, and
-     * the game model to get the questions from.
+     * Construct the strategy with the component factory to create components, and the game model to get the questions
+     * from.
      *
      * @param boardComponentFactory
      * @param gameModel
@@ -97,7 +98,7 @@ public class DefaultBoardLoaderStrategy implements BoardLoaderStrategy {
 
                 final int qIndex = j;
                 btn.setOnAction(e -> {
-                    gameModel.activateQuestion(cat, qIndex);
+                    //not implemented
                 });
             }
         });
