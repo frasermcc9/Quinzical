@@ -1,5 +1,5 @@
 package quinzical.interfaces.events;
 
-public interface QuestionObservers {
+public interface QuestionObserver {
     void updateQuestionDisplay();
 }
