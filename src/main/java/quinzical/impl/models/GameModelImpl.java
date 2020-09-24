@@ -2,27 +2,30 @@ package quinzical.impl.models;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
+import quinzical.interfaces.events.ActiveQuestionObserver;
+import quinzical.interfaces.events.QuestionObserver;
 import quinzical.interfaces.models.GameModel;
-import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Singleton
 public class GameModelImpl implements GameModel {
 
-    private GameQuestion activeQuestion = null;
+
+    private final List<QuestionObserver> questionObservers = new ArrayList<>();
+
+    private final List<ActiveQuestionObserver> activeObservers = new ArrayList<>();
 
     @Inject
     private QuestionGeneratorStrategyFactory questionGeneratorStrategyFactory;
 
-    @Inject
-    private SceneHandler sceneHandler;
-
     private Map<String, List<GameQuestion>> boardQuestions;
+
+    private GameQuestion activeQuestion = null;
 
     /**
      * Returns map containing the questions for the current game.
@@ -38,18 +41,59 @@ public class GameModelImpl implements GameModel {
     @Override
     public void generateNewGameQuestionSet() {
         this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStratgey().generateQuestions();
+        fireQuestionsUpdate();
     }
 
     /**
      * Sets the active question in the game.
      */
     @Override
-    public void activateQuestion(String category, int questionIdx) {
-        List<GameQuestion> gameQuestions = boardQuestions.get(category);
-        GameQuestion question = gameQuestions.get(questionIdx);
-
+    public void activateQuestion(GameQuestion question) {
         this.activeQuestion = question;
-        sceneHandler.setActiveScene(GameScene.GAME_QUESTION);
+        activeObservers.forEach(o -> o.fireActiveQuestion(question));
     }
+
+    @Override
+    public GameQuestion getActiveQuestion() {
+        return this.activeQuestion;
+    }
+
+    @Override
+    public void onQuestionsUpdate(QuestionObserver fn) {
+        questionObservers.add(fn);
+    }
+
+    @Override
+    public void fireQuestionsUpdate() {
+        questionObservers.forEach(QuestionObserver::updateQuestionDisplay);
+    }
+
+    @Override
+    public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
+        activeObservers.add(fn);
+    }
+
+    @Override
+    public void answerActive() {
+        GameQuestion question = this.activeQuestion;
+        this.activeQuestion.answer();
+        this.activeQuestion = null;
+
+        boolean marked;
+        for (List<GameQuestion> entry : this.boardQuestions.values()) {
+            marked = false;
+            for (GameQuestion q : entry) {
+                if (marked) {
+                    q.setAnswerable(true);
+                    marked = false;
+                }
+                if (q.equals(question)) {
+                    marked = true;
+                }
+            }
+        }
+        fireQuestionsUpdate();
+    }
+
 
 }
