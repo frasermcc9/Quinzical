@@ -1,7 +1,7 @@
 .label {
     -fx-text-fill: #e3e3e3;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
-    -fx-font-size: 32;
+    -fx-font-size: 28;
     -fx-alignment: TOP_CENTER;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -11,8 +11,10 @@
     text-area-background: #343434;
     -fx-text-fill: #ffffff;
     -fx-opacity: 0.9;
-    -fx-font-size: 32;
+    -fx-padding: 0;
+    -fx-font-size: 28;
     -fx-font-weight: bold;
+    -fx-wrap-text: true;
 }
 
 .text-area .content {
@@ -22,6 +24,7 @@
 .text-area *.text {
     -fx-text-alignment: center;
     -fx-opacity: 1;
+
 }
 
 .submit-button {
@@ -32,6 +35,7 @@
 .pass-button {
     -fx-background-color: #572121;
 }
+
 .pass-button:hover {
     -fx-background-color: #eda8a8;
 }

@@ -20,10 +20,10 @@
             <Image url="@../../../images/overlays/gameQuestion.png" />
          </image>
       </ImageView>
-        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="312.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
-      <Label fx:id="lblQuestion" alignment="TOP_RIGHT" layoutX="272.0" layoutY="131.0" prefHeight="105.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="272.0" layoutY="248.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Button fx:id="btnMenu" layoutX="470.0" layoutY="594.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="150.0" text="Submit">
+        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="292.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
+      <Label fx:id="lblQuestion" alignment="TOP_RIGHT" layoutX="272.0" layoutY="131.0" prefHeight="83.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="272.0" layoutY="225.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+      <Button fx:id="btnSubmit" layoutX="402.0" layoutY="595.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -39,7 +39,7 @@
             <String fx:value="submit-button" />
          </styleClass>
       </Button>
-      <Button fx:id="btnMenu1" layoutX="661.0" layoutY="594.0" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="150.0" text="Pass">
+      <Button fx:id="btnPass" layoutX="659.0" layoutY="595.0" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="220.0" text="Pass">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
