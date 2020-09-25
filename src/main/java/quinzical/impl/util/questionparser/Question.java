@@ -11,10 +11,12 @@ public class Question implements Serializable {
     protected final String hint;
     protected final List<Solution> solutions = new ArrayList<>();
     protected final String prompt;
+    protected final String category;
 
-    public Question(String hint, String prompt) {
+    public Question(String category, String hint, String prompt) {
         this.hint = hint;
         this.prompt = prompt;
+        this.category = category;
     }
 
     /**
@@ -26,6 +28,11 @@ public class Question implements Serializable {
         this.hint = q.hint;
         this.solutions.addAll(q.solutions);
         this.prompt = q.prompt;
+        this.category = q.category;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public Question addSolution(String[] solutions) {
@@ -41,8 +48,8 @@ public class Question implements Serializable {
     public List<Solution> getSolutions() {
         return solutions;
     }
-    
-    public List<Solution> getSolutionsCopy(){
+
+    public List<Solution> getSolutionsCopy() {
         return new ArrayList<>(solutions);
     }
 
