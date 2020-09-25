@@ -5,7 +5,6 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
@@ -14,7 +13,6 @@ import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
 
 import java.io.IOException;
-import java.util.Objects;
 
 //mvn clean compile assembly:single
 
@@ -34,6 +32,7 @@ public class Entry extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        // Create the injection container
         injector = Guice.createInjector(new MainModule(stage));
         SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
@@ -41,11 +40,11 @@ public class Entry extends Application {
         sceneRegistry = injector.getInstance(SceneRegistry.class);
         sceneRegistry.addScene(GameScene.INTRO, loadFXML("intro"));
         sceneRegistry.addScene(GameScene.GAME, loadFXML("game"));
-        sceneRegistry.addScene(GameScene.GAME_QUESTION,loadFXML("gameQuestion"));
+        sceneRegistry.addScene(GameScene.GAME_QUESTION, loadFXML("gamequestion"));
 
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
-        
+
         //set the background
         sceneHandler.fireBackgroundChange(Theme.MOUNTAINS.getImage());
 
