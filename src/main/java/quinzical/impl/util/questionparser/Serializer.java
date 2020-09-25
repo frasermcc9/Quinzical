@@ -48,7 +48,7 @@ public class Serializer {
             String prompt = parts[1].trim();
             String solutions = parts[2].trim().replaceAll("[,.]$", "");
 
-            Question q = new Question(hint, prompt);
+            Question q = new Question(activeCategory, hint, prompt);
 
             String[] slnList = solutions.split(",");
             for (String sln : slnList) {
