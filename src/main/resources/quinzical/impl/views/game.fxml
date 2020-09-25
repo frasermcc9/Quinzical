@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
-    <AnchorPane fx:id="background" prefHeight="750.0" prefWidth="1174.0" style="-fx-background-color: #232323;">
-        <Button fx:id="btnMenu" layoutX="14.0" layoutY="679.0" mnemonicParsing="false" onAction="#btnMenuClick" prefHeight="39.0" prefWidth="119.0" style="-fx-background-color: #fcba03; -fx-background-radius: 10;" text="Reset">
+    <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
+      <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgOverlay" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/overlays/game.png" />
+         </image>
+      </ImageView>
+        <Button fx:id="btnMenu" layoutX="27.0" layoutY="648.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
             <font>
                 <Font name="System Bold" size="26.0" />
             </font>
@@ -18,18 +27,29 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-      <Label fx:id="labelEarnings" layoutX="152.0" layoutY="687.0" prefHeight="40.0" prefWidth="271.0" text="Your Earnings:" textFill="#c9c9c9">
-         <font>
-            <Font name="System Bold" size="28.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelEarningsVal" layoutX="423.0" layoutY="687.0" prefHeight="40.0" prefWidth="240.0" text="\$0" textFill="#c9c9c9">
-         <font>
-            <Font name="System Bold" size="28.0" />
-         </font>
-      </Label>
-      <Pane fx:id="paneHeader" layoutX="37.0" layoutY="44.0" prefHeight="90.0" prefWidth="1100.0" />
-      <Pane fx:id="paneContent" layoutX="37.0" layoutY="140.0" prefHeight="470.0" prefWidth="1100.0" />
+        <Label fx:id="labelEarnings" layoutX="161.0" layoutY="654.0" prefHeight="40.0" prefWidth="271.0" text="Your Earnings:" textFill="#c9c9c9">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelEarningsVal" layoutX="373.0" layoutY="654.0" prefHeight="40.0" prefWidth="240.0" text="\$0" textFill="#c9c9c9">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Pane fx:id="paneHeader" layoutX="346.0" layoutY="166.0" prefHeight="423.0" prefWidth="589.0" stylesheets="@../../../css/intro.css">
+         <children>
+            <Button layoutX="95.0" layoutY="10.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
+            <Button layoutX="95.0" layoutY="95.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="Button">
+               <styleClass>
+                  <String fx:value="button" />
+                  <String fx:value="transparent" />
+               </styleClass>
+            </Button>
+            <Button layoutX="95.0" layoutY="180.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
+            <Button layoutX="95.0" layoutY="265.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
+            <Button layoutX="95.0" layoutY="350.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
+         </children></Pane>
         <cursor>
             <Cursor fx:constant="DEFAULT" />
         </cursor>

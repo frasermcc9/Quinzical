@@ -10,46 +10,54 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.IntroController">
-    <AnchorPane fx:id="background" prefHeight="750.0" prefWidth="1174.0" style="-fx-background-color: #232323;">
-        <ImageView fx:id="imgTitle" fitHeight="196.0" fitWidth="684.0" layoutX="245.0" layoutY="48.0" preserveRatio="true" AnchorPane.bottomAnchor="506.1200866699219" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="245.0" AnchorPane.topAnchor="48.0">
-            <Image url="@../../../images/title.png" />
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-        </ImageView>
-        <Button fx:id="btnPractice" layoutX="451.0" layoutY="577.0" mnemonicParsing="false" onAction="#btnPracticeClick" prefHeight="90.0" prefWidth="279.0" style="-fx-background-color: #30ff83; -fx-background-radius: 20;" text="PRACTICE" AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="444.0" AnchorPane.topAnchor="577.0">
-            <font>
-                <Font name="System Bold" size="36.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
-        <Button fx:id="btnPlay" layoutX="380.0" layoutY="375.0" mnemonicParsing="false" onAction="#btnPlayClick" prefHeight="152.0" prefWidth="422.0" style="-fx-background-color: #fcba03; -fx-background-radius: 20;" text="PLAY" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="372.0" AnchorPane.topAnchor="375.0">
-            <font>
-                <Font name="System Bold" size="64.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
-        <ImageView fx:id="btnSun" cacheHint="QUALITY" fitHeight="57.0" fitWidth="57.0" layoutX="14.0" layoutY="678.0" onMouseClicked="#btnSunClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@../../../images/sun.png" />
-        </ImageView>
-        <ImageView fx:id="btnNight" accessibleRole="BUTTON" fitHeight="47.0" fitWidth="47.0" layoutX="80.0" layoutY="682.0" onMouseClicked="#btnMoonClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="80.0">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@../../../images/moon.png" />
-        </ImageView>
+    <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
+      <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/landscapes/boulders.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/overlays/main.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnLoadGame" layoutX="455.0" layoutY="360.0" mnemonicParsing="false" onAction="#btnLoadGamePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Load Game">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="455.0" layoutY="283.0" mnemonicParsing="false" onAction="#btnNewGamePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="New Game">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="455.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnPracticeModePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Practice Mode">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="455.0" layoutY="573.0" mnemonicParsing="false" onAction="#btnOptionsPress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Options">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
         <cursor>
             <Cursor fx:constant="DEFAULT" />
         </cursor>
-      <rotationAxis>
-         <Point3D />
-      </rotationAxis>
+        <rotationAxis>
+            <Point3D />
+        </rotationAxis>
     </AnchorPane>
 </Scene>

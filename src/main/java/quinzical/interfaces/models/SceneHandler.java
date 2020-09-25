@@ -1,14 +1,16 @@
 package quinzical.interfaces.models;
 
-import quinzical.impl.constants.GameEvent;
+import javafx.scene.image.Image;
+
 import quinzical.impl.constants.GameScene;
-import quinzical.interfaces.events.EventEmitter;
-import quinzical.interfaces.events.EventFunction;
+import quinzical.interfaces.events.ChangeableBackground;
+
 
 public interface SceneHandler {
-    abstract void setActiveScene(GameScene scene);
+    void onBackgroundChange(ChangeableBackground fn);
 
-    EventEmitter on(GameEvent event, EventFunction cb);
+    void fireBackgroundChange(Image img);
 
-    boolean emit(GameEvent event);
+    void setActiveScene(GameScene scene);
+    
 }

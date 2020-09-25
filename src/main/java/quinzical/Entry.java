@@ -6,12 +6,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import quinzical.impl.bindings.MainModule;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.GameController;
-import quinzical.impl.controllers.IntroController;
+import quinzical.impl.constants.Theme;
+import quinzical.impl.util.bindings.MainModule;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
+
+import java.io.IOException;
 
 //mvn clean compile assembly:single
 
@@ -19,33 +20,37 @@ public class Entry extends Application {
 
     SceneRegistry sceneRegistry;
 
+    Injector injector;
+
+    private Scene loadFXML(String fxml) throws IOException {
+        final String path = "quinzical/impl/views/";
+        FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path + fxml + ".fxml"));
+        loader.setControllerFactory(injector::getInstance);
+        return loader.load();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        Injector injector = Guice.createInjector(new MainModule(stage));
+        // Create the injection container
+        injector = Guice.createInjector(new MainModule(stage));
         SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
-
-        // Load the views and controllers
-        final String path = "quinzical/impl/views/";
-
-        FXMLLoader introLoader = new FXMLLoader(getClass().getClassLoader().getResource(path + "intro.fxml"));
-        introLoader.setControllerFactory(injector::getInstance);
-        Scene introScene = introLoader.load();
-
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getClassLoader().getResource(path + "game.fxml"));
-        gameLoader.setControllerFactory(injector::getInstance);
-        Scene gameScene = gameLoader.load();
 
         // Register the scenes
         sceneRegistry = injector.getInstance(SceneRegistry.class);
-        sceneRegistry.addScene(GameScene.INTRO, introScene);
-        sceneRegistry.addScene(GameScene.GAME, gameScene);
+        sceneRegistry.addScene(GameScene.INTRO, loadFXML("intro"));
+        sceneRegistry.addScene(GameScene.GAME, loadFXML("game"));
+        sceneRegistry.addScene(GameScene.GAME_QUESTION, loadFXML("gamequestion"));
 
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
 
+        //set the background
+        sceneHandler.fireBackgroundChange(Theme.MOUNTAINS.getImage());
+
         // Show interface
         stage.setTitle("Quinzical");
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -1,7 +1,7 @@
 package quinzical.impl.models;
 
 import com.google.inject.Singleton;
-import quinzical.impl.questionparser.Question;
+import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
 
 import java.io.FileInputStream;
@@ -28,7 +28,7 @@ public class QuestionCollectionImpl implements QuestionCollection {
      */
     public QuestionCollectionImpl() {
         try {
-            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/questions/question.qdb");
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/data/question.qdb");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Object obj = in.readObject();
             if (obj instanceof HashMap) {
@@ -41,6 +41,7 @@ public class QuestionCollectionImpl implements QuestionCollection {
         } catch (IOException | ClassNotFoundException i) {
             System.out.println("Error: " + i.getMessage());
         }
+        assert questionMap != null;
     }
 
     /**
