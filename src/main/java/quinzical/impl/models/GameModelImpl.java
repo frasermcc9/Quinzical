@@ -36,10 +36,15 @@ public class GameModelImpl implements GameModel {
     public int getValue() {
         return value;
     }
-    
+
     public void increaseValueBy(int number) {
         this.value += number;
         fireValueChange();
+    }
+
+    @Override
+    public Map<String, List<GameQuestion>> getQuestionsForPracticeMode() {
+        return questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions();
     }
 
     /**
@@ -152,7 +157,7 @@ public class GameModelImpl implements GameModel {
     public void answerActive(boolean correct) {
         GameQuestion question = this.activeQuestion;
         this.activeQuestion.answer(correct);
-        this.activeQuestion = null;
+        //this.activeQuestion = null;
 
         GameQuestion next = getNextActiveQuestion(question);
         if (next != null) {

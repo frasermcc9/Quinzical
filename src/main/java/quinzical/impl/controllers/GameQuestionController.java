@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import quinzical.Entry;
@@ -16,23 +18,25 @@ import quinzical.impl.util.questionparser.Solution;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.Speaker;
+import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class GameQuestionController {
 
     @Inject
-    SceneHandler sceneHandler;
+    private SceneHandler sceneHandler;
 
     @Inject
-    GameModel gameModel;
+    private GameModel gameModel;
 
     @Inject
-    Speaker speaker;
+    private Speaker speaker;
+
+    @Inject
+    private QuestionVerifierFactory questionVerifierFactory;
 
     @FXML
     private AnchorPane background;
@@ -47,9 +51,6 @@ public class GameQuestionController {
     private Pane paneSolutions;
 
     @FXML
-    private Label lblQuestion;
-
-    @FXML
     private Label lblPrompt;
 
     @FXML
@@ -59,10 +60,6 @@ public class GameQuestionController {
     private Button btnPass;
 
     private List<TextArea> textAreas;
-
-    public String normaliseText(String text) {
-        return Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("\\p{M}", "").trim().toLowerCase().replaceFirst("^the", "").trim();
-    }
 
     @FXML
     void initialize() {
@@ -74,12 +71,17 @@ public class GameQuestionController {
         gameModel.onActiveQuestionUpdate(this::initialiseQuestion);
     }
 
+    @FXML
+    void onReplyClick() {
+        String s = gameModel.getActiveQuestion().getHint();
+        speaker.speak(s);
+    }
+
     private void initialiseQuestion(GameQuestion gameQuestion) {
 
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
 
-        this.lblQuestion.setText(gameQuestion.getHint());
         this.lblPrompt.setText(gameQuestion.getPrompt() + ":");
 
         speaker.speak(gameQuestion.getHint());
@@ -95,10 +97,27 @@ public class GameQuestionController {
             ta.setMaxHeight(paneSolutions.getPrefHeight() / slnSize - slnSize);
             ta.setLayoutY(0 + i * paneSolutions.getPrefHeight() / slnSize + 1);
             ta.setPromptText("Enter your solution here...");
+            ta.setOnKeyPressed(this::onEnterPressed);
             paneSolutions.getChildren().add(ta);
             textAreas.add(ta);
         }
+        textAreas.get(0).requestFocus();
+    }
 
+    private void onEnterPressed(KeyEvent e) {
+        if (e.getCode() == KeyCode.ENTER) {
+            if (e.getSource() instanceof TextArea) {
+                TextArea ta = (TextArea) e.getSource();
+                ta.setText(ta.getText().trim());
+                int idx = textAreas.indexOf(ta);
+                if (idx + 1 == textAreas.size()) {
+                    btnSubmit.fire();
+                } else {
+                    textAreas.get(idx + 1).requestFocus();
+                }
+            }
+
+        }
     }
 
     @FXML
@@ -111,38 +130,8 @@ public class GameQuestionController {
         GameQuestion question = gameModel.getActiveQuestion();
 
         List<Solution> solutions = question.getSolutionsCopy();
-        List<Boolean> corrects = new ArrayList<>();
 
-        for (TextArea textArea : textAreas) {
-            String submission = normaliseText(textArea.getText());
-            boolean solutionFound = false;
-            for (Solution solution : solutions) {
-                List<String> variants = solution.getVariants();
-                Optional<String> found = variants.stream().filter(v -> normaliseText(v).equals(submission)).findAny();
-                if (found.isPresent()) {
-                    solutions.remove(solution);
-                    corrects.add(true);
-                    solutionFound = true;
-                    textArea.setStyle("-fx-background-color: #ceffc3; -fx-text-fill: #ceffc3");
-
-                    textArea.setText(found.get());
-                    break;
-                }
-            }
-            if (!solutionFound) {
-                corrects.add(false);
-            }
-        }
-
-        for (int i = 0; i < corrects.size(); i++) {
-            if (!corrects.get(i)) {
-                TextArea textArea = textAreas.get(i);
-                textArea.setStyle("-fx-background-color: #ff858c; -fx-text-fill: #ffc7ca");
-                String sln = solutions.remove(0).getVariants().get(0);
-                if (sln != null)
-                    textArea.setText(sln);
-            }
-        }
+        List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier().verifySolutions(solutions, textAreas);
 
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
 

@@ -10,6 +10,8 @@ import java.util.Map;
 
 public interface GameModel {
 
+    Map<String, List<GameQuestion>> getQuestionsForPracticeMode();
+
     Map<String, List<GameQuestion>> getBoardQuestions();
 
     void generateNewGameQuestionSet();

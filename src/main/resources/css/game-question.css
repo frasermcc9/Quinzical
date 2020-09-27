@@ -7,6 +7,10 @@
     -fx-wrap-text: true;
 }
 
+.label-replay{
+    -fx-font-size: 18;
+}
+
 .text-area {
     text-area-background: #343434;
     -fx-text-fill: #ffffff;
