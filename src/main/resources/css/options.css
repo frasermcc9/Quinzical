@@ -1,0 +1,66 @@
+.label {
+    -fx-text-fill: #e3e3e3;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
+    -fx-font-size: 24;
+    -fx-alignment: TOP_CENTER;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.slider {
+    -fx-show-tick-marks: true;
+    -fx-show-tick-labels: true;
+    -fx-color-label-visible: true;
+    -fx-cursor: hand;
+    -fx-text-fill: #d6d6d6;
+}
+
+.combo-box {
+    -fx-background-color: #404040;
+    -fx-background-radius: 10;
+    -fx-font-size: 18;
+}
+
+.combo-box-popup .list-view {
+    -fx-font-size: 18;
+    -fx-background-color: #404040;
+}
+
+.combo-box .list-cell:hover{
+    -fx-background-color: #595959;
+}
+
+
+.combo-box .list-cell {
+    -fx-background-color: #2e2e2e;
+    -fx-text-fill: #d6d6d6;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.button {
+    -fx-background-color: #404040;
+
+    -fx-cursor: hand;
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FAFAFA;
+
+    -fx-alignment: center;
+}
+
+.button:hover {
+    -fx-background-color: #c4dff2;
+    -fx-text-fill: #131313;
+}
+
+.button:pressed {
+    -fx-background-color: #9c9c9c;
+}
+
+.button:disabled {
+    -fx-background-color: #262626;
+    -fx-text-fill: #757575;
+}
