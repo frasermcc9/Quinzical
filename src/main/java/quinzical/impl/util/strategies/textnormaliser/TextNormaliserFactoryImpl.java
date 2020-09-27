@@ -1,7 +1,7 @@
 package quinzical.impl.util.strategies.textnormaliser;
 
-import quinzical.interfaces.strategies.textnormaliser.TextNormaliserStrategy;
 import quinzical.interfaces.strategies.textnormaliser.TextNormaliserFactory;
+import quinzical.interfaces.strategies.textnormaliser.TextNormaliserStrategy;
 
 import java.text.Normalizer;
 
