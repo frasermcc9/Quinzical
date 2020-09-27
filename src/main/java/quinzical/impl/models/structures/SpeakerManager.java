@@ -2,6 +2,7 @@ package quinzical.impl.models.structures;
 
 import com.google.inject.Singleton;
 import quinzical.interfaces.models.structures.Speaker;
+import quinzical.interfaces.models.structures.SpeakerMutator;
 
 import java.io.IOException;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
  * A manager for the speaking functionality of the questions
  */
 @Singleton
-public class SpeakerManager implements Speaker {
+public class SpeakerManager implements SpeakerMutator, Speaker {
 
     /**
      * represents the currently active speaker
@@ -65,6 +66,7 @@ public class SpeakerManager implements Speaker {
     }
 
 
+    @Override
     public void setPitch(int pitch) {
         if (pitch < 0 || pitch > 99) {
             throw new IllegalArgumentException("The pitch must be be between 0 and 99");
@@ -72,6 +74,7 @@ public class SpeakerManager implements Speaker {
         this.pitch = pitch;
     }
 
+    @Override
     public void setAmplitude(int amplitude) {
         if (amplitude < 0 || amplitude > 200) {
             throw new IllegalArgumentException("The amplitude must be be between 0 and 200");
@@ -82,6 +85,7 @@ public class SpeakerManager implements Speaker {
     /**
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
+    @Override
     public void setSpeed(int speed) {
         if (speed < 1) {
             throw new IllegalArgumentException("The speed must be above 0");
@@ -89,6 +93,7 @@ public class SpeakerManager implements Speaker {
         this.speed = speed;
     }
 
+    @Override
     public void setGap(int gap) {
         if (gap < 0) {
             throw new IllegalArgumentException("The gap between words must be positive number");
