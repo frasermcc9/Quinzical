@@ -59,10 +59,9 @@ public class GameQuestionController {
     private Button btnPass;
 
     private List<TextArea> textAreas;
-    private GameQuestion gq;
 
     public String normaliseText(String text) {
-        return Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("\\p{M}", "").trim().toLowerCase();
+        return Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("\\p{M}", "").trim().toLowerCase().replaceFirst("^the", "").trim();
     }
 
     @FXML
@@ -109,10 +108,10 @@ public class GameQuestionController {
 
     @FXML
     void onSubmitClicked() {
-        List<Solution> solutions = gameModel.getActiveQuestion().getSolutionsCopy();
-        List<Boolean> corrects = new ArrayList<>();
+        GameQuestion question = gameModel.getActiveQuestion();
 
-        gq = gameModel.getActiveQuestion();
+        List<Solution> solutions = question.getSolutionsCopy();
+        List<Boolean> corrects = new ArrayList<>();
 
         for (TextArea textArea : textAreas) {
             String submission = normaliseText(textArea.getText());
@@ -145,26 +144,12 @@ public class GameQuestionController {
             }
         }
 
-        gameModel.answerActive();
+        gameModel.answerActive(corrects.stream().allMatch(e -> e));
 
         btnSubmit.setText("Categories");
         btnSubmit.setOnAction(this::handleReturnToCategories);
-        btnPass.setText("Questions");
-        btnPass.setOnAction(this::handleNextQuestion);
-
-
-        if (corrects.stream().allMatch(e -> e)) {
-            handleCorrect();
-        } else {
-            handleIncorrect();
-        }
-    }
-
-    private void handleCorrect() {
-
-    }
-
-    private void handleIncorrect() {
+        btnPass.setText("Next Question");
+        btnPass.setOnAction(e -> handleNextQuestion(question));
 
     }
 
@@ -173,17 +158,24 @@ public class GameQuestionController {
         btnPass.setOnAction(_e -> onSubmitClicked());
         btnPass.setText("Pass");
         btnSubmit.setText("Submit");
+
         sceneHandler.setActiveScene(GameScene.GAME);
 
     }
 
-    private void handleNextQuestion(ActionEvent e) {
+    private void handleNextQuestion(GameQuestion question) {
         btnSubmit.setOnAction(_e -> onSubmitClicked());
         btnPass.setOnAction(_e -> onSubmitClicked());
         btnPass.setText("Pass");
         btnSubmit.setText("Submit");
 
-        gameModel.activateQuestion(gq);
+        GameQuestion next = gameModel.getNextActiveQuestion(question);
+        if (next == null) {
+            sceneHandler.setActiveScene(GameScene.GAME);
+        } else {
+            gameModel.activateQuestion(next);
+        }
+
     }
 
 
