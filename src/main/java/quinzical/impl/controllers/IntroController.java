@@ -47,7 +47,7 @@ public class IntroController extends PrimarySceneController {
 
     @FXML
     void btnOptionsPress() {
-        //not implemented
+        sceneHandler.setActiveScene(GameScene.OPTIONS);
     }
 
     /**
