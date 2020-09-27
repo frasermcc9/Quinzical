@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
+import quinzical.interfaces.events.ValueChangeObserver;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
@@ -20,12 +21,26 @@ public class GameModelImpl implements GameModel {
 
     private final List<ActiveQuestionObserver> activeObservers = new ArrayList<>();
 
+    private final List<ValueChangeObserver> valueChangeObservers = new ArrayList<>();
+
     @Inject
     private QuestionGeneratorStrategyFactory questionGeneratorStrategyFactory;
 
     private Map<String, List<GameQuestion>> boardQuestions;
 
     private GameQuestion activeQuestion = null;
+
+    private int value = 0;
+
+    @Override
+    public int getValue() {
+        return value;
+    }
+    
+    public void increaseValueBy(int number) {
+        this.value += number;
+        fireValueChange();
+    }
 
     /**
      * Returns map containing the questions for the current game.
@@ -45,6 +60,80 @@ public class GameModelImpl implements GameModel {
     }
 
     /**
+     * Give a game question, returns the next in the category, or null if it is the final question
+     *
+     * @param question the current game question
+     * @return the next game question in category, or null.
+     */
+    @Override
+    public GameQuestion getNextActiveQuestion(GameQuestion question) {
+        String category = question.getCategory();
+        int index = this.boardQuestions.get(category).indexOf(question);
+        if (index == 4) {
+            return null;
+        } else {
+            return this.boardQuestions.get(category).get(index + 1);
+        }
+
+    }
+
+    /**
+     * Gets the currently active question
+     *
+     * @return current active question, or null if there isn't one.
+     */
+    @Override
+    public GameQuestion getActiveQuestion() {
+        return this.activeQuestion;
+    }
+
+    /**
+     * Binds a function to the question update event. This event is fired when the question board is updated.
+     *
+     * @param fn the function to call when the event is fired.
+     */
+    @Override
+    public void onQuestionsUpdate(QuestionObserver fn) {
+        questionObservers.add(fn);
+    }
+
+    /**
+     * Binds a function to the event that is fired when there is a new active question.
+     *
+     * @param fn the function to call when the event is fired.
+     */
+    @Override
+    public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
+        activeObservers.add(fn);
+    }
+
+    /**
+     * Binds a function to the event that is fired when there is a new active question.
+     *
+     * @param fn the function to call when the event is fired.
+     */
+    @Override
+    public void onValueChange(ValueChangeObserver fn) {
+        valueChangeObservers.add(fn);
+    }
+
+    /**
+     * Fire the questions update event.
+     */
+    @Override
+    public void fireQuestionsUpdate() {
+        questionObservers.forEach(QuestionObserver::updateQuestionDisplay);
+    }
+
+    /**
+     * Fire the questions update event.
+     */
+    @Override
+    public void fireValueChange() {
+        valueChangeObservers.forEach(ValueChangeObserver::updateValue);
+    }
+
+    /**
      * Sets the active question in the game.
      */
     @Override
@@ -53,46 +142,29 @@ public class GameModelImpl implements GameModel {
         activeObservers.forEach(o -> o.fireActiveQuestion(question));
     }
 
+    /**
+     * Answers whatever the active question is.
+     * <p>
+     * Removes the active question, sets it as answered and no longer answerable, and sets the next question in the
+     * category as answerable.
+     */
     @Override
-    public GameQuestion getActiveQuestion() {
-        return this.activeQuestion;
-    }
-
-    @Override
-    public void onQuestionsUpdate(QuestionObserver fn) {
-        questionObservers.add(fn);
-    }
-
-    @Override
-    public void fireQuestionsUpdate() {
-        questionObservers.forEach(QuestionObserver::updateQuestionDisplay);
-    }
-
-    @Override
-    public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
-        activeObservers.add(fn);
-    }
-
-    @Override
-    public void answerActive() {
+    public void answerActive(boolean correct) {
         GameQuestion question = this.activeQuestion;
-        this.activeQuestion.answer();
+        this.activeQuestion.answer(correct);
         this.activeQuestion = null;
 
-        boolean marked;
-        for (List<GameQuestion> entry : this.boardQuestions.values()) {
-            marked = false;
-            for (GameQuestion q : entry) {
-                if (marked) {
-                    q.setAnswerable(true);
-                    marked = false;
-                }
-                if (q.equals(question)) {
-                    marked = true;
-                }
-            }
+        GameQuestion next = getNextActiveQuestion(question);
+        if (next != null) {
+            next.setAnswerable(true);
         }
+
+        if (correct) {
+            increaseValueBy(question.getValue());
+        }
+
         fireQuestionsUpdate();
+
     }
 
 
