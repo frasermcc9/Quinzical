@@ -1,5 +1,5 @@
 package quinzical.interfaces.strategies.textnormaliser;
 
-public interface TextNormalizerFactory {
+public interface TextNormaliserFactory {
     TextNormaliserStrategy getTextNormalizer();
 }
