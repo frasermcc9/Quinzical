@@ -132,7 +132,7 @@ public class GameQuestionController {
         List<Solution> solutions = question.getSolutionsCopy();
 
         List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier().verifySolutions(solutions, textAreas);
-
+        
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
 
         btnSubmit.setText("Categories");

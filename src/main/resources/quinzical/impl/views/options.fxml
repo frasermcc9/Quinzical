@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.OptionsController">
+    <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
+        <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../images/landscapes/boulders.jpg" />
+        </ImageView>
+        <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../images/overlays/options.png" />
+        </ImageView>
+        <Button layoutX="509.0" layoutY="636.0" mnemonicParsing="false" onAction="#btnDonePress" opacity="0.9" prefHeight="56.0" prefWidth="251.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Done">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Label layoutX="457.0" layoutY="312.0" stylesheets="@../../../css/options.css" text="Speed">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+        <Label layoutX="598.0" layoutY="139.0" stylesheets="@../../../css/options.css" text="Theme" />
+        <ComboBox fx:id="comboTheme" layoutX="529.0" layoutY="179.0" onAction="#onThemeChosen" prefHeight="42.0" prefWidth="229.0" stylesheets="@../../../css/options.css">
+            <styleClass>
+                <String fx:value="combo-box" />
+            <String fx:value="combo-box-popup" />
+         </styleClass>
+      </ComboBox>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="706.0" layoutY="563.0" onMouseClicked="#onSampleClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/play.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Slider fx:id="sliderSpeed" layoutX="484.0" layoutY="360.0" majorTickUnit="50.0" max="300.0" min="50.0" minorTickCount="0" orientation="VERTICAL" stylesheets="@../../../css/options.css" value="175.0" />
+      <Slider fx:id="sliderGap" layoutX="584.0" layoutY="360.0" max="99.0" minorTickCount="1" orientation="VERTICAL" stylesheets="@../../../css/options.css" />
+      <Slider fx:id="sliderAmp" layoutX="684.0" layoutY="360.0" majorTickUnit="50.0" max="200.0" minorTickCount="1" orientation="VERTICAL" stylesheets="@../../../css/options.css" value="100.0" />
+      <Slider fx:id="sliderPitch" layoutX="784.0" layoutY="360.0" max="99.0" minorTickCount="1" orientation="VERTICAL" stylesheets="@../../../css/options.css" value="50.0" />
+      <Label layoutX="515.0" layoutY="573.0" prefHeight="40.0" prefWidth="177.0" stylesheets="@../../../css/options.css" text="Sample Voice:" />
+      <Label layoutX="569.0" layoutY="312.0" stylesheets="@../../../css/options.css" text="Gap">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="635.0" layoutY="312.0" stylesheets="@../../../css/options.css" text="Amplitude">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="764.0" layoutY="312.0" stylesheets="@../../../css/options.css" text="Pitch">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="456.0" layoutY="514.0" mnemonicParsing="false" onAction="#speedDefault" styleClass="transparent" text="Default">
+         <stylesheets>
+            <URL value="@../../../css/intro.css" />
+            <URL value="@../../../css/options.css" />
+         </stylesheets>
+      </Button>
+      <Button layoutX="556.0" layoutY="514.0" mnemonicParsing="false" onAction="#gapDefault" styleClass="transparent" text="Default">
+         <stylesheets>
+            <URL value="@../../../css/intro.css" />
+            <URL value="@../../../css/options.css" />
+         </stylesheets>
+      </Button>
+      <Button layoutX="656.0" layoutY="514.0" mnemonicParsing="false" onAction="#ampDefault" styleClass="transparent" text="Default">
+         <stylesheets>
+            <URL value="@../../../css/intro.css" />
+            <URL value="@../../../css/options.css" />
+         </stylesheets>
+      </Button>
+      <Button layoutX="756.0" layoutY="514.0" mnemonicParsing="false" onAction="#pitchDefault" styleClass="transparent" text="Default">
+         <stylesheets>
+            <URL value="@../../../css/intro.css" />
+            <URL value="@../../../css/options.css" />
+         </stylesheets>
+      </Button>
+      <Label layoutX="556.0" layoutY="264.0" stylesheets="@../../../css/options.css" text="Voice Options" />
+      <Separator layoutX="444.0" layoutY="241.0" prefHeight="15.0" prefWidth="376.0" />
+        <cursor>
+            <Cursor fx:constant="DEFAULT" />
+        </cursor>
+        <rotationAxis>
+            <Point3D />
+        </rotationAxis>
+    </AnchorPane>
+</Scene>

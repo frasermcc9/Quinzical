@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.constants.Theme;
 import quinzical.interfaces.events.BackgroundObserver;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
@@ -18,11 +19,11 @@ import java.util.List;
  */
 @Singleton
 public class SceneHandlerImpl implements SceneHandler {
-    
+
     private final Stage stage;
-    
+
     private final List<BackgroundObserver> backgroundObservers = new ArrayList<>();
-    
+
     @Inject
     SceneRegistry sceneRegistry;
 

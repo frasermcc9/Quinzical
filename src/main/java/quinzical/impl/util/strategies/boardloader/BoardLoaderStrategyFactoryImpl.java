@@ -1,7 +1,6 @@
 package quinzical.impl.util.strategies.boardloader;
 
 import com.google.inject.Inject;
-
 import quinzical.interfaces.factories.BoardComponentFactory;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategy;

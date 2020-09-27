@@ -19,6 +19,7 @@ import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
 import quinzical.interfaces.models.structures.Speaker;
+import quinzical.interfaces.models.structures.SpeakerMutator;
 import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
@@ -53,8 +54,10 @@ public class MainModule extends AbstractModule {
 
         if (System.getProperty("os.name").startsWith("Windows")) {
             bind(Speaker.class).to(WindowsSpeakerManager.class);
+            bind(SpeakerMutator.class).to(WindowsSpeakerManager.class);
         } else {
             bind(Speaker.class).to(SpeakerManager.class);
+            bind(SpeakerMutator.class).to(SpeakerManager.class);
         }
 
 
