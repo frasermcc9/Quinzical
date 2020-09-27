@@ -8,6 +8,7 @@
     -fx-font-weight: bold;
     -fx-text-fill: #FAFAFA;
     
+    -fx-alignment: center;
 }
 
 .button:hover {
@@ -19,12 +20,34 @@
     -fx-background-color: #9c9c9c;
 }
 
-.button:disabled{
+.button:disabled {
     -fx-background-color: #262626;
     -fx-text-fill: #757575;
 }
 
-.transparent{
+.transparent {
     -fx-opacity: 0.8;
 }
 
+
+.rightButton:disabled {
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-color: #1b3319;
+    -fx-text-fill: #c0d4be;
+    
+    -fx-alignment: center;
+}
+
+.wrongButton:disabled {
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-color: #330e0e;
+    -fx-text-fill: #d4bebe;
+
+    -fx-alignment: center;
+}
