@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 
-    private QuestionCollection questionCollection;
+    private final QuestionCollection questionCollection;
 
     public PracticeQuestionGeneratorStrategy(QuestionCollection questionCollection) {
         this.questionCollection = questionCollection;
