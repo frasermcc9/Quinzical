@@ -1,2 +1,5 @@
-package quinzical.interfaces.events;public interface ValueChangeObserver {
+package quinzical.interfaces.events;
+
+public interface ValueChangeObserver {
+    void updateValue();
 }
