@@ -73,6 +73,11 @@ public class GameController extends PrimarySceneController {
         // Listen for theme changes.
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
         gameModel.onQuestionsUpdate(this::refreshBoard);
+        gameModel.onValueChange(this::refreshValue);
+    }
+
+    private void refreshValue() {
+        labelEarningsVal.setText("$" + gameModel.getValue());
     }
 
     private void refreshBoard() {
@@ -87,11 +92,15 @@ public class GameController extends PrimarySceneController {
         for (int i = 0; i < buttons.size(); i++) {
             Button btn = buttons.get(i);
 
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("button");
+            btn.getStyleClass().add("transparent");
+            
             String category = keys.get(i);
-            int answered = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
+            int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
                 Integer::sum);
 
-            btn.setText(category + " - " + answered + "/5");
+            btn.setText(category + " - " + answeredCount + "/5");
             btn.setDisable(false);
             btn.setOnAction((event) -> loadQuestions(model.get(category)));
         }
@@ -106,6 +115,18 @@ public class GameController extends PrimarySceneController {
         for (int i = 0; i < buttons.size(); i++) {
             Button btn = buttons.get(i);
             GameQuestion q = questions.get(i);
+
+            if (q.isAnswered()) {
+                if (q.isCorrect()) {
+                    btn.getStyleClass().clear();
+                    btn.getStyleClass().add("rightButton");
+                    btn.getStyleClass().add("transparent");
+                } else {
+                    btn.getStyleClass().clear();
+                    btn.getStyleClass().add("wrongButton");
+                    btn.getStyleClass().add("transparent");
+                }
+            }
 
             btn.setText(q.getValue() + "");
             btn.setDisable(!q.isAnswerable());

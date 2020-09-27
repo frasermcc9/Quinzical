@@ -12,6 +12,7 @@ public class GameQuestion extends Question {
     private transient boolean answered = false;
     private transient boolean answerable = false;
     private transient int value = 0;
+    private transient boolean correct = false;
 
     /**
      * Game questions are constructed by passing the normal question into the constructor.
@@ -22,9 +23,14 @@ public class GameQuestion extends Question {
         super(question);
     }
 
-    public void answer() {
+    public void answer(boolean correct) {
         this.answerable = false;
         this.answered = true;
+        this.correct = correct;
+    }
+    
+    public boolean isCorrect(){
+        return this.correct;
     }
 
     public int getValue() {

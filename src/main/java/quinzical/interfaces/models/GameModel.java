@@ -3,24 +3,39 @@ package quinzical.interfaces.models;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
+import quinzical.interfaces.events.ValueChangeObserver;
 
 import java.util.List;
 import java.util.Map;
 
 public interface GameModel {
+
     Map<String, List<GameQuestion>> getBoardQuestions();
 
     void generateNewGameQuestionSet();
 
-    void activateQuestion(GameQuestion question);
-
     GameQuestion getActiveQuestion();
 
-    void onQuestionsUpdate(QuestionObserver fn);
+    GameQuestion getNextActiveQuestion(GameQuestion question);
+
+    
+    int getValue();
+
+
+    void fireValueChange();
 
     void fireQuestionsUpdate();
 
+    void answerActive(boolean correct);
+
+    void activateQuestion(GameQuestion question);
+
+
     void onActiveQuestionUpdate(ActiveQuestionObserver fn);
 
-    void answerActive();
+    void onQuestionsUpdate(QuestionObserver fn);
+
+    void onValueChange(ValueChangeObserver fn);
+
+
 }

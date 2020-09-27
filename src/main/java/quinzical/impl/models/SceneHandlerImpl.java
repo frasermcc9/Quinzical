@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
-import quinzical.interfaces.events.ChangeableBackground;
+import quinzical.interfaces.events.BackgroundObserver;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
 
@@ -21,7 +21,7 @@ public class SceneHandlerImpl implements SceneHandler {
     
     private final Stage stage;
     
-    private final List<ChangeableBackground> changeableBackgrounds = new ArrayList<>();
+    private final List<BackgroundObserver> backgroundObservers = new ArrayList<>();
     
     @Inject
     SceneRegistry sceneRegistry;
@@ -32,13 +32,13 @@ public class SceneHandlerImpl implements SceneHandler {
     }
 
     @Override
-    public void onBackgroundChange(ChangeableBackground fn) {
-        changeableBackgrounds.add(fn);
+    public void onBackgroundChange(BackgroundObserver fn) {
+        backgroundObservers.add(fn);
     }
 
     @Override
     public void fireBackgroundChange(Image img) {
-        changeableBackgrounds.forEach(el -> el.updateBackground(img));
+        backgroundObservers.forEach(el -> el.updateBackground(img));
     }
 
     /**
