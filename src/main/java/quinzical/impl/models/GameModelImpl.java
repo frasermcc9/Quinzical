@@ -3,18 +3,23 @@ package quinzical.impl.models;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import quinzical.impl.models.structures.GameQuestion;
+import quinzical.impl.models.structures.SaveData;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
 import quinzical.interfaces.models.GameModel;
+import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Singleton
-public class GameModelImpl implements GameModel {
+public class GameModelImpl implements GameModel, GameModelSaver {
 
 
     private final List<QuestionObserver> questionObservers = new ArrayList<>();
@@ -62,6 +67,27 @@ public class GameModelImpl implements GameModel {
     public void generateNewGameQuestionSet() {
         this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStratgey().generateQuestions();
         fireQuestionsUpdate();
+    }
+
+    @Override
+    public void loadSaveData(SaveData saveData) {
+        this.boardQuestions = saveData.getQuestionData();
+        this.value = saveData.getValue();
+
+        fireQuestionsUpdate();
+        fireValueChange();
+    }
+
+    @Override
+    public void saveQuestionsToDisk() throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+        SaveData sd = new SaveData().setQuestionData(this.boardQuestions).setValue(this.value);
+        out.writeObject(sd);
+
+        out.close();
+        fileOut.close();
     }
 
     /**

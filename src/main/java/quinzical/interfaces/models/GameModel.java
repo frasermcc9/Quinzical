@@ -1,6 +1,7 @@
 package quinzical.interfaces.models;
 
 import quinzical.impl.models.structures.GameQuestion;
+import quinzical.impl.models.structures.SaveData;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
@@ -17,6 +18,8 @@ public interface GameModel {
     void generateNewGameQuestionSet();
 
     GameQuestion getActiveQuestion();
+
+    void loadSaveData(SaveData saveData);
 
     GameQuestion getNextActiveQuestion(GameQuestion question);
 

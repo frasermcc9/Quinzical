@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
 import quinzical.impl.util.bindings.MainModule;
+import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
 
@@ -42,7 +43,7 @@ public class Entry extends Application {
         sceneRegistry.addScene(GameScene.GAME, loadFXML("game"));
         sceneRegistry.addScene(GameScene.GAME_QUESTION, loadFXML("gamequestion"));
         sceneRegistry.addScene(GameScene.OPTIONS, loadFXML("options"));
-        
+
 
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
@@ -54,6 +55,15 @@ public class Entry extends Application {
         stage.setTitle("Quinzical");
         stage.setResizable(false);
         stage.show();
+
+        stage.setOnCloseRequest(e -> {
+            GameModelSaver model = injector.getInstance(GameModelSaver.class);
+            try {
+                model.saveQuestionsToDisk();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
 }
