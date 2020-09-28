@@ -9,6 +9,7 @@ import quinzical.interfaces.events.QuestionObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.GameModelSaver;
+import quinzical.interfaces.models.structures.UserScore;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
 import java.io.FileOutputStream;
@@ -29,22 +30,27 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     private final List<ValueChangeObserver> valueChangeObservers = new ArrayList<>();
 
     @Inject
+    private UserScore userScore;
+
+    @Inject
     private QuestionGeneratorStrategyFactory questionGeneratorStrategyFactory;
 
     private Map<String, List<GameQuestion>> boardQuestions;
 
     private GameQuestion activeQuestion = null;
 
-    private int value = 0;
-
     @Override
     public int getValue() {
-        return value;
+        return userScore.getValue();
     }
 
+    /**
+     * Increases the value in the model,
+     *
+     * @param number
+     */
     public void increaseValueBy(int number) {
-        this.value += number;
-        fireValueChange();
+        this.userScore.setValue(this.userScore.getValue() + number);
     }
 
     @Override
@@ -72,10 +78,9 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     @Override
     public void loadSaveData(SaveData saveData) {
         this.boardQuestions = saveData.getQuestionData();
-        this.value = saveData.getValue();
+        this.userScore.setValue(saveData.getValue());
 
         fireQuestionsUpdate();
-        fireValueChange();
     }
 
     @Override
@@ -83,7 +88,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
         FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
-        SaveData sd = new SaveData().setQuestionData(this.boardQuestions).setValue(this.value);
+        SaveData sd = new SaveData().setQuestionData(this.boardQuestions).setValue(this.userScore.getValue());
         out.writeObject(sd);
 
         out.close();
@@ -195,8 +200,5 @@ public class GameModelImpl implements GameModel, GameModelSaver {
         }
 
         fireQuestionsUpdate();
-
     }
-
-
 }

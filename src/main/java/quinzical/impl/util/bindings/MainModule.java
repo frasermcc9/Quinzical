@@ -7,6 +7,7 @@ import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.SceneHandlerImpl;
 import quinzical.impl.models.SceneRegistryImpl;
 import quinzical.impl.models.structures.SpeakerManager;
+import quinzical.impl.models.structures.UserScoreImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
 import quinzical.impl.util.factories.BoardComponentFactoryImpl;
 import quinzical.impl.util.strategies.boardloader.BoardLoaderStrategyFactoryImpl;
@@ -18,6 +19,7 @@ import quinzical.interfaces.factories.BoardComponentFactory;
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.models.structures.SpeakerMutator;
+import quinzical.interfaces.models.structures.UserScore;
 import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
@@ -53,6 +55,8 @@ public class MainModule extends AbstractModule {
         bind(TextNormaliserFactory.class).to(TextNormaliserStrategyFactory.class);
         bind(QuestionVerifierFactory.class).to(QuestionVerifierFactoryImpl.class);
         bind(ObjectReaderStrategyFactory.class).to(ObjectReaderStrategyFactoryImpl.class);
+        
+        bind(UserScore.class).to(UserScoreImpl.class);
 
         if (System.getProperty("os.name").startsWith("Windows")) {
             bind(Speaker.class).to(WindowsSpeakerManager.class);
