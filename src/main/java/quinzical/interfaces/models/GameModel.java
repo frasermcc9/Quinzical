@@ -3,7 +3,7 @@ package quinzical.interfaces.models;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.models.structures.SaveData;
 import quinzical.interfaces.events.ActiveQuestionObserver;
-import quinzical.interfaces.events.QuestionObserver;
+import quinzical.interfaces.events.QuestionBoardObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public interface GameModel {
 
     void fireValueChange();
 
-    void fireQuestionsUpdate();
+    void fireQuestionBoardUpdate();
 
     void answerActive(boolean correct);
 
@@ -38,7 +38,7 @@ public interface GameModel {
 
     void onActiveQuestionUpdate(ActiveQuestionObserver fn);
 
-    void onQuestionsUpdate(QuestionObserver fn);
+    void onQuestionBoardUpdate(QuestionBoardObserver fn);
 
     void onValueChange(ValueChangeObserver fn);
 

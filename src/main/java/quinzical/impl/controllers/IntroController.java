@@ -98,7 +98,7 @@ public class IntroController extends PrimarySceneController {
      */
     private void listen() {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        gameModel.onQuestionsUpdate(() -> {
+        gameModel.onQuestionBoardUpdate(() -> {
             if (gameModel.getBoardQuestions() != null) {
                 btnLoadGame.setDisable(false);
             }
