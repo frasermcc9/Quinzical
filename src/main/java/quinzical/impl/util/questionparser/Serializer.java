@@ -17,7 +17,7 @@ public class Serializer {
         File file;
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
@@ -38,17 +38,18 @@ public class Serializer {
         for (String line : lines) {
             line = line.trim();
 
-            if (!line.matches("^.*\\(.*$")) {
+            if (!line.matches("^.*\\|.*\\|.*$")) {
                 activeCategory = line;
                 M.put(activeCategory, new ArrayList<>());
                 continue;
             }
-            String[] parts = line.split("[()]");
-            String hint = parts[0].trim().replaceAll("[,.]$", "");
+            String[] parts = line.split("\\|");
+            String hint = parts[0].trim();
             String prompt = parts[1].trim();
-            String solutions = parts[2].trim().replaceAll("[,.]$", "");
 
             Question q = new Question(activeCategory, hint, prompt);
+
+            String solutions = parts[2].trim();
 
             String[] slnList = solutions.split(",");
             for (String sln : slnList) {
@@ -61,7 +62,7 @@ public class Serializer {
         }
 
         try {
-            FileOutputStream fileOut = new FileOutputStream(file.getParent() + "/question.qdb");
+            FileOutputStream fileOut = new FileOutputStream(file.getParent() + "/question2.qdb");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(M);
             out.close();

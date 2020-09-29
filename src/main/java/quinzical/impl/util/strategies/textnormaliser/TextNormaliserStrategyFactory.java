@@ -5,7 +5,7 @@ import quinzical.interfaces.strategies.textnormaliser.TextNormaliserStrategy;
 
 import java.text.Normalizer;
 
-public class TextNormaliserFactoryImpl implements TextNormaliserFactory {
+public class TextNormaliserStrategyFactory implements TextNormaliserFactory {
     @Override
     public TextNormaliserStrategy getTextNormalizer() {
         return new DefaultTextNormaliser();

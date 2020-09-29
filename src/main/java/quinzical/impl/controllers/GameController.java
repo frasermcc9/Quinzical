@@ -72,7 +72,7 @@ public class GameController extends PrimarySceneController {
     private void listen() {
         // Listen for theme changes.
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        gameModel.onQuestionsUpdate(this::refreshBoard);
+        gameModel.onQuestionBoardUpdate(this::refreshBoard);
         gameModel.onValueChange(this::refreshValue);
     }
 
