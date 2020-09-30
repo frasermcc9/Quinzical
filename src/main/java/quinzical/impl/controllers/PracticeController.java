@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
 import quinzical.impl.models.QuestionCollectionImpl;
@@ -12,10 +13,11 @@ import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 
+import javax.swing.*;
 import java.util.*;
 
 public class PracticeController {
-
+    
     @Inject
     private SceneHandler sceneHandler;
 
@@ -24,6 +26,11 @@ public class PracticeController {
 
     @FXML
     private ComboBox<String> comboCategories;
+
+    @FXML
+    private ImageView imgBackground;
+    
+    
 
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
@@ -43,8 +50,13 @@ public class PracticeController {
     
     @FXML
     void initialize(){
+        listen();
         List<String> keys = new ArrayList<>(gameModel.getQuestionsForPracticeMode().keySet());
         comboCategories.getItems().addAll(keys);
+    }
+
+    private void listen() {
+        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
     
 }

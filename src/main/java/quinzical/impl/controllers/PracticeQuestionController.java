@@ -3,6 +3,7 @@ package quinzical.impl.controllers;
 import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
@@ -15,6 +16,9 @@ public class PracticeQuestionController {
 
     @Inject
     private GameModel gameModel;
+
+    @FXML
+    private ImageView imgBackground;
     
     @FXML
     void onSubmitClicked(ActionEvent actionEvent) {
@@ -32,4 +36,14 @@ public class PracticeQuestionController {
     void onBackClicked(ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
+
+    private void listen() {
+        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
+    }
+    
+    @FXML
+    void initialize() {
+        listen();
+    }
+    
 }
