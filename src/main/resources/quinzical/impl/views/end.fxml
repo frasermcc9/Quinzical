@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.EndController">
+    <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
+        <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../images/landscapes/boulders.jpg" />
+        </ImageView>
+        <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../images/overlays/end.png" />
+        </ImageView>
+        <Button layoutX="348.0" layoutY="495.0" mnemonicParsing="false" onAction="#btnDonePress" opacity="0.9" prefHeight="128.0" prefWidth="574.0" stylesheets="@../../../css/end.css" text="Main Menu">
+            <font>
+                <Font name="System Bold" size="35.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+      <Label layoutX="534.0" layoutY="263.0" text="You Made:" textFill="#c9c9c9">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMoney" alignment="CENTER" layoutX="483.0" layoutY="327.0" prefHeight="104.0" prefWidth="304.0" text="\$00000" textAlignment="CENTER" textFill="#c9c9c9">
+         <font>
+            <Font name="System Bold" size="71.0" />
+         </font>
+      </Label>
+        <cursor>
+            <Cursor fx:constant="DEFAULT" />
+        </cursor>
+        <rotationAxis>
+            <Point3D />
+        </rotationAxis>
+    </AnchorPane>
+</Scene>
