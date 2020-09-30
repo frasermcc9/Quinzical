@@ -131,6 +131,8 @@ public class GameQuestionController {
 
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
 
+
+
         btnSubmit.setText("Categories");
         btnSubmit.setOnAction(this::handleReturnToCategories);
         btnPass.setText("Next Question");
@@ -190,11 +192,23 @@ public class GameQuestionController {
 
     private void handleReturnToCategories(ActionEvent e) {
         refreshSubmissionButtonsState();
+        
+        if (gameModel.numberOfQuestionsRemaining() == 0) {
+            handleCompletion();
+            return;
+        }
+        
         sceneHandler.setActiveScene(GameScene.GAME);
     }
 
     private void handleNextQuestion(GameQuestion question) {
         refreshSubmissionButtonsState();
+        
+        if (gameModel.numberOfQuestionsRemaining() == 0) {
+            handleCompletion();
+            return;
+        }
+        
         GameQuestion next = gameModel.getNextActiveQuestion(question);
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
@@ -226,6 +240,10 @@ public class GameQuestionController {
             }
 
         }
+    }
+
+    private void handleCompletion() {
+        sceneHandler.setActiveScene(GameScene.END);
     }
 
 }
