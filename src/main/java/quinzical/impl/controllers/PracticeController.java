@@ -27,6 +27,9 @@ public class PracticeController {
 
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
+        if (comboCategories.getValue() != null) {
+            sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
+        }
     }
 
     @FXML

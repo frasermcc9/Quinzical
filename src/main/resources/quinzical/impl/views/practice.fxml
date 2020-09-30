@@ -30,7 +30,7 @@
             </cursor>
         </Button>
         <Label layoutX="584.0" layoutY="193.0" stylesheets="@../../../css/options.css" text="Category" />
-        <ComboBox fx:id="comboCategory" layoutX="526.0" layoutY="255.0" onAction="#onCategoryChosen" prefHeight="42.0" prefWidth="229.0" stylesheets="@../../../css/options.css">
+        <ComboBox fx:id="comboCategories" layoutX="526.0" layoutY="255.0" onAction="#onCategoryChosen" prefHeight="42.0" prefWidth="229.0" stylesheets="@../../../css/options.css">
             <styleClass>
                 <String fx:value="combo-box" />
             <String fx:value="combo-box-popup" />
