@@ -11,5 +11,7 @@ public interface SceneHandler {
     void fireBackgroundChange(Image img);
 
     void setActiveScene(GameScene scene);
-    
+
+    void onSceneChange(SceneChangeObserver sceneChangeObserver);
+
 }

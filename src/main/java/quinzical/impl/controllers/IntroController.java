@@ -70,6 +70,11 @@ public class IntroController extends PrimarySceneController {
      */
     @FXML
     void initialize() {
+        handleLoadGameButton();
+        listen();
+    }
+
+    private void handleLoadGameButton() {
         SaveData saveData = null;
         try {
             saveData = objectReader.<SaveData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
@@ -78,26 +83,30 @@ public class IntroController extends PrimarySceneController {
             //dont really care if file isn't found
         }
 
-        if (gameModel.getBoardQuestions() == null && saveData == null) {
-            btnLoadGame.setDisable(true);
-        } else if (saveData != null) {
+        // There is a save file
+        if (saveData != null && saveData.getQuestionData() != null) {
             SaveData finalSaveData = saveData;
             btnLoadGame.setOnAction(e -> {
                 gameModel.loadSaveData(finalSaveData);
-                sceneHandler.setActiveScene(GameScene.GAME);
+                btnLoadGame.setOnAction(action -> sceneHandler.setActiveScene(GameScene.GAME));
+                btnLoadGame.fire();
             });
-        } else {
-            btnLoadGame.setOnAction(e -> sceneHandler.setActiveScene(GameScene.GAME));
         }
-
-        listen();
+        // There is no save
+        else {
+            btnLoadGame.setDisable(true);
+        }
     }
+
 
     /**
      * Listen to events that this scene needs to react to.
      */
     private void listen() {
+        // Listen for theme changes
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
+
+        // If the QuestionBoard updates, then check if its not null. If it's not, then we can enable the load game btn.
         gameModel.onQuestionBoardUpdate(() -> {
             if (gameModel.getBoardQuestions() != null) {
                 btnLoadGame.setDisable(false);

@@ -43,8 +43,8 @@ public class Entry extends Application {
         sceneRegistry.addScene(GameScene.GAME, loadFXML("game"));
         sceneRegistry.addScene(GameScene.GAME_QUESTION, loadFXML("gamequestion"));
         sceneRegistry.addScene(GameScene.OPTIONS, loadFXML("options"));
-
-
+        sceneRegistry.addScene(GameScene.END, loadFXML("end"));
+        
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
 

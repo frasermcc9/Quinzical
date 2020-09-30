@@ -19,6 +19,10 @@ public interface GameModel {
 
     GameQuestion getActiveQuestion();
 
+    int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions);
+
+    int numberOfQuestionsRemaining();
+
     void loadSaveData(SaveData saveData);
 
     GameQuestion getNextActiveQuestion(GameQuestion question);
