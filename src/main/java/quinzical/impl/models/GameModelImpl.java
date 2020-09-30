@@ -97,7 +97,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     public void onValueChange(ValueChangeObserver fn) {
         valueChangeObservers.add(fn);
     }
-
+    
     /**
      * Fire the questions update event.
      */
@@ -235,6 +235,22 @@ public class GameModelImpl implements GameModel, GameModelSaver {
         return boardQuestions;
     }
 
+    /**
+     * @return the number of questions that are unanswered
+     */
+    @Override
+    public int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions) {
+        return boardQuestions.values().stream().reduce(0, (sub, el) -> sub + el.stream().reduce(0,
+            (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum), Integer::sum);
+    }
+
+    /**
+     * @return the number of questions that are unanswered
+     */
+    @Override
+    public int numberOfQuestionsRemaining() {
+        return numberOfQuestionsRemaining(this.boardQuestions);
+    }
 
     /**
      * Loads a game state into the model.
