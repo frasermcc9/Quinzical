@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.constants.Theme;
 import quinzical.interfaces.events.BackgroundObserver;
+import quinzical.interfaces.models.SceneChangeObserver;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.SceneRegistry;
 
@@ -23,6 +23,8 @@ public class SceneHandlerImpl implements SceneHandler {
     private final Stage stage;
 
     private final List<BackgroundObserver> backgroundObservers = new ArrayList<>();
+
+    private final List<SceneChangeObserver> sceneChangeObservers = new ArrayList<>();
 
     @Inject
     SceneRegistry sceneRegistry;
@@ -49,6 +51,11 @@ public class SceneHandlerImpl implements SceneHandler {
     public void setActiveScene(GameScene scene) {
         Scene s = sceneRegistry.getScene(scene);
         stage.setScene(s);
+        sceneChangeObservers.forEach(o -> o.sceneChanged(scene));
     }
 
+    @Override
+    public void onSceneChange(SceneChangeObserver sceneChangeObserver) {
+        sceneChangeObservers.add(sceneChangeObserver);
+    }
 }
