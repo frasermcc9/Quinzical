@@ -83,19 +83,18 @@ public class IntroController extends PrimarySceneController {
             //dont really care if file isn't found
         }
 
-        // There is no save
-        if (gameModel.getBoardQuestions() == null && saveData == null) {
-            btnLoadGame.setDisable(true);
-            return;
-        }
-        // There is no current game, but there is a save file
-        if (saveData != null) {
+        // There is a save file
+        if (saveData != null && saveData.getQuestionData() != null) {
             SaveData finalSaveData = saveData;
             btnLoadGame.setOnAction(e -> {
                 gameModel.loadSaveData(finalSaveData);
                 btnLoadGame.setOnAction(action -> sceneHandler.setActiveScene(GameScene.GAME));
                 btnLoadGame.fire();
             });
+        }
+        // There is no save
+        else {
+            btnLoadGame.setDisable(true);
         }
     }
 
