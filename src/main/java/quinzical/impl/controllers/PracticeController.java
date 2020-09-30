@@ -13,7 +13,6 @@ import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 
-import javax.swing.*;
 import java.util.*;
 
 public class PracticeController {
@@ -30,11 +29,12 @@ public class PracticeController {
     @FXML
     private ImageView imgBackground;
     
-    
-
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
         if (comboCategories.getValue() != null) {
+            List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(comboCategories.getValue());
+            Collections.shuffle(questions);
+            gameModel.activateQuestion(questions.get(0));
             sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
         }
     }
@@ -58,5 +58,6 @@ public class PracticeController {
     private void listen() {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
+
     
 }
