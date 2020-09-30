@@ -116,11 +116,9 @@ public class GameModelImpl implements GameModel, GameModelSaver {
 
     /**
      * Alerts all observers that a new game question has been set as the active question.
-     *
-     * @param question the new active question
      */
-    public void fireActiveQuestionUpdate(GameQuestion question) {
-        activeObservers.forEach(o -> o.fireActiveQuestion(question));
+    public void fireActiveQuestionUpdate() {
+        activeObservers.forEach(ActiveQuestionObserver::fireActiveQuestion);
     }
 
     //#endregion
@@ -183,7 +181,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     @Override
     public void activateQuestion(GameQuestion question) {
         this.activeQuestion = question;
-        fireActiveQuestionUpdate(question);
+        fireActiveQuestionUpdate();
     }
 
     /**
@@ -225,6 +223,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     @Override
     public void generateNewGameQuestionSet() {
         this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStratgey().generateQuestions();
+        this.userScore.setValue(0);
         fireQuestionBoardUpdate();
     }
 
