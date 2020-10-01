@@ -19,7 +19,7 @@
             <Image url="@../../../images/landscapes/boulders.jpg" />
         </ImageView>
         <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../images/overlays/options.png" />
+            <Image url="@../../../images/overlays/practice.png" />
         </ImageView>
         <Button fx:id="btnOK" layoutX="507.0" layoutY="353.0" mnemonicParsing="false" onAction="#btnOKPress" opacity="0.9" prefHeight="56.0" prefWidth="251.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="OK">
             <font>
