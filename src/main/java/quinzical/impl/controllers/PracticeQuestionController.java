@@ -12,16 +12,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import quinzical.Entry;
+import quinzical.impl.constants.Attempts;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
+import quinzical.impl.util.questionparser.Solution;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.Speaker;
+import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class PracticeQuestionController {
 
@@ -35,6 +35,9 @@ public class PracticeQuestionController {
 
     @Inject
     private Speaker speaker;
+    
+    @Inject
+    private QuestionVerifierFactory questionVerifierFactory;
 
     @FXML
     private ImageView imgBackground;
@@ -52,6 +55,9 @@ public class PracticeQuestionController {
     private Button btnSubmit;
     
     @FXML
+    private Button btnPass;
+    
+    @FXML
     private Label lblAttempts;
     
     @FXML
@@ -61,7 +67,38 @@ public class PracticeQuestionController {
     
     @FXML
     void onSubmitClicked(ActionEvent actionEvent) {
+        
+        GameQuestion question = gameModel.getActiveQuestion();
+        List<Solution> solutions = question.getSolutionsCopy();
+
+        List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier().verifySolutions(solutions, textAreas);
+        
+        if (corrects.contains(false)){
+            System.out.println("wrong");
+            if(lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())){
+                System.out.println("Attempt 3");
+                List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion());
+                Collections.shuffle(questions);
+                gameModel.activateQuestion(questions.get(0));
+            }
+        else if(lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())){
+                System.out.println("Attempt 1");
+                lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
+                gameModel.activateQuestion(gameModel.getActiveQuestion());
+            }
+        else {
+                System.out.println("Attempt 2");
+                lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
+                gameModel.activateQuestion(gameModel.getActiveQuestion());
+            }
+            
+        }
+        
+        btnPass.setText("Next Question");
+        //btnPass.setOnAction(e -> handleNextQuestion(question));
     }
+    
+
 
     @FXML
     void onPassClicked(ActionEvent actionEvent) {
@@ -87,8 +124,7 @@ public class PracticeQuestionController {
         
         textAreas = new ArrayList<>();
         panePracticeSolutions.getChildren().clear();
-
-        this.lblAttempts.setText("Attempt 1/3");
+        
         this.lblHint.setText(gameQuestion.getHint());
         this.lblPrompt.setText(gameQuestion.getPrompt() + ":");
 
@@ -130,6 +166,7 @@ public class PracticeQuestionController {
     
     @FXML
     void initialize() {
+        this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
         listen();
     }
     
