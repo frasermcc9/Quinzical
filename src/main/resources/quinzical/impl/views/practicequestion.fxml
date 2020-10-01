@@ -20,9 +20,9 @@
             <Image url="@../../../images/overlays/gameQuestion.png" />
          </image>
       </ImageView>
-        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="264.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
-      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="273.0" layoutY="215.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Button fx:id="btnSubmit" layoutX="531.0" layoutY="605.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
+        <Pane fx:id="panePracticeSolutions" layoutX="346.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="277.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
+      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="273.0" layoutY="192.0" prefHeight="31.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+      <Button fx:id="btnSubmit" layoutX="532.0" layoutY="622.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -38,7 +38,7 @@
             <String fx:value="submit-button" />
          </styleClass>
       </Button>
-      <Button fx:id="btnPass" layoutX="782.0" layoutY="605.0" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="220.0" text="Pass">
+      <Button fx:id="btnPass" layoutX="782.0" layoutY="622.0" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="220.0" text="Pass">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -54,7 +54,7 @@
             <String fx:value="pass-button" />
          </styleClass>
       </Button>
-      <ImageView fitHeight="47.0" fitWidth="37.0" layoutX="622.0" layoutY="534.0" onMouseReleased="#onReplyClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="47.0" fitWidth="37.0" layoutX="624.0" layoutY="560.0" onMouseReleased="#onReplyClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/replay.png" />
          </image>
@@ -62,8 +62,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label layoutX="574.0" layoutY="501.0" styleClass="label-replay" stylesheets="@../../../css/game-question.css" text="Repeat Question" />
-      <Button fx:id="btnBack" layoutX="279.0" layoutY="605.0" mnemonicParsing="false" onAction="#onBackClicked" prefHeight="65.0" prefWidth="220.0" text="Back">
+      <Label layoutX="576.0" layoutY="533.0" styleClass="label-replay" stylesheets="@../../../css/game-question.css" text="Repeat Question" />
+      <Button fx:id="btnBack" layoutX="279.0" layoutY="622.0" mnemonicParsing="false" onAction="#onBackClicked" prefHeight="65.0" prefWidth="220.0" text="Back">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -80,7 +80,7 @@
          </styleClass>
       </Button>
       <Label fx:id="lblHint" alignment="TOP_RIGHT" layoutX="272.0" layoutY="123.0" prefHeight="92.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Label fx:id="lblAttempts" alignment="TOP_RIGHT" layoutX="265.0" layoutY="454.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+      <Label fx:id="lblAttempts" alignment="TOP_RIGHT" layoutX="273.0" layoutY="503.0" prefHeight="46.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
         <cursor>
             <Cursor fx:constant="DEFAULT" />
         </cursor>

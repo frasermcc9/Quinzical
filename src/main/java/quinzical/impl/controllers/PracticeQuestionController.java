@@ -40,7 +40,7 @@ public class PracticeQuestionController {
     private ImageView imgBackground;
 
     @FXML
-    private Pane paneSolutions;
+    private Pane panePracticeSolutions;
     
     @FXML
     private ImageView imgOverlay;
@@ -86,7 +86,7 @@ public class PracticeQuestionController {
 
         
         textAreas = new ArrayList<>();
-        paneSolutions.getChildren().clear();
+        panePracticeSolutions.getChildren().clear();
 
         this.lblAttempts.setText("Attempt 1/3");
         this.lblHint.setText(gameQuestion.getHint());
@@ -101,12 +101,12 @@ public class PracticeQuestionController {
             ta.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/game" +
                 "-question.css")).toExternalForm());
             ta.applyCss();
-            ta.setPrefWidth(paneSolutions.getPrefWidth());
-            ta.setMaxHeight(paneSolutions.getPrefHeight() / slnSize - slnSize);
-            ta.setLayoutY(0 + i * paneSolutions.getPrefHeight() / slnSize + 1);
+            ta.setPrefWidth(panePracticeSolutions.getPrefWidth());
+            ta.setMaxHeight(panePracticeSolutions.getPrefHeight() / slnSize - slnSize);
+            ta.setLayoutY(0 + i * panePracticeSolutions.getPrefHeight() / slnSize + 1);
             ta.setPromptText("Enter your solution here...");
             ta.setOnKeyPressed(this::onEnterPressed);
-            paneSolutions.getChildren().add(ta);
+            panePracticeSolutions.getChildren().add(ta);
             textAreas.add(ta);
         }
         textAreas.get(0).requestFocus();
