@@ -20,8 +20,8 @@
             <Image url="@../../../images/overlays/gameQuestion.png" />
          </image>
       </ImageView>
-        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
-      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="272.0" layoutY="145.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="264.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
+      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="273.0" layoutY="215.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
       <Button fx:id="btnSubmit" layoutX="531.0" layoutY="605.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
          <font>
             <Font name="System Bold" size="26.0" />
@@ -79,6 +79,8 @@
             <String fx:value="pass-button" />
          </styleClass>
       </Button>
+      <Label fx:id="lblHint" alignment="TOP_RIGHT" layoutX="272.0" layoutY="123.0" prefHeight="92.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+      <Label fx:id="lblAttempts" alignment="TOP_RIGHT" layoutX="265.0" layoutY="454.0" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
         <cursor>
             <Cursor fx:constant="DEFAULT" />
         </cursor>

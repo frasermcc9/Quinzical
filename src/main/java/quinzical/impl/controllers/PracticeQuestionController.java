@@ -50,6 +50,12 @@ public class PracticeQuestionController {
 
     @FXML
     private Button btnSubmit;
+    
+    @FXML
+    private Label lblAttempts;
+    
+    @FXML
+    private Label lblHint;
 
     private List<TextArea> textAreas;
     
@@ -63,6 +69,7 @@ public class PracticeQuestionController {
 
     @FXML
     void onReplyClick(MouseEvent mouseEvent) {
+        speaker.speak(gameModel.getActiveQuestion().getHint());
     }
 
     @FXML
@@ -77,9 +84,12 @@ public class PracticeQuestionController {
 
     private void initialiseQuestion(GameQuestion gameQuestion) {
 
+        
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
 
+        this.lblAttempts.setText("Attempt 1/3");
+        this.lblHint.setText(gameQuestion.getHint());
         this.lblPrompt.setText(gameQuestion.getPrompt() + ":");
 
         speaker.speak(gameQuestion.getHint());
