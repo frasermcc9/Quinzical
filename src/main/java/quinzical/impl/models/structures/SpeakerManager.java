@@ -42,7 +42,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     /**
      * Speaks the given text.
      *
-     * @param text
+     * @param text the text to speak
      */
     @Override
     public void speak(final String text) {

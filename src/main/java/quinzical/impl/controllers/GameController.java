@@ -28,7 +28,6 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
-import quinzical.interfaces.strategies.boardloader.BoardLoaderStrategyFactory;
 
 import java.net.URL;
 import java.util.*;
@@ -43,8 +42,7 @@ public class GameController {
     private GameModel gameModel;
     @Inject
     private SceneHandler sceneHandler;
-    @Inject
-    private BoardLoaderStrategyFactory boardLoaderStrategyFactory;
+
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -144,12 +142,11 @@ public class GameController {
                 if (q.isCorrect()) {
                     btn.getStyleClass().clear();
                     btn.getStyleClass().add("rightButton");
-                    btn.getStyleClass().add("transparent");
                 } else {
                     btn.getStyleClass().clear();
                     btn.getStyleClass().add("wrongButton");
-                    btn.getStyleClass().add("transparent");
                 }
+                btn.getStyleClass().add("transparent");
             }
 
             btn.setText(q.getValue() + "");

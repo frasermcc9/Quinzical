@@ -19,9 +19,9 @@ public enum Attempts {
     ATTEMPT_2("Attempt 2/3"), 
     ATTEMPT_3("Attempt 3/3");
     
-    private String message;
+    private final String message;
     
-    private Attempts(String message){
+    Attempts(String message){
         this.message = message;
     }
     

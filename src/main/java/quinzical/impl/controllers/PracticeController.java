@@ -50,10 +50,6 @@ public class PracticeController {
     }
 
     @FXML
-    void onCategoryChosen(ActionEvent actionEvent) {
-    }
-
-    @FXML
     void btnBackPress(ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }

@@ -32,10 +32,10 @@ import java.util.Collection;
 
 public class OptionsController {
 
-    static int DEFAULT_PITCH;
-    static int DEFAULT_SPEED;
-    static int DEFAULT_AMP;
-    static int DEFAULT_GAP;
+    static final int DEFAULT_PITCH;
+    static final int DEFAULT_SPEED;
+    static final int DEFAULT_AMP;
+    static final int DEFAULT_GAP;
 
     static {
         DEFAULT_PITCH = 50;
@@ -113,18 +113,10 @@ public class OptionsController {
         comboTheme.getItems().addAll(list);
         comboTheme.setValue(Theme.MOUNTAINS);
 
-        sliderSpeed.valueProperty().addListener(e -> {
-            adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue());
-        });
-        sliderPitch.valueProperty().addListener(e -> {
-            adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue());
-        });
-        sliderAmp.valueProperty().addListener(e -> {
-            adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue());
-        });
-        sliderGap.valueProperty().addListener(e -> {
-            adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue());
-        });
+        sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
+        sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
+        sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
+        sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
 
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
