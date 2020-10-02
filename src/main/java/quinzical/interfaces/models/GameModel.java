@@ -14,10 +14,8 @@
 
 package quinzical.interfaces.models;
 
-import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.models.structures.SaveData;
-import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionBoardObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
 

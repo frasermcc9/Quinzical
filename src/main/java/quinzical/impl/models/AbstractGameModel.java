@@ -17,7 +17,6 @@ package quinzical.impl.models;
 import com.google.inject.Inject;
 import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
-import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;

@@ -15,7 +15,6 @@
 package quinzical.impl.models.structures;
 
 import com.google.inject.Singleton;
-import quinzical.interfaces.models.structures.Speaker;
 
 @Singleton
 public class WindowsSpeakerManager extends SpeakerManager {
