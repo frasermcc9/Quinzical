@@ -90,6 +90,9 @@ public class PracticeQuestionController {
                 lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
                 gameModel.colourTextAreas(textAreas, corrects);
+                for (int i=0;i<textAreas.size();i++){
+                    textAreas.get(i).setText(Character.toString(gameModel.getActiveQuestion().getSolutions().get(i).getVariants().get(i).charAt(0)));
+                }
             }
             
         }
