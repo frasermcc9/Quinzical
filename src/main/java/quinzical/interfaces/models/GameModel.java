@@ -1,5 +1,6 @@
 package quinzical.interfaces.models;
 
+import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
@@ -40,4 +41,5 @@ public interface GameModel {
     void onValueChange(ValueChangeObserver fn);
 
 
+    void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects);
 }

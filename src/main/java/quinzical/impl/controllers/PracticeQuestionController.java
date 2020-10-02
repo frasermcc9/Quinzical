@@ -66,7 +66,7 @@ public class PracticeQuestionController {
     private List<TextArea> textAreas;
     
     @FXML
-    void onSubmitClicked(ActionEvent actionEvent) {
+    void onSubmitClicked() {
         
         GameQuestion question = gameModel.getActiveQuestion();
         List<Solution> solutions = question.getSolutionsCopy();
@@ -77,31 +77,45 @@ public class PracticeQuestionController {
             System.out.println("wrong");
             if(lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())){
                 System.out.println("Attempt 3");
-                List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion());
-                Collections.shuffle(questions);
-                gameModel.activateQuestion(questions.get(0));
+                
             }
         else if(lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())){
                 System.out.println("Attempt 1");
                 lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
+                gameModel.colourTextAreas(textAreas, corrects);
             }
         else {
                 System.out.println("Attempt 2");
                 lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
+                gameModel.colourTextAreas(textAreas, corrects);
             }
             
         }
         
-        btnPass.setText("Next Question");
+        //btnPass.setText("Next Question");
         //btnPass.setOnAction(e -> handleNextQuestion(question));
     }
+
     
+    
+    private void handleNextQuestion(GameQuestion question) {
+        btnSubmit.setOnAction(_e -> onSubmitClicked());
+        btnPass.setOnAction(_e -> onPassClicked());
+        btnPass.setText("Pass");
+        btnSubmit.setText("Submit");
+
+        List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion().getCategory());
+        Collections.shuffle(questions);
+        gameModel.activateQuestion(questions.get(0));
+
+    }
 
 
     @FXML
-    void onPassClicked(ActionEvent actionEvent) {
+    void onPassClicked() {
+        
     }
 
     @FXML

@@ -2,6 +2,7 @@ package quinzical.impl.models;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionObserver;
@@ -120,6 +121,18 @@ public class GameModelImpl implements GameModel {
     @Override
     public void onValueChange(ValueChangeObserver fn) {
         valueChangeObservers.add(fn);
+    }
+
+    @Override
+    public void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects) {
+        for(int i=0; i<textAreas.size(); i++ ){
+            if(corrects.get(i)) {
+                textAreas.get(i).setStyle("-fx-background-color: #ceffc3; -fx-text-fill: #ceffc3");
+            }
+            else {
+                textAreas.get(i).setStyle("-fx-background-color: #ff858c; -fx-text-fill: #ffc7ca");
+            }
+        }
     }
 
     /**
