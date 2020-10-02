@@ -15,27 +15,29 @@ import quinzical.Entry;
 import quinzical.impl.constants.Attempts;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
+import quinzical.impl.util.questionparser.Question;
 import quinzical.impl.util.questionparser.Solution;
-import quinzical.interfaces.models.GameModel;
+import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class PracticeQuestionController {
 
 
-    
     @Inject
     private SceneHandler sceneHandler;
 
     @Inject
-    private GameModel gameModel;
+    private PracticeModel gameModel;
 
     @Inject
     private Speaker speaker;
-    
+
     @Inject
     private QuestionVerifierFactory questionVerifierFactory;
 
@@ -44,78 +46,74 @@ public class PracticeQuestionController {
 
     @FXML
     private Pane panePracticeSolutions;
-    
+
     @FXML
     private ImageView imgOverlay;
-    
+
     @FXML
     private Label lblPrompt;
 
     @FXML
     private Button btnSubmit;
-    
+
     @FXML
     private Button btnPass;
-    
+
     @FXML
     private Label lblAttempts;
-    
+
     @FXML
     private Label lblHint;
 
     private List<TextArea> textAreas;
-    
+
     @FXML
     void onSubmitClicked() {
-        
+
         GameQuestion question = gameModel.getActiveQuestion();
         List<Solution> solutions = question.getSolutionsCopy();
 
         List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier().verifySolutions(solutions, textAreas);
-        
-        if (corrects.contains(false)){
+
+        if (corrects.contains(false)) {
             System.out.println("wrong");
-            if(lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())){
+            if (lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())) {
                 System.out.println("Attempt 3");
-                
-            }
-        else if(lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())){
+
+            } else if (lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())) {
                 System.out.println("Attempt 1");
                 lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
                 gameModel.colourTextAreas(textAreas, corrects);
-            }
-        else {
+            } else {
                 System.out.println("Attempt 2");
                 lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
                 gameModel.colourTextAreas(textAreas, corrects);
             }
-            
+
         }
-        
+
         //btnPass.setText("Next Question");
         //btnPass.setOnAction(e -> handleNextQuestion(question));
     }
 
-    
-    
+
     private void handleNextQuestion(GameQuestion question) {
         btnSubmit.setOnAction(_e -> onSubmitClicked());
         btnPass.setOnAction(_e -> onPassClicked());
         btnPass.setText("Pass");
         btnSubmit.setText("Submit");
 
-        List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion().getCategory());
-        Collections.shuffle(questions);
-        gameModel.activateQuestion(questions.get(0));
+        Question newQuestion = gameModel.getRandomQuestion(question.getCategory());
+        gameModel.activateQuestion(newQuestion);
 
     }
 
 
     @FXML
     void onPassClicked() {
-        
+
     }
 
     @FXML
@@ -133,12 +131,13 @@ public class PracticeQuestionController {
         gameModel.onActiveQuestionUpdate(this::initialiseQuestion);
     }
 
-    private void initialiseQuestion(GameQuestion gameQuestion) {
+    private void initialiseQuestion() {
 
-        
+        GameQuestion gameQuestion = gameModel.getActiveQuestion();
+
         textAreas = new ArrayList<>();
         panePracticeSolutions.getChildren().clear();
-        
+
         this.lblHint.setText(gameQuestion.getHint());
         this.lblPrompt.setText(gameQuestion.getPrompt() + ":");
 
@@ -177,12 +176,12 @@ public class PracticeQuestionController {
 
         }
     }
-    
+
     @FXML
     void initialize() {
         this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
         listen();
     }
-    
+
 
 }
