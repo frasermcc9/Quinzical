@@ -21,12 +21,12 @@ import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
-import quinzical.impl.util.factories.BoardComponentFactoryImpl;
+
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questionverifier.QuestionVerifierFactoryImpl;
 import quinzical.impl.util.strategies.textnormaliser.TextNormaliserStrategyFactory;
-import quinzical.interfaces.factories.BoardComponentFactory;
+
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.models.structures.SpeakerMutator;
@@ -59,7 +59,6 @@ public class MainModule extends AbstractModule {
         bind(SceneRegistry.class).to(SceneRegistryImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
-        bind(BoardComponentFactory.class).to(BoardComponentFactoryImpl.class);
 
         bind(TextNormaliserFactory.class).to(TextNormaliserStrategyFactory.class);
         bind(QuestionVerifierFactory.class).to(QuestionVerifierFactoryImpl.class);
