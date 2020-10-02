@@ -106,6 +106,7 @@ public class PracticeQuestionController {
 
     private void prepForNewQuestion() {
         btnPass.setText("Next Question");
+        btnSubmit.setDisable(true);
         btnPass.setOnAction(e -> getNewQuestion());
     }
 
@@ -113,6 +114,7 @@ public class PracticeQuestionController {
         List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion().getCategory());
         Collections.shuffle(questions);
         gameModel.activateQuestion(questions.get(0));
+        btnSubmit.setDisable(false);
         btnPass.setText("Pass");
         btnPass.setOnAction(e -> getNewQuestion());
         this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
