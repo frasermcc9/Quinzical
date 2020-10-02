@@ -3,8 +3,8 @@ package quinzical.impl.util.strategies.textnormaliser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class TextNormaliserFactoryImplTest {
-    private final TextNormaliserFactoryImpl textNormaliserFactory = new TextNormaliserFactoryImpl();
+class DefaultTextNormaliserTest {
+    private final TextNormaliserStrategyFactory textNormaliserFactory = new TextNormaliserStrategyFactory();
 
     @Test
     public void TestNormalizeInput1() {

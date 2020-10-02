@@ -70,16 +70,25 @@ public class GameController extends PrimarySceneController {
      * Listen for events from the SceneHandler.
      */
     private void listen() {
-        // Listen for theme changes.
+        // Listen for theme changes
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        gameModel.onQuestionsUpdate(this::refreshBoard);
+        // Listen for when the board is updated
+        gameModel.onQuestionBoardUpdate(this::refreshBoard);
+        // Listen for when the earnings of the user is updated
         gameModel.onValueChange(this::refreshValue);
     }
 
+    /**
+     * Update the earnings label. Fired when the model's earnings value updates.
+     */
     private void refreshValue() {
         labelEarningsVal.setText("$" + gameModel.getValue());
     }
 
+    /**
+     * Refreshes the question board. Does this by setting the style of all the buttons and adding the needed handlers.
+     * Fired when the state of some question updates.
+     */
     private void refreshBoard() {
 
         btnMenu.setOnAction(event -> sceneHandler.setActiveScene(GameScene.INTRO));
@@ -95,7 +104,7 @@ public class GameController extends PrimarySceneController {
             btn.getStyleClass().clear();
             btn.getStyleClass().add("button");
             btn.getStyleClass().add("transparent");
-            
+
             String category = keys.get(i);
             int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
                 Integer::sum);
@@ -106,6 +115,7 @@ public class GameController extends PrimarySceneController {
         }
     }
 
+    // Called when a category is selected. Sets the buttons and handlers to change to the question scene.
     private void loadQuestions(List<GameQuestion> questions) {
 
         btnMenu.setOnAction(event -> refreshBoard());
@@ -134,11 +144,13 @@ public class GameController extends PrimarySceneController {
         }
     }
 
+    // Handler for question buttons.
     private void activateQuestion(GameQuestion gameQuestion) {
         gameModel.activateQuestion(gameQuestion);
         sceneHandler.setActiveScene(GameScene.GAME_QUESTION);
     }
 
+    // Also fired when any category button is pressed (or the back button). Sets the top text image.
     private void setOverlay(Overlay o) {
         String img = "";
         switch (o) {
@@ -154,6 +166,7 @@ public class GameController extends PrimarySceneController {
             "/overlays/" + img + ".png"))));
     }
 
+    // The two types of overlay.
     private enum Overlay {
         CATEGORY, QUESTION
     }
