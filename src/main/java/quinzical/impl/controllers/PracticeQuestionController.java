@@ -79,7 +79,7 @@ public class PracticeQuestionController {
             System.out.println("wrong");
             if (lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())) {
                 System.out.println("Attempt 3");
-
+                prepForNewQuestion();
             } else if (lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())) {
                 System.out.println("Attempt 1");
                 lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
@@ -90,30 +90,38 @@ public class PracticeQuestionController {
                 lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
                 gameModel.activateQuestion(gameModel.getActiveQuestion());
                 gameModel.colourTextAreas(textAreas, corrects);
+                for (int i = 0; i < textAreas.size(); i++) {
+                    textAreas.get(i).setText(Character.toString(gameModel.getActiveQuestion().getSolutions().get(i).getVariants().get(i).charAt(0)));
+                }
             }
 
+        } else {
+            prepForNewQuestion();
         }
 
         //btnPass.setText("Next Question");
         //btnPass.setOnAction(e -> handleNextQuestion(question));
     }
 
-
-    private void handleNextQuestion(GameQuestion question) {
-        btnSubmit.setOnAction(_e -> onSubmitClicked());
-        btnPass.setOnAction(_e -> onPassClicked());
-        btnPass.setText("Pass");
-        btnSubmit.setText("Submit");
-
-        Question newQuestion = gameModel.getRandomQuestion(question.getCategory());
-        gameModel.activateQuestion(newQuestion);
-
+    private void prepForNewQuestion() {
+        btnPass.setText("Next Question");
+        btnSubmit.setDisable(true);
+        btnPass.setOnAction(e -> getNewQuestion());
     }
 
+    private void getNewQuestion() {
+        Question question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        gameModel.activateQuestion(question);
+
+        btnSubmit.setDisable(false);
+        btnPass.setText("Pass");
+        btnPass.setOnAction(e -> getNewQuestion());
+        this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
+    }
 
     @FXML
     void onPassClicked() {
-
+        getNewQuestion();
     }
 
     @FXML
