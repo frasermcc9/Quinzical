@@ -27,7 +27,7 @@ import java.util.Objects;
 public class GameQuestionController {
 
     //#region Injected classes
-
+    
     @Inject
     private SceneHandler sceneHandler;
 

@@ -9,6 +9,10 @@ import quinzical.interfaces.events.ValueChangeObserver;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Fully extracted interface of GameModelImpl class. Handles various factors for the game, such as the game questions
+ * and the users earnings.
+ */
 public interface GameModel {
 
     Map<String, List<GameQuestion>> getQuestionsForPracticeMode();
@@ -27,7 +31,7 @@ public interface GameModel {
 
     GameQuestion getNextActiveQuestion(GameQuestion question);
 
-    
+
     int getValue();
 
 
