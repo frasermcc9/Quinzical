@@ -1,6 +1,7 @@
 package quinzical.impl.util.bindings;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
 import javafx.stage.Stage;
 import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
@@ -64,6 +65,8 @@ public class MainModule extends AbstractModule {
             bind(Speaker.class).to(SpeakerManager.class);
             bind(SpeakerMutator.class).to(SpeakerManager.class);
         }
+
+        bind(Integer.class).annotatedWith(Names.named("attempts")).toInstance(0);
 
 
         bind(Stage.class).toInstance(stage);
