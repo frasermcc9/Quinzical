@@ -18,7 +18,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * categories with 5 questions each.
      */
     @Override
-    public QuestionGeneratorStrategy createGameQuestionStratgey() {
+    public QuestionGeneratorStrategy createGameQuestionStrategy() {
         return new GameQuestionGeneratorStrategy(questionCollection);
     }
 
