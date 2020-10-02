@@ -77,7 +77,7 @@ public class PracticeQuestionController {
             System.out.println("wrong");
             if(lblAttempts.getText().equals(Attempts.ATTEMPT_3.getMessage())){
                 System.out.println("Attempt 3");
-                
+                prepForNewQuestion();
             }
         else if(lblAttempts.getText().equals(Attempts.ATTEMPT_1.getMessage())){
                 System.out.println("Attempt 1");
@@ -96,29 +96,31 @@ public class PracticeQuestionController {
             }
             
         }
+        else {
+            prepForNewQuestion();
+        }
         
         //btnPass.setText("Next Question");
         //btnPass.setOnAction(e -> handleNextQuestion(question));
     }
 
-    
-    
-    private void handleNextQuestion(GameQuestion question) {
-        btnSubmit.setOnAction(_e -> onSubmitClicked());
-        btnPass.setOnAction(_e -> onPassClicked());
-        btnPass.setText("Pass");
-        btnSubmit.setText("Submit");
+    private void prepForNewQuestion() {
+        btnPass.setText("Next Question");
+        btnPass.setOnAction(e -> getNewQuestion());
+    }
 
+    private void getNewQuestion() {
         List<GameQuestion> questions = gameModel.getQuestionsForPracticeMode().get(gameModel.getActiveQuestion().getCategory());
         Collections.shuffle(questions);
         gameModel.activateQuestion(questions.get(0));
-
+        btnPass.setText("Pass");
+        btnPass.setOnAction(e -> getNewQuestion());
+        this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
     }
-
-
+    
     @FXML
     void onPassClicked() {
-        
+        getNewQuestion();
     }
 
     @FXML
