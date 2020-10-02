@@ -2,10 +2,7 @@ package quinzical.impl.util.bindings;
 
 import com.google.inject.AbstractModule;
 import javafx.stage.Stage;
-import quinzical.impl.models.GameModelImpl;
-import quinzical.impl.models.QuestionCollectionImpl;
-import quinzical.impl.models.SceneHandlerImpl;
-import quinzical.impl.models.SceneRegistryImpl;
+import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
@@ -55,8 +52,10 @@ public class MainModule extends AbstractModule {
         bind(TextNormaliserFactory.class).to(TextNormaliserStrategyFactory.class);
         bind(QuestionVerifierFactory.class).to(QuestionVerifierFactoryImpl.class);
         bind(ObjectReaderStrategyFactory.class).to(ObjectReaderStrategyFactoryImpl.class);
-        
+
         bind(UserScore.class).to(UserScoreImpl.class);
+
+        bind(PracticeModel.class).to(PracticeModelImpl.class);
 
         if (System.getProperty("os.name").startsWith("Windows")) {
             bind(Speaker.class).to(WindowsSpeakerManager.class);

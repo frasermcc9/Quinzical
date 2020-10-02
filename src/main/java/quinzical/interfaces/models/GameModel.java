@@ -14,15 +14,11 @@ import java.util.Map;
  * Fully extracted interface of GameModelImpl class. Handles various factors for the game, such as the game questions
  * and the users earnings.
  */
-public interface GameModel {
-
-    Map<String, List<GameQuestion>> getQuestionsForPracticeMode();
+public interface GameModel extends QuinzicalModel {
 
     Map<String, List<GameQuestion>> getBoardQuestions();
 
     void generateNewGameQuestionSet();
-
-    GameQuestion getActiveQuestion();
 
     int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions);
 
@@ -32,6 +28,8 @@ public interface GameModel {
 
     GameQuestion getNextActiveQuestion(GameQuestion question);
 
+    void answerActive(boolean correct);
+    
 
     int getValue();
 
@@ -40,17 +38,9 @@ public interface GameModel {
 
     void fireQuestionBoardUpdate();
 
-    void answerActive(boolean correct);
-
-    void activateQuestion(GameQuestion question);
-
-
-    void onActiveQuestionUpdate(ActiveQuestionObserver fn);
-
     void onQuestionBoardUpdate(QuestionBoardObserver fn);
 
     void onValueChange(ValueChangeObserver fn);
-
-
-    void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects);
+    
+    
 }

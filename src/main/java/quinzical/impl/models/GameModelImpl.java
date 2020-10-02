@@ -5,13 +5,14 @@ import com.google.inject.Singleton;
 import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.models.structures.SaveData;
+import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.events.QuestionBoardObserver;
 import quinzical.interfaces.events.ValueChangeObserver;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.GameModelSaver;
+import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.models.structures.UserScore;
-import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Singleton
-public class GameModelImpl implements GameModel, GameModelSaver {
+public class GameModelImpl extends AbstractGameModel implements GameModel, GameModelSaver, QuinzicalModel {
 
     //#region Fields
 
@@ -32,12 +33,6 @@ public class GameModelImpl implements GameModel, GameModelSaver {
      */
     private final List<QuestionBoardObserver> questionBoardObservers = new ArrayList<>();
 
-    /**
-     * List of functions (observers) that are executed when the game board updates.  Adding (subscribing) to the list is
-     * done with {@link this#onActiveQuestionUpdate}, which will add the given ActiveQuestionObserver to the list. When
-     * {@link this#fireActiveQuestionUpdate} )} is called, all functions will be executed.
-     */
-    private final List<ActiveQuestionObserver> activeObservers = new ArrayList<>();
 
     /**
      * List of functions (observers) that are executed when the game board updates.  Adding (subscribing) to the list is
@@ -50,20 +45,11 @@ public class GameModelImpl implements GameModel, GameModelSaver {
      */
     @Inject
     private UserScore userScore;
-    /**
-     * Factory for creating strategies for generating the questions for the board.
-     */
-    @Inject
-    private QuestionGeneratorStrategyFactory questionGeneratorStrategyFactory;
+
     /**
      * Map containing the board questions.
      */
     private Map<String, List<GameQuestion>> boardQuestions;
-    /**
-     * Most recent question that was active, or null if no question was active. Potential bug: is null when loading game
-     * from save.
-     */
-    private GameQuestion activeQuestion = null;
 
     //#endregion
 
@@ -89,6 +75,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
         activeObservers.add(fn);
     }
 
+
     /**
      * Binds a function to the event that is fired when there is a new active question.
      *
@@ -98,7 +85,7 @@ public class GameModelImpl implements GameModel, GameModelSaver {
     public void onValueChange(ValueChangeObserver fn) {
         valueChangeObservers.add(fn);
     }
-    
+
     /**
      * Fire the questions update event.
      */
@@ -165,26 +152,6 @@ public class GameModelImpl implements GameModel, GameModelSaver {
 
     }
 
-
-    /**
-     * Gets the currently active question
-     *
-     * @return current active question, or null if there isn't one.
-     */
-    @Override
-    public GameQuestion getActiveQuestion() {
-        return this.activeQuestion;
-    }
-
-    /**
-     * Sets the active question in the game.
-     */
-    @Override
-    public void activateQuestion(GameQuestion question) {
-        this.activeQuestion = question;
-        fireActiveQuestionUpdate();
-    }
-
     /**
      * Answers whatever the active question is.
      * <p>
@@ -213,31 +180,14 @@ public class GameModelImpl implements GameModel, GameModelSaver {
 
     //#region Game Board and State
 
-    @Override
-    public Map<String, List<GameQuestion>> getQuestionsForPracticeMode() {
-        return questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions();
-    }
-
     /**
      * Generates a new set of questions.
      */
     @Override
     public void generateNewGameQuestionSet() {
-        this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStratgey().generateQuestions();
+        this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStrategy().generateQuestions();
         this.userScore.setValue(0);
         fireQuestionBoardUpdate();
-    }
-
-    @Override
-    public void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects) {
-        for(int i=0; i<textAreas.size(); i++ ){
-            if(corrects.get(i)) {
-                textAreas.get(i).setStyle("-fx-background-color: #ceffc3; -fx-text-fill: #ceffc3");
-            }
-            else {
-                textAreas.get(i).setStyle("-fx-background-color: #ff858c; -fx-text-fill: #ffc7ca");
-            }
-        }
     }
 
     /**
