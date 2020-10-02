@@ -1,7 +1,9 @@
 package quinzical.interfaces.events;
 
-import quinzical.impl.models.structures.GameQuestion;
-
+/**
+ * Functional interface with no arguments. Is fired when a question is activated.
+ */
+@FunctionalInterface
 public interface ActiveQuestionObserver {
-    void fireActiveQuestion(GameQuestion gq);
+    void fireActiveQuestion();
 }

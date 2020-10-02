@@ -7,7 +7,7 @@
     -fx-wrap-text: true;
 }
 
-.label-replay{
+.label-replay {
     -fx-font-size: 18;
 }
 
@@ -42,4 +42,24 @@
 
 .pass-button:hover {
     -fx-background-color: #eda8a8;
+}
+
+.macron-button {
+    -fx-background-color: #404040;
+
+    -fx-cursor: hand;
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FAFAFA;
+}
+
+.macron-button:hover {
+    -fx-background-color: #c4dff2;
+    -fx-text-fill: #131313;
+}
+
+.macron-button:pressed {
+    -fx-background-color: #9c9c9c;
 }

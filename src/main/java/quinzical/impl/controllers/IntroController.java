@@ -6,8 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.models.structures.SaveData;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
+
+import java.io.IOException;
 
 
 /**
@@ -21,6 +25,9 @@ public class IntroController extends PrimarySceneController {
     @Inject
     private GameModel gameModel;
 
+    @Inject
+    private ObjectReaderStrategyFactory objectReader;
+
     @FXML
     private AnchorPane background;
 
@@ -32,7 +39,6 @@ public class IntroController extends PrimarySceneController {
 
     @FXML
     void btnLoadGamePress() {
-
         sceneHandler.setActiveScene(GameScene.GAME);
     }
 
@@ -64,19 +70,45 @@ public class IntroController extends PrimarySceneController {
      */
     @FXML
     void initialize() {
-        if (gameModel.getBoardQuestions() == null) {
-            btnLoadGame.setDisable(true);
-        }
+        handleLoadGameButton();
         listen();
     }
+
+    private void handleLoadGameButton() {
+        SaveData saveData = null;
+        try {
+            saveData = objectReader.<SaveData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
+                "/save.qdb");
+        } catch (IOException | ClassNotFoundException e) {
+            //dont really care if file isn't found
+        }
+
+        // There is a save file
+        if (saveData != null && saveData.getQuestionData() != null) {
+            SaveData finalSaveData = saveData;
+            btnLoadGame.setOnAction(e -> {
+                gameModel.loadSaveData(finalSaveData);
+                btnLoadGame.setOnAction(action -> sceneHandler.setActiveScene(GameScene.GAME));
+                btnLoadGame.fire();
+            });
+        }
+        // There is no save
+        else {
+            btnLoadGame.setDisable(true);
+        }
+    }
+
 
     /**
      * Listen to events that this scene needs to react to.
      */
     private void listen() {
+        // Listen for theme changes
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        gameModel.onQuestionsUpdate(()->{
-            if(gameModel.getBoardQuestions()!=null){
+
+        // If the QuestionBoard updates, then check if its not null. If it's not, then we can enable the load game btn.
+        gameModel.onQuestionBoardUpdate(() -> {
+            if (gameModel.getBoardQuestions() != null) {
                 btnLoadGame.setDisable(false);
             }
         });

@@ -18,30 +18,34 @@ import java.util.Collection;
 
 public class OptionsController {
 
+    static int DEFAULT_PITCH;
+    static int DEFAULT_SPEED;
+    static int DEFAULT_AMP;
+    static int DEFAULT_GAP;
+
+    static {
+        DEFAULT_PITCH = 50;
+        DEFAULT_SPEED = 175;
+        DEFAULT_AMP = 100;
+        DEFAULT_GAP = 0;
+    }
+
     @Inject
     private SceneHandler sceneHandler;
-
     @Inject
     private SpeakerMutator speakerMutator;
-
     @FXML
     private AnchorPane background;
-
     @FXML
     private ImageView imgBackground;
-
     @FXML
     private ComboBox<Theme> comboTheme;
-
     @FXML
     private Slider sliderSpeed;
-
     @FXML
     private Slider sliderGap;
-
     @FXML
     private Slider sliderAmp;
-
     @FXML
     private Slider sliderPitch;
 
@@ -63,22 +67,26 @@ public class OptionsController {
 
     @FXML
     void pitchDefault() {
-        speakerMutator.setPitch(50);
+        speakerMutator.setPitch(DEFAULT_PITCH);
+        sliderPitch.setValue(DEFAULT_PITCH);
     }
 
     @FXML
     void speedDefault() {
-        speakerMutator.setSpeed(175);
+        speakerMutator.setSpeed(DEFAULT_SPEED);
+        sliderSpeed.setValue(DEFAULT_SPEED);
     }
 
     @FXML
     void ampDefault() {
-        speakerMutator.setAmplitude(100);
+        speakerMutator.setAmplitude(DEFAULT_AMP);
+        sliderAmp.setValue(DEFAULT_AMP);
     }
 
     @FXML
     void gapDefault() {
-        speakerMutator.setGap(0);
+        speakerMutator.setGap(DEFAULT_GAP);
+        sliderGap.setValue(DEFAULT_GAP);
     }
 
     @FXML

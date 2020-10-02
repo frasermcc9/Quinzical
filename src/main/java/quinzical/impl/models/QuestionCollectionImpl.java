@@ -28,10 +28,10 @@ public class QuestionCollectionImpl implements QuestionCollection {
      */
     public QuestionCollectionImpl() {
         try {
-            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/data/question.qdb");
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/data/question2.qdb");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Object obj = in.readObject();
-            if (obj instanceof HashMap) {
+            if (obj instanceof Map) {
                 @SuppressWarnings("unchecked")
                 Map<String, List<Question>> map = (Map<String, List<Question>>) obj;
                 this.questionMap = new LinkedHashMap<>(map);
