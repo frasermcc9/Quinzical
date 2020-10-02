@@ -114,7 +114,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
 
     @Override
-    protected void adjustQuestionOnLoad() {
+    protected void onQuestionLoad() {
         gameModel.answerActive(false);
     }
 

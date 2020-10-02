@@ -52,7 +52,6 @@ public class PracticeQuestionController extends AbstractQuestionController {
     @Named("attempts")
     private int attempts;
 
-
     @FXML
     void onSubmitClicked() {
 
@@ -63,9 +62,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
         attempts++;
         switch (attempts) {
             case 1:
-                corrects =
-                    questionVerifierFactory.getQuestionVerifier(VerifierType.HIDE_SOLUTION).verifySolutions(solutions,
-                        textAreas);
+                corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.HIDE_SOLUTION)
+                    .verifySolutions(solutions, textAreas);
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
                     gameModel.colourTextAreas(textAreas, corrects);
@@ -76,9 +74,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
                 }
                 break;
             case 2:
-                corrects =
-                    questionVerifierFactory.getQuestionVerifier(VerifierType.HINT_SOLUTION).verifySolutions(solutions,
-                        textAreas);
+                corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.HINT_SOLUTION)
+                    .verifySolutions(solutions, textAreas);
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
                     gameModel.colourTextAreas(textAreas, corrects);
@@ -89,13 +86,13 @@ public class PracticeQuestionController extends AbstractQuestionController {
                 }
                 break;
             case 3:
-                corrects =
-                    questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION).verifySolutions(solutions,
-                        textAreas);
-                if (!corrects.contains(false)) {
-                    attempts = 0;
-                    btnPass.requestFocus();
+                corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
+                    .verifySolutions(solutions, textAreas);
+                if (corrects.contains(false)) {
+                    lblAttempts.setText(Attempts.ATTEMPT_4.getMessage());
                 }
+                attempts = 0;
+                btnPass.requestFocus();
                 textAreas.forEach(textArea -> textArea.setEditable(false));
                 prepForNewQuestion();
                 break;
@@ -144,7 +141,6 @@ public class PracticeQuestionController extends AbstractQuestionController {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
 
-
     @FXML
     void initialize() {
         this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
@@ -152,5 +148,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
         listen();
     }
 
-
+    @Override
+    protected void onQuestionLoad() {
+        this.btnSubmit.setDisable(false);
+    }
 }

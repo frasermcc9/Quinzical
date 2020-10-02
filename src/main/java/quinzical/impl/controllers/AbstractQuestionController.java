@@ -64,7 +64,7 @@ public abstract class AbstractQuestionController {
     /**
      * Optional hook
      */
-    protected void adjustQuestionOnLoad() {
+    protected void onQuestionLoad() {
     }
 
     protected void listen() {
@@ -78,7 +78,7 @@ public abstract class AbstractQuestionController {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
 
-        adjustQuestionOnLoad();
+        onQuestionLoad();
 
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
