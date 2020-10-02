@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * Controller class for the intro screen.
  */
-public class IntroController extends PrimarySceneController {
+public class IntroController {
 
     @Inject
     private SceneHandler sceneHandler;
