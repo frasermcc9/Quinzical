@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Controller class for the Game view. This is the view that contains the question board.
  */
-public class GameController extends PrimarySceneController {
+public class GameController {
 
     private final List<Button> buttons = new ArrayList<>();
     @Inject

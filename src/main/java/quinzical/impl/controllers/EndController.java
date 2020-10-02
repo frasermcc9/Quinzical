@@ -9,7 +9,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
-public class EndController extends PrimarySceneController {
+public class EndController {
 
     @Inject
     private SceneHandler sceneHandler;
