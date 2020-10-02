@@ -15,17 +15,18 @@
 package quinzical.impl.constants;
 
 public enum Attempts {
-    ATTEMPT_1("Attempt 1/3"),
-    ATTEMPT_2("Attempt 2/3"), 
-    ATTEMPT_3("Attempt 3/3");
-    
+    ATTEMPT_1("3 Attempts Left"), 
+    ATTEMPT_2("2 Attempts Left"), 
+    ATTEMPT_3("1 Attempt Left"),
+    ATTEMPT_4("No Attempts Left");
+
     private final String message;
-    
-    Attempts(String message){
+
+    Attempts(String message) {
         this.message = message;
     }
-    
-    public String getMessage(){
+
+    public String getMessage() {
         return message;
     }
 }
