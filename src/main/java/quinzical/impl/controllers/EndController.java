@@ -23,9 +23,11 @@ public class EndController extends PrimarySceneController {
     @FXML
     private Label lblMoney;
 
+    /**
+     * Return to the main menu
+     */
     @FXML
     void btnDonePress() {
-
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -37,20 +39,31 @@ public class EndController extends PrimarySceneController {
         listen();
     }
 
+    /**
+     *
+     */
     private void listen() {
+        //Listen for scene change, when this scene is selected, run the animation.
         sceneHandler.onSceneChange(s -> {
             if (s.equals(GameScene.END)) {
                 int earnings = gameModel.getValue();
                 animateLabel(earnings);
             }
         });
+
+        //Listen for theme change
+        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
 
+    //Begin the money animation.
     private void animateLabel(final int animateUpTo) {
         final int increment = animateUpTo / 100;
         AnimationTimer timer = new AnimationTimer() {
             private int currentValue = 0;
 
+            /**
+             * Called each frame. Update the label with an incremented amount.
+             */
             @Override
             public void handle(long timestamp) {
                 currentValue += increment;
