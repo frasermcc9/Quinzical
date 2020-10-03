@@ -80,6 +80,9 @@ public class IntroController {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
 
+    /**
+     *  When the Load New Question Set button is pressed, run the question file loading method.
+     */
     @FXML
     void btnLoadSetPress() { Serializer.main(null); }
     

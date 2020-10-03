@@ -66,7 +66,7 @@ public class GameQuestion extends Question {
     public boolean isAnswered() {
         return answered;
     }
-
+    
     public void setAnswered(boolean answered) {
         this.answered = answered;
     }
