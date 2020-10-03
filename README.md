@@ -2,16 +2,16 @@
 
 This repository contains the source code for the Quinzical application developed by Team Four.
 
-### Running the Application
+## Running the Application
 
 With the latest release, simply run the `launch.sh` script. You may need to edit the script and change the module path
 to your local JavaFX install location.
 
-#### Native Dependencies
+### Native Dependencies
 
 JavaFX and ESpeak are required to run this application.
 
-### Overview
+## Overview
 - **New Game**<br>This will create a new game with new questions and new categories.
 
 - **Load Game**<br>This will attempt to load the last created new game. The application will try to save the current
@@ -26,12 +26,12 @@ additional hints for questions.
 
 - **Load New Questions**<br>See [the section on loading custom questions](#loading-custom-questions)
 
-### Compiling from Source
+## Compiling from Source
 
 Download the source code, then use Maven to compile. The command `mvn clean compile assembly:single` will create the
 needed `.jar` file in the target directory.
 
-### Loading Custom Questions
+## Loading Custom Questions
 
 Use the button in the main screen to load a custom question set. This will open a file selector where you can pick
 a text file in the same format as the one in the data folder to load a new question set, namely:
@@ -53,7 +53,7 @@ Some Question|Some Prompt|Solution One, Solution Two/Solution Two Alternative
 A category should have at least 5 questions. The program might not work correctly if a category has less than five
 questions.
 
-### Contributors
+## Contributors
 
 - Fraser McCallum
 - Braden Palmer
