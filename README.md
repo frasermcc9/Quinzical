@@ -24,7 +24,7 @@ additional hints for questions.
 
 - **Options**<br>Here you can adjust the settings for the Text-To-Speech system, as well as set the theme of the game.
 
-- **Load New Questions**<br>See [the section on loading custom questions](#Loading Custom Questions)
+- **Load New Questions**<br>See [the section on loading custom questions](###Loading-Custom-Questions)
 
 ### Compiling from Source
 
