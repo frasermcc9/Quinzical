@@ -17,6 +17,7 @@ package quinzical.impl.util.questionparser;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Question implements Serializable {
 
@@ -69,5 +70,16 @@ public class Question implements Serializable {
 
     public String getPrompt() {
         return prompt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return Objects.equals(hint, question.hint) &&
+            Objects.equals(solutions, question.solutions) &&
+            Objects.equals(prompt, question.prompt) &&
+            Objects.equals(category, question.category);
     }
 }
