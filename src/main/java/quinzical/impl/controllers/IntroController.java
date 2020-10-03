@@ -15,12 +15,14 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.SaveData;
+import quinzical.impl.util.questionparser.Serializer;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
@@ -78,7 +80,10 @@ public class IntroController {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
 
-
+    @FXML
+    void btnLoadSetPress() { Serializer.main(null); }
+    
+    
     /**
      * Fired when the FXML is loaded.
      */
@@ -127,4 +132,5 @@ public class IntroController {
             }
         });
     }
+    
 }
