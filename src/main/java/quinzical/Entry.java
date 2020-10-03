@@ -29,7 +29,7 @@ import quinzical.interfaces.models.SceneRegistry;
 
 import java.io.IOException;
 
-//mvn clean compile assembly:single
+
 
 public class Entry extends Application {
 
