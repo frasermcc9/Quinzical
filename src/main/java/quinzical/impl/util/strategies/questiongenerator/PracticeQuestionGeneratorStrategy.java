@@ -14,6 +14,7 @@
 
 package quinzical.impl.util.strategies.questiongenerator;
 
+import com.google.inject.Inject;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
@@ -28,11 +29,11 @@ import java.util.Map;
  */
 public class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 
-    private final QuestionCollection questionCollection;
-
-    public PracticeQuestionGeneratorStrategy(QuestionCollection questionCollection) {
-        this.questionCollection = questionCollection;
-    }
+    /**
+     * Inject the questionCollection into the strategy
+     */
+    @Inject
+    private QuestionCollection questionCollection;
 
     /**
      * Generates questions for practice mode

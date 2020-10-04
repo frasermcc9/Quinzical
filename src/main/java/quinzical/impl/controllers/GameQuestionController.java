@@ -193,23 +193,6 @@ public class GameQuestionController extends AbstractQuestionController {
         btnPass.setText("Pass");
         btnSubmit.setText("Submit");
     }
-    
-    private void onTextAreaKeyPress(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            if (e.getSource() instanceof TextArea) {
-                TextArea ta = (TextArea) e.getSource();
-                ta.setText(ta.getText().trim());
-                int idx = textAreas.indexOf(ta);
-                if (idx + 1 == textAreas.size()) {
-                    btnSubmit.fire();
-                    btnPass.requestFocus();
-                } else {
-                    textAreas.get(idx + 1).requestFocus();
-                }
-            }
-
-        }
-    }
 
     private void handleCompletion() {
         sceneHandler.setActiveScene(GameScene.END);
