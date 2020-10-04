@@ -53,6 +53,9 @@ public class IntroController {
     @FXML
     private ImageView imgBackground;
 
+    /**
+     * Sets the active scene to the main game scene where you select categories and questions from.
+     */
     @FXML
     void btnLoadGamePress() {
         sceneHandler.setActiveScene(GameScene.GAME);
@@ -96,6 +99,10 @@ public class IntroController {
         listen();
     }
 
+    /**
+     * Sets up the loadGameButton, checking to see if there is save data to fetch
+     * and disabling the button if there isn't any yet.
+     */
     private void handleLoadGameButton() {
         SaveData saveData = null;
         try {
