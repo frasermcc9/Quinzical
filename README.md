@@ -53,6 +53,9 @@ Some Question|Some Prompt|Solution One, Solution Two/Solution Two Alternative
 A category should have at least 5 questions. The program might not work correctly if a category has less than five
 questions.
 
+Please not this is an experimental feature. Users should take care to ensure the files conform to the required
+specifications.
+
 ## Contributors
 
 - Fraser McCallum
