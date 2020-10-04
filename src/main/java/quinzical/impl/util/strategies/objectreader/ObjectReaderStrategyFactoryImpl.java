@@ -21,7 +21,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Factory class for reading serialised objects.
+ */
 public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFactory {
+    /**
+     * @param <T> The type of object being read. This is used as a cast.
+     * @return the object reader strategy.
+     */
     public <T> ObjectReaderStrategy<T> createObjectReader() {
         return new DefaultObjectReaderStrategy<>();
     }
@@ -29,14 +36,18 @@ public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFact
 
 /**
  * Manages the creation of objects by reading a file.
+ *
+ * @param <T> The object being read. The read object will be casted to this type.
  */
 class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
 
     /**
      * Reads the file from the specified directory and creates an object from it.
-     * 
-     * @param dirname -  the directory to read the file from
-     * @return - the object that was created from the file
+     *
+     * @param dirname the location of the object on disk.
+     * @return the deserialized object, casted to type T
+     * @throws IOException            If an error occurs with finding the file
+     * @throws ClassNotFoundException If the class being casted to cannot be found.
      */
     @Override
     public T readObject(String dirname) throws IOException, ClassNotFoundException {
