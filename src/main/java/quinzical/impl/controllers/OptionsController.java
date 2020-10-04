@@ -30,6 +30,9 @@ import quinzical.interfaces.models.structures.SpeakerMutator;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Controller class for the options screen.
+ */
 public class OptionsController {
 
     static final int DEFAULT_PITCH;
@@ -63,46 +66,71 @@ public class OptionsController {
     @FXML
     private Slider sliderPitch;
 
+    /**
+     * Fired when the done button is pressed, goes back to the intro screen.
+     */
     @FXML
     void btnDonePress(ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
+    /**
+     * Updates the scene when it is changed.
+     */
     @FXML
     void onThemeChosen(ActionEvent event) {
         Theme theme = comboTheme.getValue();
         sceneHandler.fireBackgroundChange(theme.getImage());
     }
 
+    /**
+     * Runs a sample message of the speaker to show the user what it sounds like.
+     */
     @FXML
     void onSampleClick(MouseEvent event) {
         speakerMutator.speak("Hello, welcome to the Quinzical!");
     }
 
+    /**
+     * Sets the pitch back to the default value and puts the slider in the correct position for that.
+     */
     @FXML
     void pitchDefault() {
         speakerMutator.setPitch(DEFAULT_PITCH);
         sliderPitch.setValue(DEFAULT_PITCH);
     }
 
+    /**
+     * Sets the speed back to the default value and puts the slider in the correct position for that.
+     */
     @FXML
     void speedDefault() {
         speakerMutator.setSpeed(DEFAULT_SPEED);
         sliderSpeed.setValue(DEFAULT_SPEED);
     }
 
+    /**
+     * Sets the amplitude back to the default value and puts the slider in the correct position for that.
+     */
     @FXML
     void ampDefault() {
         speakerMutator.setAmplitude(DEFAULT_AMP);
         sliderAmp.setValue(DEFAULT_AMP);
     }
 
+    /**
+     * Sets the speaker gap back to the default value and puts the slider in the correct position for that.
+     */
     @FXML
     void gapDefault() {
         speakerMutator.setGap(DEFAULT_GAP);
         sliderGap.setValue(DEFAULT_GAP);
     }
 
+    /**
+     * Fired when the FXML is loaded, sets up the themes combobox for all the available themes
+     * and sets up what happens when the background is changed.
+     */
     @FXML
     void initialize() {
         assert background != null : "fx:id=\"background\" was not injected: check your FXML file 'options.fxml'.";
@@ -121,6 +149,13 @@ public class OptionsController {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
 
+    /**
+     * Adjusts the Speakers properties according to the value
+     * and the property that is being changed.
+     * 
+     * @param sp the speech property that is being changed (pitch, speed, amplitude or gap)
+     * @param value the value that the property is to be set to.
+     */
     private void adjustSpeaker(SpeechProperty sp, int value) {
         switch (sp) {
             case SPEED:
@@ -138,6 +173,9 @@ public class OptionsController {
         }
     }
 
+    /**
+     * The different possible speech properties, used in adjustSpeaker .
+     */
     private enum SpeechProperty {
         SPEED, PITCH, AMPLITUDE, GAP
     }

@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Manages the question verifying for both the practice mode and the main game.
+ */
 public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
 
     private final Provider<DefaultQuestionVerifier> questionVerifierStrategyProvider;
@@ -43,6 +45,15 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
         this.hintQuestionVerifierProvider = hintQuestionVerifierProvider;
     }
 
+    /**
+     * Checks the text areas given against the solutions and creates a list of boolean
+     * values for each text area, showing if they were correct or not.
+     * 
+     * @param solutions - A list of solutions to the questions
+     * @param textAreas - A list of text areas were the user put their answers in
+     * @param textNormaliserFactory - A text normaliser to trim any unnecessary info from the text
+     * @return - the list of corrects, showing which text areas are right and which are wrong.
+     */
     static List<Boolean> checkCorrectness(List<Solution> solutions, List<TextArea> textAreas,
                                           TextNormaliserFactory textNormaliserFactory) {
 
@@ -74,6 +85,12 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
         return corrects;
     }
 
+    /**
+     * Gets the questionVerifier of the type that is requested
+     * 
+     * @param type - the VerifierType that is being requested
+     * @return - A verifier of the requested type.
+     */
     @Override
     public QuestionVerifierStrategy getQuestionVerifier(VerifierType type) {
         switch (type) {
@@ -93,11 +110,23 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
 
 }
 
+/**
+ * Verifies if the text areas contain correct answers, and for any that are
+ * not correct, insert the correct answer into the text area.
+ */
 class DefaultQuestionVerifier implements QuestionVerifierStrategy {
 
     @Inject
     private TextNormaliserFactory textNormaliserFactory;
 
+    /**
+     * Verify that the text in the given textAreas are consistent with the solution list and
+     * put the correct answer into any incorrect textAreas.
+     *
+     * @param solutions - A list of the solutions to the question
+     * @param textAreas - The text areas that are being verified
+     * @return - A list of whether or not each text area is correct
+     */
     @Override
     public List<Boolean> verifySolutions(List<Solution> solutions, List<TextArea> textAreas) {
 
@@ -123,10 +152,20 @@ class DefaultQuestionVerifier implements QuestionVerifierStrategy {
     }
 }
 
+/**
+ * Verifies if the text areas for practice mode contain correct answers.
+ */
 class PracticeQuestionVerifier implements QuestionVerifierStrategy {
     @Inject
     private TextNormaliserFactory textNormaliserFactory;
 
+    /**
+     * Verify that the text in the given textAreas are consistent with the solution list
+     * 
+     * @param solutions - A list of the solutions to the question
+     * @param textAreas - The text areas that are being verified
+     * @return - A list of whether or not each text area is correct
+     */
     @Override
     public List<Boolean> verifySolutions(List<Solution> solutions, List<TextArea> textAreas) {
 
@@ -145,10 +184,23 @@ class PracticeQuestionVerifier implements QuestionVerifierStrategy {
     }
 }
 
+/**
+ * Verifies if the text areas contain correct answers, and if they do not all,
+ * set the first letter of each incorrect text area as the first letter of one of the solutions,
+ * ensuring not to put the same solution first letter into 2 text areas.
+ */
 class HintQuestionVerifier implements QuestionVerifierStrategy {
     @Inject
     private TextNormaliserFactory textNormaliserFactory;
 
+    /**
+     * Verify that the text in the given textAreas are consistent with the solution list
+     * and add hints for incorrect textAreas
+     *
+     * @param solutions - A list of the solutions to the question
+     * @param textAreas - The text areas that are being verified
+     * @return - A list of whether or not each text area is correct
+     */
     @Override
     public List<Boolean> verifySolutions(List<Solution> solutions, List<TextArea> textAreas) {
 

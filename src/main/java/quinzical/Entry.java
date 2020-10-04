@@ -31,12 +31,22 @@ import java.io.IOException;
 
 
 
+/**
+ * The "main" class that is run to start the application
+ */
 public class Entry extends Application {
 
     SceneRegistry sceneRegistry;
 
     Injector injector;
 
+    /**
+     * Loads the inputted FXML file
+     * 
+     * @param fxml - the FXML file name to load
+     * @return - the scene created by loading the FXML file
+     * @throws IOException - thrown if the file does not exist
+     */
     private Scene loadFXML(String fxml) throws IOException {
         final String path = "quinzical/impl/views/";
         FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path + fxml + ".fxml"));
@@ -44,6 +54,10 @@ public class Entry extends Application {
         return loader.load();
     }
 
+    /**
+     * Sets up all the scenes for the application as well as attempt
+     * to save the game when the application is closed.
+     */
     @Override
     public void start(Stage stage) throws Exception {
 

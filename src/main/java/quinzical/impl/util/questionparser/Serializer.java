@@ -24,6 +24,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Allows the user to locate a file within their file system containting correctly formatted questions,
+ * and then reads the files, creating a map containing the questions in it
+ */
 public class Serializer {
 
     public static void main(String[] args) {

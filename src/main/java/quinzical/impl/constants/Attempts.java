@@ -14,6 +14,9 @@
 
 package quinzical.impl.constants;
 
+/**
+ * Controls the messages for the practice mode attempts
+ */
 public enum Attempts {
     ATTEMPT_1("3 Attempts Left"), 
     ATTEMPT_2("2 Attempts Left"), 

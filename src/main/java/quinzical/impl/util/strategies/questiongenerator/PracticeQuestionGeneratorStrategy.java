@@ -35,6 +35,9 @@ public class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrat
     @Inject
     private QuestionCollection questionCollection;
 
+    /**
+     * Generates questions for practice mode
+     */
     @Override
     public Map<String, List<GameQuestion>> generateQuestions() {
 

@@ -19,6 +19,10 @@ import quinzical.Entry;
 
 import java.util.Objects;
 
+/**
+ * provides the different themes that the game can have, as well
+ * as the getImage() method to get the associated image for the theme.
+ */
 public enum Theme implements ImageProvider {
     MOUNTAINS {
         public Image getImage() {
