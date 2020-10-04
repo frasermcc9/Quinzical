@@ -29,7 +29,7 @@ import quinzical.interfaces.models.SceneRegistry;
 
 import java.io.IOException;
 
-//mvn clean compile assembly:single
+
 
 /**
  * The "main" class that is run to start the application

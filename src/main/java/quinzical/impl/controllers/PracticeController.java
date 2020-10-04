@@ -69,14 +69,7 @@ public class PracticeController {
      */
     @FXML
     void initialize() {
-
-        List<String> categories = gameModel.getCategories();
-
-        comboCategories.getItems().addAll(categories);
-        comboCategories.setValue(categories.get(0));
-
         listen();
-
     }
 
     /**
@@ -84,5 +77,19 @@ public class PracticeController {
      */
     private void listen() {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
+        sceneHandler.onSceneChange(s -> {
+            if (s.equals(GameScene.PRACTICE)) {
+                populateComboBox();
+            }
+        });
+    }
+
+    private void populateComboBox() {
+        List<String> categories = gameModel.getCategories();
+
+        comboCategories.getItems().clear();
+        
+        comboCategories.getItems().addAll(categories);
+        comboCategories.setValue(categories.get(0));
     }
 }
