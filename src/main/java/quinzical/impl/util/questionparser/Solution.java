@@ -18,13 +18,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a solution to a question, contains all the variants to the solution 
+ */
 public class Solution implements Serializable {
-    /**
-     *
-     */
+
     private static final long serialVersionUID = 1L;
     private final List<String> variants = new ArrayList<>();
 
+    /**
+     * Creates a new Solution with the given solution array
+     * 
+     * @param solutions - an array containing the variants to the solution 
+     */
     public Solution(String[] solutions) {
         for (String s : solutions) {
             s = s.trim();
@@ -32,6 +38,11 @@ public class Solution implements Serializable {
         }
     }
 
+    /**
+     * Creates a new Solution with the given solution array
+     *
+     * @param solutions - A list containing the variants to the solution 
+     */
     public Solution(List<String> solutions) {
         for (String s : solutions) {
             s = s.trim();
@@ -39,6 +50,9 @@ public class Solution implements Serializable {
         }
     }
 
+    /**
+     * Gets the a copy of the variants of this solution object.
+     */
     public List<String> getVariants() {
         return new ArrayList<>(variants);
     }

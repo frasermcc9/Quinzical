@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Question represents a singular question to be used in the game, storing the category, hint, and solutions.
+ */
 public class Question implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +31,13 @@ public class Question implements Serializable {
     protected final String prompt;
     protected final String category;
 
+    /**
+     * Creates a new Question object with appropriate values 
+     * 
+     * @param category - the category of the question
+     * @param hint - the hint for the question
+     * @param prompt - the prompt for the question
+     */
     public Question(String category, String hint, String prompt) {
         this.hint = hint;
         this.prompt = prompt;
@@ -46,32 +56,59 @@ public class Question implements Serializable {
         this.category = q.category;
     }
 
+    /**
+     * gets the category of this question
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * Adds the inputs solution to the list of solutions for this question
+     * 
+     * @param solutions - the solution to add to this question
+     * @return - the question the solutions are being added to
+     */
     public Question addSolution(String[] solutions) {
         Solution s = new Solution(solutions);
         this.solutions.add(s);
         return this;
     }
 
+    /**
+     * gets the hint for this question
+     */
     public String getHint() {
         return hint;
     }
 
+    /**
+     * gets the solutions for this question
+     */
     public List<Solution> getSolutions() {
         return solutions;
     }
 
+    /**
+     * gets a copy of the solutions for this question (so that they cant be changed)
+     */
     public List<Solution> getSolutionsCopy() {
         return new ArrayList<>(solutions);
     }
 
+    /**
+     * gets the prompt for this question
+     */
     public String getPrompt() {
         return prompt;
     }
 
+    /**
+     * Checks if two questions are the same
+     * 
+     * @param o - the question that is being compared to this
+     * @return - whether or not the inputted question and this are the same
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
