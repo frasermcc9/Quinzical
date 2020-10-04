@@ -27,8 +27,17 @@ public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFact
     }
 }
 
+/**
+ * Manages the creation of objects by reading a file.
+ */
 class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
 
+    /**
+     * Reads the file from the specified directory and creates an object from it.
+     * 
+     * @param dirname -  the directory to read the file from
+     * @return - the object that was created from the file
+     */
     @Override
     public T readObject(String dirname) throws IOException, ClassNotFoundException {
 
