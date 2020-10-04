@@ -14,6 +14,7 @@
 
 package quinzical.impl.util.strategies.questiongenerator;
 
+import com.google.inject.Inject;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
@@ -26,16 +27,11 @@ import java.util.*;
  */
 public class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 
-    private final QuestionCollection questionCollection;
-
     /**
-     * Constructs the strategy.
-     *
-     * @param questionCollection the full question database
+     * Inject the questionCollection into the strategy
      */
-    public GameQuestionGeneratorStrategy(QuestionCollection questionCollection) {
-        this.questionCollection = questionCollection;
-    }
+    @Inject
+    private QuestionCollection questionCollection;
 
     /**
      * Generates a question set for the game.

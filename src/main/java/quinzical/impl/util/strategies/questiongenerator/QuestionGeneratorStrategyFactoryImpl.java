@@ -15,7 +15,7 @@
 package quinzical.impl.util.strategies.questiongenerator;
 
 import com.google.inject.Inject;
-import quinzical.interfaces.models.QuestionCollection;
+import com.google.inject.Provider;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
@@ -24,16 +24,22 @@ import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrate
  */
 public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorStrategyFactory {
 
+    private final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider;
+    private final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider;
+
     @Inject
-    private QuestionCollection questionCollection;
+    public QuestionGeneratorStrategyFactoryImpl(final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider,
+                                                final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider) {
+        this.gameQuestionGeneratorStrategyProvider = gameQuestionGeneratorStrategyProvider;
+        this.practiceQuestionGeneratorStrategyProvider = practiceQuestionGeneratorStrategyProvider;
+    }
 
     /**
-     * Creates the strategy for loading questions for a regular game - i.e. 5
-     * categories with 5 questions each.
+     * Creates the strategy for loading questions for a regular game - i.e. 5 categories with 5 questions each.
      */
     @Override
     public QuestionGeneratorStrategy createGameQuestionStrategy() {
-        return new GameQuestionGeneratorStrategy(questionCollection);
+        return gameQuestionGeneratorStrategyProvider.get();
     }
 
     /**
@@ -41,6 +47,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      */
     @Override
     public QuestionGeneratorStrategy createPracticeQuestionStrategy() {
-        return new PracticeQuestionGeneratorStrategy(questionCollection);
+        return practiceQuestionGeneratorStrategyProvider.get();
+
     }
 }
