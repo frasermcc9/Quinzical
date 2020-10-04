@@ -19,6 +19,10 @@ import quinzical.impl.util.questionparser.Solution;
 
 import java.util.List;
 
+/**
+ * Interface for HintQuestionVerifier, DefaultQuestionVerifier and PracticeQuestionVerifier.
+ * Manages the Verifying of solutions against some given text areas.
+ */
 public interface QuestionVerifierStrategy {
     List<Boolean> verifySolutions(List<Solution> solutions, List<TextArea> textAreas);
 }

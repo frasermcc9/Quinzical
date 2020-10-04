@@ -16,6 +16,9 @@ package quinzical.interfaces.strategies.objectreader;
 
 import java.io.IOException;
 
+/**
+ * Interface for DefaultObjectReaderStrategy, handles the creation of objects from a file that is read.
+ */
 public interface ObjectReaderStrategy<T> {
     T readObject(String dirname) throws IOException, ClassNotFoundException;
 }

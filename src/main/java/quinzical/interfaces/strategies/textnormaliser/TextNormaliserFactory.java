@@ -14,6 +14,9 @@
 
 package quinzical.interfaces.strategies.textnormaliser;
 
+/**
+ * Interface for TextNormaliserStrategyFactory, which manages the creation of TextNormaliserStrategy objects.
+ */
 public interface TextNormaliserFactory {
     TextNormaliserStrategy getTextNormalizer();
 }

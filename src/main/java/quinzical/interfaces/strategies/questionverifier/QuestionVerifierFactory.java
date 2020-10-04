@@ -16,6 +16,9 @@ package quinzical.interfaces.strategies.questionverifier;
 
 import quinzical.impl.util.strategies.questionverifier.VerifierType;
 
+/**
+ * Interface for QuestionVerifierFactoryImpl. Manages the creation of QuestionVerifierStrategy objects.
+ */
 public interface QuestionVerifierFactory {
     QuestionVerifierStrategy getQuestionVerifier(VerifierType type);
 }
