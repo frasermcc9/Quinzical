@@ -18,6 +18,9 @@ import com.google.inject.Inject;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.structures.UserScore;
 
+/**
+ * Manages the current score (earnings) of the game
+ */
 public class UserScoreImpl implements UserScore {
 
     /**
