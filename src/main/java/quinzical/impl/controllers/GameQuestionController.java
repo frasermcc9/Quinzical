@@ -76,7 +76,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Repeats the question using the speaker.speak method
      */
     @FXML
-    void onReplyClick() {
+    void onReplayClick() {
         String s = gameModel.getActiveQuestion().getHint();
         speaker.speak(s);
     }
