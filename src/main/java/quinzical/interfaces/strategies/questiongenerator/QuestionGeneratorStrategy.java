@@ -19,6 +19,10 @@ import quinzical.impl.models.structures.GameQuestion;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Interface for GameQuestionGeneratorStrategy and PracticeQuestionGeneratorStrategy, which handles
+ * the generation of gameQuestions for use in the application.
+ */
 public interface QuestionGeneratorStrategy {
     Map<String, List<GameQuestion>> generateQuestions();
 }

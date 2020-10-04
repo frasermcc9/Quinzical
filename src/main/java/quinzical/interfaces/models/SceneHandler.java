@@ -18,7 +18,10 @@ import javafx.scene.image.Image;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.events.BackgroundObserver;
 
-
+/**
+ * Interface for SceneHandlerImpl. Handles the setting of the current active scene
+ * as well as backgroundChange and sceneChange observers.
+ */
 public interface SceneHandler {
     void onBackgroundChange(BackgroundObserver fn);
 

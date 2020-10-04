@@ -35,14 +35,14 @@ public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFact
 }
 
 /**
- * The default strategy for reading objects.
+ * Manages the creation of objects by reading a file.
  *
  * @param <T> The object being read. The read object will be casted to this type.
  */
 class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
 
     /**
-     * Read the object
+     * Reads the file from the specified directory and creates an object from it.
      *
      * @param dirname the location of the object on disk.
      * @return the deserialized object, casted to type T

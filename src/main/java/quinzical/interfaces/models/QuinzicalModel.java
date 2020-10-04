@@ -20,6 +20,11 @@ import quinzical.interfaces.events.ActiveQuestionObserver;
 
 import java.util.List;
 
+/**
+ * Interface used for the PracticeModel and GameModel interfaces.
+ * handles the shared uses in both the gameModel and the practiceModel
+ * such as the activation of questions and the colouring of text areas.
+ */
 public interface QuinzicalModel {
     GameQuestion getActiveQuestion();
 
