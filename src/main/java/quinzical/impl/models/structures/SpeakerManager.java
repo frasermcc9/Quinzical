@@ -80,6 +80,11 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     }
 
 
+    /**
+     * Sets the pitch of the speaker
+     * 
+     * @param pitch - The pitch that the speaker will talk in (how high or low the voice sounds)
+     */
     @Override
     public void setPitch(int pitch) {
         if (pitch < 0 || pitch > 99) {
@@ -88,6 +93,11 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.pitch = pitch;
     }
 
+    /**
+     * Sets the amplitude of the speaker
+     * 
+     * @param amplitude - The amplitude to be set (how loud the voice is)
+     */
     @Override
     public void setAmplitude(int amplitude) {
         if (amplitude < 0 || amplitude > 200) {
@@ -97,6 +107,8 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     }
 
     /**
+     * Sets the reading speed of the speaker
+     * 
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
     @Override
@@ -107,6 +119,11 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.speed = speed;
     }
 
+    /**
+     * Sets the gap between words for the speaker
+     * 
+     * @param gap - How long to wait between each word spoken
+     */
     @Override
     public void setGap(int gap) {
         if (gap < 0) {

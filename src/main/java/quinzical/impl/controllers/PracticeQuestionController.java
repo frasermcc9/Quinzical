@@ -118,6 +118,9 @@ public class PracticeQuestionController extends AbstractQuestionController {
 
     private void getNewQuestion() {
         Question question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        while(question.equals(gameModel.getActiveQuestion())){
+            question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        }
         gameModel.activateQuestion(question);
 
         btnSubmit.setDisable(false);

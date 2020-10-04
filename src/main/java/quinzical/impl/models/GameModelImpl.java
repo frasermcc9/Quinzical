@@ -33,6 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The model for the main game of the application, controlling the saving, loading, 
+ * and question and score saving and getting of the game.
+ */
 @Singleton
 public class GameModelImpl extends AbstractGameModel implements GameModel, GameModelSaver, QuinzicalModel {
 

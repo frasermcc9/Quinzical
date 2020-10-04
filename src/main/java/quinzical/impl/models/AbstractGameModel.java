@@ -63,7 +63,7 @@ public abstract class AbstractGameModel implements QuinzicalModel {
         this.activeQuestion = question;
         fireActiveQuestionUpdate();
     }
-
+    
     @Override
     public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
         activeObservers.add(fn);
@@ -73,6 +73,14 @@ public abstract class AbstractGameModel implements QuinzicalModel {
         this.activeObservers.forEach(ActiveQuestionObserver::fireActiveQuestion);
     }
 
+    /**
+     * Sets the colour of the text areas to either red or green,
+     * depending on if they were incorrect or correct as per
+     * the corrects list.
+     * 
+     * @param textAreas - The list of textAreas to be coloured
+     * @param corrects -  The list of Boolean values showing which text areas are right and wrong.
+     */
     @Override
     public void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects) {
         for (int i = 0; i < textAreas.size(); i++) {
