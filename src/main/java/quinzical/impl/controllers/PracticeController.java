@@ -26,6 +26,9 @@ import quinzical.interfaces.models.SceneHandler;
 
 import java.util.List;
 
+/**
+ * Controller for the practice menu scene
+ */
 public class PracticeController {
 
     @Inject
@@ -40,6 +43,10 @@ public class PracticeController {
     @FXML
     private ImageView imgBackground;
 
+    /**
+     * Fired when the ok button is pressed, gets a random question from the currently selected category
+     * and then switches to the practice question scene.
+     */
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
         if (comboCategories.getValue() != null) {
@@ -49,11 +56,17 @@ public class PracticeController {
         }
     }
 
+    /**
+     * Sets the scene to the intro scene when the back button is pressed.
+     */
     @FXML
     void btnBackPress(ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
+    /**
+     * Fired when the FXML is loaded, sets the combobox options according to all of the available categories.
+     */
     @FXML
     void initialize() {
 
@@ -66,6 +79,9 @@ public class PracticeController {
 
     }
 
+    /**
+     * Makes the background change to the correct image whenever needed.
+     */
     private void listen() {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
