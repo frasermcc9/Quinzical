@@ -68,6 +68,12 @@ public class SceneHandlerImpl implements SceneHandler {
         sceneChangeObservers.forEach(o -> o.sceneChanged(scene));
     }
 
+    /**
+     * Adds a new sceneChangeObserver to the list of observers that listen
+     * to scene changes.
+     * 
+     * @param sceneChangeObserver - the sceneChangeObserver to add.
+     */
     @Override
     public void onSceneChange(SceneChangeObserver sceneChangeObserver) {
         sceneChangeObservers.add(sceneChangeObserver);
