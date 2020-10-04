@@ -18,6 +18,9 @@ import quinzical.impl.util.questionparser.Question;
 
 import java.util.List;
 
+/**
+ * Interface of PracticeModelImpl class. Handles getting of random questions and the list of categories.
+ */
 public interface PracticeModel extends QuinzicalModel {
     Question getRandomQuestion(String category);
 

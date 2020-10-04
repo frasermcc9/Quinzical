@@ -19,6 +19,9 @@ import quinzical.impl.util.questionparser.Question;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Interface for QuestionCollectionImpl class. Handles the collection of all the questions available in the game.
+ */
 public interface QuestionCollection {
     Map<String, List<Question>> getQuestions();
 }

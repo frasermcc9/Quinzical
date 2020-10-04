@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Fully extracted interface of GameModelImpl class. Handles various factors for the game, such as the game questions
+ * Interface of GameModelImpl class. Handles various factors for the game, such as the game questions
  * and the users earnings.
  */
 public interface GameModel extends QuinzicalModel {
