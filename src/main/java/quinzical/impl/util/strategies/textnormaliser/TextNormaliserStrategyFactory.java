@@ -19,13 +19,24 @@ import quinzical.interfaces.strategies.textnormaliser.TextNormaliserStrategy;
 
 import java.text.Normalizer;
 
+/**
+ * Manages Normalisation of text, converting capitals to lower case, trimming leading
+ * and trailing spaces and trimming starting "the" words.
+ */
 public class TextNormaliserStrategyFactory implements TextNormaliserFactory {
+
+    /**
+     * Gets a TextNormalizer to be used.
+     */
     @Override
     public TextNormaliserStrategy getTextNormalizer() {
         return new MacronRequiredNormaliser();
     }
 }
 
+/**
+ * A Text normalizer that removes any macrons in the text
+ */
 class DefaultTextNormaliser implements TextNormaliserStrategy {
     @Override
     public String normaliseText(String input) {
@@ -33,6 +44,10 @@ class DefaultTextNormaliser implements TextNormaliserStrategy {
     }
 }
 
+/**
+ * A Text normalizer when macrons are required, keeping all macrons in the text 
+ * as opposed to removing them.
+ */
 class MacronRequiredNormaliser implements TextNormaliserStrategy {
     @Override
     public String normaliseText(String input) {

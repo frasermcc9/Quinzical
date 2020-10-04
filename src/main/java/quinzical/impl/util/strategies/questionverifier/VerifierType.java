@@ -14,6 +14,9 @@
 
 package quinzical.impl.util.strategies.questionverifier;
 
+/**
+ * The different types of verifiers available to compare solutions with textAreas.
+ */
 public enum VerifierType {
     FILL_SOLUTION, HIDE_SOLUTION, HINT_SOLUTION
 }
