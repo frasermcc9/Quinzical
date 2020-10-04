@@ -15,7 +15,6 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -24,6 +23,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.SaveData;
 import quinzical.impl.util.questionparser.Serializer;
 import quinzical.interfaces.models.GameModel;
+import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 
@@ -43,6 +43,9 @@ public class IntroController {
 
     @Inject
     private ObjectReaderStrategyFactory objectReader;
+
+    @Inject
+    private QuestionCollection questionCollection;
 
     @FXML
     private AnchorPane background;
@@ -81,12 +84,15 @@ public class IntroController {
     }
 
     /**
-     *  When the Load New Question Set button is pressed, run the question file loading method.
+     * When the Load New Question Set button is pressed, run the question file loading method.
      */
     @FXML
-    void btnLoadSetPress() { Serializer.main(null); }
-    
-    
+    void btnLoadSetPress() {
+        Serializer.main(null);
+        questionCollection.regenerateQuestionsFromDisk();
+    }
+
+
     /**
      * Fired when the FXML is loaded.
      */
@@ -135,5 +141,5 @@ public class IntroController {
             }
         });
     }
-    
+
 }

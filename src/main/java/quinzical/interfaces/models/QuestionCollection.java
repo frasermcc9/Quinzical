@@ -21,4 +21,6 @@ import java.util.Map;
 
 public interface QuestionCollection {
     Map<String, List<Question>> getQuestions();
+
+    void regenerateQuestionsFromDisk();
 }
