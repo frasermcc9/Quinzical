@@ -31,6 +31,9 @@ import quinzical.interfaces.models.QuinzicalModel;
 
 import java.util.List;
 
+/**
+ * Controls the question scene for the main game
+ */
 public class GameQuestionController extends AbstractQuestionController {
 
     //#region Injected classes
@@ -55,6 +58,9 @@ public class GameQuestionController extends AbstractQuestionController {
     //#region Initialisation at FXML load
 
 
+    /**
+     * Sets up the Game Question scene.
+     */
     @FXML
     void initialize() {
         listen();
@@ -66,27 +72,47 @@ public class GameQuestionController extends AbstractQuestionController {
 
     //#region Injected handlers
 
+    /**
+     * Repeats the question using the speaker.speak method
+     */
     @FXML
     void onReplyClick() {
         String s = gameModel.getActiveQuestion().getHint();
         speaker.speak(s);
     }
 
+    /**
+     * submits the currently inputted text as an answer to the question
+     */
     @FXML
     void onPassClicked() {
         onSubmitClicked();
     }
 
+    /**
+     * gets the gameModel associated with this controller.
+     * 
+     * @return - the gameModel that this controller uses
+     */
     @Override
     protected QuinzicalModel getGameModel() {
         return this.gameModel;
     }
 
+    /**
+     * Sets the Text of the prompt for the current question in the correct label
+     * 
+     * @param hint - the current hint being read out
+     * @param prompt - the prompt for the current question to be set in the label
+     */
     @Override
     protected void setPrompts(String hint, String prompt) {
         this.lblPrompt.setText(prompt);
     }
 
+    /**
+     * submits the currently inputted text as an answer to the question
+     */
     @FXML
     void onSubmitClicked() {
         GameQuestion question = gameModel.getActiveQuestion();
@@ -112,12 +138,18 @@ public class GameQuestionController extends AbstractQuestionController {
 
     //#endregion
 
-
+    /**
+     * Makes it so that when a question is initially set as active, it will be 
+     * set as incorrectly answered.
+     */
     @Override
     protected void onQuestionLoad() {
         gameModel.answerActive(false);
     }
 
+    /**
+     * Handles the return to the main game scene.
+     */
     private void handleReturnToCategories(ActionEvent e) {
         refreshSubmissionButtonsState();
 
@@ -129,6 +161,11 @@ public class GameQuestionController extends AbstractQuestionController {
         sceneHandler.setActiveScene(GameScene.GAME);
     }
 
+    /**
+     * handles the moving to the next question, used when the pass button is clicked
+     * 
+     * @param question - The current active question.
+     */
     private void handleNextQuestion(GameQuestion question) {
         refreshSubmissionButtonsState();
 
@@ -146,13 +183,17 @@ public class GameQuestionController extends AbstractQuestionController {
 
     }
 
+    /**
+     * refreshes the buttons onAction calls, back to the normal functions,
+     * as they change when a question is just answered.
+     */
     private void refreshSubmissionButtonsState() {
         btnSubmit.setOnAction(e -> onSubmitClicked());
         btnPass.setOnAction(e -> onSubmitClicked());
         btnPass.setText("Pass");
         btnSubmit.setText("Submit");
     }
-
+    
     private void onTextAreaKeyPress(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof TextArea) {

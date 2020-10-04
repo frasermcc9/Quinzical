@@ -23,6 +23,11 @@ import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
+/**
+ * Controls the end game screen, where the total earnings
+ * are displayed and the option to go back to the main menu 
+ * is given.
+ */
 public class EndController {
 
     @Inject
@@ -45,6 +50,9 @@ public class EndController {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
+    /**
+     * Sets up the controller.
+     */
     @FXML
     void initialize() {
         assert imgBackground != null : "fx:id=\"imgBackground\" was not injected: check your FXML file 'end.fxml'.";
@@ -54,7 +62,7 @@ public class EndController {
     }
 
     /**
-     *
+     *Sets the Actions to be done when the end game scene is selected.
      */
     private void listen() {
         //Listen for scene change, when this scene is selected, run the animation.
@@ -69,7 +77,11 @@ public class EndController {
         sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
 
-    //Begin the money animation.
+    /**
+     * Starts the earnings display animation
+     * 
+     * @param animateUpTo The value to be displayed as the earnings.
+     */
     private void animateLabel(final int animateUpTo) {
         final int increment = animateUpTo / 100;
         AnimationTimer timer = new AnimationTimer() {

@@ -127,7 +127,9 @@ public class GameController {
         }
     }
 
-    // Called when a category is selected. Sets the buttons and handlers to change to the question scene.
+    /**
+     * Called when a category is selected. Sets the buttons and handlers to change to the question scene.
+     */
     private void loadQuestions(List<GameQuestion> questions) {
 
         btnMenu.setOnAction(event -> refreshBoard());
@@ -155,13 +157,21 @@ public class GameController {
         }
     }
 
-    // Handler for question buttons.
+    /**
+     * Sets the inputted question as the active question through the game model.
+     * 
+     * @param gameQuestion the question to be set as the active one.
+     */
     private void activateQuestion(GameQuestion gameQuestion) {
         gameModel.activateQuestion(gameQuestion);
         sceneHandler.setActiveScene(GameScene.GAME_QUESTION);
     }
 
-    // Also fired when any category button is pressed (or the back button). Sets the top text image.
+    /**
+     * Also fired when any category button is pressed (or the back button). Sets the top text image.
+     * 
+     * @param o the overlay to be set (what top text should be active)
+     */
     private void setOverlay(Overlay o) {
         String img = "";
         switch (o) {
@@ -177,7 +187,10 @@ public class GameController {
             "/overlays/" + img + ".png"))));
     }
 
-    // The two types of overlay.
+
+    /**
+     * The two types of overlay
+     */
     private enum Overlay {
         CATEGORY, QUESTION
     }
