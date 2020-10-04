@@ -21,14 +21,34 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Factory class for reading serialised objects.
+ */
 public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFactory {
+    /**
+     * @param <T> The type of object being read. This is used as a cast.
+     * @return the object reader strategy.
+     */
     public <T> ObjectReaderStrategy<T> createObjectReader() {
         return new DefaultObjectReaderStrategy<>();
     }
 }
 
+/**
+ * The default strategy for reading objects.
+ *
+ * @param <T> The object being read. The read object will be casted to this type.
+ */
 class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
 
+    /**
+     * Read the object
+     *
+     * @param dirname the location of the object on disk.
+     * @return the deserialized object, casted to type T
+     * @throws IOException            If an error occurs with finding the file
+     * @throws ClassNotFoundException If the class being casted to cannot be found.
+     */
     @Override
     public T readObject(String dirname) throws IOException, ClassNotFoundException {
 
