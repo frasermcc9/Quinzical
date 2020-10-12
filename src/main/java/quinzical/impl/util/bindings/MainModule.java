@@ -21,12 +21,11 @@ import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
-
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questionverifier.QuestionVerifierFactoryImpl;
 import quinzical.impl.util.strategies.textnormaliser.TextNormaliserStrategyFactory;
-
+import quinzical.impl.util.strategies.timer.TimerContextImpl;
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.models.structures.SpeakerMutator;
@@ -35,6 +34,7 @@ import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 import quinzical.interfaces.strategies.textnormaliser.TextNormaliserFactory;
+import quinzical.interfaces.strategies.timer.TimerContext;
 
 /**
  * This class binds concrete implementations to interfaces. It decides, when a class requires an interface injection
@@ -77,6 +77,8 @@ public class MainModule extends AbstractModule {
         }
 
         bind(Integer.class).annotatedWith(Names.named("attempts")).toInstance(0);
+
+        bind(TimerContext.class).to(TimerContextImpl.class);
 
 
         bind(Stage.class).toInstance(stage);
