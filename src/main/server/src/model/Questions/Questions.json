@@ -1,0 +1,370 @@
+{
+    "Places": [
+        { "question": "This is the capital of New Zealand", "prompt": "what is", "solution": ["Wellington"] },
+        { "question": "This is the Māori name for New Zealand", "prompt": "what is", "solution": ["Aotearoa"] },
+        { "question": "This is the largest city in New Zealand", "prompt": "what is", "solution": ["Auckland"] },
+        {
+            "question": "This is the name of the port that serves Christchurch",
+            "prompt": "what is",
+            "solution": ["Lyttleton"]
+        },
+        {
+            "question": "This is the name of the Parliament Building in Wellington",
+            "prompt": "what is",
+            "solution": ["Beehive"]
+        },
+        {
+            "question": "This is the name of New Zealand's national museum",
+            "prompt": "what is",
+            "solution": ["Te Papa"]
+        },
+        {
+            "question": "This is the island in New Zealand that has the largest population",
+            "prompt": "what is",
+            "solution": ["North Island"]
+        },
+        {
+            "question": "This is the city that is the first to see the sunrise each day",
+            "prompt": "what is",
+            "solution": ["Gisborne"]
+        },
+        {
+            "question": "This is the most northern tip on the North Island",
+            "prompt": "what is",
+            "solution": ["Cape Reinga"]
+        },
+        {
+            "question": "This is the most southern port in the South Island",
+            "prompt": "what is",
+            "solution": ["Bluff"]
+        },
+        {
+            "question": "This city is nicknamed the Edinburgh of the South",
+            "prompt": "what is",
+            "solution": ["Dunedin"]
+        },
+        {
+            "question": "The number of river systems that flow through either the North or South Island",
+            "prompt": "what is",
+            "solution": ["70", "seventy"]
+        }
+    ],
+    "Symbols": [{
+            "question": "This is the number of stars on the New Zealand flag",
+            "prompt": "what is",
+            "solution": ["4", "four"]
+        },
+        { "question": "This is the ship on the 50 cent coin", "prompt": "what is", "solution": ["Endeavour"] },
+        {
+            "question": "This plant is the national symbol of New Zealand",
+            "prompt": "what is",
+            "solution": ["silver fern"]
+        },
+        {
+            "question": "These are the birds that New Zealanders are named after",
+            "prompt": "who are",
+            "solution": ["Kiwis"]
+        },
+        {
+            "question": "This is the flightless bird that features in the Royal New Zealand Airforce logo",
+            "prompt": "what is",
+            "solution": ["Kiwi"]
+        },
+        {
+            "question": "This is what the stars on the New Zealand flag represent",
+            "prompt": "what is",
+            "solution": ["Southern Cross"]
+        }
+    ],
+    "Geography": [{
+            "question": "This is the largest lake in New Zealand",
+            "prompt": "what is",
+            "solution": ["Taupo", "Lake Taupo"]
+        },
+        {
+            "question": "This is the highest mountain in New Zealand",
+            "prompt": "what is",
+            "solution": ["Mt Cook", "Mt Aorangi", "Mt Aoraki"]
+        },
+        { "question": "This is the Longest river in New Zealand", "prompt": "what is", "solution": ["Waikato"] },
+        {
+            "question": "This is the name of the ocean New Zealand sits in",
+            "prompt": "what is",
+            "solution": ["Pacific"]
+        },
+        {
+            "question": "This is the name of the sea between New Zealand Australia",
+            "prompt": "what is",
+            "solution": ["Tasman"]
+        },
+        {
+            "question": "This is the name of the sea between the North and the South Island",
+            "prompt": "what is",
+            "solution": ["Cook Strait"]
+        },
+        {
+            "question": "This is the name of the long chain of mountains that make up the backbone of the South Island",
+            "prompt": "what is",
+            "solution": ["Southern Alps"]
+        },
+        {
+            "question": "This volcano in Auckland last erupted 20,000 years ago, and was the site of a major pā",
+            "prompt": "what is",
+            "solution": ["Māngere Mountain"]
+        },
+        {
+            "question": "This volcano emerged unexpectedly in the Hauraki gulf about 600 years ago",
+            "prompt": "what is",
+            "solution": ["Rangitoto"]
+        },
+        {
+            "question": "This is the largest active volcano in New Zealand",
+            "prompt": "what is",
+            "solution": ["Ruapehu"]
+        },
+        {
+            "question": "This is the third largest island of New Zealand",
+            "prompt": "what is",
+            "solution": ["Stewart Island", "Rakiura"]
+        }
+    ],
+    "History": [{
+            "question": "This is the name of the ship Captain Cook sailed on to New Zealand",
+            "prompt": "what is",
+            "solution": ["Endeavour"]
+        },
+        { "question": "This is the year the treaty of Waitangi was signed", "prompt": "what is", "solution": ["1840"] },
+        {
+            "question": "This is the year women first got to vote in New Zealand",
+            "prompt": "what is",
+            "solution": ["1893"]
+        },
+        {
+            "question": "This is the first country in the world to give women the vote",
+            "prompt": "what is",
+            "solution": ["New Zealand", "NZ"]
+        },
+        {
+            "question": "This is the first person to step foot on New Zealand",
+            "prompt": "who is",
+            "solution": ["Kupe"]
+        },
+        {
+            "question": "This city was the capital of New Zealand before it moved in Wellington",
+            "prompt": "what is",
+            "solution": ["Auckland"]
+        },
+        {
+            "question": "The eruption from this volcano happened in 1886 and destroyed several villages",
+            "prompt": "what is",
+            "solution": ["Mount Tarawera"]
+        },
+        {
+            "question": "On the 22 February 2011 and magnitude 6.3 earthquake hit this city",
+            "prompt": "what is",
+            "solution": ["Christchurch"]
+        }
+    ],
+    "Famous People": [{
+            "question": "This New Zealand was the first person to climb mount Everest",
+            "prompt": "who is",
+            "solution": ["Edmund Hillary"]
+        },
+        {
+            "question": "This New Zealander was the first person to split the atom",
+            "prompt": "who is",
+            "solution": ["Ernest Rutherford"]
+        },
+        {
+            "question": "The New Zealander directed \"The Lord of the Rings\" and \"The Hobbit\"",
+            "prompt": "who is",
+            "solution": ["Peter Jackson"]
+        },
+        {
+            "question": "This New Zealander directed \"Jojo Rabbit\" and \"Thor Ragnarok\"",
+            "prompt": "who is",
+            "solution": ["Taika Waititi"]
+        },
+        {
+            "question": "This is what  Dame Kiri Te Kanawa was famous for",
+            "prompt": "what is",
+            "solution": ["Opera Singing"]
+        },
+        {
+            "question": "This New Zealander sung at the wedding of Prince Charles and Lady Diana",
+            "prompt": "what is",
+            "solution": ["Kiri Te Kanawa"]
+        },
+        {
+            "question": "This New Zealand  had a worldwide hit with the song \"Royal\"",
+            "prompt": "who is",
+            "solution": ["Lorde"]
+        },
+        {
+            "question": "This New Zealander led the 1975 land march from Te Hapua to Parliament",
+            "prompt": "who is",
+            "solution": ["Dame Whina Cooper"]
+        }
+    ],
+    "NZ Life": [{
+            "question": "This is the name for a traditional fenced Māori village",
+            "prompt": "what is",
+            "solution": ["Pā"]
+        },
+        { "question": "This is the Māori word for stomach", "prompt": "what is", "solution": ["Puku"] },
+        { "question": "This is the Māori word for sweet potato", "prompt": "what is", "solution": ["kumara"] },
+        {
+            "question": "This is the name of the underground method of cooking used in New Zealand",
+            "prompt": "what is",
+            "solution": ["hangi"]
+        },
+        { "question": "The New Zealand term for swimwear", "prompt": "what is", "solution": ["togs"] },
+        {
+            "question": "These shoes are called flip flops or thongs in other countries",
+            "prompt": "what are",
+            "solution": ["jandals"]
+        }
+    ],
+    "Flora": [
+        { "question": "This is the largest native tree in New Zealand", "prompt": "what is", "solution": ["Kauri"] },
+        {
+            "question": "This well known fruit use to be called the Chinese Gooseberry",
+            "prompt": "what is",
+            "solution": ["Kiwifruit"]
+        },
+        {
+            "question": "New Zealand has 200 of this species, and one species is our national symbol",
+            "prompt": "what is",
+            "solution": ["fern"]
+        },
+        {
+            "question": "The honey from this plant is known for its medicinal benefits",
+            "prompt": "what is",
+            "solution": ["Mānuka"]
+        },
+        {
+            "question": "The nectar from bright yellow flowers of this tree are an important food source for native birds",
+            "prompt": "what is",
+            "solution": ["Kowhai"]
+        },
+        {
+            "question": "This is known as the New Zealand Christmas tree",
+            "prompt": "what is",
+            "solution": ["Pōhtukawa"]
+        },
+        {
+            "question": "This green vegetable is a traditional staple food of the Māori",
+            "prompt": "what is",
+            "solution": ["Pūhā"]
+        },
+        {
+            "question": "This is the plant that the Māori weaved into baskets",
+            "prompt": "what is",
+            "solution": ["flax", "Harakeke"]
+        },
+        {
+            "question": "This introduced alga is a threat to New Zealand rivers and is known as rock snot",
+            "prompt": "what is",
+            "solution": ["Didymo"]
+        }
+    ],
+    "Fauna": [
+        { "question": "This is New Zealand's mountain Parrot", "prompt": "what is", "solution": ["Kea"] },
+        { "question": "This is called a living dinosaur", "prompt": "what is", "solution": ["Tuatara"] },
+        {
+            "question": "This is the common name for the New Zealand owl",
+            "prompt": "what is",
+            "solution": ["Morepork", "Ruru"]
+        },
+        {
+            "question": "This native bird lays the largest egg in relation to their body size of any species of bird in the world",
+            "prompt": "what is",
+            "solution": ["Kiwi"]
+        },
+        {
+            "question": "This is the now extinct giant flightless bird that inhabited all of New Zealand",
+            "prompt": "what is",
+            "solution": ["Moa"]
+        },
+        { "question": "This is the only land mammal native to New Zealand", "prompt": "what is", "solution": ["bat"] },
+        { "question": "This is the number of Kiwi species", "prompt": "what is", "solution": ["5", "five"] },
+        {
+            "question": "This is the animal that is the greatest threat to Kiwi",
+            "prompt": "what is",
+            "solution": ["stoat"]
+        },
+        {
+            "question": "This animal was introduced in the late 1700s to New Zealand and can damage the forest ecosystem",
+            "prompt": "what are",
+            "solution": ["pig"]
+        },
+        { "question": "This animal is known as Kiore in Māori", "prompt": "what is", "solution": ["black rat"] },
+        {
+            "question": "This native bird of prey can fly over 1000 kilometers an hour",
+            "prompt": "what is",
+            "solution": ["NZ Falcon", "New Zealand Falcon", "Falcon", "Kareaea"]
+        },
+        {
+            "question": "This large brown flightless bird is known for being curious and a bit of a thief",
+            "prompt": "what is",
+            "solution": ["Weka"]
+        },
+        {
+            "question": "This small common bird has a tail that opens up to look like a fan",
+            "prompt": "what is",
+            "solution": ["Fantail", "pīwakawaka"]
+        },
+        {
+            "question": "This large flightless nocturnal parrot is one of New Zealand's most endangered birds",
+            "prompt": "what is",
+            "solution": ["Kākāpō"]
+        },
+        {
+            "question": "This common forest bird is known for its beautiful song, and distinctive white tuft under their throat",
+            "prompt": "what is",
+            "solution": ["Tui"]
+        },
+        {
+            "question": "This is the only poisonous Native spider in New Zealand",
+            "prompt": "what is",
+            "solution": ["Katipō"]
+        },
+        { "question": "This grub chews up wood, and is edible", "prompt": "what is", "solution": ["Huhu Grub"] }
+    ],
+    "Oddities": [{
+            "question": "What is the year the Government pledged New Zealand would be predator free",
+            "prompt": "what is",
+            "solution": ["2050"]
+        },
+        {
+            "question": "This is the name of New Zealand Male Rugby Team",
+            "prompt": "what is",
+            "solution": ["All Blacks"]
+        },
+        {
+            "question": "What New Zealand song has made it into the New Zealand Top 40 in three separate decades",
+            "prompt": "what is",
+            "solution": ["Poi E"]
+        },
+        {
+            "question": "This is the nationality of the inventors of the bobby pin, wide toothed shearing comb, and jet boat",
+            "prompt": "what is",
+            "solution": ["New Zealander"]
+        },
+        {
+            "question": "In 1990 New Zealand became the first country in the modern world to make this appointment",
+            "prompt": "what is",
+            "solution": ["Official National Wizard"]
+        },
+        {
+            "question": "With more that 400, New Zealand has more of these per capita than any other country in the world",
+            "prompt": "what are",
+            "solution": ["Golf Courses"]
+        },
+        {
+            "question": "The first record wholly produced in New Zealand from composition to pressing",
+            "prompt": "what is",
+            "solution": ["Blue Smoke"]
+        }
+    ]
+}
