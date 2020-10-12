@@ -84,7 +84,7 @@ public abstract class AbstractQuestionController {
         paneSolutions.getChildren().clear();
 
         setPrompts(gameQuestion.getHint(), gameQuestion.getPrompt() + ":");
-        
+
         speaker.speak(gameQuestion.getHint());
 
         int slnSize = gameQuestion.getSolutions().size();
@@ -126,11 +126,12 @@ public abstract class AbstractQuestionController {
         }
     }
 
+    /**
+     * gets each button in the bar, and programs its handler Gets the text and current cursor location from the selected
+     * text area and inserts the selected macron character after the cursor. Then reselect the text area and set the
+     * cursor to after the inserted character.
+     */
     protected void initMacronButtons() {
-        //gets each button in the bar, and programs its handler
-        // Gets the text and current cursor location from the selected text area and inserts the selected 
-        // macron character after the cursor. Then reselect the text area and set the cursor to after the 
-        // inserted character.
         macronBar.getButtons().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(btn -> btn.setOnAction(e -> {
             String text = activeText.getText();
             int currentPos = activeText.getCaretPosition();
