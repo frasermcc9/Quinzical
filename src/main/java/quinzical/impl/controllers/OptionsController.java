@@ -88,7 +88,7 @@ public class OptionsController {
      */
     @FXML
     void onSampleClick(MouseEvent event) {
-        speakerMutator.speak("Hello, welcome to the Quinzical!");
+        speakerMutator.speak("Hello, welcome to Quinzical!");
     }
 
     /**

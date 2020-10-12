@@ -17,7 +17,10 @@ package quinzical.interfaces.models;
 import javafx.scene.Scene;
 import quinzical.impl.constants.GameScene;
 
-
+/**
+ * Interface for SceneRegistryImpl which handles the collection of all scenes,
+ * both adding to it and getting them back.
+ */
 public interface SceneRegistry {
     void addScene(GameScene name, Scene scene);
 

@@ -16,6 +16,10 @@ package quinzical.interfaces.models;
 
 import quinzical.impl.constants.GameScene;
 
+/**
+ * A functional interface with gameScene argument. This is fired when the gameScene is changed,
+ * with the new scene being passed as the argument.
+ */
 @FunctionalInterface
 public interface SceneChangeObserver {
     void sceneChanged(GameScene gameScene);

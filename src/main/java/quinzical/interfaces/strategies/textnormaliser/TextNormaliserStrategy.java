@@ -14,6 +14,11 @@
 
 package quinzical.interfaces.strategies.textnormaliser;
 
+/**
+ * Interface for DefaultTextNormaliser and MacronRequiredNormaliser, which manage
+ * the simplification/ normalising of text by removing trailing/leading spaces, making
+ * the text all one case and similar actions.
+ */
 public interface TextNormaliserStrategy {
     String normaliseText(String input);
 }
