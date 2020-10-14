@@ -16,7 +16,8 @@ package quinzical.impl.util.bindings;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
@@ -41,12 +42,6 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  * with the @Inject annotation, which concrete implementation to give it.
  */
 public class MainModule extends AbstractModule {
-
-    private final Stage stage;
-
-    public MainModule(Stage stage) {
-        this.stage = stage;
-    }
 
     @Override
     protected void configure() {
@@ -80,7 +75,6 @@ public class MainModule extends AbstractModule {
 
         bind(TimerContext.class).to(TimerContextImpl.class);
 
-
-        bind(Stage.class).toInstance(stage);
+        bind(Scene.class).toInstance(new Scene(new AnchorPane()));
     }
 }
