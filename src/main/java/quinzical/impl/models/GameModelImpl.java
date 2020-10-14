@@ -48,8 +48,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * {@link this#fireQuestionBoardUpdate)} is called, all functions will be executed.
      */
     private final List<QuestionBoardObserver> questionBoardObservers = new ArrayList<>();
-
-
+    
     /**
      * List of functions (observers) that are executed when the game board updates.  Adding (subscribing) to the list is
      * done with {@link this#onValueChange}, which will add the given ActiveQuestionObserver to the list. When {@link
@@ -204,6 +203,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStrategy().generateQuestions();
         this.userScore.setValue(0);
         fireQuestionBoardUpdate();
+    }
+    
+    public void generateGameQuestionSetFromCategories(){
+        
     }
 
     /**

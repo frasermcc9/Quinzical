@@ -14,14 +14,19 @@
 
 package quinzical.interfaces.strategies.questiongenerator;
 
+import java.util.List;
+
 /**
- * Interface for QuestionGeneratorStrategyFactoryImpl. Handles the generation of 
- * QuestionGeneratorStrategy and PracticeQuestionGeneratorStrategy objects.
+ * Interface for QuestionGeneratorStrategyFactoryImpl. Handles the generation of QuestionGeneratorStrategy and
+ * PracticeQuestionGeneratorStrategy objects.
  */
 public interface QuestionGeneratorStrategyFactory {
 
     QuestionGeneratorStrategy createGameQuestionStrategy();
 
     QuestionGeneratorStrategy createPracticeQuestionStrategy();
-    
+
+    QuestionGeneratorStrategy createSelectedCategorySelection(String[] categories);
+
+    QuestionGeneratorStrategy createSelectedCategorySelection(List<String> categories);
 }
