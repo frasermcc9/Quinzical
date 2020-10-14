@@ -51,7 +51,6 @@ public class MainModule extends AbstractModule {
         bind(GameModelSaver.class).to(GameModelImpl.class);
 
         bind(SceneHandler.class).to(SceneHandlerImpl.class);
-        bind(SceneRegistry.class).to(SceneRegistryImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
 
