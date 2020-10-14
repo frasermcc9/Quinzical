@@ -7,7 +7,7 @@
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #FAFAFA;
-    
+
     -fx-alignment: center;
 }
 
@@ -37,7 +37,7 @@
     -fx-font-weight: bold;
     -fx-background-color: #1b3319;
     -fx-text-fill: #c0d4be;
-    
+
     -fx-alignment: center;
 }
 
@@ -50,4 +50,15 @@
     -fx-text-fill: #d4bebe;
 
     -fx-alignment: center;
+}
+
+
+.vbox {
+    -fx-background-image: url(../images/overlays/other.png);
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-pref-width: 1280;
+    -fx-pref-height: 720;
+    
 }

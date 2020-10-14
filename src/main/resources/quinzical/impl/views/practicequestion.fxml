@@ -2,8 +2,8 @@
 
 <?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -11,95 +11,105 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.PracticeQuestionController">
-    <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
-      <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.PracticeQuestionController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../images/overlays/gameQuestion.png" />
+            <Image url="@../../../images/landscapes/fields.jpg" />
          </image>
       </ImageView>
-        <Pane fx:id="paneSolutions" layoutX="346.0" layoutY="305.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
-      <Label fx:id="lblPrompt" alignment="TOP_RIGHT" layoutX="274.0" layoutY="265.0" prefHeight="31.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Button fx:id="btnSubmit" layoutX="532.0" layoutY="634.0" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <stylesheets>
-            <URL value="@../../../css/intro.css" />
-            <URL value="@../../../css/game-question.css" />
-         </stylesheets>
-         <styleClass>
-            <String fx:value="transparent" />
-            <String fx:value="submit-button" />
-         </styleClass>
-      </Button>
-      <Button fx:id="btnPass" layoutX="764.0" layoutY="634.0" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="280.0" text="Pass">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <stylesheets>
-            <URL value="@../../../css/intro.css" />
-            <URL value="@../../../css/game-question.css" />
-         </stylesheets>
-         <styleClass>
-            <String fx:value="transparent" />
-            <String fx:value="pass-button" />
-         </styleClass>
-      </Button>
-      <Button layoutX="620.0" layoutY="215.0" mnemonicParsing="false" onAction="#onReplayClick" prefHeight="27.0" prefWidth="38.0" style="-fx-opacity: 1; -fx-background-color: transparent;">
-         <tooltip>
-            <Tooltip text="Replay Text-to-Speech">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Tooltip>
-         </tooltip>
-         <graphic>
-            <ImageView fitHeight="37.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/replay.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="btnBack" layoutX="239.0" layoutY="634.0" mnemonicParsing="false" onAction="#onBackClicked" prefHeight="65.0" prefWidth="280.0" stylesheets="@../../../css/intro.css" text="Back">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <styleClass>
-            <String fx:value="transparent" />
-            <String fx:value="pass-button" />
-         </styleClass>
-      </Button>
-      <Label fx:id="lblHint" alignment="TOP_RIGHT" layoutX="276.0" layoutY="123.0" prefHeight="92.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <Label fx:id="lblAttempts" alignment="TOP_RIGHT" layoutX="274.0" layoutY="582.0" prefHeight="19.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-      <ButtonBar fx:id="macronBar" layoutX="389.0" layoutY="532.0" prefHeight="40.0" prefWidth="242.0" stylesheets="@../../../css/game-question.css">
-         <buttons>
-            <Button mnemonicParsing="false" prefWidth="83.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ā" />
-            <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ē" />
-            <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ī" />
-            <Button minWidth="20.0" mnemonicParsing="false" prefHeight="20.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ū" />
-            <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ō" />
-         </buttons>
-      </ButtonBar>
-        <cursor>
-            <Cursor fx:constant="DEFAULT" />
-        </cursor>
-    </AnchorPane>
-</Scene>
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 3;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+         <children>
+            <Label prefHeight="106.0" prefWidth="134.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Label" />
+            <Label fx:id="lblHint" alignment="TOP_RIGHT" prefHeight="92.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+            <Button mnemonicParsing="false" onAction="#onReplayClick" prefHeight="27.0" prefWidth="38.0" style="-fx-opacity: 1; -fx-background-color: transparent;">
+               <tooltip>
+                  <Tooltip text="Replay Text-to-Speech">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+               <graphic>
+                  <ImageView fitHeight="37.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/replay.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="lblPrompt" alignment="TOP_RIGHT" prefHeight="31.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
+              <Pane fx:id="paneSolutions" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
+            <ButtonBar fx:id="macronBar" buttonOrder="L_HE+U+FBIX_NCYOA_" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="465.0" stylesheets="@../../../css/game-question.css">
+               <buttons>
+                  <Button mnemonicParsing="false" prefWidth="83.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ā" />
+                  <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ē" />
+                  <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ī" />
+                  <Button minWidth="20.0" mnemonicParsing="false" prefHeight="20.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ū" />
+                  <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ō" />
+               </buttons>
+               <VBox.margin>
+                  <Insets left="390.0" right="390.0" />
+               </VBox.margin>
+            </ButtonBar>
+            <Label fx:id="lblAttempts" alignment="TOP_RIGHT" prefHeight="48.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" textAlignment="CENTER" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onBackClicked" prefHeight="65.0" prefWidth="280.0" stylesheets="@../../../css/intro.css" text="Back">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="pass-button" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="220.0" text="Submit">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <stylesheets>
+                        <URL value="@../../../css/intro.css" />
+                        <URL value="@../../../css/game-question.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="submit-button" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnPass" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="280.0" text="Pass">
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <stylesheets>
+                        <URL value="@../../../css/intro.css" />
+                        <URL value="@../../../css/game-question.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="transparent" />
+                        <String fx:value="pass-button" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
