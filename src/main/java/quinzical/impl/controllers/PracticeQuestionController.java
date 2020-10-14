@@ -56,10 +56,10 @@ public class PracticeQuestionController extends AbstractQuestionController {
     private int attempts;
 
     /**
-     * Called when the submit button is clicked. When called it gets the solutions to the current question and
-     * compares them to the correct answers, and depending on how many attempts have been made, either reveals
-     * the answer and prep for a new question, or gives the user another attempt, or if correct, move onto 
-     * the next question regardless of attempts.
+     * Called when the submit button is clicked. When called it gets the solutions to the current question and compares
+     * them to the correct answers, and depending on how many attempts have been made, either reveals the answer and
+     * prep for a new question, or gives the user another attempt, or if correct, move onto the next question regardless
+     * of attempts.
      */
     @FXML
     void onSubmitClicked() {
@@ -110,7 +110,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
 
     /**
      * Gets the gameModel associated with this controller
-     * 
+     *
      * @return the gameModel that this controller is using.
      */
     @Override
@@ -121,7 +121,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
     /**
      * Sets the Text of the prompt for the current question in the correct label
      *
-     * @param hint - the current hint being read out
+     * @param hint   - the current hint being read out
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
@@ -131,8 +131,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
     }
 
     /**
-     * Sets the scenes state in the prepping for next question state, where 
-     * the question has been answered but the user has not asked for a new question yet.
+     * Sets the scenes state in the prepping for next question state, where the question has been answered but the user
+     * has not asked for a new question yet.
      */
     private void prepForNewQuestion() {
         btnPass.setText("Next Question");
@@ -140,39 +140,15 @@ public class PracticeQuestionController extends AbstractQuestionController {
         btnPass.setOnAction(e -> getNewQuestion());
     }
 
-    /**
-     * Get a new random question, ensuring it is not the same as the previous question,
-     * and then setting the question as the gameModels current active question.
-     */
-    private void getNewQuestion() {
-        Question question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
-        while(question.equals(gameModel.getActiveQuestion())){
-            question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
-        }
-        gameModel.activateQuestion(question);
-
-        btnSubmit.setDisable(false);
-        btnPass.setText("Pass");
-        btnPass.setOnAction(e -> getNewQuestion());
-        this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
-    }
 
     /**
-     * Called when the pass button is clicked, to go to 
-     * a new question.
+     * Called when the pass button is clicked, to go to a new question.
      */
     @FXML
     void onPassClicked() {
         getNewQuestion();
     }
 
-    /**
-     * Called when the replay button is clicked, repeats the question hint using the speaker.
-     */
-    @FXML
-    void onReplayClick() {
-        speaker.speak(gameModel.getActiveQuestion().getHint());
-    }
 
     /**
      * Called when the back button is clicked, sets the active scene to the practice menu.
@@ -182,22 +158,31 @@ public class PracticeQuestionController extends AbstractQuestionController {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
 
+
     /**
-     * Fired when the FXML is loaded, sets up the macron buttons and sets the current attempt at 1.
+     * Get a new random question, ensuring it is not the same as the previous question, and then setting the question as
+     * the gameModels current active question.
      */
-    @FXML
-    void initialize() {
+    private void getNewQuestion() {
+        Question question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        while (question.equals(gameModel.getActiveQuestion())) {
+            question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        }
+        gameModel.activateQuestion(question);
+        btnSubmit.setDisable(false);
+        btnPass.setText("Pass");
+        btnPass.setOnAction(e -> getNewQuestion());
         this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
-        initMacronButtons();
-        listen();
+        refresh();
     }
 
     /**
-     * Re-enables the submit button when a new question is loaded, as it is disabled
-     * when in the prepping for question state.
+     * Re-enables the submit button when a new question is loaded, as it is disabled when in the prepping for question
+     * state.
      */
     @Override
     protected void onQuestionLoad() {
         this.btnSubmit.setDisable(false);
     }
+
 }

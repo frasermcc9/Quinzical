@@ -19,15 +19,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Solution;
 import quinzical.impl.util.strategies.questionverifier.VerifierType;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
+import quinzical.interfaces.strategies.timer.TimerContext;
 
 import java.util.List;
 
@@ -39,13 +37,14 @@ public class GameQuestionController extends AbstractQuestionController {
     //#region Injected classes
 
     @Inject
+    TimerContext timer;
+    @Inject
     private GameModel gameModel;
 
 
     //#endregion
 
     //#region Injected FXML components
-
     @FXML
     private Label lblPrompt;
 
@@ -57,29 +56,9 @@ public class GameQuestionController extends AbstractQuestionController {
 
     //#region Initialisation at FXML load
 
-
-    /**
-     * Sets up the Game Question scene.
-     */
-    @FXML
-    void initialize() {
-        listen();
-        initMacronButtons();
-    }
-
-
     //#endregion
 
     //#region Injected handlers
-
-    /**
-     * Repeats the question using the speaker.speak method
-     */
-    @FXML
-    void onReplayClick() {
-        String s = gameModel.getActiveQuestion().getHint();
-        speaker.speak(s);
-    }
 
     /**
      * submits the currently inputted text as an answer to the question
@@ -91,7 +70,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
     /**
      * gets the gameModel associated with this controller.
-     * 
+     *
      * @return - the gameModel that this controller uses
      */
     @Override
@@ -101,8 +80,8 @@ public class GameQuestionController extends AbstractQuestionController {
 
     /**
      * Sets the Text of the prompt for the current question in the correct label
-     * 
-     * @param hint - the current hint being read out
+     *
+     * @param hint   - the current hint being read out
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
@@ -139,8 +118,7 @@ public class GameQuestionController extends AbstractQuestionController {
     //#endregion
 
     /**
-     * Makes it so that when a question is initially set as active, it will be 
-     * set as incorrectly answered.
+     * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
      */
     @Override
     protected void onQuestionLoad() {
@@ -151,24 +129,19 @@ public class GameQuestionController extends AbstractQuestionController {
      * Handles the return to the main game scene.
      */
     private void handleReturnToCategories(ActionEvent e) {
-        refreshSubmissionButtonsState();
-
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
         }
-
         sceneHandler.setActiveScene(GameScene.GAME);
     }
 
     /**
      * handles the moving to the next question, used when the pass button is clicked
-     * 
+     *
      * @param question - The current active question.
      */
     private void handleNextQuestion(GameQuestion question) {
-        refreshSubmissionButtonsState();
-
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
@@ -179,23 +152,29 @@ public class GameQuestionController extends AbstractQuestionController {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
             gameModel.activateQuestion(next);
+            refresh();
         }
 
-    }
-
-    /**
-     * refreshes the buttons onAction calls, back to the normal functions,
-     * as they change when a question is just answered.
-     */
-    private void refreshSubmissionButtonsState() {
-        btnSubmit.setOnAction(e -> onSubmitClicked());
-        btnPass.setOnAction(e -> onSubmitClicked());
-        btnPass.setText("Pass");
-        btnSubmit.setText("Submit");
     }
 
     private void handleCompletion() {
         sceneHandler.setActiveScene(GameScene.END);
     }
 
+    /**
+     * refreshes the buttons onAction calls, back to the normal functions, as they change when a question is just
+     * answered.
+     */
+    private void refreshButtonState() {
+        btnSubmit.setOnAction(e -> onSubmitClicked());
+        btnPass.setOnAction(e -> onSubmitClicked());
+        btnPass.setText("Pass");
+        btnSubmit.setText("Submit");
+    }
+
+    @Override
+    protected void refresh() {
+        refreshButtonState();
+        super.refresh();
+    }
 }

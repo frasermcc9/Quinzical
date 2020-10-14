@@ -19,9 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
 import quinzical.interfaces.models.SceneHandler;
@@ -33,7 +31,7 @@ import java.util.Collection;
 /**
  * Controller class for the options screen.
  */
-public class OptionsController {
+public class OptionsController extends StandardSceneController {
 
     static final int DEFAULT_PITCH;
     static final int DEFAULT_SPEED;
@@ -51,10 +49,6 @@ public class OptionsController {
     private SceneHandler sceneHandler;
     @Inject
     private SpeakerMutator speakerMutator;
-    @FXML
-    private AnchorPane background;
-    @FXML
-    private ImageView imgBackground;
     @FXML
     private ComboBox<Theme> comboTheme;
     @FXML
@@ -80,7 +74,8 @@ public class OptionsController {
     @FXML
     void onThemeChosen(ActionEvent event) {
         Theme theme = comboTheme.getValue();
-        sceneHandler.fireBackgroundChange(theme.getImage());
+        sceneHandler.fireBackgroundChange(theme);
+        background.setImage(theme.getImage());
     }
 
     /**
@@ -127,33 +122,23 @@ public class OptionsController {
         sliderGap.setValue(DEFAULT_GAP);
     }
 
-    /**
-     * Fired when the FXML is loaded, sets up the themes combobox for all the available themes
-     * and sets up what happens when the background is changed.
-     */
-    @FXML
-    void initialize() {
-        assert background != null : "fx:id=\"background\" was not injected: check your FXML file 'options.fxml'.";
-        assert imgBackground != null : "fx:id=\"imgBackground\" was not injected: check your FXML file 'options.fxml'.";
-        assert comboTheme != null : "fx:id=\"comboTheme\" was not injected: check your FXML file 'options.fxml'.";
 
+    @Override
+    protected void onLoad() {
         Collection<Theme> list = Arrays.asList(Theme.values());
         comboTheme.getItems().addAll(list);
-        comboTheme.setValue(Theme.MOUNTAINS);
+        comboTheme.setValue(sceneHandler.getActiveTheme());
 
         sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
         sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
         sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
         sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
-
-        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
     }
 
     /**
-     * Adjusts the Speakers properties according to the value
-     * and the property that is being changed.
-     * 
-     * @param sp the speech property that is being changed (pitch, speed, amplitude or gap)
+     * Adjusts the Speakers properties according to the value and the property that is being changed.
+     *
+     * @param sp    the speech property that is being changed (pitch, speed, amplitude or gap)
      * @param value the value that the property is to be set to.
      */
     private void adjustSpeaker(SpeechProperty sp, int value) {

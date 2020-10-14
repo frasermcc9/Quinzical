@@ -16,19 +16,28 @@ package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
 import quinzical.interfaces.models.SceneHandler;
 
 public abstract class StandardSceneController {
 
     @FXML
-    protected VBox background;
+    protected ImageView background;
 
     @Inject
     protected SceneHandler sceneHandler;
 
     @FXML
     final void initialize() {
-        this.sceneHandler.onBackgroundChange(image -> background.setStyle("-fx-background-image:" + image));
+        this.background.setImage(sceneHandler.getActiveTheme().getImage());
+        
+        onLoad();
+        refresh();
     }
+    
+    protected abstract void onLoad();
+    
+    protected void refresh() {
+    }
+    
 }
