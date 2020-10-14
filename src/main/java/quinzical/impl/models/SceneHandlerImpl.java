@@ -15,18 +15,15 @@
 package quinzical.impl.models;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
-import quinzical.interfaces.events.BackgroundObserver;
-import quinzical.interfaces.models.SceneChangeObserver;
+import quinzical.impl.constants.Theme;
+import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.interfaces.models.SceneHandler;
-import quinzical.interfaces.models.SceneRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Singleton class that handles switching between scenes on the main stage.
@@ -34,48 +31,34 @@ import java.util.List;
 @Singleton
 public class SceneHandlerImpl implements SceneHandler {
 
-    private final Stage stage;
-
-    private final List<BackgroundObserver> backgroundObservers = new ArrayList<>();
-
-    private final List<SceneChangeObserver> sceneChangeObservers = new ArrayList<>();
+    private final Scene scene;
+    @Inject
+    Injector injector;
+    private Theme activeTheme = null;
 
     @Inject
-    SceneRegistry sceneRegistry;
+    public SceneHandlerImpl(Scene scene) {
+        this.scene = scene;
+    }
 
-    @Inject
-    public SceneHandlerImpl(Stage stage) {
-        this.stage = stage;
+    public <T> T setActiveScene(GameScene newScene) {
+        try {
+            final FxmlInfo<T> fxmlInfo = FxmlInfo.loadFXML(newScene.getFxmlName(), injector);
+            scene.setRoot(fxmlInfo.getParent());
+            return fxmlInfo.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public void onBackgroundChange(BackgroundObserver fn) {
-        backgroundObservers.add(fn);
+    public void fireBackgroundChange(Theme theme) {
+        activeTheme = theme;
     }
 
-    @Override
-    public void fireBackgroundChange(Image img) {
-        backgroundObservers.forEach(el -> el.updateBackground(img));
+    public Theme getActiveTheme() {
+        return activeTheme;
     }
 
-    /**
-     * Sets the main stage theme to the selected theme.
-     */
-    @Override
-    public void setActiveScene(GameScene scene) {
-        Scene s = sceneRegistry.getScene(scene);
-        stage.setScene(s);
-        sceneChangeObservers.forEach(o -> o.sceneChanged(scene));
-    }
-
-    /**
-     * Adds a new sceneChangeObserver to the list of observers that listen
-     * to scene changes.
-     * 
-     * @param sceneChangeObserver - the sceneChangeObserver to add.
-     */
-    @Override
-    public void onSceneChange(SceneChangeObserver sceneChangeObserver) {
-        sceneChangeObservers.add(sceneChangeObserver);
-    }
 }

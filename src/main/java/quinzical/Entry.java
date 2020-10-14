@@ -25,10 +25,8 @@ import quinzical.impl.constants.Theme;
 import quinzical.impl.util.bindings.MainModule;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
-import quinzical.interfaces.models.SceneRegistry;
 
 import java.io.IOException;
-
 
 
 /**
@@ -36,13 +34,11 @@ import java.io.IOException;
  */
 public class Entry extends Application {
 
-    SceneRegistry sceneRegistry;
-
     Injector injector;
 
     /**
      * Loads the inputted FXML file
-     * 
+     *
      * @param fxml - the FXML file name to load
      * @return - the scene created by loading the FXML file
      * @throws IOException - thrown if the file does not exist
@@ -55,34 +51,23 @@ public class Entry extends Application {
     }
 
     /**
-     * Sets up all the scenes for the application as well as attempt
-     * to save the game when the application is closed.
+     * Sets up all the scenes for the application as well as attempt to save the game when the application is closed.
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         // Create the injection container
-        injector = Guice.createInjector(new MainModule(stage));
+        injector = Guice.createInjector(new MainModule());
         SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
-        // Register the scenes
-        sceneRegistry = injector.getInstance(SceneRegistry.class);
-        sceneRegistry.addScene(GameScene.INTRO, loadFXML("intro"));
-        sceneRegistry.addScene(GameScene.GAME, loadFXML("game"));
-        sceneRegistry.addScene(GameScene.GAME_QUESTION, loadFXML("gamequestion"));
-        sceneRegistry.addScene(GameScene.OPTIONS, loadFXML("options"));
-        sceneRegistry.addScene(GameScene.PRACTICE, loadFXML("practice"));
-        sceneRegistry.addScene(GameScene.PRACTICE_QUESTION, loadFXML("practicequestion"));
-        sceneRegistry.addScene(GameScene.END, loadFXML("end"));
+        //set the background
+        sceneHandler.fireBackgroundChange(Theme.MOUNTAINS);
 
-        
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
 
-        //set the background
-        sceneHandler.fireBackgroundChange(Theme.MOUNTAINS.getImage());
-
         // Show interface
+        stage.setScene(injector.getInstance(Scene.class));
         stage.setTitle("Quinzical");
         stage.setResizable(false);
         stage.show();

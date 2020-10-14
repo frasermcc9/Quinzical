@@ -1,57 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
-    <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
-      <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgOverlay" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../images/overlays/game.png" />
-         </image>
-      </ImageView>
-        <Button fx:id="btnMenu" layoutX="27.0" layoutY="648.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
-            <font>
-                <Font name="System Bold" size="26.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
-        <Label fx:id="labelEarnings" layoutX="161.0" layoutY="654.0" prefHeight="40.0" prefWidth="271.0" text="Your Earnings:" textFill="#c9c9c9">
-            <font>
-                <Font name="System Bold" size="28.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelEarningsVal" layoutX="401.0" layoutY="654.0" prefHeight="40.0" prefWidth="240.0" text="\$0" textFill="#c9c9c9">
-            <font>
-                <Font name="System Bold" size="28.0" />
-            </font>
-        </Label>
-        <Pane fx:id="paneHeader" layoutX="346.0" layoutY="166.0" prefHeight="423.0" prefWidth="589.0" stylesheets="@../../../css/intro.css">
-         <children>
-            <Button layoutX="95.0" layoutY="10.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
-            <Button layoutX="95.0" layoutY="95.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="Button">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="transparent" />
-               </styleClass>
-            </Button>
-            <Button layoutX="95.0" layoutY="180.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
-            <Button layoutX="95.0" layoutY="265.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
-            <Button layoutX="95.0" layoutY="350.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button" />
-         </children></Pane>
-        <cursor>
-            <Cursor fx:constant="DEFAULT" />
-        </cursor>
-    </AnchorPane>
-</Scene>
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
+   <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../images/landscapes/fields.jpg" />
+      </image>
+   </ImageView>
+   <VBox alignment="CENTER" layoutX="2.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+      <children>
+         <Label fx:id="txtHeading" prefHeight="68.0" prefWidth="422.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Select A Category">
+            <VBox.margin>
+               <Insets bottom="-20.0" top="20.0" />
+            </VBox.margin>
+         </Label>
+         <VBox fx:id="paneHeader" alignment="CENTER" prefHeight="487.0" prefWidth="1280.0" style="-fx-spacing: 20;">
+            <children>
+               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
+                  <font>
+                     <Font size="19.0" />
+                  </font>
+               </Button>
+               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="Button">
+                  <styleClass>
+                     <String fx:value="button" />
+                     <String fx:value="transparent" />
+                  </styleClass>
+                  <font>
+                     <Font size="19.0" />
+                  </font>
+               </Button>
+               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
+                  <font>
+                     <Font size="19.0" />
+                  </font>
+               </Button>
+               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
+                  <font>
+                     <Font size="19.0" />
+                  </font>
+               </Button>
+               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
+                  <font>
+                     <Font size="19.0" />
+                  </font>
+               </Button>
+            </children>
+         </VBox>
+           <Button fx:id="btnMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
+               <font>
+                   <Font name="System Bold" size="26.0" />
+               </font>
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+           </Button>
+         <HBox alignment="CENTER" prefHeight="55.0" prefWidth="1180.0" style="-fx-spacing: 25;">
+            <children>
+                 <Label fx:id="labelEarnings" text="Your Earnings:" textFill="#c9c9c9">
+                     <font>
+                         <Font name="System Bold" size="28.0" />
+                     </font>
+                 </Label>
+                 <Label fx:id="labelEarningsVal" text="\$0" textFill="#c9c9c9">
+                     <font>
+                         <Font name="System Bold" size="28.0" />
+                     </font>
+                 </Label>
+            </children>
+            <VBox.margin>
+               <Insets left="50.0" right="50.0" />
+            </VBox.margin>
+         </HBox>
+      </children>
+   </VBox>
+     <cursor>
+         <Cursor fx:constant="DEFAULT" />
+     </cursor>
+ </AnchorPane>

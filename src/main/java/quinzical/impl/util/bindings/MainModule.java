@@ -16,7 +16,8 @@ package quinzical.impl.util.bindings;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import quinzical.impl.models.*;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
@@ -42,12 +43,6 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  */
 public class MainModule extends AbstractModule {
 
-    private final Stage stage;
-
-    public MainModule(Stage stage) {
-        this.stage = stage;
-    }
-
     @Override
     protected void configure() {
         bind(QuestionCollection.class).to(QuestionCollectionImpl.class);
@@ -56,7 +51,6 @@ public class MainModule extends AbstractModule {
         bind(GameModelSaver.class).to(GameModelImpl.class);
 
         bind(SceneHandler.class).to(SceneHandlerImpl.class);
-        bind(SceneRegistry.class).to(SceneRegistryImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
 
@@ -80,7 +74,6 @@ public class MainModule extends AbstractModule {
 
         bind(TimerContext.class).to(TimerContextImpl.class);
 
-
-        bind(Stage.class).toInstance(stage);
+        bind(Scene.class).toInstance(new Scene(new AnchorPane()));
     }
 }

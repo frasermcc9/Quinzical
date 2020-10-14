@@ -17,8 +17,6 @@ package quinzical.impl.controllers;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.SaveData;
 import quinzical.impl.util.questionparser.Serializer;
@@ -33,7 +31,7 @@ import java.io.IOException;
 /**
  * Controller class for the intro screen.
  */
-public class IntroController {
+public class IntroController extends StandardSceneController {
 
     @Inject
     private SceneHandler sceneHandler;
@@ -46,15 +44,10 @@ public class IntroController {
 
     @Inject
     private QuestionCollection questionCollection;
-
-    @FXML
-    private AnchorPane background;
-
+    
     @FXML
     private Button btnLoadGame;
-
-    @FXML
-    private ImageView imgBackground;
+    
 
     /**
      * Sets the active scene to the main game scene where you select categories and questions from.
@@ -94,20 +87,17 @@ public class IntroController {
         Serializer.main(null);
         questionCollection.regenerateQuestionsFromDisk();
     }
+    
 
-
-    /**
-     * Fired when the FXML is loaded.
-     */
-    @FXML
-    void initialize() {
+    @Override
+    protected void onLoad() {
         handleLoadGameButton();
         listen();
     }
 
     /**
-     * Sets up the loadGameButton, checking to see if there is save data to fetch
-     * and disabling the button if there isn't any yet.
+     * Sets up the loadGameButton, checking to see if there is save data to fetch and disabling the button if there
+     * isn't any yet.
      */
     private void handleLoadGameButton() {
         SaveData saveData = null;
@@ -134,13 +124,16 @@ public class IntroController {
     }
 
 
+    @FXML
+    void btnOnlineClick() {
+        
+    }
+
+
     /**
      * Listen to events that this scene needs to react to.
      */
     private void listen() {
-        // Listen for theme changes
-        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-
         // If the QuestionBoard updates, then check if its not null. If it's not, then we can enable the load game btn.
         gameModel.onQuestionBoardUpdate(() -> {
             if (gameModel.getBoardQuestions() != null) {

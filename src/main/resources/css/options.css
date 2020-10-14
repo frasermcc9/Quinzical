@@ -2,8 +2,6 @@
     -fx-text-fill: #e3e3e3;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
     -fx-font-size: 24;
-    -fx-alignment: TOP_CENTER;
-    -fx-text-alignment: center;
     -fx-wrap-text: true;
 }
 

@@ -14,21 +14,18 @@
 
 package quinzical.interfaces.models;
 
-import javafx.scene.image.Image;
 import quinzical.impl.constants.GameScene;
-import quinzical.interfaces.events.BackgroundObserver;
+import quinzical.impl.constants.Theme;
 
 /**
- * Interface for SceneHandlerImpl. Handles the setting of the current active scene
- * as well as backgroundChange and sceneChange observers.
+ * Interface for SceneHandlerImpl. Handles the setting of the current active scene as well as backgroundChange and
+ * sceneChange observers.
  */
 public interface SceneHandler {
-    void onBackgroundChange(BackgroundObserver fn);
 
-    void fireBackgroundChange(Image img);
+    void fireBackgroundChange(Theme img);
 
-    void setActiveScene(GameScene scene);
+    <T> T setActiveScene(GameScene newScene);
 
-    void onSceneChange(SceneChangeObserver sceneChangeObserver);
-
+    Theme getActiveTheme();
 }

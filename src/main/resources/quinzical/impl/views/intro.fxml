@@ -1,71 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Point3D?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.IntroController">
-    <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;">
-      <ImageView fx:id="imgBackground" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.IntroController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../images/landscapes/boulders.jpg" />
+            <Image url="@../../../images/landscapes/fields.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../images/overlays/main.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="btnLoadGame" layoutX="455.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnLoadGamePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Load Game">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="455.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnNewGamePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="New Game">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="455.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnPracticeModePress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Practice Mode">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="455.0" layoutY="592.0" mnemonicParsing="false" onAction="#btnOptionsPress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Options">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="455.0" layoutY="517.0" mnemonicParsing="false" onAction="#btnLoadSetPress" opacity="0.9" prefHeight="56.0" prefWidth="371.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Load New Question Set">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-        <cursor>
-            <Cursor fx:constant="DEFAULT" />
-        </cursor>
-        <rotationAxis>
-            <Point3D />
-        </rotationAxis>
-    </AnchorPane>
-</Scene>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+          <children>
+              <Label prefHeight="148.0" prefWidth="639.0" styleClass="intro-title" stylesheets="@../../../css/title-label.css" text="Quinzical">
+                  <font>
+                      <Font size="61.0" />
+                  </font>
+               <VBox.margin>
+                  <Insets bottom="-15.0" top="-50.0" />
+               </VBox.margin>
+              </Label>
+              <Button minWidth="320.0" mnemonicParsing="false" onAction="#btnNewGamePress" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="New Game">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+              <Button fx:id="btnLoadGame" minWidth="320.0" mnemonicParsing="false" onAction="#btnLoadGamePress" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Load Game">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+              <Button minWidth="320.0" mnemonicParsing="false" onAction="#btnOnlineClick" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Play Online">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+              <Button minWidth="320.0" mnemonicParsing="false" onAction="#btnPracticeModePress" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Practice Mode">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+              <Separator maxWidth="480.0" />
+              <Button minWidth="320.0" mnemonicParsing="false" onAction="#btnLoadSetPress" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Load New Question Set" VBox.vgrow="ALWAYS">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+              <Button minWidth="320.0" mnemonicParsing="false" onAction="#btnOptionsPress" opacity="0.9" prefHeight="56.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Options">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+          </children>
+      </VBox>
+   </children>
+</AnchorPane>

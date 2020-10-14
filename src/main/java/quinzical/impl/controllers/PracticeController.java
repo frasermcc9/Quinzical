@@ -15,9 +15,11 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.util.questionparser.Question;
@@ -29,7 +31,7 @@ import java.util.List;
 /**
  * Controller for the practice menu scene
  */
-public class PracticeController {
+public class PracticeController extends StandardSceneController {
 
     @Inject
     private SceneHandler sceneHandler;
@@ -41,16 +43,19 @@ public class PracticeController {
     private ComboBox<String> comboCategories;
 
     @FXML
+    private ListView<String> listCategories;
+
+    @FXML
     private ImageView imgBackground;
 
     /**
-     * Fired when the ok button is pressed, gets a random question from the currently selected category
-     * and then switches to the practice question scene.
+     * Fired when the ok button is pressed, gets a random question from the currently selected category and then
+     * switches to the practice question scene.
      */
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
-        if (comboCategories.getValue() != null) {
-            Question question = gameModel.getRandomQuestion(comboCategories.getValue());
+        if (listCategories.getSelectionModel().getSelectedItem() != null) {
+            Question question = gameModel.getRandomQuestion(listCategories.getSelectionModel().getSelectedItem());
             gameModel.activateQuestion(question);
             sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
         }
@@ -63,33 +68,20 @@ public class PracticeController {
     void btnBackPress(ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
+    
 
-    /**
-     * Fired when the FXML is loaded, sets the combobox options according to all of the available categories.
-     */
-    @FXML
-    void initialize() {
-        listen();
+    @Override
+    protected void onLoad() {
+        populateList();
     }
+    
 
-    /**
-     * Makes the background change to the correct image whenever needed.
-     */
-    private void listen() {
-        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        sceneHandler.onSceneChange(s -> {
-            if (s.equals(GameScene.PRACTICE)) {
-                populateComboBox();
-            }
-        });
-    }
-
-    private void populateComboBox() {
+    private void populateList() {
         List<String> categories = gameModel.getCategories();
+        listCategories.getItems().clear();
 
-        comboCategories.getItems().clear();
-        
-        comboCategories.getItems().addAll(categories);
-        comboCategories.setValue(categories.get(0));
+        ObservableList<String> list = javafx.collections.FXCollections.observableList(categories);
+
+        listCategories.setItems(list);
     }
 }

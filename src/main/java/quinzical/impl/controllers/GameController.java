@@ -19,23 +19,20 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import quinzical.Entry;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller class for the Game view. This is the view that contains the question board.
  */
-public class GameController {
+public class GameController extends StandardSceneController {
 
     private final List<Button> buttons = new ArrayList<>();
     @Inject
@@ -44,50 +41,29 @@ public class GameController {
     private SceneHandler sceneHandler;
 
     @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
-    @FXML
-    private AnchorPane background;
-    @FXML
     private Button btnMenu;
-    @FXML
-    private Label labelEarnings;
+
     @FXML
     private Label labelEarningsVal;
     @FXML
     private Pane paneHeader;
-    @FXML
-    private ImageView imgBackground;
-    @FXML
-    private ImageView imgOverlay;
 
-    /**
-     * Called when the FXML is finished loading.
-     */
     @FXML
-    void initialize() {
-        assert btnMenu != null : "fx:id=\"btnMenu\" was not injected: check your FXML file 'game.fxml'.";
+    private Label txtHeading;
 
+    @Override
+    protected void onLoad() {
         for (Node b : paneHeader.getChildren()) {
             if (b instanceof Button) {
                 buttons.add((Button) b);
             }
         }
-
-        listen();
     }
 
-    /**
-     * Listen for events from the SceneHandler.
-     */
-    private void listen() {
-        // Listen for theme changes
-        sceneHandler.onBackgroundChange(img -> this.imgBackground.setImage(img));
-        // Listen for when the board is updated
-        gameModel.onQuestionBoardUpdate(this::refreshBoard);
-        // Listen for when the earnings of the user is updated
-        gameModel.onValueChange(this::refreshValue);
+    @Override
+    protected void refresh() {
+        this.refreshBoard();
+        this.refreshValue();
     }
 
     /**
@@ -159,7 +135,7 @@ public class GameController {
 
     /**
      * Sets the inputted question as the active question through the game model.
-     * 
+     *
      * @param gameQuestion the question to be set as the active one.
      */
     private void activateQuestion(GameQuestion gameQuestion) {
@@ -169,22 +145,20 @@ public class GameController {
 
     /**
      * Also fired when any category button is pressed (or the back button). Sets the top text image.
-     * 
+     *
      * @param o the overlay to be set (what top text should be active)
      */
     private void setOverlay(Overlay o) {
-        String img = "";
         switch (o) {
             case CATEGORY:
-                img = "game";
-                break;
+                txtHeading.setText("Select a Category");
+                return;
             case QUESTION:
-                img = "game2";
-                break;
-
+                txtHeading.setText("Select a Question");
+                return;
+            default:
+                throw new IllegalArgumentException("Invalid overlay passed in GameController");
         }
-        imgOverlay.setImage(new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-            "/overlays/" + img + ".png"))));
     }
 
 

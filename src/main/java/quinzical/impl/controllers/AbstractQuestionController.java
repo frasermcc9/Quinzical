@@ -15,11 +15,11 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractQuestionController {
+public abstract class AbstractQuestionController extends StandardSceneController {
 
     @Inject
     protected SceneHandler sceneHandler;
@@ -47,9 +47,7 @@ public abstract class AbstractQuestionController {
 
     @FXML
     protected Pane paneSolutions;
-
-    @FXML
-    protected ImageView imgBackground;
+    
     @FXML
     protected Button btnSubmit;
     protected List<TextArea> textAreas;
@@ -61,25 +59,29 @@ public abstract class AbstractQuestionController {
 
     protected abstract void setPrompts(String hint, String prompt);
 
+    @Override
+    protected void refresh() {
+        initialiseQuestion();
+        Platform.runLater(() -> textAreas.get(0).requestFocus());
+    }
+
+    @Override
+    protected void onLoad() {
+        initMacronButtons();
+    }
+
     /**
      * Optional hook
      */
     protected void onQuestionLoad() {
     }
-
-    protected void listen() {
-        //Listens for theme change
-        sceneHandler.onBackgroundChange(this.imgBackground::setImage);
-        //Listens for when a new active question is activated
-        getGameModel().onActiveQuestionUpdate(this::initialiseQuestion);
-    }
-
-    protected void initialiseQuestion() {
+    
+    protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
-
+        
         onQuestionLoad();
-
+        
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
 
@@ -141,4 +143,14 @@ public abstract class AbstractQuestionController {
             activeText.positionCaret(currentPos + 1);
         }));
     }
+
+    /**
+     * Called when the replay button is clicked, repeats the question hint using the speaker.
+     */
+    @FXML
+    protected void onReplayClick() {
+        speaker.speak(getGameModel().getActiveQuestion().getHint());
+    }
+    
+    void areYouOk(){}
 }
