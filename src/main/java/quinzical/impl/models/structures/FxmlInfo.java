@@ -31,10 +31,10 @@ public class FxmlInfo<T> {
     }
 
     public static <T> FxmlInfo<T> loadFXML(String fxml, Injector injector) throws IOException {
-        final String path = "quinzical/impl/views/";
-        FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path + fxml + ".fxml"));
+        final String path = "quinzical/impl/views/" + fxml + ".fxml";
+        FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path));
         loader.setControllerFactory(injector::getInstance);
-        
+
         return new FxmlInfo<>(loader.load(), loader.getController());
     }
 

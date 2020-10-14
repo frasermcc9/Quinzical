@@ -17,8 +17,61 @@ package quinzical.impl.constants;
 /**
  * The names of the scenes that can be switched to on the main stage.
  */
-public enum GameScene {
+public enum GameScene implements GameSceneFxmlLoader {
 
-    INTRO, PRACTICE, GAME, GAME_QUESTION, PRACTICE_QUESTION, END, OPTIONS
+    INTRO {
+        @Override
+        public String getFxmlName () {
+            return "intro";
+        }
+    },
 
+    PRACTICE {
+        @Override
+        public String getFxmlName () {
+            return "practice";
+        }
+    },
+
+    GAME {
+        @Override
+        public String getFxmlName () {
+            return "game";
+        }
+    },
+
+    GAME_QUESTION {
+        @Override
+        public String getFxmlName () {
+            return "gamequestion";
+        }
+    },
+
+    PRACTICE_QUESTION {
+        @Override
+        public String getFxmlName () {
+            return "practicequestion";
+        }
+    },
+
+    END {
+        @Override
+        public String getFxmlName () {
+            return "end";
+        }
+    },
+
+    OPTIONS {
+        @Override
+        public String getFxmlName () {
+            return "options";
+        }
+    }
+
+    ;
+
+}
+
+interface GameSceneFxmlLoader {
+    String getFxmlName();
 }
