@@ -62,8 +62,7 @@ public class IntroController extends StandardSceneController {
      */
     @FXML
     void btnNewGamePress() {
-        gameModel.generateNewGameQuestionSet();
-        sceneHandler.setActiveScene(GameScene.GAME);
+        sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT);
     }
 
     @FXML
