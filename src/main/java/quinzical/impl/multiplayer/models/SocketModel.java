@@ -38,4 +38,10 @@ public class SocketModel {
     public void connect() {
         this.socket.connect();
     }
+
+    public void destroy() {
+        this.socket.off();
+        this.socket.disconnect();
+        this.socket = null;
+    }
 }

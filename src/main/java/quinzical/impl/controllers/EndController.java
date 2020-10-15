@@ -47,7 +47,7 @@ public class EndController extends StandardSceneController {
 
     @Override
     protected void onLoad() {
-        int earnings = gameModel.getValue();
+        int earnings = gameModel.getEarnings();
         animateLabel(earnings);
     }
 

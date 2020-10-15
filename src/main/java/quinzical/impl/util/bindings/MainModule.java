@@ -23,7 +23,7 @@ import quinzical.impl.models.PracticeModelImpl;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.SceneHandlerImpl;
 import quinzical.impl.models.structures.SpeakerManager;
-import quinzical.impl.models.structures.UserScoreImpl;
+import quinzical.impl.models.structures.UserDataImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
@@ -33,7 +33,7 @@ import quinzical.impl.util.strategies.timer.TimerContextImpl;
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.models.structures.SpeakerMutator;
-import quinzical.interfaces.models.structures.UserScore;
+import quinzical.interfaces.models.structures.UserData;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
@@ -54,6 +54,7 @@ public class MainModule extends AbstractModule {
 
         bind(GameModel.class).to(GameModelImpl.class);
         bind(GameModelSaver.class).to(GameModelImpl.class);
+        bind(UserData.class).to(UserDataImpl.class);
 
         bind(SceneHandler.class).to(SceneHandlerImpl.class);
 
@@ -62,8 +63,6 @@ public class MainModule extends AbstractModule {
         bind(TextNormaliserFactory.class).to(TextNormaliserStrategyFactory.class);
         bind(QuestionVerifierFactory.class).to(QuestionVerifierFactoryImpl.class);
         bind(ObjectReaderStrategyFactory.class).to(ObjectReaderStrategyFactoryImpl.class);
-
-        bind(UserScore.class).to(UserScoreImpl.class);
 
         bind(PracticeModel.class).to(PracticeModelImpl.class);
 

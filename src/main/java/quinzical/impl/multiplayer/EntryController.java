@@ -18,6 +18,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -51,11 +52,11 @@ public class EntryController extends StandardSceneController {
     void btnConnect() throws URISyntaxException, IOException {
 
         socket = IO.socket(socketUrl);
-        SocketModel.getInstance().setName(txtName.getText()).setSocket(socket).connect();
-
+        SocketModel.getInstance().setName(txtName.getText()).setSocket(socket);
         setProgressVisible(true);
-
-        socket.once("connect", objects -> sceneHandler.setActiveScene(GameScene.MULTI_MENU));
+        
+        socket.once("connect", objects -> Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)));
+        SocketModel.getInstance().connect();
     }
 
     @Override

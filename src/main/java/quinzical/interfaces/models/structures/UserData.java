@@ -12,19 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.interfaces.models;
+package quinzical.interfaces.models.structures;
 
-import quinzical.interfaces.models.structures.UserData;
+import quinzical.impl.models.structures.GameQuestion;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-/**
- * Interface of GameModel for saving the game state.
- */
-public interface GameModelSaver {
-    void saveGame() throws IOException;
+public interface UserData {
+    void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings);
 
-    void loadSaveData(UserData userData);
+    Map<String, List<GameQuestion>> getBoard();
 
+    void createNewBoard(Map<String, List<GameQuestion>> board);
+
+    int getEarnings();
+
+    void incrementEarnings(int earnings);
+
+    boolean isInternationalUnlocked();
+
+    void activateInternationalQuestions();
+
+    void resetUserData();
+
+    int getCoins();
+
+    void setCoins(int coins);
+    
     boolean isGameActive();
 }
