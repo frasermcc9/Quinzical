@@ -70,7 +70,7 @@ public class GameController extends StandardSceneController {
      * Update the earnings label. Fired when the model's earnings value updates.
      */
     private void refreshValue() {
-        labelEarningsVal.setText("$" + gameModel.getValue());
+        labelEarningsVal.setText("$" + gameModel.getEarnings());
     }
 
     /**
