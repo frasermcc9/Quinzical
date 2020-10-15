@@ -16,12 +16,20 @@ package quinzical.impl.util.strategies.questiongenerator;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -32,14 +40,17 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
     private final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider;
     private final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider;
     private final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider;
+    private final Provider<InternationalQuestionGeneratorStrategy> internationalQuestionGeneratorStrategyProvider;
 
     @Inject
     public QuestionGeneratorStrategyFactoryImpl(final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider,
                                                 final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider,
-                                                final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider) {
+                                                final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider,
+                                                final Provider<InternationalQuestionGeneratorStrategy> internationalQuestionGeneratorStrategyProvider) {
         this.gameQuestionGeneratorStrategyProvider = gameQuestionGeneratorStrategyProvider;
         this.practiceQuestionGeneratorStrategyProvider = practiceQuestionGeneratorStrategyProvider;
         this.selectedCategoryGeneratorStrategyProvider = selectedCategoryGeneratorStrategyProvider;
+        this.internationalQuestionGeneratorStrategyProvider = internationalQuestionGeneratorStrategyProvider;
     }
 
     /**
@@ -60,17 +71,20 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
     }
 
     @Override
-    public QuestionGeneratorStrategy createSelectedCategorySelection(String[] categories) {
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(String[] categories) {
+        return createSelectedCategoryStrategy(List.of(categories));
+    }
+
+    @Override
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(List<String> categories) {
         SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
-        strategy.setCategories(List.of(categories));
+        strategy.setCategories(categories);
         return strategy;
     }
 
     @Override
-    public QuestionGeneratorStrategy createSelectedCategorySelection(List<String> categories) {
-        SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
-        strategy.setCategories(categories);
-        return strategy;
+    public QuestionGeneratorStrategy createInternationalQuestionStrategy() {
+        return internationalQuestionGeneratorStrategyProvider.get();
     }
 }
 
@@ -191,5 +205,88 @@ class SelectedCategoryGeneratorStrategy implements QuestionGeneratorStrategy {
 
         return questionBoard;
 
+    }
+}
+
+class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
+
+    OkHttpClient client = new OkHttpClient();
+
+    @Override
+    public Map<String, List<GameQuestion>> generateQuestions() {
+
+        Map<String, List<GameQuestion>> questions = new LinkedHashMap<>();
+
+        List<CategoryNumberBinding> bindings = new ArrayList<>(5);
+
+        try {
+            int offset = (int) (Math.random() * 10000);
+            ResponseBody response = run("https://jservice.io/api/categories?count=5&offset=" + offset);
+            String responseString = response.string();
+            JSONArray array = new JSONArray(responseString);
+
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = (JSONObject) array.get(i);
+                bindings.add(new CategoryNumberBinding() {
+                    @Override
+                    public String name() throws JSONException {
+                        return object.get("title").toString();
+                    }
+
+                    @Override
+                    public String id() throws JSONException {
+                        return object.get("id").toString();
+                    }
+                });
+            }
+
+            for (CategoryNumberBinding binding : bindings) {
+                List<GameQuestion> gameQuestions = new ArrayList<>(5);
+                questions.put(binding.name(), gameQuestions);
+                String clues = run("https://jservice.io/api/clues?category=" + binding.id()).string();
+                JSONArray clueArray = new JSONArray(clues);
+
+                List<JSONObject> jsonObjects = new ArrayList<>();
+                for (int i = 0; i < clueArray.length(); i++) {
+                    jsonObjects.add((JSONObject) clueArray.get(i));
+                }
+
+                Collections.shuffle(jsonObjects);
+                for (int i = 0; i < 5; i++) {
+                    GameQuestion gameQuestion = new GameQuestion(
+                        new Question(
+                            binding.name(),
+                            jsonObjects.get(i).get("question").toString(),
+                            "What is"
+                        ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString()})
+                    );
+                    gameQuestion.setValue((i + 1) * 100);
+                    if (i == 0) {
+                        gameQuestion.setAnswerable(true);
+                    }
+                    gameQuestions.add(gameQuestion);
+                }
+            }
+            return questions;
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ResponseBody run(String url) throws IOException {
+        Request request = new Request.Builder()
+            .url(url)
+            .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body();
+    }
+
+    private interface CategoryNumberBinding {
+        String name() throws JSONException;
+
+        String id() throws JSONException;
     }
 }
