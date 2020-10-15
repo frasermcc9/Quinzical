@@ -31,6 +31,8 @@ public interface GameModel extends QuinzicalModel {
     Map<String, List<GameQuestion>> getBoardQuestions();
 
     void generateNewGameQuestionSet();
+    
+    void generateInternationalQuestions();
 
     int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions);
 
