@@ -204,6 +204,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         resetScore();
     }
 
+    /**
+     * Generates a set of International Questions. This method should be run on another thread as it makes API calls
+     * that can be somewhat slow to execute.
+     */
     @Override
     public void generateInternationalQuestions() {
         this.boardQuestions =
@@ -211,17 +215,32 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         resetScore();
     }
 
+    /**
+     * Generates questions from the given array of categories.
+     *
+     * @param categories String array of categories to generate questions from. Must be of length 5.
+     */
     public void generateGameQuestionSetFromCategories(String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
         resetScore();
     }
 
+    /**
+     * Generates questions from the given list of categories.
+     *
+     * @param categories String list of categories. Must be at least size 5.
+     */
     public void generateGameQuestionSetFromCategories(List<String> categories) {
+        if (categories.size() != 5)
+            throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
         this.boardQuestions =
             questionGeneratorStrategyFactory.createSelectedCategoryStrategy(categories).generateQuestions();
         resetScore();
     }
 
+    /**
+     * Sets the users score to 0 and fires the question board update event.
+     */
     private void resetScore() {
         this.userScore.setValue(0);
         fireQuestionBoardUpdate();
