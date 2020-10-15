@@ -15,9 +15,7 @@
 package quinzical.interfaces.models;
 
 import quinzical.impl.models.structures.GameQuestion;
-import quinzical.impl.models.structures.SaveData;
-import quinzical.interfaces.events.QuestionBoardObserver;
-import quinzical.interfaces.events.ValueChangeObserver;
+import quinzical.interfaces.models.structures.UserData;
 
 import java.util.List;
 import java.util.Map;
@@ -42,23 +40,14 @@ public interface GameModel extends QuinzicalModel {
 
     int numberOfQuestionsRemaining();
 
-    void loadSaveData(SaveData saveData);
+    void loadSaveData(UserData userData);
 
     GameQuestion getNextActiveQuestion(GameQuestion question);
 
     void answerActive(boolean correct);
 
+    int getEarnings();
 
-    int getValue();
-
-
-    void fireValueChange();
-
-    void fireQuestionBoardUpdate();
-
-    void onQuestionBoardUpdate(QuestionBoardObserver fn);
-
-    void onValueChange(ValueChangeObserver fn);
-
+    boolean isGameActive();
 
 }
