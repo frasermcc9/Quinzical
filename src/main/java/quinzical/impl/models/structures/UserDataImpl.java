@@ -14,20 +14,77 @@
 
 package quinzical.impl.models.structures;
 
-import com.google.inject.Inject;
-import quinzical.impl.util.questionparser.Question;
+import quinzical.interfaces.models.structures.UserData;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class UserData implements Serializable {
+public class UserDataImpl implements Serializable, UserData {
 
-    private Map<String, List<GameQuestion>> questionData;
-    private int value;
+    private Map<String, List<GameQuestion>> board;
 
-    private boolean internationalUnlocked;
+    private int earnings = 0;
 
-    private int coins;
+    private boolean internationalUnlocked = false;
 
+    private int coins = 0;
+
+    @Override
+    public void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings) {
+        this.board = board;
+        this.earnings = earnings;
+    }
+
+    @Override
+    public Map<String, List<GameQuestion>> getBoard() {
+        return board;
+    }
+
+    @Override
+    public void createNewBoard(Map<String, List<GameQuestion>> board) {
+        this.board = board;
+        this.earnings = 0;
+    }
+
+    public void activateInternationalQuestions() {
+        internationalUnlocked = true;
+    }
+
+    @Override
+    public boolean isInternationalUnlocked() {
+        return internationalUnlocked;
+    }
+
+    @Override
+    public int getEarnings() {
+        return earnings;
+    }
+
+    @Override
+    public void incrementEarnings(int earnings) {
+        this.earnings += earnings;
+    }
+
+    @Override
+    public int getCoins() {
+        return coins;
+    }
+
+    @Override
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void resetUserData() {
+        this.board = null;
+        this.earnings = 0;
+        this.internationalUnlocked = false;
+        this.coins = 0;
+    }
+
+    @Override
+    public boolean isGameActive() {
+        return this.board != null;
+    }
 }
