@@ -17,19 +17,14 @@ package quinzical.impl.models;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import quinzical.impl.models.structures.GameQuestion;
-import quinzical.impl.models.structures.SaveData;
-import quinzical.interfaces.events.ActiveQuestionObserver;
-import quinzical.interfaces.events.QuestionBoardObserver;
-import quinzical.interfaces.events.ValueChangeObserver;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.QuinzicalModel;
-import quinzical.interfaces.models.structures.UserScore;
+import quinzical.interfaces.models.structures.UserData;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,91 +35,10 @@ import java.util.Map;
 @Singleton
 public class GameModelImpl extends AbstractGameModel implements GameModel, GameModelSaver, QuinzicalModel {
 
-    //#region Fields
 
-    /**
-     * List of functions (observers) that are executed when the game board updates. Adding (subscribing) to the list is
-     * done with {@link this#onQuestionBoardUpdate}, which will add the given QuestionBoardObserver to the list. When
-     * {@link this#fireQuestionBoardUpdate)} is called, all functions will be executed.
-     */
-    private final List<QuestionBoardObserver> questionBoardObservers = new ArrayList<>();
-
-    /**
-     * List of functions (observers) that are executed when the game board updates.  Adding (subscribing) to the list is
-     * done with {@link this#onValueChange}, which will add the given ActiveQuestionObserver to the list. When {@link
-     * this#fireValueChange} )} is called, all functions will be executed.
-     */
-    private final List<ValueChangeObserver> valueChangeObservers = new ArrayList<>();
-    /**
-     * Stores the user's current earnings within the game.
-     */
     @Inject
-    private UserScore userScore;
+    private UserData userData;
 
-    /**
-     * Map containing the board questions.
-     */
-    private Map<String, List<GameQuestion>> boardQuestions;
-
-    //#endregion
-
-    //#region Observer Methods
-
-    /**
-     * Binds a function to the question update event. This event is fired when the question board is updated.
-     *
-     * @param fn the function to call when the event is fired.
-     */
-    @Override
-    public void onQuestionBoardUpdate(QuestionBoardObserver fn) {
-        questionBoardObservers.add(fn);
-    }
-
-    /**
-     * Binds a function to the event that is fired when there is a new active question.
-     *
-     * @param fn the function to call when the event is fired.
-     */
-    @Override
-    public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
-        activeObservers.add(fn);
-    }
-
-
-    /**
-     * Binds a function to the event that is fired when there is a new active question.
-     *
-     * @param fn the function to call when the event is fired.
-     */
-    @Override
-    public void onValueChange(ValueChangeObserver fn) {
-        valueChangeObservers.add(fn);
-    }
-
-    /**
-     * Fire the questions update event.
-     */
-    @Override
-    public void fireQuestionBoardUpdate() {
-        questionBoardObservers.forEach(QuestionBoardObserver::updateQuestionDisplay);
-    }
-
-    /**
-     * Fire the questions update event.
-     */
-    @Override
-    public void fireValueChange() {
-        valueChangeObservers.forEach(ValueChangeObserver::updateValue);
-    }
-
-    /**
-     * Alerts all observers that a new game question has been set as the active question.
-     */
-    public void fireActiveQuestionUpdate() {
-        activeObservers.forEach(ActiveQuestionObserver::fireActiveQuestion);
-    }
-
-    //#endregion
 
     //#region User earnings methods
 
@@ -132,8 +46,8 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return Gets the user value.
      */
     @Override
-    public int getValue() {
-        return userScore.getValue();
+    public int getEarnings() {
+        return userData.getEarnings();
     }
 
     /**
@@ -142,7 +56,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @param number the amount to increase by
      */
     public void increaseValueBy(int number) {
-        this.userScore.setValue(this.userScore.getValue() + number);
+        this.userData.incrementEarnings(number);
     }
 
     //#endregion
@@ -158,11 +72,11 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Override
     public GameQuestion getNextActiveQuestion(GameQuestion question) {
         String category = question.getCategory();
-        int index = this.boardQuestions.get(category).indexOf(question);
+        int index = this.userData.getBoard().get(category).indexOf(question);
         if (index == 4) {
             return null;
         } else {
-            return this.boardQuestions.get(category).get(index + 1);
+            return this.userData.getBoard().get(category).get(index + 1);
         }
 
     }
@@ -187,8 +101,6 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         if (correct) {
             increaseValueBy(question.getValue());
         }
-
-        fireQuestionBoardUpdate();
     }
 
     //#endregion
@@ -200,8 +112,9 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void generateNewGameQuestionSet() {
-        this.boardQuestions = questionGeneratorStrategyFactory.createGameQuestionStrategy().generateQuestions();
-        resetScore();
+        Map<String, List<GameQuestion>> board =
+            questionGeneratorStrategyFactory.createGameQuestionStrategy().generateQuestions();
+        this.userData.createNewBoard(board);
     }
 
     /**
@@ -210,9 +123,9 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void generateInternationalQuestions() {
-        this.boardQuestions =
+        Map<String, List<GameQuestion>> board =
             questionGeneratorStrategyFactory.createInternationalQuestionStrategy().generateQuestions();
-        resetScore();
+        this.userData.createNewBoard(board);
     }
 
     /**
@@ -222,7 +135,6 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     public void generateGameQuestionSetFromCategories(String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
-        resetScore();
     }
 
     /**
@@ -233,17 +145,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     public void generateGameQuestionSetFromCategories(List<String> categories) {
         if (categories.size() != 5)
             throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
-        this.boardQuestions =
-            questionGeneratorStrategyFactory.createSelectedCategoryStrategy(categories).generateQuestions();
-        resetScore();
-    }
 
-    /**
-     * Sets the users score to 0 and fires the question board update event.
-     */
-    private void resetScore() {
-        this.userScore.setValue(0);
-        fireQuestionBoardUpdate();
+        Map<String, List<GameQuestion>> board =
+            questionGeneratorStrategyFactory.createSelectedCategoryStrategy(categories).generateQuestions();
+        this.userData.createNewBoard(board);
     }
 
     /**
@@ -251,7 +156,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public Map<String, List<GameQuestion>> getBoardQuestions() {
-        return boardQuestions;
+        return userData.getBoard();
     }
 
     /**
@@ -268,20 +173,17 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public int numberOfQuestionsRemaining() {
-        return numberOfQuestionsRemaining(this.boardQuestions);
+        return numberOfQuestionsRemaining(this.userData.getBoard());
     }
 
     /**
      * Loads a game state into the model.
      *
-     * @param saveData the game state that has been saved.
+     * @param userData the game state that has been saved.
      */
     @Override
-    public void loadSaveData(SaveData saveData) {
-        this.boardQuestions = saveData.getQuestionData();
-        this.userScore.setValue(saveData.getValue());
-
-        fireQuestionBoardUpdate();
+    public void loadSaveData(UserData userData) {
+        this.userData = userData;
     }
 
     /**
@@ -290,15 +192,17 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @throws IOException if the folder hierarchy is broken.
      */
     @Override
-    public void saveQuestionsToDisk() throws IOException {
+    public void saveGame() throws IOException {
         FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
-        SaveData sd = new SaveData().setQuestionData(this.boardQuestions).setValue(this.userScore.getValue());
-        out.writeObject(sd);
-
+        out.writeObject(userData);
         out.close();
         fileOut.close();
+    }
+
+    @Override
+    public boolean isGameActive() {
+        return userData.isGameActive();
     }
 
     //#endregion
