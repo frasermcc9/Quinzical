@@ -267,7 +267,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
                     GameQuestion gameQuestion = new GameQuestion(
                         new Question(
                             binding.name(),
-                            jsonObjects.get(i).get("question").toString(),
+                            jsonObjects.get(i).get("question").toString().replace("\\", ""),
                             "What is"
                         ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString()})
                     );
