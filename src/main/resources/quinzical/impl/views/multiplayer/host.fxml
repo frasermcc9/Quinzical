@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  ~ Copyright 2020 Fraser McCallum and Braden Palmer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~  
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~  
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.HostController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <Label alignment="CENTER" prefHeight="35.0" prefWidth="179.0" text="Settings">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Separator prefWidth="200.0" />
+   <VBox>
+      <children>
+         <HBox alignment="TOP_CENTER">
+            <children>
+               <TextField fx:id="txtQuestions">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="txtPlayers">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="txtTime">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </TextField>
+            </children>
+         </HBox>
+         <HBox alignment="CENTER">
+            <children>
+               <Label alignment="CENTER" prefHeight="60.0" prefWidth="156.0" text="Questions">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label alignment="CENTER" prefHeight="35.0" prefWidth="160.0" text="Max Players">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label alignment="CENTER" prefHeight="35.0" prefWidth="160.0" text="Answer Time">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+      </children>
+   </VBox>
+   <Separator prefWidth="200.0" />
+   <CheckBox fx:id="chkPublic" mnemonicParsing="false" text="Public">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </CheckBox>
+   <Separator prefWidth="200.0" />
+   <Button mnemonicParsing="false" onAction="#btnStart" text="Start Game">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Button>
+   <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
+</VBox>
