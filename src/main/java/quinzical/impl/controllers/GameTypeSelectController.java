@@ -17,7 +17,7 @@ public class GameTypeSelectController extends StandardSceneController{
     
     @FXML
     void btnInternationalPress() {
-        gameModel.generateNewGameQuestionSet();
+        gameModel.generateInternationalQuestions();
         sceneHandler.setActiveScene(GameScene.INTERNATIONAL_GAME);
     }
 
