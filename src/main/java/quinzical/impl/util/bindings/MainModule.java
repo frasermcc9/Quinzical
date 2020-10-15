@@ -18,7 +18,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import quinzical.impl.models.*;
+import quinzical.impl.models.GameModelImpl;
+import quinzical.impl.models.PracticeModelImpl;
+import quinzical.impl.models.QuestionCollectionImpl;
+import quinzical.impl.models.SceneHandlerImpl;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserScoreImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
@@ -42,6 +45,8 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  * with the @Inject annotation, which concrete implementation to give it.
  */
 public class MainModule extends AbstractModule {
+
+    private final static boolean TEST_MODE = false;
 
     @Override
     protected void configure() {
@@ -75,5 +80,10 @@ public class MainModule extends AbstractModule {
         bind(TimerContext.class).to(TimerContextImpl.class);
 
         bind(Scene.class).toInstance(new Scene(new AnchorPane()));
+
+        if (TEST_MODE)
+            bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://localhost:7373");
+        else
+            bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://20.190.113.34:7373");
     }
 }

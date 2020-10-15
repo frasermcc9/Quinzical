@@ -12,32 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.multiplayer;
 
-import com.google.inject.Inject;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import quinzical.interfaces.models.SceneHandler;
+import quinzical.impl.multiplayer.models.ActiveGame;
 
-public abstract class StandardSceneController {
+import java.io.IOException;
 
-    @FXML
-    protected ImageView background;
-
-    @Inject
-    protected SceneHandler sceneHandler;
+public class PlayerWaitController extends AbstractWaitController {
 
     @FXML
-    public final void initialize() {
-        this.background.setImage(sceneHandler.getActiveTheme().getImage());
-        
-        onLoad();
-        refresh();
+    void btnCancel(ActionEvent event) throws IOException {
+        socket.emit("playerDisconnect");
+        App.setRoot("menu");
     }
-    
-    protected abstract void onLoad();
-    
-    protected void refresh() {
+
+    @Override
+    protected void addListeners() {
+        socket.on("gameStart", (objects) -> Platform.runLater(() -> {
+            ActiveGame.resetInstance().init();
+        }));
     }
-    
 }

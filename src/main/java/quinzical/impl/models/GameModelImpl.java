@@ -204,7 +204,12 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userScore.setValue(0);
         fireQuestionBoardUpdate();
     }
-    
+
+    @Override
+    public void generateInternationalQuestions() {
+        
+    }
+
     public void generateGameQuestionSetFromCategories(){
         
     }

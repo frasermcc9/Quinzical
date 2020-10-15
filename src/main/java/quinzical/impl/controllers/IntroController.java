@@ -126,7 +126,7 @@ public class IntroController extends StandardSceneController {
 
     @FXML
     void btnOnlineClick() {
-        
+        sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
 

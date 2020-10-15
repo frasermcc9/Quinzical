@@ -21,54 +21,108 @@ public enum GameScene implements GameSceneFxmlLoader {
 
     INTRO {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "intro";
         }
     },
 
     PRACTICE {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "practice";
         }
     },
 
     GAME {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "game";
         }
     },
 
     GAME_QUESTION {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "gamequestion";
         }
     },
 
     PRACTICE_QUESTION {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "practicequestion";
         }
     },
 
     END {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "end";
         }
     },
 
     OPTIONS {
         @Override
-        public String getFxmlName () {
+        public String getFxmlName() {
             return "options";
         }
-    }
+    },
 
-    ;
+    MULTI_INTRO {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/entry";
+        }
+    },
+
+    MULTI_GAME {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/game";
+        }
+    },
+
+    MULTI_GAME__END {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/game-end";
+        }
+    },
+
+    MULTI_HOST {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/host";
+        }
+    },
+
+    MULTI_HOST_WAIT {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/host-wait";
+        }
+    },
+
+    MULTI_MENU {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/menu";
+        }
+    },
+
+    MULTI_PLAYER_WAIT {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/player-wait";
+        }
+    },
+
+    MULTI_ROUND_END {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/round-end";
+        }
+    }
 
 }
 
