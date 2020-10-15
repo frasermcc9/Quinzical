@@ -28,7 +28,7 @@ public abstract class StandardSceneController {
     protected SceneHandler sceneHandler;
 
     @FXML
-    final void initialize() {
+    public final void initialize() {
         this.background.setImage(sceneHandler.getActiveTheme().getImage());
         
         onLoad();
