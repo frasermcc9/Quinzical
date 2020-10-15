@@ -26,7 +26,9 @@ public interface QuestionGeneratorStrategyFactory {
 
     QuestionGeneratorStrategy createPracticeQuestionStrategy();
 
-    QuestionGeneratorStrategy createSelectedCategorySelection(String[] categories);
+    QuestionGeneratorStrategy createSelectedCategoryStrategy(String[] categories);
 
-    QuestionGeneratorStrategy createSelectedCategorySelection(List<String> categories);
+    QuestionGeneratorStrategy createSelectedCategoryStrategy(List<String> categories);
+
+    QuestionGeneratorStrategy createInternationalQuestionStrategy();
 }
