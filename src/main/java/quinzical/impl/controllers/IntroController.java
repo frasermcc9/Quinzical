@@ -18,11 +18,12 @@ import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.models.structures.SaveData;
 import quinzical.impl.util.questionparser.Serializer;
 import quinzical.interfaces.models.GameModel;
+import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.models.structures.UserData;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 
 import java.io.IOException;
@@ -37,17 +38,17 @@ public class IntroController extends StandardSceneController {
     private SceneHandler sceneHandler;
 
     @Inject
-    private GameModel gameModel;
+    private GameModelSaver gameModel;
 
     @Inject
     private ObjectReaderStrategyFactory objectReader;
 
     @Inject
     private QuestionCollection questionCollection;
-    
+
     @FXML
     private Button btnLoadGame;
-    
+
 
     /**
      * Sets the active scene to the main game scene where you select categories and questions from.
@@ -86,38 +87,42 @@ public class IntroController extends StandardSceneController {
         Serializer.main(null);
         questionCollection.regenerateQuestionsFromDisk();
     }
-    
+
 
     @Override
     protected void onLoad() {
         handleLoadGameButton();
-        listen();
     }
 
     /**
      * Sets up the loadGameButton, checking to see if there is save data to fetch and disabling the button if there
      * isn't any yet.
+     * <p>
+     * Method execution order: Check if there is a game in the current instance going, and load that. Check if there is
+     * a save file, then: Check if that save file has a game running. If yes, load that. Otherwise disable the button,
+     * and load only total coins and international mode.
      */
     private void handleLoadGameButton() {
-        SaveData saveData = null;
-        try {
-            saveData = objectReader.<SaveData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
-                "/save.qdb");
-        } catch (IOException | ClassNotFoundException e) {
-            //dont really care if file isn't found
+        if (gameModel.isGameActive()) {
+            btnLoadGame.setDisable(false);
+            return;
         }
 
-        // There is a save file
-        if (saveData != null && saveData.getQuestionData() != null) {
-            SaveData finalSaveData = saveData;
-            btnLoadGame.setOnAction(e -> {
-                gameModel.loadSaveData(finalSaveData);
-                btnLoadGame.setOnAction(action -> sceneHandler.setActiveScene(GameScene.GAME));
+        UserData saveData;
+        try {
+            saveData = objectReader.<UserData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
+                "/save.qdb");
+
+            gameModel.loadSaveData(saveData);
+            if (saveData.isGameActive()) {
+                btnLoadGame.setOnAction(e -> btnLoadGame.setOnAction(action -> sceneHandler.setActiveScene(GameScene.GAME)));
                 btnLoadGame.fire();
-            });
-        }
-        // There is no save
-        else {
+            } else {
+                btnLoadGame.setDisable(true);
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            //if no game data is found
             btnLoadGame.setDisable(true);
         }
     }
@@ -128,17 +133,5 @@ public class IntroController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
-
-    /**
-     * Listen to events that this scene needs to react to.
-     */
-    private void listen() {
-        // If the QuestionBoard updates, then check if its not null. If it's not, then we can enable the load game btn.
-        gameModel.onQuestionBoardUpdate(() -> {
-            if (gameModel.getBoardQuestions() != null) {
-                btnLoadGame.setDisable(false);
-            }
-        });
-    }
 
 }
