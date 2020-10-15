@@ -7,7 +7,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
-public class GameTypeSelectController {
+public class GameTypeSelectController extends StandardSceneController{
 
     @Inject
     private SceneHandler sceneHandler;
@@ -30,5 +30,9 @@ public class GameTypeSelectController {
     @FXML
     void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
+    }
+
+    @Override
+    protected void onLoad() {
     }
 }
