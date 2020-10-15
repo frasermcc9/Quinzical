@@ -26,6 +26,20 @@ public enum GameScene implements GameSceneFxmlLoader {
         }
     },
 
+    GAME_TYPE_SELECT {
+        @Override 
+        public String getFxmlName(){
+            return "gametypeselect";
+        }
+    },
+
+    INTERNATIONAL_GAME {
+        @Override
+        public String getFxmlName(){
+            return "internationalgame";
+        }
+    },
+    
     PRACTICE {
         @Override
         public String getFxmlName() {
