@@ -17,6 +17,7 @@ package quinzical;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -74,11 +75,15 @@ public class Entry extends Application {
 
         stage.setOnCloseRequest(e -> {
             GameModelSaver model = injector.getInstance(GameModelSaver.class);
-            try {
-                model.saveQuestionsToDisk();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    model.saveGame();
+                    System.exit(0);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            
         });
     }
 

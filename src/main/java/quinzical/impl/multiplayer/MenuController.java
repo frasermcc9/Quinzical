@@ -16,11 +16,11 @@ package quinzical.impl.multiplayer;
 
 import com.google.inject.Inject;
 import io.socket.client.Socket;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,12 +32,10 @@ import quinzical.interfaces.models.SceneHandler;
 
 public class MenuController extends StandardSceneController {
 
-    @Inject
-    SceneHandler sceneHandler;
-    
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();
-
+    @Inject
+    SceneHandler sceneHandler;
     @FXML
     private TextField txtCode;
     @FXML
@@ -64,7 +62,7 @@ public class MenuController extends StandardSceneController {
                     String maxPlayers = ((String) a.get("maxPlayers"));
                     String timePerQuestion = ((String) a.get("timePerQuestion"));
                     System.out.println("Code: " + code + "   Players: " + currentPlayers + "/" + maxPlayers + "   " +
-                            "Questions: " + questions + "   Time per Question: " + timePerQuestion + "   Host: " + host);
+                        "Questions: " + questions + "   Time per Question: " + timePerQuestion + "   Host: " + host);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -104,7 +102,9 @@ public class MenuController extends StandardSceneController {
 
     @FXML
     void btnQuit(ActionEvent event) {
-        socket.disconnect();
+        Platform.runLater(() -> {
+            SocketModel.getInstance().destroy();
+        });
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
