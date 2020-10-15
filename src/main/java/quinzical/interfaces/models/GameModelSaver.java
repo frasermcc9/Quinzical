@@ -14,11 +14,17 @@
 
 package quinzical.interfaces.models;
 
+import quinzical.interfaces.models.structures.UserData;
+
 import java.io.IOException;
 
 /**
  * Interface of GameModel for saving the game state.
  */
 public interface GameModelSaver {
-    void saveQuestionsToDisk() throws IOException;
+    void saveGame() throws IOException;
+
+    void loadSaveData(UserData userData);
+
+    boolean isGameActive();
 }
