@@ -10,20 +10,20 @@ class DefaultTextNormaliserTest {
     public void TestNormalizeInput1() {
         String str = "Māori";
         String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
-        Assertions.assertEquals("maori", newStr);
+        Assertions.assertEquals("māori", newStr);
     }
 
     @Test
     public void TestNormalizeInput2() {
         String str = "Katipō";
         String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
-        Assertions.assertEquals("katipo", newStr);
+        Assertions.assertEquals("katipō", newStr);
     }
 
     @Test
     public void TestNormalizeInput3() {
         String str = "Pūhā";
         String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
-        Assertions.assertEquals("puha", newStr);
+        Assertions.assertEquals("pūhā", newStr);
     }
 }

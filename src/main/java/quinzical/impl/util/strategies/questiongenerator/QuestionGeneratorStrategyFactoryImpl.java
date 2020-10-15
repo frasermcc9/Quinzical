@@ -16,12 +16,20 @@ package quinzical.impl.util.strategies.questiongenerator;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategy;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -29,17 +37,23 @@ import java.util.*;
  */
 public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorStrategyFactory {
 
+    /**
+     * Providers contain their referenced object, created via the injector with their dependencies resolved.
+     */
     private final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider;
     private final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider;
     private final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider;
+    private final Provider<InternationalQuestionGeneratorStrategy> internationalQuestionGeneratorStrategyProvider;
 
     @Inject
     public QuestionGeneratorStrategyFactoryImpl(final Provider<GameQuestionGeneratorStrategy> gameQuestionGeneratorStrategyProvider,
                                                 final Provider<PracticeQuestionGeneratorStrategy> practiceQuestionGeneratorStrategyProvider,
-                                                final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider) {
+                                                final Provider<SelectedCategoryGeneratorStrategy> selectedCategoryGeneratorStrategyProvider,
+                                                final Provider<InternationalQuestionGeneratorStrategy> internationalQuestionGeneratorStrategyProvider) {
         this.gameQuestionGeneratorStrategyProvider = gameQuestionGeneratorStrategyProvider;
         this.practiceQuestionGeneratorStrategyProvider = practiceQuestionGeneratorStrategyProvider;
         this.selectedCategoryGeneratorStrategyProvider = selectedCategoryGeneratorStrategyProvider;
+        this.internationalQuestionGeneratorStrategyProvider = internationalQuestionGeneratorStrategyProvider;
     }
 
     /**
@@ -59,18 +73,39 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
 
     }
 
+    /**
+     * Creates the strategy for creating questions for the specified question.
+     *
+     * @param categories the string array of categories
+     * @return the QuestionGeneratorStrategy that will generate the questions.
+     */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategorySelection(String[] categories) {
-        SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
-        strategy.setCategories(List.of(categories));
-        return strategy;
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(String[] categories) {
+        return createSelectedCategoryStrategy(List.of(categories));
     }
 
+    /**
+     * Equivalent to {@link #createSelectedCategoryStrategy(String[])} but with a list input.
+     *
+     * @param categories list of string containing the category names.
+     * @return the QuestionGeneratorStrategy that will generate the questions.
+     * @see #createGameQuestionStrategy()
+     */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategorySelection(List<String> categories) {
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(List<String> categories) {
         SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
         strategy.setCategories(categories);
         return strategy;
+    }
+
+    /**
+     * Returns the strategy that can create the international questions.
+     *
+     * @return the strategy, which when executed, will return international questions and categories.
+     */
+    @Override
+    public QuestionGeneratorStrategy createInternationalQuestionStrategy() {
+        return internationalQuestionGeneratorStrategyProvider.get();
     }
 }
 
@@ -107,6 +142,12 @@ class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
 
     /**
+     * This strategy uses another strategy of this type, so injects the factory to acquire it.
+     */
+    @Inject
+    QuestionGeneratorStrategyFactory factory;
+
+    /**
      * Inject the questionCollection into the strategy
      */
     @Inject
@@ -124,31 +165,7 @@ class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
         Collections.shuffle(allCategories);
         List<String> chosen = allCategories.subList(0, 5);
 
-        // Add the 5 chosen categories to a new map.
-        Map<String, List<GameQuestion>> boardQuestions = new LinkedHashMap<>();
-        chosen.forEach(e -> boardQuestions.put(e, new ArrayList<>()));
-
-        // For each of the categories, pick 5 questions.
-        boardQuestions.forEach((k, v) -> {
-            // Get all questions for category and shuffle.
-            List<Question> availableQuestions = new ArrayList<>(questions.get(k));
-            Collections.shuffle(availableQuestions);
-
-            // Pick the first 5 questions in the list and assign it a value. If
-            // its the first question of the category, set it as answerable.
-            for (int i = 0; i < 5; i++) {
-                GameQuestion q = new GameQuestion(availableQuestions.get(i));
-                q.setValue((i + 1) * 100);
-                if (i == 0) {
-                    q.setAnswerable(true);
-                }
-
-                v.add(q);
-            }
-
-        });
-
-        return boardQuestions;
+        return factory.createSelectedCategoryStrategy(chosen).generateQuestions();
     }
 }
 
@@ -191,5 +208,106 @@ class SelectedCategoryGeneratorStrategy implements QuestionGeneratorStrategy {
 
         return questionBoard;
 
+    }
+}
+
+/**
+ * Generates the international question set.
+ */
+class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
+
+    OkHttpClient client = new OkHttpClient();
+
+    @Override
+    public Map<String, List<GameQuestion>> generateQuestions() {
+
+        Map<String, List<GameQuestion>> questions = new LinkedHashMap<>();
+
+        List<CategoryNumberBinding> bindings = new ArrayList<>(5);
+
+        try {
+            // Get 5 categories
+            int offset = (int) (Math.random() * 10000);
+            ResponseBody response = run("https://jservice.io/api/categories?count=5&offset=" + offset);
+            String responseString = response.string();
+            JSONArray array = new JSONArray(responseString);
+
+            // Convert the api response into a useful format
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = (JSONObject) array.get(i);
+                bindings.add(new CategoryNumberBinding() {
+                    @Override
+                    public String name() throws JSONException {
+                        return object.get("title").toString();
+                    }
+
+                    @Override
+                    public String id() throws JSONException {
+                        return object.get("id").toString();
+                    }
+                });
+            }
+
+            // Iterate through the 5 categories.
+            // Make an api request for each category, and get 5 clues from it.
+            for (CategoryNumberBinding binding : bindings) {
+                List<GameQuestion> gameQuestions = new ArrayList<>(5);
+                questions.put(binding.name(), gameQuestions);
+                String clues = run("https://jservice.io/api/clues?category=" + binding.id()).string();
+                JSONArray clueArray = new JSONArray(clues);
+
+                List<JSONObject> jsonObjects = new ArrayList<>();
+                for (int i = 0; i < clueArray.length(); i++) {
+                    jsonObjects.add((JSONObject) clueArray.get(i));
+                }
+                Collections.shuffle(jsonObjects);
+
+                // Add the clues to the question map.
+                for (int i = 0; i < 5; i++) {
+                    GameQuestion gameQuestion = new GameQuestion(
+                        new Question(
+                            binding.name(),
+                            jsonObjects.get(i).get("question").toString(),
+                            "What is"
+                        ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString()})
+                    );
+                    gameQuestion.setValue((i + 1) * 100);
+                    if (i == 0) {
+                        gameQuestion.setAnswerable(true);
+                    }
+                    gameQuestions.add(gameQuestion);
+                }
+            }
+            return questions;
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Executes the http request
+     *
+     * @param url the url to GET
+     * @return Response body from the http request
+     * @throws IOException when the http request fails to execute.
+     */
+    private ResponseBody run(String url) throws IOException {
+        Request request = new Request.Builder()
+            .url(url)
+            .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body();
+    }
+
+    /**
+     * Data interface for pairs of category names to their id in the api.
+     */
+    private interface CategoryNumberBinding {
+        String name() throws JSONException;
+
+        String id() throws JSONException;
     }
 }

@@ -23,14 +23,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface of GameModelImpl class. Handles various factors for the game, such as the game questions
- * and the users earnings.
+ * Interface of GameModelImpl class. Handles various factors for the game, such as the game questions and the users
+ * earnings.
  */
 public interface GameModel extends QuinzicalModel {
 
     Map<String, List<GameQuestion>> getBoardQuestions();
 
     void generateNewGameQuestionSet();
+
+    void generateInternationalQuestions();
+
+    void generateGameQuestionSetFromCategories(String[] categories);
+
+    void generateGameQuestionSetFromCategories(List<String> categories);
 
     int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions);
 
@@ -41,7 +47,7 @@ public interface GameModel extends QuinzicalModel {
     GameQuestion getNextActiveQuestion(GameQuestion question);
 
     void answerActive(boolean correct);
-    
+
 
     int getValue();
 
@@ -53,6 +59,6 @@ public interface GameModel extends QuinzicalModel {
     void onQuestionBoardUpdate(QuestionBoardObserver fn);
 
     void onValueChange(ValueChangeObserver fn);
-    
-    
+
+
 }
