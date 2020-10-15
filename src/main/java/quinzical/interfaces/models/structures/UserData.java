@@ -19,22 +19,26 @@ import quinzical.impl.models.structures.GameQuestion;
 import java.util.List;
 import java.util.Map;
 
-public interface IUserData {
+public interface UserData {
     void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings);
 
     Map<String, List<GameQuestion>> getBoard();
 
-    void setBoard(Map<String, List<GameQuestion>> board);
+    void createNewBoard(Map<String, List<GameQuestion>> board);
 
     int getEarnings();
 
-    void setEarnings(int earnings);
+    void incrementEarnings(int earnings);
 
     boolean isInternationalUnlocked();
 
-    void setInternationalUnlocked(boolean internationalUnlocked);
+    void activateInternationalQuestions();
+
+    void resetUserData();
 
     int getCoins();
 
     void setCoins(int coins);
+    
+    boolean isGameActive();
 }
