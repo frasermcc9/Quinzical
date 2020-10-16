@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class GameQuestionController extends AbstractQuestionController {
     
-    private static  int TIMER_VALUE = 20;
+    private static  int TIMER_VALUE = 10000;
 
     //#region Injected classes
 
@@ -143,8 +143,12 @@ public class GameQuestionController extends AbstractQuestionController {
     private void startTimer(){
         timerContext.createTimer(TimerType.DEFAULT).setTimeout(()->{
             Platform.runLater(()->btnSubmit.fire());
-        }, 10000);
-        
+        }, TIMER_VALUE);
+
+        final Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(TIMER_VALUE),
+            new KeyValue (timerProgressBar.progressProperty(), 1)));
+        timeline.play();
     }
     
     /**
