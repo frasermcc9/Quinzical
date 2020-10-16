@@ -81,6 +81,7 @@ public class OptionsController extends StandardSceneController {
     private VBox vboxAdvanced;
 
     private VBox activeVbox;
+    private Label activeLabel;
 
     @Override
     protected void onLoad() {
@@ -185,11 +186,6 @@ public class OptionsController extends StandardSceneController {
         speakerMutator.speak("Hello, welcome to Quinzical!");
     }
 
-    @FXML
-    void btnLoadNewQuestionSet() {
-        Serializer.main(null);
-        questionCollection.regenerateQuestionsFromDisk();
-    }
 
     // #endregion
 
@@ -209,13 +205,9 @@ public class OptionsController extends StandardSceneController {
     }
 
     @FXML
-    void accessHovered(MouseEvent event) {
-        if (activeVbox == vboxAccess) return;
-        if (activeVbox != null)
-            animateOutSettings(activeVbox);
-
-        activeVbox = vboxAccess;
-        animateInSettings(vboxAccess);
+    void btnLoadNewQuestionSet() {
+        Serializer.main(null);
+        questionCollection.regenerateQuestionsFromDisk();
     }
 
     //#endregion
@@ -225,43 +217,68 @@ public class OptionsController extends StandardSceneController {
     @FXML
     void advancedHovered(MouseEvent event) {
         if (activeVbox == vboxAdvanced) return;
-        if (activeVbox != null)
-            animateOutSettings(activeVbox);
+        if (activeVbox != null) {
+            animateOutSettings(activeVbox, activeLabel);
+        }
 
         activeVbox = vboxAdvanced;
-        animateInSettings(vboxAdvanced);
+        activeLabel = lblAdvanced;
+        animateInSettings(activeVbox, activeLabel);
     }
 
     @FXML
     void helpHovered(MouseEvent event) {
         if (activeVbox == vboxHelp) return;
-        if (activeVbox != null)
-            animateOutSettings(activeVbox);
+        if (activeVbox != null) {
+            animateOutSettings(activeVbox, activeLabel);
+        }
 
         activeVbox = vboxHelp;
-        animateInSettings(vboxHelp);
+        activeLabel = lblHelp;
+        animateInSettings(activeVbox, activeLabel);
     }
 
     @FXML
     void themeHovered(MouseEvent event) {
         if (activeVbox == vboxTheme) return;
-        if (activeVbox != null)
-            animateOutSettings(activeVbox);
+        if (activeVbox != null) {
+            animateOutSettings(activeVbox, activeLabel);
+        }
 
         activeVbox = vboxTheme;
-        animateInSettings(vboxTheme);
+        activeLabel = lblTheme;
+        animateInSettings(activeVbox, activeLabel);
     }
 
-    private void animateInSettings(VBox vBox) {
+    @FXML
+    void accessHovered(MouseEvent event) {
+        if (activeVbox == vboxAccess) return;
+        if (activeVbox != null) {
+            animateOutSettings(activeVbox, activeLabel);
+        }
+
+        activeVbox = vboxAccess;
+        activeLabel = lblAccess;
+        animateInSettings(activeVbox, activeLabel);
+    }
+
+    private void animateInSettings(VBox vBox, Label label) {
         final Timeline timeline = new Timeline(
             new KeyFrame(
                 Duration.ZERO,
                 new KeyValue(vBox.opacityProperty(), vBox.getOpacity()),
                 new KeyValue(vBox.layoutXProperty(), vBox.getLayoutX()),
+                new KeyValue(label.scaleXProperty(), label.getScaleX()),
+                new KeyValue(label.scaleYProperty(), label.getScaleY()),
                 new KeyValue(vBox.visibleProperty(), true)
             ),
             new KeyFrame(
-                Duration.millis(500),
+                Duration.millis(100),
+                new KeyValue(label.scaleXProperty(), 1.1),
+                new KeyValue(label.scaleYProperty(), 1.1)
+            ),
+            new KeyFrame(
+                Duration.millis(250),
                 new KeyValue(vBox.opacityProperty(), 0.95),
                 new KeyValue(vBox.layoutXProperty(), 20),
                 new KeyValue(vBox.visibleProperty(), true)
@@ -270,17 +287,24 @@ public class OptionsController extends StandardSceneController {
         timeline.playFromStart();
     }
 
-    private void animateOutSettings(VBox vBox) {
+    private void animateOutSettings(VBox vBox, Label label) {
         if (vBox == null) return;
         final Timeline timeline = new Timeline(
             new KeyFrame(
                 Duration.ZERO,
                 new KeyValue(vBox.opacityProperty(), vBox.getOpacity()),
                 new KeyValue(vBox.layoutXProperty(), vBox.getLayoutX()),
+                new KeyValue(label.scaleXProperty(), label.getScaleX()),
+                new KeyValue(label.scaleYProperty(), label.getScaleY()),
                 new KeyValue(vBox.visibleProperty(), true)
             ),
             new KeyFrame(
-                Duration.millis(500),
+                Duration.millis(100),
+                new KeyValue(label.scaleXProperty(), 1),
+                new KeyValue(label.scaleYProperty(), 1)
+            ),
+            new KeyFrame(
+                Duration.millis(250),
                 new KeyValue(vBox.opacityProperty(), 0),
                 new KeyValue(vBox.layoutXProperty(), 0),
                 new KeyValue(vBox.visibleProperty(), false)
