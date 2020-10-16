@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The model for the main game of the application, controlling the saving,
- * loading, and question and score saving and getting of the game.
+ * The model for the main game of the application, controlling the saving, loading, and question and score saving and
+ * getting of the game.
  */
 @Singleton
 public class GameModelImpl extends AbstractGameModel implements GameModel, GameModelSaver, QuinzicalModel {
@@ -40,8 +40,6 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
 
     private double timerValue = 30;
     
-    //#region User earnings methods
-
     /**
      * @return Gets the user value.
      */
@@ -59,13 +57,11 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userData.incrementEarnings(number);
     }
 
-    // #endregion
 
     // #region Active Question
 
     /**
-     * Give a game question, returns the next in the category, or null if it is the
-     * final question
+     * Give a game question, returns the next in the category, or null if it is the final question
      *
      * @param question the current game question
      * @return the next game question in category, or null.
@@ -85,8 +81,8 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     /**
      * Answers whatever the active question is.
      * <p>
-     * Removes the active question, sets it as answered and no longer answerable,
-     * and sets the next question in the category as answerable.
+     * Removes the active question, sets it as answered and no longer answerable, and sets the next question in the
+     * category as answerable.
      */
     @Override
     public void answerActive(boolean correct) {
@@ -118,26 +114,25 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Override
     public void generateNewGameQuestionSet() {
         Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createGameQuestionStrategy()
-                .generateQuestions();
+            .generateQuestions();
         this.userData.createNewBoard(board);
     }
 
     /**
-     * Generates a set of International Questions. This method should be run on
-     * another thread as it makes API calls that can be somewhat slow to execute.
+     * Generates a set of International Questions. This method should be run on another thread as it makes API calls
+     * that can be somewhat slow to execute.
      */
     @Override
     public void generateInternationalQuestions() {
         Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createInternationalQuestionStrategy()
-                .generateQuestions();
+            .generateQuestions();
         this.userData.createNewBoard(board);
     }
 
     /**
      * Generates questions from the given array of categories.
      *
-     * @param categories String array of categories to generate questions from. Must
-     *                   be of length 5.
+     * @param categories String array of categories to generate questions from. Must be of length 5.
      */
     public void generateGameQuestionSetFromCategories(String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
@@ -153,18 +148,18 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
             throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
 
         Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory
-                .createSelectedCategoryStrategy(categories).generateQuestions();
+            .createSelectedCategoryStrategy(categories).generateQuestions();
         this.userData.createNewBoard(board);
     }
 
-    public void setTimerValue(double value){
-        timerValue=value;
-    }
-    
-    public double getTimerValue(){
+    public double getTimerValue() {
         return timerValue;
     }
-    
+
+    public void setTimerValue(double value) {
+        timerValue = value;
+    }
+
     /**
      * Returns map containing the questions for the current game.
      */
@@ -179,9 +174,9 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Override
     public int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions) {
         return boardQuestions.values().stream().reduce(0,
-                (sub, el) -> sub
-                        + el.stream().reduce(0, (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum),
-                Integer::sum);
+            (sub, el) -> sub
+                + el.stream().reduce(0, (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum),
+            Integer::sum);
     }
 
     /**

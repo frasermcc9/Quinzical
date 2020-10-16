@@ -46,21 +46,19 @@ public class GameQuestionController extends AbstractQuestionController {
     @Inject
     TimerContext timer;
     @Inject
-    private GameModel gameModel;
-
-    @Inject
     TimerContext timerContext;
-
+    @Inject
+    private GameModel gameModel;
     // #region Injected FXML components
     @FXML
     private Label lblPrompt;
 
     @FXML
     private Button btnPass;
-    
+
     @FXML
     private ProgressBar timerProgressBar;
-    
+
     //#endregion
 
 
@@ -77,7 +75,7 @@ public class GameQuestionController extends AbstractQuestionController {
     void onPassClicked() {
         onSubmitClicked();
     }
-    
+
     /**
      * gets the gameModel associated with this controller.
      *
@@ -111,7 +109,7 @@ public class GameQuestionController extends AbstractQuestionController {
         textAreas.forEach(textArea -> textArea.setEditable(false));
 
         List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
-                .verifySolutions(solutions, textAreas);
+            .verifySolutions(solutions, textAreas);
 
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
 
@@ -126,8 +124,7 @@ public class GameQuestionController extends AbstractQuestionController {
     // #endregion
 
     /**
-     * Makes it so that when a question is initially set as active, it will be set
-     * as incorrectly answered.
+     * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
      */
     @Override
     protected void onQuestionLoad() {
@@ -135,15 +132,23 @@ public class GameQuestionController extends AbstractQuestionController {
         startTimer();
     }
 
-    private void startTimer(){
-        timerContext.createTimer(TimerType.DEFAULT).setTimeout(()-> Platform.runLater(()->btnSubmit.fire()), (int)gameModel.getTimerValue()*100);
-        timerProgressBar.setProgress(1);
-        final Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(gameModel.getTimerValue()),
-            new KeyValue (timerProgressBar.progressProperty(), 0)));
-        timeline.play();
+    private void startTimer() {
+        final Timeline timeline = new Timeline(
+            new KeyFrame(
+                Duration.ZERO,
+                new KeyValue(timerProgressBar.progressProperty(), 1)
+            ),
+            new KeyFrame(
+                Duration.seconds(gameModel.getTimerValue() - 1),
+                new KeyValue(timerProgressBar.progressProperty(), 0)
+            )
+        );
+        timeline.playFromStart();
+
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
+            (int) gameModel.getTimerValue() * 1000);
     }
-    
+
     /**
      * Handles the return to the main game scene.
      */
@@ -182,8 +187,8 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     /**
-     * refreshes the buttons onAction calls, back to the normal functions, as they
-     * change when a question is just answered.
+     * refreshes the buttons onAction calls, back to the normal functions, as they change when a question is just
+     * answered.
      */
     private void refreshButtonState() {
         btnSubmit.setOnAction(e -> onSubmitClicked());
