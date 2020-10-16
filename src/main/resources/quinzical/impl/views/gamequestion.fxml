@@ -95,7 +95,7 @@
                </Button>
             </children>
          </HBox>
-         <ProgressBar fx:id="timerProgressBar" prefHeight="32.0" prefWidth="1285.0" progress="1.0" stylesheets="@../../../css/game-question.css" />
+         <ProgressBar fx:id="timerProgressBar" prefHeight="32.0" prefWidth="1280.0" progress="1.0" stylesheets="@../../../css/game-question.css" />
       </children>
    </VBox>
      <cursor>
