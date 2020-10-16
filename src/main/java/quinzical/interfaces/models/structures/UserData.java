@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserData {
+
+    void answerQuestion(boolean correct);
+
+    void finishCategory();
+
     void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings);
 
     Map<String, List<GameQuestion>> getBoard();
@@ -39,6 +44,6 @@ public interface UserData {
     int getCoins();
 
     void setCoins(int coins);
-    
+
     boolean isGameActive();
 }

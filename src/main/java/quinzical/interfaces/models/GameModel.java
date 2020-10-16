@@ -50,4 +50,7 @@ public interface GameModel extends QuinzicalModel {
 
     boolean isGameActive();
 
+    boolean isInternationalUnlocked();
+
+    UserData getUserData();
 }
