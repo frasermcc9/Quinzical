@@ -33,6 +33,7 @@ import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.strategies.timer.TimerContext;
+import quinzical.interfaces.strategies.timer.TimerStrategy;
 
 import java.util.List;
 
@@ -41,15 +42,12 @@ import java.util.List;
  */
 public class GameQuestionController extends AbstractQuestionController {
 
-    // #region Injected classes
-
-    @Inject
-    TimerContext timer;
     @Inject
     TimerContext timerContext;
+
     @Inject
     private GameModel gameModel;
-    // #region Injected FXML components
+
     @FXML
     private Label lblPrompt;
 
@@ -59,12 +57,8 @@ public class GameQuestionController extends AbstractQuestionController {
     @FXML
     private ProgressBar timerProgressBar;
 
-    //#endregion
+    private TimerStrategy activeTimer;
 
-
-    // #region Initialisation at FXML load
-
-    // #endregion
 
     // #region Injected handlers
 
@@ -73,7 +67,7 @@ public class GameQuestionController extends AbstractQuestionController {
      */
     @FXML
     void onPassClicked() {
-        onSubmitClicked();
+        btnSubmit.fire();
     }
 
     /**
@@ -102,6 +96,8 @@ public class GameQuestionController extends AbstractQuestionController {
      */
     @FXML
     void onSubmitClicked() {
+        activeTimer.stopTimeout();
+
         GameQuestion question = gameModel.getActiveQuestion();
 
         List<Solution> solutions = question.getSolutionsCopy();
@@ -145,7 +141,8 @@ public class GameQuestionController extends AbstractQuestionController {
         );
         timeline.playFromStart();
 
-        timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
+        activeTimer = timerContext.createTimer(TimerType.DEFAULT);
+        activeTimer.setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
             (int) gameModel.getTimerValue() * 1000);
     }
 
@@ -175,7 +172,6 @@ public class GameQuestionController extends AbstractQuestionController {
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
-            startTimer();
             gameModel.activateQuestion(next);
             refresh();
         }
