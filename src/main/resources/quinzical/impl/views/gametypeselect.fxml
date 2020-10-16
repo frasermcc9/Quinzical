@@ -33,7 +33,7 @@
                      <Font size="19.0" />
                   </font>
                </Button>
-               <Button mnemonicParsing="false" onAction="#btnInternationalPress" prefHeight="80.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="International Game">
+               <Button fx:id="btnInternational" mnemonicParsing="false" onAction="#btnInternationalPress" prefHeight="80.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="International Game">
                   <styleClass>
                      <String fx:value="button" />
                      <String fx:value="transparent" />

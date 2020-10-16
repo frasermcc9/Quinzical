@@ -40,8 +40,8 @@ import java.util.List;
  * Controls the question scene for the main game
  */
 public class GameQuestionController extends AbstractQuestionController {
-    
-    //#region Injected classes
+
+    // #region Injected classes
 
     @Inject
     TimerContext timer;
@@ -51,9 +51,7 @@ public class GameQuestionController extends AbstractQuestionController {
     @Inject
     TimerContext timerContext;
 
-    //#endregion
-
-    //#region Injected FXML components
+    // #region Injected FXML components
     @FXML
     private Label lblPrompt;
 
@@ -66,11 +64,11 @@ public class GameQuestionController extends AbstractQuestionController {
     //#endregion
 
 
-    //#region Initialisation at FXML load
+    // #region Initialisation at FXML load
 
-    //#endregion
+    // #endregion
 
-    //#region Injected handlers
+    // #region Injected handlers
 
     /**
      * submits the currently inputted text as an answer to the question
@@ -112,12 +110,10 @@ public class GameQuestionController extends AbstractQuestionController {
 
         textAreas.forEach(textArea -> textArea.setEditable(false));
 
-        List<Boolean> corrects =
-            questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION).verifySolutions(solutions,
-                textAreas);
+        List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
+                .verifySolutions(solutions, textAreas);
 
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
-
 
         btnSubmit.setText("Categories");
         btnSubmit.setOnAction(this::handleReturnToCategories);
@@ -127,10 +123,11 @@ public class GameQuestionController extends AbstractQuestionController {
         btnPass.requestFocus();
     }
 
-    //#endregion
+    // #endregion
 
     /**
-     * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
+     * Makes it so that when a question is initially set as active, it will be set
+     * as incorrectly answered.
      */
     @Override
     protected void onQuestionLoad() {
@@ -185,8 +182,8 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     /**
-     * refreshes the buttons onAction calls, back to the normal functions, as they change when a question is just
-     * answered.
+     * refreshes the buttons onAction calls, back to the normal functions, as they
+     * change when a question is just answered.
      */
     private void refreshButtonState() {
         btnSubmit.setOnAction(e -> onSubmitClicked());

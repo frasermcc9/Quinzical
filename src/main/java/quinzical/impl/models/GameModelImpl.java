@@ -29,12 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The model for the main game of the application, controlling the saving, loading, and question and score saving and
- * getting of the game.
+ * The model for the main game of the application, controlling the saving,
+ * loading, and question and score saving and getting of the game.
  */
 @Singleton
 public class GameModelImpl extends AbstractGameModel implements GameModel, GameModelSaver, QuinzicalModel {
-
 
     @Inject
     private UserData userData;
@@ -60,12 +59,13 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userData.incrementEarnings(number);
     }
 
-    //#endregion
+    // #endregion
 
-    //#region Active Question
+    // #region Active Question
 
     /**
-     * Give a game question, returns the next in the category, or null if it is the final question
+     * Give a game question, returns the next in the category, or null if it is the
+     * final question
      *
      * @param question the current game question
      * @return the next game question in category, or null.
@@ -85,54 +85,59 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     /**
      * Answers whatever the active question is.
      * <p>
-     * Removes the active question, sets it as answered and no longer answerable, and sets the next question in the
-     * category as answerable.
+     * Removes the active question, sets it as answered and no longer answerable,
+     * and sets the next question in the category as answerable.
      */
     @Override
     public void answerActive(boolean correct) {
         GameQuestion question = this.activeQuestion;
         this.activeQuestion.answer(correct);
-        //this.activeQuestion = null;
+        // this.activeQuestion = null;
 
         GameQuestion next = getNextActiveQuestion(question);
         if (next != null) {
             next.setAnswerable(true);
+        } else {
+            userData.finishCategory();
         }
+        userData.answerQuestion(correct);
 
         if (correct) {
             increaseValueBy(question.getValue());
         }
+
     }
 
-    //#endregion
+    // #endregion
 
-    //#region Game Board and State
+    // #region Game Board and State
 
     /**
      * Generates a new set of questions.
      */
     @Override
     public void generateNewGameQuestionSet() {
-        Map<String, List<GameQuestion>> board =
-            questionGeneratorStrategyFactory.createGameQuestionStrategy().generateQuestions();
+        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createGameQuestionStrategy()
+                .generateQuestions();
         this.userData.createNewBoard(board);
     }
 
     /**
-     * Generates a set of International Questions. This method should be run on another thread as it makes API calls
-     * that can be somewhat slow to execute.
+     * Generates a set of International Questions. This method should be run on
+     * another thread as it makes API calls that can be somewhat slow to execute.
      */
     @Override
     public void generateInternationalQuestions() {
-        Map<String, List<GameQuestion>> board =
-            questionGeneratorStrategyFactory.createInternationalQuestionStrategy().generateQuestions();
+        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createInternationalQuestionStrategy()
+                .generateQuestions();
         this.userData.createNewBoard(board);
     }
 
     /**
      * Generates questions from the given array of categories.
      *
-     * @param categories String array of categories to generate questions from. Must be of length 5.
+     * @param categories String array of categories to generate questions from. Must
+     *                   be of length 5.
      */
     public void generateGameQuestionSetFromCategories(String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
@@ -147,8 +152,8 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         if (categories.size() != 5)
             throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
 
-        Map<String, List<GameQuestion>> board =
-            questionGeneratorStrategyFactory.createSelectedCategoryStrategy(categories).generateQuestions();
+        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory
+                .createSelectedCategoryStrategy(categories).generateQuestions();
         this.userData.createNewBoard(board);
     }
 
@@ -173,8 +178,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions) {
-        return boardQuestions.values().stream().reduce(0, (sub, el) -> sub + el.stream().reduce(0,
-            (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum), Integer::sum);
+        return boardQuestions.values().stream().reduce(0,
+                (sub, el) -> sub
+                        + el.stream().reduce(0, (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum),
+                Integer::sum);
     }
 
     /**
@@ -209,11 +216,21 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         fileOut.close();
     }
 
-    @Override
+    @Override // delegate
     public boolean isGameActive() {
         return userData.isGameActive();
     }
 
-    //#endregion
+    @Override // delegate
+    public boolean isInternationalUnlocked() {
+        return userData.isInternationalUnlocked();
+    }
+
+    @Override
+    public UserData getUserData() {
+        return this.userData;
+    }
+
+    // #endregion
 
 }

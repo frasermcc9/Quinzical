@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import quinzical.impl.constants.GameScene;
@@ -23,6 +24,9 @@ public class GameTypeSelectController extends StandardSceneController {
 
     @FXML
     private Label lblProgress;
+
+    @FXML
+    private Button btnInternational;
 
     @FXML
     void btnInternationalPress() {
@@ -63,5 +67,8 @@ public class GameTypeSelectController extends StandardSceneController {
     @Override
     protected void onLoad() {
         setProgressVisible(false);
+        // Disable the international button if it is not unlocked
+        btnInternational.setDisable(!gameModel.isInternationalUnlocked());
+
     }
 }
