@@ -16,14 +16,14 @@
 
 .chart-pie-label {
     -fx-fill: white;
-    -fx-font-size: 20;
+    -fx-font-size: 14;
     -fx-font-weight: bold;
 }
 
 .label {
     -fx-text-fill: white;
     -fx-fill: white;
-    -fx-font-size: 32;
+    -fx-font-size: 24;
     -fx-font-weight: bold;
 }
 
@@ -34,3 +34,26 @@
 .data1.chart-pie {
     -fx-pie-color: #fc9b0a;
 }
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #26aafc;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 5);
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.table-view .cell{
+    -fx-alignment: center;
+    -fx-background-color: #29292D;
+    -fx-border-color: #29292D;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+
