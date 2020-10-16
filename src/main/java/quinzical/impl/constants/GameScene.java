@@ -82,6 +82,11 @@ public enum GameScene implements GameSceneFxmlLoader {
         }
     },
 
+    STATISTICS {
+        @Override
+        public String getFxmlName() {
+            return "statistics";
+
     CATEGORY_SELECTOR {
         @Override
         public String getFxmlName() {
@@ -144,7 +149,6 @@ public enum GameScene implements GameSceneFxmlLoader {
             return "multiplayer/round-end";
         }
     }
-
 }
 
 interface GameSceneFxmlLoader {

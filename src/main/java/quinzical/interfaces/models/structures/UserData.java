@@ -24,6 +24,9 @@ public interface UserData {
     void answerQuestion(boolean correct);
 
     void finishCategory();
+    
+    int getCorrect();
+    int getIncorrect();
 
     void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings);
 
