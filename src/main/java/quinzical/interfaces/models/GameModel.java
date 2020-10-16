@@ -50,6 +50,10 @@ public interface GameModel extends QuinzicalModel {
 
     boolean isGameActive();
 
+    double getTimerValue();
+
+    void setTimerValue(double value);
+    
     boolean isInternationalUnlocked();
 
     UserData getUserData();

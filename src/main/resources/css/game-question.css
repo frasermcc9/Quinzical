@@ -35,6 +35,20 @@
     -fx-background-color: #213c57;
 }
 
+.progress-bar .bar { 
+    -fx-padding: 0px; 
+    -fx-background-insets: 0; 
+    -fx-background-radius: 0;
+    -fx-background-color: #404040;
+    -fx-opacity: .8;
+}
+
+.progress-bar > .track {
+  -fx-opacity: 0;
+  -fx-background-radius: 0;
+  -fx-text-box-border: #c4dff2;
+  -fx-control-inner-background: #c4dff2;
+}
 
 .pass-button {
     -fx-background-color: #572121;

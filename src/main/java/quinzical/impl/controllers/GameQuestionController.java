@@ -15,14 +15,21 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Solution;
 import quinzical.impl.util.strategies.questionverifier.VerifierType;
+import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.strategies.timer.TimerContext;
@@ -41,7 +48,8 @@ public class GameQuestionController extends AbstractQuestionController {
     @Inject
     private GameModel gameModel;
 
-    // #endregion
+    @Inject
+    TimerContext timerContext;
 
     // #region Injected FXML components
     @FXML
@@ -49,8 +57,12 @@ public class GameQuestionController extends AbstractQuestionController {
 
     @FXML
     private Button btnPass;
+    
+    @FXML
+    private ProgressBar timerProgressBar;
+    
+    //#endregion
 
-    // #endregion
 
     // #region Initialisation at FXML load
 
@@ -65,7 +77,7 @@ public class GameQuestionController extends AbstractQuestionController {
     void onPassClicked() {
         onSubmitClicked();
     }
-
+    
     /**
      * gets the gameModel associated with this controller.
      *
@@ -120,8 +132,18 @@ public class GameQuestionController extends AbstractQuestionController {
     @Override
     protected void onQuestionLoad() {
         gameModel.answerActive(false);
+        startTimer();
     }
 
+    private void startTimer(){
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(()-> Platform.runLater(()->btnSubmit.fire()), (int)gameModel.getTimerValue()*100);
+        timerProgressBar.setProgress(1);
+        final Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(gameModel.getTimerValue()),
+            new KeyValue (timerProgressBar.progressProperty(), 0)));
+        timeline.play();
+    }
+    
     /**
      * Handles the return to the main game scene.
      */
@@ -148,6 +170,7 @@ public class GameQuestionController extends AbstractQuestionController {
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
+            startTimer();
             gameModel.activateQuestion(next);
             refresh();
         }
