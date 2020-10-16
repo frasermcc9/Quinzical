@@ -62,7 +62,7 @@ public class Entry extends Application {
         SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
         //set the background
-        sceneHandler.fireBackgroundChange(Theme.MOUNTAINS);
+        sceneHandler.fireBackgroundChange(Theme.FIELDS);
 
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);

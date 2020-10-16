@@ -2,11 +2,11 @@
 
 <?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,102 +15,206 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.OptionsController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane-bg" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.OptionsController">
    <children>
       <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/landscapes/fields.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 10;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+      <HBox fx:id="hboxContainer" alignment="CENTER_LEFT" prefHeight="720.0" prefWidth="1280.0" styleClass="h-box">
          <children>
-            <Label prefHeight="66.0" prefWidth="180.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Options" />
-            <Label stylesheets="@../../../css/options.css" text="Theme" />
-            <ComboBox fx:id="comboTheme" onAction="#onThemeChosen" prefHeight="42.0" prefWidth="229.0" stylesheets="@../../../css/options.css">
-               <styleClass>
-                  <String fx:value="combo-box" />
-                  <String fx:value="combo-box-popup" />
-               </styleClass>
-            </ComboBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-spacing: 25;" styleClass="left-vbox">
                <children>
-                  <Label stylesheets="@../../../css/options.css" text="Timer Duration">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Slider fx:id="sliderTimer" majorTickUnit="15.0" max="110.0" min="5.0" minWidth="200.0" minorTickCount="100" prefHeight="24.0" prefWidth="1280.0" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" value="30.0" />
-                  <Button mnemonicParsing="false" onAction="#timerDefault" styleClass="transparent" text="Default">
-                     <stylesheets>
-                        <URL value="@../../../css/intro.css" />
-                        <URL value="@../../../css/options.css" />
-                     </stylesheets>
+                  <Label fx:id="lblTheme" onMouseEntered="#themeHovered" prefHeight="35.0" prefWidth="162.0" styleClass="option-label" text="Theme" />
+                  <Label fx:id="lblAccess" onMouseEntered="#accessHovered" prefHeight="35.0" prefWidth="203.0" styleClass="option-label" text="Accessibility" />
+                  <Label fx:id="lblHelp" onMouseEntered="#helpHovered" prefHeight="35.0" prefWidth="195.0" styleClass="option-label" text="Help" />
+                  <Label fx:id="lblAdvanced" onMouseEntered="#advancedHovered" prefHeight="35.0" prefWidth="216.0" styleClass="option-label" text="Advanced" />
+                  <Button mnemonicParsing="false" onAction="#btnMenuClick" text="Back to Main Menu">
+                     <styleClass>
+                        <String fx:value="large-button" />
+                        <String fx:value="transparent" />
+                     </styleClass>
+                     <VBox.margin>
+                        <Insets bottom="-180.0" top="120.0" />
+                     </VBox.margin>
                   </Button>
                </children>
             </VBox>
-            <Separator maxWidth="-Infinity" prefHeight="16.0" prefWidth="320.0" />
-            <VBox alignment="CENTER" prefHeight="235.0" prefWidth="1280.0">
+            <AnchorPane prefHeight="720.0" prefWidth="458.0">
                <children>
-                  <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="297.0" stylesheets="@../../../css/options.css" text="Voice Options" textAlignment="CENTER" />
-                  <HBox alignment="CENTER" prefHeight="248.0" prefWidth="1280.0" style="-fx-spacing: -20;">
+                  <VBox fx:id="vboxTheme" alignment="CENTER" layoutX="-1.0" maxWidth="480.0" minHeight="410.0" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
+                        <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="273.0" text="Theme Settings">
+                           <styleClass>
+                              <String fx:value="bright-label" />
+                              <String fx:value="settings-title" />
+                           </styleClass>
+                           <VBox.margin>
+                              <Insets bottom="55.0" top="-106.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label styleClass="bright-label" text="Pick Your Theme" />
+                        <ListView fx:id="themeList" prefHeight="351.0" prefWidth="419.0" styleClass="transparent" stylesheets="@../../../css/list-view.css" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxAccess" minHeight="410.0" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox">
+                     <children>
+                        <Label prefHeight="47.0" prefWidth="273.0" text="Voice Settings">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="bright-label" />
+                              <String fx:value="settings-title" />
+                           </styleClass>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="248.0" prefWidth="1280.0" style="-fx-spacing: -20;">
                            <children>
-                              <Label stylesheets="@../../../css/options.css" text="Speed">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Slider fx:id="sliderSpeed" majorTickUnit="50.0" max="300.0" min="50.0" minorTickCount="0" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" value="175.0" />
-                              <Button mnemonicParsing="false" onAction="#speedDefault" styleClass="transparent" text="Default">
-                                 <stylesheets>
-                                    <URL value="@../../../css/intro.css" />
-                                    <URL value="@../../../css/options.css" />
-                                 </stylesheets>
-                              </Button>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                                 <children>
+                                    <Label styleClass="label-voice" text="Speed">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Slider fx:id="sliderSpeed" majorTickUnit="125.0" max="300.0" min="50.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="175.0">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                       <styleClass>
+                                          <String fx:value="voice-slider-label" />
+                                          <String fx:value="slider-vertical" />
+                                       </styleClass>
+                                    </Slider>
+                                    <Button mnemonicParsing="false" onAction="#speedDefault" text="Default">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="button-voice" />
+                                          <String fx:value="transparent" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                                 <children>
+                                    <Label prefHeight="37.0" prefWidth="43.0" styleClass="label-voice" text="Gap">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Slider fx:id="sliderGap" majorTickUnit="20.0" max="80.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                       <styleClass>
+                                          <String fx:value="voice-slider-label" />
+                                          <String fx:value="slider-vertical" />
+                                       </styleClass>
+                                    </Slider>
+                                    <Button mnemonicParsing="false" onAction="#gapDefault" text="Default">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="button-voice" />
+                                          <String fx:value="transparent" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="126.0" styleClass="label-voice" text="Amplitude">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Slider fx:id="sliderAmp" majorTickUnit="50.0" max="200.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="100.0">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                       <styleClass>
+                                          <String fx:value="voice-slider-label" />
+                                          <String fx:value="slider-vertical" />
+                                       </styleClass>
+                                    </Slider>
+                                    <Button mnemonicParsing="false" onAction="#ampDefault" text="Default">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="button-voice" />
+                                          <String fx:value="transparent" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                                 <children>
+                                    <Label styleClass="label-voice" text="Pitch">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Slider fx:id="sliderPitch" majorTickUnit="20.0" max="80.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="50.0">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                       <styleClass>
+                                          <String fx:value="voice-slider-label" />
+                                          <String fx:value="slider-vertical" />
+                                       </styleClass>
+                                    </Slider>
+                                    <Button mnemonicParsing="false" onAction="#pitchDefault" text="Default">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="button-voice" />
+                                          <String fx:value="transparent" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
+                        </HBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="4.0" prefWidth="177.0" styleClass="label-voice" stylesheets="@../../../css/options.css" text="Sample Voice:" />
+                              <ImageView fitHeight="70.0" fitWidth="60.0" onMouseClicked="#onSampleClick" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/play.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="-20.0" />
+                           </VBox.margin>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
                            <children>
-                              <Label prefHeight="37.0" prefWidth="43.0" stylesheets="@../../../css/options.css" text="Gap">
+                              <Label styleClass="label-voice" text="Timer Duration">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Slider fx:id="sliderGap" max="99.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" />
-                              <Button mnemonicParsing="false" onAction="#gapDefault" styleClass="transparent" text="Default">
-                                 <stylesheets>
-                                    <URL value="@../../../css/intro.css" />
-                                    <URL value="@../../../css/options.css" />
-                                 </stylesheets>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
-                           <children>
-                              <Label prefHeight="30.0" prefWidth="126.0" stylesheets="@../../../css/options.css" text="Amplitude">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Slider fx:id="sliderAmp" majorTickUnit="50.0" max="200.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" value="100.0" />
-                              <Button mnemonicParsing="false" onAction="#ampDefault" styleClass="transparent" text="Default">
-                                 <stylesheets>
-                                    <URL value="@../../../css/intro.css" />
-                                    <URL value="@../../../css/options.css" />
-                                 </stylesheets>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
-                           <children>
-                              <Label stylesheets="@../../../css/options.css" text="Pitch">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Slider fx:id="sliderPitch" max="99.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" value="50.0" />
-                              <Button mnemonicParsing="false" onAction="#pitchDefault" styleClass="transparent" text="Default">
+                              <Slider fx:id="sliderTimer" majorTickUnit="10.0" max="45.0" min="5.0" minorTickCount="1" prefHeight="38.0" prefWidth="329.0" showTickLabels="true" showTickMarks="true" stylesheets="@../../../css/options.css" value="25.0">
+                                 <padding>
+                                    <Insets left="25.0" right="25.0" />
+                                 </padding>
+                                 <styleClass>
+                                    <String fx:value="voice-slider-label" />
+                                    <String fx:value="slider-horizontal" />
+                                 </styleClass>
+                              </Slider>
+                              <Button mnemonicParsing="false" onAction="#timerDefault" styleClass="transparent" text="Default">
                                  <stylesheets>
                                     <URL value="@../../../css/intro.css" />
                                     <URL value="@../../../css/options.css" />
@@ -119,28 +223,42 @@
                            </children>
                         </VBox>
                      </children>
-                  </HBox>
+                  </VBox>
+                  <VBox fx:id="vboxHelp" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox">
+                     <children>
+                        <Label prefHeight="47.0" prefWidth="273.0" text="Help">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="bright-label" />
+                              <String fx:value="settings-title" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxAdvanced" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox">
+                     <children>
+                        <Label prefHeight="47.0" prefWidth="273.0" text="Advanced Settings">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="bright-label" />
+                              <String fx:value="settings-title" />
+                           </styleClass>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#btnLoadNewQuestionSet" styleClass="large-button" text="Load New Question Set" />
+                        <Button mnemonicParsing="false" onAction="#btnResetLocalData" styleClass="large-button" text="Reset Local Data" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <Label prefHeight="12.0" prefWidth="177.0" stylesheets="@../../../css/options.css" text="Sample Voice:" />
-            <ImageView fitHeight="116.0" fitWidth="60.0" onMouseClicked="#onSampleClick" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/play.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Separator maxWidth="-Infinity" prefHeight="21.0" prefWidth="320.0" />
-            <Button mnemonicParsing="false" onAction="#btnDonePress" opacity="0.9" prefHeight="56.0" prefWidth="251.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Done">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            </AnchorPane>
          </children>
-      </VBox>
+      </HBox>
    </children>
+   <stylesheets>
+      <URL value="@../../../css/global.css" />
+      <URL value="@../../../css/options2.css" />
+   </stylesheets>
 </AnchorPane>

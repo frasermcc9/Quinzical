@@ -36,6 +36,22 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     private int speed = 175;
     private int gap = 0;
 
+    public int getPitch() {
+        return pitch;
+    }
+
+    public int getAmplitude() {
+        return amplitude;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getGap() {
+        return gap;
+    }
+
     public SpeakerManager() {
     }
 

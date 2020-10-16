@@ -1,39 +1,27 @@
-// Copyright 2020 Fraser McCallum and Braden Palmer
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//  
-//     http://www.apache.org/licenses/LICENSE-2.0
-//  
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
-import javafx.event.ActionEvent;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
+import quinzical.impl.util.questionparser.Serializer;
 import quinzical.interfaces.models.GameModel;
+import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Optional;
 
-/**
- * Controller class for the options screen.
- */
 public class OptionsController extends StandardSceneController {
 
     static final int DEFAULT_PITCH;
@@ -51,13 +39,25 @@ public class OptionsController extends StandardSceneController {
     }
 
     @Inject
-    private GameModel gameModel;
-    @Inject
     private SceneHandler sceneHandler;
     @Inject
     private SpeakerMutator speakerMutator;
+    @Inject
+    private GameModel gameModel;
+    @Inject
+    private QuestionCollection questionCollection;
+
     @FXML
-    private ComboBox<Theme> comboTheme;
+    private Label lblTheme;
+    @FXML
+    private Label lblAccess;
+    @FXML
+    private Label lblHelp;
+    @FXML
+    private Label lblAdvanced;
+    @FXML
+    private ListView<Theme> themeList;
+
     @FXML
     private Slider sliderSpeed;
     @FXML
@@ -69,32 +69,70 @@ public class OptionsController extends StandardSceneController {
     @FXML
     private Slider sliderTimer;
 
-    /**
-     * Fired when the done button is pressed, goes back to the intro screen.
-     */
     @FXML
-    void btnDonePress(ActionEvent event) {
+    private HBox hboxContainer;
+    @FXML
+    private VBox vboxTheme;
+    @FXML
+    private VBox vboxAccess;
+    @FXML
+    private VBox vboxHelp;
+    @FXML
+    private VBox vboxAdvanced;
+
+    private VBox activeVbox;
+
+    @Override
+    protected void onLoad() {
+
+        ObservableList<Theme> list = FXCollections.observableArrayList(Theme.values());
+        themeList.setItems(list);
+        themeList.getSelectionModel().select(sceneHandler.getActiveTheme());
+        themeList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            sceneHandler.fireBackgroundChange(newValue);
+            background.setImage(newValue.getImage());
+        });
+
+        sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
+        sliderTimer.setValue(gameModel.getTimerValue());
+        sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
+        sliderSpeed.setValue(speakerMutator.getSpeed());
+        sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
+        sliderPitch.setValue(speakerMutator.getPitch());
+        sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
+        sliderAmp.setValue(speakerMutator.getAmplitude());
+        sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
+        sliderGap.setValue(speakerMutator.getGap());
+    }
+
+    @FXML
+    void btnMenuClick() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
-    
-    
+
+    //#region ACCESSIBILITY
 
     /**
-     * Updates the scene when it is changed.
+     * Adjusts the Speakers properties according to the value and the property that is being changed.
+     *
+     * @param sp    the speech property that is being changed (pitch, speed, amplitude or gap)
+     * @param value the value that the property is to be set to.
      */
-    @FXML
-    void onThemeChosen(ActionEvent event) {
-        Theme theme = comboTheme.getValue();
-        sceneHandler.fireBackgroundChange(theme);
-        background.setImage(theme.getImage());
-    }
-
-    /**
-     * Runs a sample message of the speaker to show the user what it sounds like.
-     */
-    @FXML
-    void onSampleClick(MouseEvent event) {
-        speakerMutator.speak("Hello, welcome to Quinzical!");
+    private void adjustSpeaker(SpeechProperty sp, int value) {
+        switch (sp) {
+            case SPEED:
+                speakerMutator.setSpeed(value);
+                break;
+            case PITCH:
+                speakerMutator.setPitch(value);
+                break;
+            case AMPLITUDE:
+                speakerMutator.setAmplitude(value);
+                break;
+            case GAP:
+                speakerMutator.setGap(value);
+                break;
+        }
     }
 
     /**
@@ -139,43 +177,116 @@ public class OptionsController extends StandardSceneController {
         sliderTimer.setValue(DEFAULT_TIMER);
     }
 
-    @Override
-    protected void onLoad() {
-        Collection<Theme> list = Arrays.asList(Theme.values());
-        comboTheme.getItems().addAll(list);
-        comboTheme.setValue(sceneHandler.getActiveTheme());
-
-        sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
-
-        sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
-        sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
-        sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
-        sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
-        
-        //todo set sliders to the right value when the options page is loaded
+    /**
+     * Runs a sample message of the speaker to show the user what it sounds like.
+     */
+    @FXML
+    void onSampleClick(MouseEvent event) {
+        speakerMutator.speak("Hello, welcome to Quinzical!");
     }
 
-    /**
-     * Adjusts the Speakers properties according to the value and the property that is being changed.
-     *
-     * @param sp    the speech property that is being changed (pitch, speed, amplitude or gap)
-     * @param value the value that the property is to be set to.
-     */
-    private void adjustSpeaker(SpeechProperty sp, int value) {
-        switch (sp) {
-            case SPEED:
-                speakerMutator.setSpeed(value);
-                break;
-            case PITCH:
-                speakerMutator.setPitch(value);
-                break;
-            case AMPLITUDE:
-                speakerMutator.setAmplitude(value);
-                break;
-            case GAP:
-                speakerMutator.setGap(value);
-                break;
+    @FXML
+    void btnLoadNewQuestionSet() {
+        Serializer.main(null);
+        questionCollection.regenerateQuestionsFromDisk();
+    }
+
+    // #endregion
+
+    //#region ADVANCED
+
+    @FXML
+    void btnResetLocalData() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Data Deletion");
+        alert.setHeaderText("Are you sure you want to delete your local user data?");
+        alert.setContentText("This will reset your international question unlock, your statistics and your current " +
+            "game. This will not reset your coins.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            gameModel.getUserData().resetUserData();
         }
+    }
+
+    @FXML
+    void accessHovered(MouseEvent event) {
+        if (activeVbox == vboxAccess) return;
+        if (activeVbox != null)
+            animateOutSettings(activeVbox);
+
+        activeVbox = vboxAccess;
+        animateInSettings(vboxAccess);
+    }
+
+    //#endregion
+
+    //#region ANIMATORS
+
+    @FXML
+    void advancedHovered(MouseEvent event) {
+        if (activeVbox == vboxAdvanced) return;
+        if (activeVbox != null)
+            animateOutSettings(activeVbox);
+
+        activeVbox = vboxAdvanced;
+        animateInSettings(vboxAdvanced);
+    }
+
+    @FXML
+    void helpHovered(MouseEvent event) {
+        if (activeVbox == vboxHelp) return;
+        if (activeVbox != null)
+            animateOutSettings(activeVbox);
+
+        activeVbox = vboxHelp;
+        animateInSettings(vboxHelp);
+    }
+
+    @FXML
+    void themeHovered(MouseEvent event) {
+        if (activeVbox == vboxTheme) return;
+        if (activeVbox != null)
+            animateOutSettings(activeVbox);
+
+        activeVbox = vboxTheme;
+        animateInSettings(vboxTheme);
+    }
+
+    private void animateInSettings(VBox vBox) {
+        final Timeline timeline = new Timeline(
+            new KeyFrame(
+                Duration.ZERO,
+                new KeyValue(vBox.opacityProperty(), vBox.getOpacity()),
+                new KeyValue(vBox.layoutXProperty(), vBox.getLayoutX()),
+                new KeyValue(vBox.visibleProperty(), true)
+            ),
+            new KeyFrame(
+                Duration.millis(500),
+                new KeyValue(vBox.opacityProperty(), 0.95),
+                new KeyValue(vBox.layoutXProperty(), 20),
+                new KeyValue(vBox.visibleProperty(), true)
+            )
+        );
+        timeline.playFromStart();
+    }
+
+    private void animateOutSettings(VBox vBox) {
+        if (vBox == null) return;
+        final Timeline timeline = new Timeline(
+            new KeyFrame(
+                Duration.ZERO,
+                new KeyValue(vBox.opacityProperty(), vBox.getOpacity()),
+                new KeyValue(vBox.layoutXProperty(), vBox.getLayoutX()),
+                new KeyValue(vBox.visibleProperty(), true)
+            ),
+            new KeyFrame(
+                Duration.millis(500),
+                new KeyValue(vBox.opacityProperty(), 0),
+                new KeyValue(vBox.layoutXProperty(), 0),
+                new KeyValue(vBox.visibleProperty(), false)
+            )
+        );
+        timeline.playFromStart();
     }
 
     /**
@@ -184,4 +295,6 @@ public class OptionsController extends StandardSceneController {
     private enum SpeechProperty {
         SPEED, PITCH, AMPLITUDE, GAP
     }
+
+    //#endregion
 }
