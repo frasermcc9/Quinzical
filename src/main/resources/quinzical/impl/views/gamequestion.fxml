@@ -76,7 +76,6 @@
                      <String fx:value="submit-button" />
                   </styleClass>
                </Button>
-               <Label fx:id="lblTimer" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="92.0" stylesheets="@../../../css/game-question.css" text="Timer" />
                <Button fx:id="btnPass" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="280.0" text="Pass">
                   <font>
                      <Font name="System Bold" size="26.0" />

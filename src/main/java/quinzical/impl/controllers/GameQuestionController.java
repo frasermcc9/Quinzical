@@ -56,9 +56,6 @@ public class GameQuestionController extends AbstractQuestionController {
 
     @FXML
     private Button btnPass;
-
-    @FXML
-    private Label lblTimer;
     
     //#endregion
 
@@ -136,16 +133,9 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     private void startTimer(){
-        lblTimer.setText(Integer.toString(TIMER_VALUE));
-        int count = TIMER_VALUE;
-        while(count>0){
-            int finalCount = count;
-            timerContext.createTimer(TimerType.DEFAULT).setTimeout(()->{
-                Platform.runLater(()->{lblTimer.setText(Integer.toString(finalCount));});
-            }, 1000);
-            count--;
-        }
-        //onSubmitClicked();
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(()->{
+            Platform.runLater(()->btnSubmit.fire());
+        }, 10000);
     }
     
     /**
