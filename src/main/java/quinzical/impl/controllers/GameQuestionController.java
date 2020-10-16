@@ -145,6 +145,7 @@ public class GameQuestionController extends AbstractQuestionController {
             Platform.runLater(()->btnSubmit.fire());
         }, TIMER_VALUE);
 
+        timerProgressBar.setProgress(0);
         final Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(TIMER_VALUE),
             new KeyValue (timerProgressBar.progressProperty(), 1)));
