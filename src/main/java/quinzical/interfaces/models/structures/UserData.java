@@ -40,8 +40,6 @@ public interface UserData {
 
     boolean isInternationalUnlocked();
 
-    void activateInternationalQuestions();
-
     void resetUserData();
 
     int getCoins();

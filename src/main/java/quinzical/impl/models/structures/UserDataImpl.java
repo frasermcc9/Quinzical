@@ -25,7 +25,6 @@ public class UserDataImpl implements Serializable, UserData {
     private Map<String, List<GameQuestion>> board;
     private int earnings = 0;
 
-    private boolean internationalUnlocked = false;
     private int coins = 0;
 
     private int questionsAnswered = 0;
@@ -68,10 +67,6 @@ public class UserDataImpl implements Serializable, UserData {
         this.earnings = 0;
     }
 
-    public void activateInternationalQuestions() {
-        internationalUnlocked = true;
-    }
-
     @Override
     public boolean isInternationalUnlocked() {
         return categoriesAnswered > 2;
@@ -97,11 +92,15 @@ public class UserDataImpl implements Serializable, UserData {
         this.coins = coins;
     }
 
+    /**
+     * Resets the user data. Does not reset coins.
+     */
     public void resetUserData() {
         this.board = null;
         this.earnings = 0;
-        this.internationalUnlocked = false;
-        this.coins = 0;
+        this.categoriesAnswered = 0;
+        this.questionsAnswered = 0;
+        this.correctAnswers = 0;
     }
 
     @Override
