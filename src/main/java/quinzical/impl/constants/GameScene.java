@@ -86,7 +86,8 @@ public enum GameScene implements GameSceneFxmlLoader {
         @Override
         public String getFxmlName() {
             return "statistics";
-
+        }
+    },
     CATEGORY_SELECTOR {
         @Override
         public String getFxmlName() {
