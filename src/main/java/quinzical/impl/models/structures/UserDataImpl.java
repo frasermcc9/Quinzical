@@ -23,12 +23,23 @@ import java.util.Map;
 public class UserDataImpl implements Serializable, UserData {
 
     private Map<String, List<GameQuestion>> board;
-
     private int earnings = 0;
 
     private boolean internationalUnlocked = false;
-
     private int coins = 0;
+
+    private int questionsAnswered = 0;
+    private int categoriesAnswered = 0;
+    private int correctAnswers = 0;
+
+    public void answerQuestion(boolean correct) {
+        questionsAnswered++;
+        correctAnswers += correct ? 1 : 0;
+    }
+
+    public void finishCategory() {
+        this.categoriesAnswered += 1;
+    }
 
     @Override
     public void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings) {
@@ -53,7 +64,7 @@ public class UserDataImpl implements Serializable, UserData {
 
     @Override
     public boolean isInternationalUnlocked() {
-        return internationalUnlocked;
+        return categoriesAnswered > 2;
     }
 
     @Override
