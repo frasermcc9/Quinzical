@@ -18,10 +18,7 @@ import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.util.questionparser.Serializer;
-import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.GameModelSaver;
-import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.UserData;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
@@ -42,9 +39,6 @@ public class IntroController extends StandardSceneController {
 
     @Inject
     private ObjectReaderStrategyFactory objectReader;
-
-    @Inject
-    private QuestionCollection questionCollection;
 
     @FXML
     private Button btnLoadGame;
@@ -79,17 +73,8 @@ public class IntroController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.PRACTICE);
     }
 
-    /**
-     * When the Load New Question Set button is pressed, run the question file loading method.
-     */
     @FXML
-    void btnLoadSetPress() {
-        Serializer.main(null);
-        questionCollection.regenerateQuestionsFromDisk();
-    }
-    
-    @FXML
-    void btnStatisticsClick(){
+    void btnStatisticsClick() {
         sceneHandler.setActiveScene(GameScene.STATISTICS);
     }
 
