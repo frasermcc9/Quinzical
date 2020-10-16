@@ -15,6 +15,7 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Solution;
 import quinzical.impl.util.strategies.questionverifier.VerifierType;
+import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.strategies.timer.TimerContext;
@@ -33,6 +35,8 @@ import java.util.List;
  * Controls the question scene for the main game
  */
 public class GameQuestionController extends AbstractQuestionController {
+    
+    private static  int TIMER_VALUE = 20;
 
     //#region Injected classes
 
@@ -53,6 +57,9 @@ public class GameQuestionController extends AbstractQuestionController {
     @FXML
     private Button btnPass;
 
+    @FXML
+    private Label lblTimer;
+    
     //#endregion
 
 
@@ -69,7 +76,7 @@ public class GameQuestionController extends AbstractQuestionController {
     void onPassClicked() {
         onSubmitClicked();
     }
-
+    
     /**
      * gets the gameModel associated with this controller.
      *
@@ -125,8 +132,22 @@ public class GameQuestionController extends AbstractQuestionController {
     @Override
     protected void onQuestionLoad() {
         gameModel.answerActive(false);
+        startTimer();
     }
 
+    private void startTimer(){
+        lblTimer.setText(Integer.toString(TIMER_VALUE));
+        int count = TIMER_VALUE;
+        while(count>0){
+            int finalCount = count;
+            timerContext.createTimer(TimerType.DEFAULT).setTimeout(()->{
+                Platform.runLater(()->{lblTimer.setText(Integer.toString(finalCount));});
+            }, 1000);
+            count--;
+        }
+        //onSubmitClicked();
+    }
+    
     /**
      * Handles the return to the main game scene.
      */
@@ -153,6 +174,7 @@ public class GameQuestionController extends AbstractQuestionController {
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
+            startTimer();
             gameModel.activateQuestion(next);
             refresh();
         }
