@@ -21,11 +21,12 @@ import java.util.Map;
 
 public interface UserData {
 
-    void answerQuestion(boolean correct);
+    void answerQuestion(String category, boolean correct);
 
     void finishCategory();
-    
+
     int getCorrect();
+
     int getIncorrect();
 
     void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings);
@@ -47,4 +48,6 @@ public interface UserData {
     void setCoins(int coins);
 
     boolean isGameActive();
+
+    AnalyticsEngineReader getAnalytics();
 }
