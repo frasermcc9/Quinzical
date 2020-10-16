@@ -50,4 +50,5 @@ public interface GameModel extends QuinzicalModel {
 
     boolean isGameActive();
 
+    int getTimerValue();
 }

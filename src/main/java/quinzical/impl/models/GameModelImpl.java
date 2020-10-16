@@ -39,7 +39,8 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Inject
     private UserData userData;
 
-
+    private int timerValue = 30;
+    
     //#region User earnings methods
 
     /**
@@ -151,6 +152,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userData.createNewBoard(board);
     }
 
+    public int getTimerValue(){
+        return timerValue;
+    }
+    
     /**
      * Returns map containing the questions for the current game.
      */

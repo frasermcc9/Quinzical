@@ -19,9 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
+import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
@@ -46,6 +49,8 @@ public class OptionsController extends StandardSceneController {
     }
 
     @Inject
+    private GameModel gameModel;
+    @Inject
     private SceneHandler sceneHandler;
     @Inject
     private SpeakerMutator speakerMutator;
@@ -59,6 +64,8 @@ public class OptionsController extends StandardSceneController {
     private Slider sliderAmp;
     @FXML
     private Slider sliderPitch;
+    @FXML
+    private Spinner timerSpinner;
 
     /**
      * Fired when the done button is pressed, goes back to the intro screen.
@@ -67,6 +74,8 @@ public class OptionsController extends StandardSceneController {
     void btnDonePress(ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
+    
+    
 
     /**
      * Updates the scene when it is changed.
@@ -128,6 +137,9 @@ public class OptionsController extends StandardSceneController {
         Collection<Theme> list = Arrays.asList(Theme.values());
         comboTheme.getItems().addAll(list);
         comboTheme.setValue(sceneHandler.getActiveTheme());
+        
+        timerSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100000));
+        timerSpinner.getValueFactory().setValue(gameModel.getTimerValue());
 
         sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
         sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
