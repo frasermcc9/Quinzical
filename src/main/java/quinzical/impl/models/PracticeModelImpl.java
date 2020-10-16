@@ -42,15 +42,7 @@ public class PracticeModelImpl extends AbstractGameModel implements PracticeMode
         return questions.get((int) (Math.random() * questions.size()));
     }
 
-    /**
-     * Gets the list of categories that are available in the game currently.
-     * 
-     * @return - The list of all categories, expressed as strings that are the names of each category.
-     */
-    @Override
-    public List<String> getCategories() {
-        return new ArrayList<>(questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions().keySet());
-    }
+
 
     /**
      * Sets the given question as the active question, which is the 
