@@ -19,9 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
+import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
@@ -37,14 +40,18 @@ public class OptionsController extends StandardSceneController {
     static final int DEFAULT_SPEED;
     static final int DEFAULT_AMP;
     static final int DEFAULT_GAP;
+    static final double DEFAULT_TIMER;
 
     static {
+        DEFAULT_TIMER = 30;
         DEFAULT_PITCH = 50;
         DEFAULT_SPEED = 175;
         DEFAULT_AMP = 100;
         DEFAULT_GAP = 0;
     }
 
+    @Inject
+    private GameModel gameModel;
     @Inject
     private SceneHandler sceneHandler;
     @Inject
@@ -59,6 +66,8 @@ public class OptionsController extends StandardSceneController {
     private Slider sliderAmp;
     @FXML
     private Slider sliderPitch;
+    @FXML
+    private Slider sliderTimer;
 
     /**
      * Fired when the done button is pressed, goes back to the intro screen.
@@ -67,6 +76,8 @@ public class OptionsController extends StandardSceneController {
     void btnDonePress(ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
+    
+    
 
     /**
      * Updates the scene when it is changed.
@@ -122,6 +133,11 @@ public class OptionsController extends StandardSceneController {
         sliderGap.setValue(DEFAULT_GAP);
     }
 
+    @FXML
+    void timerDefault() {
+        gameModel.setTimerValue(DEFAULT_TIMER);
+        sliderTimer.setValue(DEFAULT_TIMER);
+    }
 
     @Override
     protected void onLoad() {
@@ -129,10 +145,14 @@ public class OptionsController extends StandardSceneController {
         comboTheme.getItems().addAll(list);
         comboTheme.setValue(sceneHandler.getActiveTheme());
 
+        sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
+
         sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
         sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
         sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
         sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
+        
+        //todo set sliders to the right value when the options page is loaded
     }
 
     /**

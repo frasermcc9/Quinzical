@@ -91,4 +91,13 @@ public abstract class AbstractGameModel implements QuinzicalModel {
             }
         }
     }
+
+    /**
+     * Gets the list of categories that are available in the game currently.
+     *
+     * @return - The list of all categories, expressed as strings that are the names of each category.
+     */
+    public List<String> getCategories() {
+        return new ArrayList<>(questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions().keySet());
+    }
 }
