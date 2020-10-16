@@ -14,6 +14,9 @@
 
 package quinzical.impl.models.structures;
 
+import com.google.inject.Inject;
+import quinzical.interfaces.models.structures.AnalyticsEngineMutator;
+import quinzical.interfaces.models.structures.AnalyticsEngineReader;
 import quinzical.interfaces.models.structures.UserData;
 
 import java.io.Serializable;
@@ -22,32 +25,30 @@ import java.util.Map;
 
 public class UserDataImpl implements Serializable, UserData {
 
+    @Inject
+    private AnalyticsEngineMutator analyticsEngine;
     private Map<String, List<GameQuestion>> board;
-    private int earnings = 0;
 
+    private int earnings = 0;
     private int coins = 0;
 
-    private int questionsAnswered = 0;
-    private int categoriesAnswered = 0;
-    private int correctAnswers = 0;
+    public void answerQuestion(String category, boolean correct) {
+        analyticsEngine.answerQuestion(category, correct);
 
-    public void answerQuestion(boolean correct) {
-        questionsAnswered++;
-        correctAnswers += correct ? 1 : 0;
     }
 
     public void finishCategory() {
-        this.categoriesAnswered += 1;
+        this.analyticsEngine.setCategoriesAnswered(this.analyticsEngine.getCategoriesAnswered() + 1);
     }
 
     @Override
     public int getCorrect() {
-        return correctAnswers;
+        return analyticsEngine.getCorrectAnswers();
     }
 
     @Override
     public int getIncorrect() {
-        return questionsAnswered / 2 - getCorrect();
+        return analyticsEngine.getQuestionsAnswered() - getCorrect();
     }
 
     @Override
@@ -69,7 +70,7 @@ public class UserDataImpl implements Serializable, UserData {
 
     @Override
     public boolean isInternationalUnlocked() {
-        return categoriesAnswered > 2;
+        return analyticsEngine.getCategoriesAnswered() > 2;
     }
 
     @Override
@@ -98,13 +99,17 @@ public class UserDataImpl implements Serializable, UserData {
     public void resetUserData() {
         this.board = null;
         this.earnings = 0;
-        this.categoriesAnswered = 0;
-        this.questionsAnswered = 0;
-        this.correctAnswers = 0;
+        this.analyticsEngine.setCategoriesAnswered(0);
+        this.analyticsEngine.setQuestionsAnswered(0);
+        this.analyticsEngine.setCorrectAnswers(0);
     }
 
     @Override
     public boolean isGameActive() {
         return this.board != null;
+    }
+
+    public AnalyticsEngineReader getAnalytics() {
+        return this.analyticsEngine;
     }
 }
