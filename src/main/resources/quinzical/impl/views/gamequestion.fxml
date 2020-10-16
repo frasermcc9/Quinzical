@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
- <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameQuestionController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameQuestionController">
    <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../images/landscapes/fields.jpg" />
@@ -77,6 +76,7 @@
                      <String fx:value="submit-button" />
                   </styleClass>
                </Button>
+               <Label fx:id="lblTimer" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="92.0" stylesheets="@../../../css/game-question.css" text="Timer" />
                <Button fx:id="btnPass" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="280.0" text="Pass">
                   <font>
                      <Font name="System Bold" size="26.0" />

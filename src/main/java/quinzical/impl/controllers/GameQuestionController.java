@@ -41,6 +41,8 @@ public class GameQuestionController extends AbstractQuestionController {
     @Inject
     private GameModel gameModel;
 
+    @Inject
+    TimerContext timerContext;
 
     //#endregion
 
