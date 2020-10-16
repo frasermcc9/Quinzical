@@ -139,7 +139,7 @@ public class GameQuestionController extends AbstractQuestionController {
                 new KeyValue(timerProgressBar.progressProperty(), 1)
             ),
             new KeyFrame(
-                Duration.seconds(gameModel.getTimerValue() - 1),
+                Duration.seconds(gameModel.getTimerValue()),
                 new KeyValue(timerProgressBar.progressProperty(), 0)
             )
         );
