@@ -39,7 +39,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Inject
     private UserData userData;
 
-    private int timerValue = 30;
+    private double timerValue = 30;
     
     //#region User earnings methods
 
@@ -152,7 +152,11 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userData.createNewBoard(board);
     }
 
-    public int getTimerValue(){
+    public void setTimerValue(double value){
+        timerValue=value;
+    }
+    
+    public double getTimerValue(){
         return timerValue;
     }
     

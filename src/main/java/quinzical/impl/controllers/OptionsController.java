@@ -40,8 +40,10 @@ public class OptionsController extends StandardSceneController {
     static final int DEFAULT_SPEED;
     static final int DEFAULT_AMP;
     static final int DEFAULT_GAP;
+    static final double DEFAULT_TIMER;
 
     static {
+        DEFAULT_TIMER = 30;
         DEFAULT_PITCH = 50;
         DEFAULT_SPEED = 175;
         DEFAULT_AMP = 100;
@@ -65,7 +67,7 @@ public class OptionsController extends StandardSceneController {
     @FXML
     private Slider sliderPitch;
     @FXML
-    private Spinner timerSpinner;
+    private Slider sliderTimer;
 
     /**
      * Fired when the done button is pressed, goes back to the intro screen.
@@ -131,15 +133,19 @@ public class OptionsController extends StandardSceneController {
         sliderGap.setValue(DEFAULT_GAP);
     }
 
+    @FXML
+    void timerDefault() {
+        gameModel.setTimerValue(DEFAULT_TIMER);
+        sliderTimer.setValue(DEFAULT_TIMER);
+    }
 
     @Override
     protected void onLoad() {
         Collection<Theme> list = Arrays.asList(Theme.values());
         comboTheme.getItems().addAll(list);
         comboTheme.setValue(sceneHandler.getActiveTheme());
-        
-        timerSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100000));
-        timerSpinner.getValueFactory().setValue(gameModel.getTimerValue());
+
+        sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
 
         sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
         sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));

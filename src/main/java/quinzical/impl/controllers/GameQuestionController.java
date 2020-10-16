@@ -139,7 +139,7 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     private void startTimer(){
-        timerContext.createTimer(TimerType.DEFAULT).setTimeout(()-> Platform.runLater(()->btnSubmit.fire()), gameModel.getTimerValue()*1000);
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(()-> Platform.runLater(()->btnSubmit.fire()), (int)gameModel.getTimerValue()*100);
         timerProgressBar.setProgress(1);
         final Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(gameModel.getTimerValue()),
