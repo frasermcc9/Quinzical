@@ -39,7 +39,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     private UserData userData;
 
     private double timerValue = 30;
-    
+
     /**
      * @return Gets the user value.
      */
@@ -96,7 +96,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         } else {
             userData.finishCategory();
         }
-        userData.answerQuestion(correct);
+        userData.answerQuestion(question.getCategory(), correct);
 
         if (correct) {
             increaseValueBy(question.getValue());
