@@ -15,11 +15,16 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Solution;
@@ -56,6 +61,9 @@ public class GameQuestionController extends AbstractQuestionController {
 
     @FXML
     private Button btnPass;
+    
+    @FXML
+    private ProgressBar timerProgressBar;
     
     //#endregion
 
@@ -136,6 +144,7 @@ public class GameQuestionController extends AbstractQuestionController {
         timerContext.createTimer(TimerType.DEFAULT).setTimeout(()->{
             Platform.runLater(()->btnSubmit.fire());
         }, 10000);
+        
     }
     
     /**
