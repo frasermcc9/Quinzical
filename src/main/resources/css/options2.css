@@ -1,0 +1,134 @@
+/*
+ * Copyright 2020 Fraser McCallum and Braden Palmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.h-box {
+    -fx-background-image: url(../images/overlays/options.png);
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+
+    -fx-spacing: 100;
+}
+
+.left-vbox {
+    -fx-pref-width: 480;
+    -fx-pref-height: 720;
+}
+
+.option-label {
+    -fx-font-size: 32;
+    -fx-text-fill: white;
+    -fx-alignment: center-right;
+    -fx-pref-width: 200;
+}
+
+.bright-label {
+    -fx-font-size: 24;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-pref-width: 200;
+}
+
+.side-vbox {
+    -fx-alignment: center;
+    -fx-spacing: 25;
+}
+
+.label-voice {
+    -fx-text-fill: #e3e3e3;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
+    -fx-font-size: 24;
+    -fx-wrap-text: true;
+}
+
+.button-voice {
+    -fx-background-color: #404040;
+
+    -fx-cursor: hand;
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FAFAFA;
+
+    -fx-alignment: center;
+}
+
+.button-voice:hover {
+    -fx-background-color: #c4dff2;
+    -fx-text-fill: #131313;
+}
+
+.button-voice:pressed {
+    -fx-background-color: #9c9c9c;
+}
+
+.button-voice:disabled {
+    -fx-background-color: #262626;
+    -fx-text-fill: #757575;
+}
+
+.voice-slider-label {
+    -fx-font-size: 16;
+}
+
+.voice-slider-label .axis {
+    -fx-tick-label-fill: #cfcfcf;
+}
+
+.slider-vertical .track {
+    -fx-background-color: linear-gradient(to right, #262626 0%, #474747 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
+}
+
+.slider-horizontal .track {
+    -fx-background-color: linear-gradient(to bottom, #262626 0%, #474747 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 5);
+}
+
+.settings-title {
+    -fx-font-size: 32;
+    -fx-font-weight: bold;
+    -fx-pref-width: 400;
+    -fx-alignment: center;
+}
+
+.large-button {
+    -fx-background-color: #404040;
+
+    -fx-cursor: hand;
+    -fx-border-radius: 4px;
+
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FAFAFA;
+
+    -fx-alignment: center;
+    -fx-pref-width: 300;
+}
+
+.large-button:hover {
+    -fx-background-color: #c4dff2;
+    -fx-text-fill: #131313;
+}
+
+.large-button:pressed {
+    -fx-background-color: #9c9c9c;
+}
+
+.large-button:disabled {
+    -fx-background-color: #262626;
+    -fx-text-fill: #757575;
+}

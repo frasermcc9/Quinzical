@@ -21,11 +21,14 @@
     -fx-background-size: 100% 100%;
     -fx-pref-width: 1280;
     -fx-pref-height: 720;
-
 }
 
-.bright-label{
+.bright-label {
     -fx-font-size: 24;
     -fx-text-fill: white;
     -fx-alignment: center;
+}
+
+.transparent {
+    -fx-opacity: 0.8;
 }
