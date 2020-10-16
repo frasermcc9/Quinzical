@@ -19,9 +19,6 @@ import com.google.inject.Provider;
 import quinzical.interfaces.strategies.timer.TimerContext;
 import quinzical.interfaces.strategies.timer.TimerStrategy;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-
 public class TimerContextImpl implements TimerContext {
     private final Provider<DefaultTimerStrategy> defaultTimerStrategyProvider;
 
@@ -42,9 +39,25 @@ public class TimerContextImpl implements TimerContext {
 }
 
 class DefaultTimerStrategy implements TimerStrategy {
+    
+    private Thread task;
+
     @Override
-    public void setTimeout(Runnable runnable, int delay) {
-        CompletableFuture.delayedExecutor(delay, TimeUnit.MILLISECONDS).execute(runnable);
+    public void setTimeout(final Runnable runnable, final int delay) {
+        task = new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            } catch (InterruptedException ignored) {
+            }
+        });
+
+        task.start();
+    }
+
+    @Override
+    public void stopTimeout() {
+        task.interrupt();
     }
 }
 

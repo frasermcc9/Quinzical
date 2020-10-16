@@ -16,4 +16,6 @@ package quinzical.interfaces.strategies.timer;
 
 public interface TimerStrategy {
     void setTimeout(Runnable runnable, int delay);
+    
+    void stopTimeout();
 }
