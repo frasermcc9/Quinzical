@@ -42,6 +42,16 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
+    public int getCorrect() {
+        return correctAnswers;
+    }
+
+    @Override
+    public int getIncorrect() {
+        return questionsAnswered / 2 - getCorrect();
+    }
+
+    @Override
     public void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings) {
         this.board = board;
         this.earnings = earnings;

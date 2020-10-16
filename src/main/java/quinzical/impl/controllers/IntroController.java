@@ -87,6 +87,11 @@ public class IntroController extends StandardSceneController {
         Serializer.main(null);
         questionCollection.regenerateQuestionsFromDisk();
     }
+    
+    @FXML
+    void btnStatisticsClick(){
+        sceneHandler.setActiveScene(GameScene.STATISTICS);
+    }
 
 
     @Override
