@@ -15,14 +15,22 @@
 package quinzical.interfaces.models.structures;
 
 public interface SpeakerMutator {
-    
+
     void speak(String text);
+
+    int getPitch();
 
     void setPitch(int pitch);
 
+    int getAmplitude();
+
     void setAmplitude(int amplitude);
 
+    int getSpeed();
+
     void setSpeed(int speed);
+
+    int getGap();
 
     void setGap(int gap);
 }
