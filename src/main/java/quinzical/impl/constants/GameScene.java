@@ -27,19 +27,19 @@ public enum GameScene implements GameSceneFxmlLoader {
     },
 
     GAME_TYPE_SELECT {
-        @Override 
-        public String getFxmlName(){
+        @Override
+        public String getFxmlName() {
             return "gametypeselect";
         }
     },
 
     INTERNATIONAL_GAME {
         @Override
-        public String getFxmlName(){
+        public String getFxmlName() {
             return "internationalgame";
         }
     },
-    
+
     PRACTICE {
         @Override
         public String getFxmlName() {
@@ -79,6 +79,13 @@ public enum GameScene implements GameSceneFxmlLoader {
         @Override
         public String getFxmlName() {
             return "options";
+        }
+    },
+
+    STATISTICS {
+        @Override
+        public String getFxmlName() {
+            return "statistics";
         }
     },
 
@@ -137,7 +144,6 @@ public enum GameScene implements GameSceneFxmlLoader {
             return "multiplayer/round-end";
         }
     }
-
 }
 
 interface GameSceneFxmlLoader {
