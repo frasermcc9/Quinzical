@@ -50,8 +50,7 @@ public class GameTypeSelectController extends StandardSceneController {
 
     @FXML
     void btnNZPress() {
-        gameModel.generateNewGameQuestionSet();
-        sceneHandler.setActiveScene(GameScene.GAME);
+        sceneHandler.setActiveScene(GameScene.CATEGORY_SELECTOR);
     }
 
     @FXML
