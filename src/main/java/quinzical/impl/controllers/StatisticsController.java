@@ -7,7 +7,6 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.layout.FlowPane;
 import quinzical.Entry;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.views.DoughnutChart;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
