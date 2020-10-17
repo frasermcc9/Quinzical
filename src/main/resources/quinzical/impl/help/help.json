@@ -1,8 +1,41 @@
 {
-    "An Example Title": {
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    "New Game": {
+        "content": "This is where you can begin a new game. Clicking this option will present you with two options, a New Zealand Game and an International Game.\n\nPlease note that once you start a game, any save data for previous games will be overwritten."
     },
-    "Another Title": {
-        "content": "Here is some more content"
+    "International Game": {
+        "content": "The International Game section will start a new game with randomly acquired international questions, all acquired from real Jeopardy questions.\n\nChoosing this game mode may take a few seconds to load the questions, as they must be downloaded.\n\nPlease note that this option requires an internet connection.\n\nThe international game mode will be locked at first. You must complete two categories in the New Zealand game mode before playing the international mode."
+    },
+    "New Zealand Game": {
+        "content": "The New Zealand Game section will prompt the user to select five categories that are installed in the games loaded question set. Only five categories may be selected.\n\nOnce five categories are selected, clicking the OK button will begin the game."
+    },
+    "Playing a Game": {
+        "content": "When playing a game, you can pick one of five categories. Each category contains five questions. Completing a game involves answering all 25 questions.\n\nYou can only answer the lowest value unanswered question for each category."
+    },
+    "Answering a Question": {
+        "content": "The question will be read out. If you are in practice mode, it will also show the text of the question.\n\nIf you are in a normal game, a timer will start counting down the bottom of the screen. This is how long you have to answer the question.\n\nPressing the submit button will check if your answer is correct. From there, you can skip straight to the next question, or go back to the category screen.\n\nSome answers may require macrons for the correct solution. The buttons below the answer panel will allow you to use these characters."
+    },
+    "Loading a Game": {
+        "content": "The load game feature will allow you to load your last played game. This game is saved between instances - you can close the application and return later.\n\nPlease note that starting a new game will remove any previous saved game."
+    },
+    "Playing Online": {
+        "content": "Quinzical supports an online multiplayer mode. In the online multiplayer mode, you can host a game, or join someone else's game.\n\nGames can be private or public. Public games can be joined by anyone, private games can only be joined only by those with the code.\n\nThe winner of the multiplayer game is determined by how many questions each player gets right, and how quickly each player answers.\n\nThe multiplayer mode requires an internet connection."
+    },
+    "Practice Mode": {
+        "content": "The practice mode will allow you to get familiar with questions and answers from the New Zealand mode.\n\nThe practice mode will ask you to pick a category. From there, Quinzical will ask you questions from that category."
+    },
+    "Statistics": {
+        "content": "The statistics page will show you information about your statistics for Quinzical. On the left, you can see the ratio of questions you have got right to wrong. You can click on each section of the pie chart to see the categories you have the most right or wrong.\n\nOn the right, you can see the categories you have answered the most questions of, and the categories you struggle the most with."
+    },
+    "Changing Theme": {
+        "content": "You can change the background image for Quinzical in the options page.\n\nSelecting options from the main menu and navigating to the themes menu will present a list for you to select from."
+    },
+    "Accessibility": {
+        "content": "You can access several accessibility settings in the options page.\n\nSelecting options from the main menu and navigating to the accessibility menu will present you with several options.\n\nAt the top are settings about the question reader voice. Speed changes the rate it speaks at, gap increases the time between each word, amplitude increases volume, and pitch changes how 'high' of the voice is.\n\nThe timer duration setting decides how many seconds you have to answer questions."
+    },
+    "Loading a new Question Set": {
+        "content": "You can load a new local Question Set in the advanced menu of the options page.\n\nA Question Set takes the form of a text file. Question Set's must have at least five categories with at least five questions each to be valid.\n\nPlease consult the included default Question Set text-file for a template on how to format the file."
+    },
+    "Resetting my Local Data": {
+        "content": "You can reset your local data, which will reset your statistics, international mode unlock and your current game. It will not reset your coins."
     }
 }
