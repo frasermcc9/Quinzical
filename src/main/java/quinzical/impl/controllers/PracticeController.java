@@ -90,7 +90,6 @@ public class PracticeController extends StandardSceneController {
     
     @Override
     protected void onLoad() {
-        //populateList();
 
         btnOk.setDisable(true);
 
@@ -147,7 +146,6 @@ public class PracticeController extends StandardSceneController {
 
         source.getStyleClass().clear();
         if (added) {
-            //selectedCategories.add(category);
             selectedCategory=category;
             source.getStyleClass().add("button-selected");
             source.setOnAction(this::deselectCategory);
@@ -157,17 +155,12 @@ public class PracticeController extends StandardSceneController {
                 selectedButton.getStyleClass().add("button-unselected");
                 selectedButton.setOnAction(this::selectCategory);
             }
-            
             selectedButton = source;
-            
         } else {
-            //selectedCategories.remove(category);
             selectedCategory=null;
             source.getStyleClass().add("button-unselected");
             source.setOnAction(this::selectCategory);
         }
-        //this.lblSelected.setText("Selected: " + selectedCategories.size() + "/5");
-        //btnOk.setDisable(selectedCategories.size() != 5);
         btnOk.setDisable(selectedCategory==null);
     }
 }
