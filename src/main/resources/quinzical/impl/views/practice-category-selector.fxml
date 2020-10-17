@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.PracticeController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/landscapes/fields.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox" stylesheets="@../../../css/global.css">
+         <children>
+            <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Select Your Categories" />
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="354.0" prefWidth="680.0" stylesheets="@../../../css/Category-Selector.css">
+               <VBox.margin>
+                  <Insets left="300.0" right="300.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <Button fx:id="btnOk" mnemonicParsing="false" onAction="#btnOKPress" opacity="0.9" prefHeight="56.0" prefWidth="250.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="OK">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator prefHeight="28.0" prefWidth="580.0">
+               <VBox.margin>
+                  <Insets left="350.0" right="350.0" />
+               </VBox.margin>
+            </Separator>
+            <Button mnemonicParsing="false" onAction="#btnBackPress" opacity="0.9" prefHeight="56.0" prefWidth="250.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

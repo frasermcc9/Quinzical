@@ -18,21 +18,30 @@ import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.SceneHandler;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for the practice menu scene
  */
 public class PracticeController extends StandardSceneController {
-
+    
+    private String selectedCategory;
+    
     @Inject
     private SceneHandler sceneHandler;
 
@@ -48,6 +57,12 @@ public class PracticeController extends StandardSceneController {
     @FXML
     private ImageView imgBackground;
 
+    @FXML
+    private Button btnOk;
+    
+    @FXML
+    private ScrollPane scrollPane;
+    
     /**
      * Fired when the ok button is pressed, gets a random question from the currently selected category and then
      * switches to the practice question scene.
@@ -69,12 +84,79 @@ public class PracticeController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
     
-
+    
     @Override
     protected void onLoad() {
         populateList();
+
+        btnOk.setDisable(true);
+
+        List<String> categories = gameModel.getCategories()
+            .stream()
+            .sorted(String::compareToIgnoreCase)
+            .collect(Collectors.toList());
+
+        int size = categories.size();
+
+        GridPane grid = new GridPane();
+
+        for (int rowIndex = 0; rowIndex < size / 2 + 1; rowIndex++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setVgrow(Priority.SOMETIMES);
+            rc.setFillHeight(true);
+            grid.getRowConstraints().add(rc);
+        }
+        for (int colIndex = 0; colIndex < 2; colIndex++) {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setHgrow(Priority.SOMETIMES);
+            cc.setFillWidth(true);
+            grid.getColumnConstraints().add(cc);
+        }
+        for (int i = 0; i < size; i++) {
+            Button btn = new Button();
+            btn.setText(categories.get(i));
+            btn.setMinSize(scrollPane.getWidth() / 2, 70);
+            btn.setPrefSize(scrollPane.getWidth() / 2, 70);
+            btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            btn.getStyleClass().add("button-unselected");
+
+            btn.setOnAction(this::selectCategory);
+
+            int colIdx = i % 2;
+            grid.add(btn, colIdx, i / 2);
+        }
+
+        scrollPane.setContent(grid);
     }
-    
+
+    private void selectCategory(ActionEvent e) {
+        buttonToggle(e, true);
+    }
+
+    private void deselectCategory(ActionEvent e) {
+        buttonToggle(e, false);
+    }
+
+    private void buttonToggle(ActionEvent e, boolean added) {
+        Button source = (Button) e.getSource();
+        String category = source.getText();
+
+        source.getStyleClass().clear();
+        if (added) {
+            //selectedCategories.add(category);
+            selectedCategory=category;
+            source.getStyleClass().add("button-selected");
+            source.setOnAction(this::deselectCategory);
+        } else {
+            //selectedCategories.remove(category);
+            selectedCategory=null;
+            source.getStyleClass().add("button-unselected");
+            source.setOnAction(this::selectCategory);
+        }
+        //this.lblSelected.setText("Selected: " + selectedCategories.size() + "/5");
+        //btnOk.setDisable(selectedCategories.size() != 5);
+        btnOk.setDisable(selectedCategory==null);
+    }
 
     private void populateList() {
         List<String> categories = gameModel.getCategories();
