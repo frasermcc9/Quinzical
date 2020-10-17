@@ -269,7 +269,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
                             binding.name(),
                             jsonObjects.get(i).get("question").toString().replace("\\", ""),
                             "What is"
-                        ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString()})
+                        ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString().replace("\\", "")})
                     );
                     gameQuestion.setValue((i + 1) * 100);
                     if (i == 0) {
