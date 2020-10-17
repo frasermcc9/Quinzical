@@ -32,6 +32,7 @@ import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.SceneHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,8 @@ import java.util.stream.Collectors;
 public class PracticeController extends StandardSceneController {
     
     private String selectedCategory;
+    
+    private Button selectedButton;
     
     @Inject
     private SceneHandler sceneHandler;
@@ -119,7 +122,7 @@ public class PracticeController extends StandardSceneController {
             btn.setPrefSize(scrollPane.getWidth() / 2, 70);
             btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             btn.getStyleClass().add("button-unselected");
-
+            
             btn.setOnAction(this::selectCategory);
 
             int colIdx = i % 2;
@@ -148,6 +151,15 @@ public class PracticeController extends StandardSceneController {
             selectedCategory=category;
             source.getStyleClass().add("button-selected");
             source.setOnAction(this::deselectCategory);
+            
+            if(selectedButton != null){
+                selectedButton.getStyleClass().clear();
+                selectedButton.getStyleClass().add("button-unselected");
+                selectedButton.setOnAction(this::selectCategory);
+            }
+            
+            selectedButton = source;
+            
         } else {
             //selectedCategories.remove(category);
             selectedCategory=null;
@@ -157,14 +169,5 @@ public class PracticeController extends StandardSceneController {
         //this.lblSelected.setText("Selected: " + selectedCategories.size() + "/5");
         //btnOk.setDisable(selectedCategories.size() != 5);
         btnOk.setDisable(selectedCategory==null);
-    }
-
-    private void populateList() {
-        List<String> categories = gameModel.getCategories();
-        listCategories.getItems().clear();
-
-        ObservableList<String> list = javafx.collections.FXCollections.observableList(categories);
-
-        listCategories.setItems(list);
     }
 }
