@@ -42,9 +42,9 @@
                   </Button>
                </children>
             </VBox>
-            <AnchorPane prefHeight="720.0" prefWidth="458.0">
+            <AnchorPane prefHeight="720.0" prefWidth="332.0">
                <children>
-                  <VBox fx:id="vboxTheme" alignment="CENTER" layoutX="-1.0" maxWidth="480.0" minHeight="410.0" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
+                  <VBox fx:id="vboxTheme" alignment="CENTER" layoutX="-1.0" maxWidth="600.0" minHeight="410.0" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
                      <children>
                         <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="273.0" text="Theme Settings">
                            <styleClass>
@@ -59,7 +59,7 @@
                         <ListView fx:id="themeList" prefHeight="351.0" prefWidth="419.0" styleClass="transparent" stylesheets="@../../../css/list-view.css" />
                      </children>
                   </VBox>
-                  <VBox fx:id="vboxAccess" minHeight="410.0" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
+                  <VBox fx:id="vboxAccess" minHeight="410.0" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
                      <children>
                         <Label prefHeight="47.0" prefWidth="273.0" text="Voice Settings">
                            <VBox.margin>
@@ -224,7 +224,7 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="vboxHelp" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
+                  <VBox fx:id="vboxHelp" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
                      <children>
                         <Label prefHeight="47.0" prefWidth="273.0" text="Help">
                            <VBox.margin>
@@ -235,16 +235,16 @@
                               <String fx:value="settings-title" />
                            </styleClass>
                         </Label>
-                        <ScrollPane prefHeight="394.0" prefWidth="478.0" styleClass="help-box">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="394.0" prefWidth="478.0" styleClass="help-box">
                           <content>
                               <VBox fx:id="vboxHelpList" alignment="TOP_CENTER" prefHeight="195.0" prefWidth="476.0" style="-fx-spacing: 5;" />
                           </content>
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox fx:id="vboxHelpPage" layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
+                  <VBox fx:id="vboxHelpPage" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
                      <children>
-                        <Label fx:id="helpTitle" prefHeight="47.0" prefWidth="273.0" text="TITLE_PLACEHOLDER">
+                        <Label fx:id="helpTitle" alignment="CENTER" prefHeight="47.0" prefWidth="448.0" text="Loading a New Question Set" textAlignment="CENTER">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
