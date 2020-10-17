@@ -43,7 +43,7 @@ public enum GameScene implements GameSceneFxmlLoader {
     PRACTICE {
         @Override
         public String getFxmlName() {
-            return "practice";
+            return "practicecategoryselector";
         }
     },
 
