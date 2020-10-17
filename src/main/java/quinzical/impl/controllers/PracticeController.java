@@ -69,8 +69,8 @@ public class PracticeController extends StandardSceneController {
      */
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
-        if (listCategories.getSelectionModel().getSelectedItem() != null) {
-            Question question = gameModel.getRandomQuestion(listCategories.getSelectionModel().getSelectedItem());
+        if (selectedCategory != null) {
+            Question question = gameModel.getRandomQuestion(selectedCategory);
             gameModel.activateQuestion(question);
             sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
         }
@@ -87,7 +87,7 @@ public class PracticeController extends StandardSceneController {
     
     @Override
     protected void onLoad() {
-        populateList();
+        //populateList();
 
         btnOk.setDisable(true);
 
@@ -127,6 +127,7 @@ public class PracticeController extends StandardSceneController {
         }
 
         scrollPane.setContent(grid);
+         
     }
 
     private void selectCategory(ActionEvent e) {
