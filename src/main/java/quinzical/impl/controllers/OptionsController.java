@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import org.json.JSONException;
+import org.json.JSONObject;
+import quinzical.Entry;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
 import quinzical.impl.util.questionparser.Serializer;
@@ -20,6 +23,12 @@ import quinzical.interfaces.models.QuestionCollection;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class OptionsController extends StandardSceneController {
@@ -80,11 +89,26 @@ public class OptionsController extends StandardSceneController {
     @FXML
     private VBox vboxAdvanced;
 
+    @FXML
+    private VBox vboxHelpList;
+    @FXML
+    private VBox vboxHelpPage;
+    @FXML
+    private Label helpTitle;
+    @FXML
+    private Label helpContent;
+
     private VBox activeVbox;
     private Label activeLabel;
 
     @Override
     protected void onLoad() {
+
+        try {
+            loadHelpFromJson();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         ObservableList<Theme> list = FXCollections.observableArrayList(Theme.values());
         themeList.setItems(list);
@@ -105,6 +129,7 @@ public class OptionsController extends StandardSceneController {
         sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
         sliderGap.setValue(speakerMutator.getGap());
     }
+
 
     @FXML
     void btnMenuClick() {
@@ -274,8 +299,8 @@ public class OptionsController extends StandardSceneController {
             ),
             new KeyFrame(
                 Duration.millis(100),
-                new KeyValue(label.scaleXProperty(), 1.1),
-                new KeyValue(label.scaleYProperty(), 1.1)
+                new KeyValue(label.scaleXProperty(), 1.2),
+                new KeyValue(label.scaleYProperty(), 1.2)
             ),
             new KeyFrame(
                 Duration.millis(250),
@@ -313,6 +338,60 @@ public class OptionsController extends StandardSceneController {
         timeline.playFromStart();
     }
 
+
+    //#endregion
+
+    //#region HELP
+
+    @SuppressWarnings("unchecked")
+    private void loadHelpFromJson() throws URISyntaxException, IOException, JSONException {
+        URL resource = Entry.class.getClassLoader().getResource("quinzical/impl/help/help.json");
+        if (resource == null) throw new IOException("Cannot find help file");
+
+        byte[] bytes = Files.readAllBytes(Paths.get(resource.toURI()));
+        JSONObject jsonObject = new JSONObject(new String(bytes));
+
+        ArrayList<String> list = new ArrayList<>();
+        jsonObject.sortedKeys().forEachRemaining(k -> list.add((String) k));
+        list.forEach(title -> {
+            try {
+                JSONObject contentObject = jsonObject.getJSONObject(title);
+                String content = contentObject.getString("content");
+
+                Label lbl = new Label(title);
+                vboxHelpList.getChildren().add(lbl);
+                lbl.setOnMouseClicked(action -> {
+                    helpTitle.setText(title);
+                    helpContent.setText(content);
+                    if (activeVbox == vboxHelpPage) return;
+                    if (activeVbox != null) {
+                        animateOutSettings(activeVbox, lblHelp);
+                    }
+                    activeVbox = vboxHelpPage;
+                    activeLabel = lblHelp;
+                    animateInSettings(activeVbox, activeLabel);
+                });
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    void onHelpReturnClick(MouseEvent event) {
+        if (activeVbox == vboxHelp) return;
+        if (activeVbox != null) {
+            animateOutSettings(activeVbox, activeLabel);
+        }
+
+        activeVbox = vboxHelp;
+        activeLabel = lblHelp;
+        animateInSettings(activeVbox, activeLabel);
+    }
+
+    // #endregion
+
+
     /**
      * The different possible speech properties, used in adjustSpeaker .
      */
@@ -320,5 +399,4 @@ public class OptionsController extends StandardSceneController {
         SPEED, PITCH, AMPLITUDE, GAP
     }
 
-    //#endregion
 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -233,6 +234,33 @@
                               <String fx:value="bright-label" />
                               <String fx:value="settings-title" />
                            </styleClass>
+                        </Label>
+                        <ScrollPane prefHeight="394.0" prefWidth="478.0" styleClass="help-box">
+                          <content>
+                              <VBox fx:id="vboxHelpList" alignment="TOP_CENTER" prefHeight="195.0" prefWidth="476.0" style="-fx-spacing: 5;" />
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxHelpPage" layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="478.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false">
+                     <children>
+                        <Label fx:id="helpTitle" prefHeight="47.0" prefWidth="273.0" text="TITLE_PLACEHOLDER">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="bright-label" />
+                              <String fx:value="settings-title" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="helpContent" prefWidth="418.0" styleClass="help-text" text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;" wrapText="true" />
+                        <Label onMouseClicked="#onHelpReturnClick" text="Return" textFill="WHITE" underline="true">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                      </children>
                   </VBox>
