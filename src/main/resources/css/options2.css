@@ -101,7 +101,7 @@
 .settings-title {
     -fx-font-size: 32;
     -fx-font-weight: bold;
-    -fx-pref-width: 400;
+    -fx-pref-width: 450;
     -fx-alignment: center;
 }
 
@@ -155,7 +155,8 @@
 }
 
 .help-box {
-    -fx-background-color: #1c1c1c;
+    -fx-background-color: rgba(30, 30, 30, 0.8);
+    -fx-background-radius: 4px;
 }
 
 .scroll-bar:vertical .track {
