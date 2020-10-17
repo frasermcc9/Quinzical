@@ -131,7 +131,6 @@ public class StatisticsController extends StandardSceneController {
 
     private void createChart() {
         pieRatio.setData(createAnswerData());
-        System.out.println("data default");
         ScaleTransition scaleTransition = createScaleAnimation(pieRatio);
         pieRatio.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/statistics" +
             ".css")).toExternalForm());
