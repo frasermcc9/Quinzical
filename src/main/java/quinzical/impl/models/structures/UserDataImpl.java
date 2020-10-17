@@ -99,9 +99,7 @@ public class UserDataImpl implements Serializable, UserData {
     public void resetUserData() {
         this.board = null;
         this.earnings = 0;
-        this.analyticsEngine.setCategoriesAnswered(0);
-        this.analyticsEngine.setQuestionsAnswered(0);
-        this.analyticsEngine.setCorrectAnswers(0);
+        this.analyticsEngine.resetData();
     }
 
     @Override

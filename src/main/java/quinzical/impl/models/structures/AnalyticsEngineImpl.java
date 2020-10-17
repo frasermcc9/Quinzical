@@ -39,6 +39,15 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
+    public void resetData() {
+        correctByCategory.clear();
+        answeredByCategory.clear();
+        setCategoriesAnswered(0);
+        setQuestionsAnswered(0);
+        setCorrectAnswers(0);
+    }
+
+    @Override
     public int getQuestionsAnswered() {
         return questionsAnswered / 2;
     }

@@ -32,4 +32,6 @@ public interface AnalyticsEngineMutator extends AnalyticsEngineReader {
     void answerQuestion(String category, boolean correct);
 
     List<String> getMostAnsweredCategories();
+    
+    void resetData();
 }
