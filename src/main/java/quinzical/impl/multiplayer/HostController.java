@@ -14,41 +14,56 @@
 
 package quinzical.impl.multiplayer;
 
+import com.google.inject.Inject;
 import io.socket.client.Socket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-
+import javafx.scene.control.Label;
 import org.json.JSONException;
+import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.StandardSceneController;
 import quinzical.impl.multiplayer.models.GameSettings;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.impl.multiplayer.util.Util;
+import quinzical.interfaces.models.SceneHandler;
 
 import java.io.IOException;
 
-public class HostController  extends StandardSceneController {
+public class HostController extends StandardSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();
 
+    @Inject
+    private SceneHandler sceneHandler;
+    
     @FXML
-    private TextField txtQuestions;
-
+    private Button qDec;
     @FXML
-    private TextField txtPlayers;
-
+    private Label txtQuestions;
     @FXML
-    private TextField txtTime;
-
+    private Button qInc;
+    @FXML
+    private Button pDec;
+    @FXML
+    private Label txtPlayers;
+    @FXML
+    private Button pInc;
+    @FXML
+    private Button aDec;
+    @FXML
+    private Label txtTime;
+    @FXML
+    private Button aInc;
     @FXML
     private CheckBox chkPublic;
 
     @FXML
     void btnCancel(ActionEvent event) throws IOException {
-        App.setRoot("menu");
+        sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML
@@ -66,12 +81,12 @@ public class HostController  extends StandardSceneController {
         socket.once("gameHostGiven", (code) -> {
             MultiplayerGame.getInstance().setCode((String) code[0]);
             MultiplayerGame.getInstance().addPlayer(name);
-            App.setRoot("host-wait");
+            sceneHandler.setActiveScene(GameScene.MULTI_HOST_WAIT);
         });
         socket.emit("hostGameRequest", name, Util.asJson(new GameSettings(questions, time, maxPlayers, isPublic)));
     }
 
-    private int parseToInt(TextField textField) {
+    private int parseToInt(Label textField) {
         String text = textField.getText();
         try {
             return Integer.parseInt(text);
@@ -82,6 +97,53 @@ public class HostController  extends StandardSceneController {
 
     @Override
     protected void onLoad() {
-        
+
+    }
+
+    @FXML
+    void playersDec(ActionEvent event) {
+        int val = parseToInt(txtPlayers) - 1;
+        txtPlayers.setText(val + "");
+        checkValues(val, 2, 10, pDec, pInc);
+    }
+
+    @FXML
+    void playersInc(ActionEvent event) {
+        int val = parseToInt(txtPlayers) + 1;
+        txtPlayers.setText(val + "");
+        checkValues(val, 2, 10, pDec, pInc);
+    }
+
+    @FXML
+    void questionDec(ActionEvent event) {
+        int val = parseToInt(txtQuestions) - 1;
+        txtQuestions.setText(val + "");
+        checkValues(val, 2, 25, qDec, qInc);
+    }
+
+    @FXML
+    void questionInc(ActionEvent event) {
+        int val = parseToInt(txtQuestions) + 1;
+        txtQuestions.setText(val + "");
+        checkValues(val, 2, 25, qDec, qInc);
+    }
+
+    @FXML
+    void timeDec(ActionEvent event) {
+        int val = parseToInt(txtTime) - 1;
+        txtTime.setText(val + "");
+        checkValues(val, 5, 30, aDec, aInc);
+    }
+
+    @FXML
+    void timeInc(ActionEvent event) {
+        int val = parseToInt(txtTime) + 1;
+        txtTime.setText(val + "");
+        checkValues(val, 5, 30, aDec, aInc);
+    }
+
+    private void checkValues(int val, int min, int max, Button btnDec, Button btnInc) {
+        btnDec.setDisable(val == min);
+        btnInc.setDisable(val == max);
     }
 }

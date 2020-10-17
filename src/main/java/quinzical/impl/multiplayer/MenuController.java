@@ -34,8 +34,10 @@ public class MenuController extends StandardSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();
+    
     @Inject
     SceneHandler sceneHandler;
+    
     @FXML
     private TextField txtCode;
     @FXML
@@ -72,7 +74,7 @@ public class MenuController extends StandardSceneController {
 
     @FXML
     void btnHost(ActionEvent event) {
-        App.setRoot("host");
+        sceneHandler.setActiveScene(GameScene.MULTI_HOST);
     }
 
     @FXML
@@ -81,7 +83,8 @@ public class MenuController extends StandardSceneController {
         socket.emit("joinGameRequest", name, code);
         socket.once("joinGameNotification", (arg) -> {
             if (arg[0].equals(false)) {
-                System.out.println(arg[1]);
+                txtCode.setPromptText(arg[1] + "");
+                txtCode.setText("");
             } else {
                 JSONArray jsonArray = (JSONArray) arg[1];
                 MultiplayerGame mg = MultiplayerGame.getInstance();
@@ -93,8 +96,7 @@ public class MenuController extends StandardSceneController {
                         e.printStackTrace();
                     }
                 }
-                App.setRoot("player-wait");
-                System.out.println("Game Joined");
+                sceneHandler.setActiveScene(GameScene.MULTI_PLAYER_WAIT);
             }
         });
     }

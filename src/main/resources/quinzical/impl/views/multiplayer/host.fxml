@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -26,69 +28,108 @@
   ~ limitations under the License.
   -->
 
-<VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.HostController">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <Label alignment="CENTER" prefHeight="35.0" prefWidth="179.0" text="Settings">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </Label>
-   <Separator prefWidth="200.0" />
-   <VBox>
-      <children>
-         <HBox alignment="TOP_CENTER">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.HostController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" styleClass="vbox">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <Label alignment="CENTER" prefHeight="92.0" prefWidth="539.0" styleClass="title" stylesheets="@../../../../css/title-label.css" text="Host New Game">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <Separator prefWidth="200.0" />
+         <VBox prefHeight="200.0" prefWidth="100.0">
             <children>
-               <TextField fx:id="txtQuestions">
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </TextField>
-               <TextField fx:id="txtPlayers">
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </TextField>
-               <TextField fx:id="txtTime">
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </TextField>
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
+                  <children>
+                     <Label styleClass="bright-label" text="Questions:" />
+                     <Button fx:id="qDec" mnemonicParsing="false" onAction="#questionDec" text="&lt;">
+                        <HBox.margin>
+                           <Insets right="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                     <Label fx:id="txtQuestions" prefHeight="35.0" prefWidth="47.0" styleClass="bright-label" text="5">
+                        <HBox.margin>
+                           <Insets left="-30.0" right="-30.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Button fx:id="qInc" mnemonicParsing="false" onAction="#questionInc" text="&gt;">
+                        <HBox.margin>
+                           <Insets left="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                  </children>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
+                  <children>
+                     <Label styleClass="bright-label" text="Max Players:">
+                        <HBox.margin>
+                           <Insets right="-18.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Button fx:id="pDec" mnemonicParsing="false" onAction="#playersDec" text="&lt;">
+                        <HBox.margin>
+                           <Insets right="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                     <Label fx:id="txtPlayers" prefHeight="35.0" prefWidth="45.0" styleClass="bright-label" text="5">
+                        <HBox.margin>
+                           <Insets left="-30.0" right="-30.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Button fx:id="pInc" mnemonicParsing="false" onAction="#playersInc" text="&gt;">
+                        <HBox.margin>
+                           <Insets left="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                  </children>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
+                  <children>
+                     <Label styleClass="bright-label" text="Time To Answer:">
+                        <HBox.margin>
+                           <Insets right="-60.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Button fx:id="aDec" mnemonicParsing="false" onAction="#timeDec" text="&lt;">
+                        <HBox.margin>
+                           <Insets right="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                     <Label fx:id="txtTime" prefHeight="35.0" prefWidth="47.0" styleClass="bright-label" text="10">
+                        <HBox.margin>
+                           <Insets left="-30.0" right="-30.0" />
+                        </HBox.margin>
+                     </Label>
+                     <Button fx:id="aInc" mnemonicParsing="false" onAction="#timeInc" text="&gt;">
+                        <HBox.margin>
+                           <Insets left="-40.0" />
+                        </HBox.margin>
+                     </Button>
+                  </children>
+               </HBox>
             </children>
-         </HBox>
-         <HBox alignment="CENTER">
-            <children>
-               <Label alignment="CENTER" prefHeight="60.0" prefWidth="156.0" text="Questions">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" prefHeight="35.0" prefWidth="160.0" text="Max Players">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" prefHeight="35.0" prefWidth="160.0" text="Answer Time">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-      </children>
-   </VBox>
-   <Separator prefWidth="200.0" />
-   <CheckBox fx:id="chkPublic" mnemonicParsing="false" text="Public">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </CheckBox>
-   <Separator prefWidth="200.0" />
-   <Button mnemonicParsing="false" onAction="#btnStart" text="Start Game">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </Button>
-   <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
-</VBox>
+         </VBox>
+         <Separator prefWidth="200.0" />
+         <CheckBox fx:id="chkPublic" mnemonicParsing="false" styleClass="bright-label" text="Public">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </CheckBox>
+         <Separator prefWidth="200.0" />
+         <Button mnemonicParsing="false" onAction="#btnStart" text="Start Game">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../css/global.css" />
+      <URL value="@../../../../css/multiplayer.css" />
+   </stylesheets>
+</AnchorPane>

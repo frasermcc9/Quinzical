@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -24,31 +27,45 @@
   ~ limitations under the License.
   -->
 
-<VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.PlayerWaitController">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <VBox alignment="CENTER">
-      <children>
-         <Label prefHeight="2.0" prefWidth="76.0" text="Game Code:">
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.PlayerWaitController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" styleClass="vbox">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <VBox alignment="CENTER">
+            <children>
+               <Label prefHeight="183.0" prefWidth="667.0" styleClass="intro-title" text="Game Code:">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblCode" alignment="CENTER" prefHeight="92.0" prefWidth="349.0" styleClass="title" text="Label">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+            </children>
+         </VBox>
+         <Separator prefWidth="200.0" />
+         <ListView fx:id="listPlayers" prefHeight="195.0" prefWidth="440.0">
+            <VBox.margin>
+               <Insets left="400.0" right="400.0" />
+            </VBox.margin>
+         </ListView>
+         <Label fx:id="lblPlayers" styleClass="bright-label" text="0/0 Players">
             <font>
-               <Font size="14.0" />
+               <Font size="18.0" />
             </font>
          </Label>
-         <Label fx:id="lblCode" alignment="CENTER" prefHeight="35.0" prefWidth="106.0" text="Label">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Label>
-      </children>
-   </VBox>
-   <Separator prefWidth="200.0" />
-   <ListView fx:id="listPlayers" prefHeight="200.0" prefWidth="200.0" />
-   <Label fx:id="lblPlayers" text="0/0 Players">
-      <font>
-         <Font size="18.0" />
-      </font>
-   </Label>
-   <Separator prefWidth="200.0" />
-   <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
-</VBox>
+         <Separator prefWidth="200.0" />
+         <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../css/global.css" />
+      <URL value="@../../../../css/multiplayer.css" />
+   </stylesheets>
+</AnchorPane>
