@@ -33,6 +33,7 @@
                <children>
                   <Label styleClass="bright-label" />
                   <PieChart fx:id="pieRatio" />
+                  <Button fx:id="btnChartReset" disable="true" mnemonicParsing="false" onAction="#resetChartClick" prefHeight="36.0" prefWidth="169.0" text="Reset Chart" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="492.0" prefWidth="345.0" style="-fx-spacing: 5;" stylesheets="@../../../css/statistics.css">

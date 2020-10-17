@@ -14,6 +14,9 @@
 
 package quinzical.interfaces.models.structures;
 
+import javafx.util.Pair;
+import quinzical.impl.controllers.StatisticsController;
+
 import java.util.List;
 
 public interface AnalyticsEngineReader {
@@ -24,4 +27,13 @@ public interface AnalyticsEngineReader {
     List<String> getCorrectRatiosOfCategories(List<String> categories);
 
     List<String> getQuestionsAnsweredByCategory(List<String> categories);
+
+    /**
+     * 
+     * @param points the maximum number of data points to return
+     * @return list of the users most wrong categories, and the amount wrong
+     */
+    List<Pair<String,Integer>> getPairsForIncorrectAnswers(int points);
+
+    List<Pair<String, Integer>> getPairsForCorrectAnswers(int points);
 }

@@ -14,6 +14,7 @@
 
 package quinzical.impl.models.structures;
 
+import javafx.util.Pair;
 import quinzical.interfaces.models.structures.AnalyticsEngineMutator;
 import quinzical.interfaces.models.structures.AnalyticsEngineReader;
 
@@ -57,6 +58,10 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
 
     public int getQuestionsCorrectForCategory(String category) {
         return this.correctByCategory.get(category);
+    }
+
+    public int getQuestionsWrongForCategory(String category) {
+        return getQuestionsAnsweredForCategory(category) - getQuestionsCorrectForCategory(category);
     }
 
     @Override
@@ -127,6 +132,25 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .stream()
             .map(this::getCorrectRatioForCategory)
             .map(v -> String.format("%.2g", v))
+            .collect(Collectors.toList());
+    }
+
+    public List<Pair<String, Integer>> getPairsForIncorrectAnswers(int points) {
+        return answeredByCategory.keySet()
+            .stream()
+            .sorted(Comparator.comparingInt(this::getQuestionsWrongForCategory).reversed())
+            .map(s -> new Pair<>(s, getQuestionsWrongForCategory(s)))
+            .limit(points)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pair<String, Integer>> getPairsForCorrectAnswers(int points) {
+        return answeredByCategory.keySet()
+            .stream()
+            .sorted(Comparator.comparingInt(this::getQuestionsCorrectForCategory).reversed())
+            .map(s -> new Pair<>(s, getQuestionsCorrectForCategory(s)))
+            .limit(points)
             .collect(Collectors.toList());
     }
 }

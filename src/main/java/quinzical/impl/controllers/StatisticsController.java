@@ -3,20 +3,25 @@ package quinzical.impl.controllers;
 import com.google.inject.Inject;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
+import javafx.scene.effect.Glow;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import quinzical.Entry;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,21 +57,26 @@ public class StatisticsController extends StandardSceneController {
     @FXML
     private TableColumn<NameValuePair, String> colMostChallengingNumber;
 
+    @FXML
+    private Button btnChartReset;
+
     @Override
     protected void onLoad() {
-        createChart(createAnswerData(), "Correct Answer Ratio");
-        createMostAnsweredTable();
-        createMostChallengingTable();
+        Platform.runLater(() -> {
+            createChart();
+            createMostAnsweredTable();
+            createMostChallengingTable();
+        });
     }
 
     private ObservableList<PieChart.Data> createAnswerData() {
         int correct = gameModel.getUserData().getCorrect();
         int incorrect = gameModel.getUserData().getIncorrect();
 
-        return observableArrayList(
-            new PieChart.Data("Correct (" + correct + ")", correct),
-            new PieChart.Data("Incorrect (" + incorrect + ")", incorrect)
-        );
+        PieChart.Data correctData = new PieChart.Data("Correct (" + correct + ")", correct);
+        PieChart.Data incorrectData = new PieChart.Data("Incorrect (" + incorrect + ")", incorrect);
+
+        return observableArrayList(correctData, incorrectData);
     }
 
     private void createMostAnsweredTable() {
@@ -119,18 +129,93 @@ public class StatisticsController extends StandardSceneController {
         return scaleTransition;
     }
 
-    private void createChart(ObservableList<PieChart.Data> pieChartData, String title) {
-        PieChart chart = this.pieRatio;
-        pieRatio.setData(pieChartData);
-        ScaleTransition scaleTransition = createScaleAnimation(chart);
-        chart.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/statistics" +
+    private void createChart() {
+        pieRatio.setData(createAnswerData());
+        System.out.println("data default");
+        ScaleTransition scaleTransition = createScaleAnimation(pieRatio);
+        pieRatio.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/statistics" +
             ".css")).toExternalForm());
-        chart.applyCss();
-        chart.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0.1, 3, 3);");
-        chart.setLegendVisible(false);
-        chart.setTitle(title);
-        chart.setLabelLineLength(15);
+        pieRatio.applyCss();
+        pieRatio.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0.1, 3, 3);");
+        pieRatio.setLegendVisible(false);
+        pieRatio.setTitle("Correct Answer Ratio");
+        pieRatio.setLabelLineLength(15);
         scaleTransition.play();
+        setChartStateOne(false);
+    }
+
+    private void setChartStateOne(boolean reloadData) {
+        if (reloadData)
+            pieRatio.setData(createAnswerData());
+        Node correct = pieRatio.getData().get(0).getNode();
+        Node wrong = pieRatio.getData().get(1).getNode();
+        correct.setOnMouseClicked(a -> setChartStateCorrect());
+        wrong.setOnMouseClicked(a -> setChartStateIncorrect());
+
+        pieRatio.getData().forEach(data -> {
+            Node node = data.getNode();
+            node.setCursor(Cursor.HAND);
+            node.setOnMouseEntered(a -> {
+                node.setEffect(new Glow());
+                final ScaleTransition innerST = new ScaleTransition();
+                innerST.setDuration(Duration.seconds(0.4));
+                innerST.setNode(node);
+                innerST.setFromX(node.getScaleX());
+                innerST.setFromY(node.getScaleY());
+                innerST.setToX(1.1);
+                innerST.setToY(1.1);
+                innerST.playFromStart();
+            });
+            node.setOnMouseExited(a -> {
+                node.setEffect(null);
+                final ScaleTransition innerST = new ScaleTransition();
+                innerST.setDuration(Duration.seconds(0.4));
+                innerST.setNode(node);
+                innerST.setFromX(node.getScaleX());
+                innerST.setFromY(node.getScaleY());
+                innerST.setToX(1);
+                innerST.setToY(1);
+                innerST.playFromStart();
+            });
+        });
+    }
+
+    private void setChartStateOne() {
+        setChartStateOne(true);
+    }
+
+    private void setChartStateCorrect() {
+        btnChartReset.setDisable(false);
+        pieRatio.setData(rightChartData());
+    }
+
+    private void setChartStateIncorrect() {
+        btnChartReset.setDisable(false);
+        pieRatio.setData(wrongChartData());
+    }
+
+    @FXML
+    void resetChartClick() {
+        btnChartReset.setDisable(true);
+        setChartStateOne();
+    }
+
+    private ObservableList<PieChart.Data> wrongChartData() {
+        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForIncorrectAnswers(5);
+        return observableArrayList(
+            data.stream()
+                .map(d -> new PieChart.Data(d.getKey() + " (" + d.getValue() + ")", d.getValue()))
+                .collect(Collectors.toList())
+        );
+    }
+
+    private ObservableList<PieChart.Data> rightChartData() {
+        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForCorrectAnswers(5);
+        return observableArrayList(
+            data.stream()
+                .map(d -> new PieChart.Data(d.getKey() + " (" + d.getValue() + ")", d.getValue()))
+                .collect(Collectors.toList())
+        );
     }
 
 
@@ -139,7 +224,7 @@ public class StatisticsController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
-    private static class NameValuePair {
+    public static class NameValuePair {
         private final SimpleStringProperty name;
         private final SimpleStringProperty value;
 
