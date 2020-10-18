@@ -59,7 +59,7 @@
                <Insets left="400.0" right="400.0" />
             </VBox.margin>
          </ButtonBar>
-         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
+         <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
             <children>
                <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="280.0" text="Submit">
                   <font>
@@ -77,7 +77,7 @@
                      <String fx:value="submit-button" />
                   </styleClass>
                </Button>
-               <Button fx:id="btnPass" mnemonicParsing="false" onAction="#onPassClicked" prefHeight="65.0" prefWidth="280.0" text="Pass">
+               <Button fx:id="btnNextQuestion" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="280.0" text="Next Question">
                   <font>
                      <Font name="System Bold" size="26.0" />
                   </font>
@@ -90,7 +90,7 @@
                   </stylesheets>
                   <styleClass>
                      <String fx:value="transparent" />
-                     <String fx:value="pass-button" />
+                     <String fx:value="submit-button" />
                   </styleClass>
                </Button>
             </children>

@@ -20,6 +20,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
@@ -73,6 +74,8 @@ public class Entry extends Application {
         stage.setResizable(false);
         stage.show();
 
+        stage.getIcons().add(new Image(Entry.class.getResourceAsStream("APP_ICON_TWO.png")));
+
         stage.setOnCloseRequest(e -> {
             GameModelSaver model = injector.getInstance(GameModelSaver.class);
             Platform.runLater(() -> {
@@ -83,7 +86,7 @@ public class Entry extends Application {
                     ioException.printStackTrace();
                 }
             });
-            
+
         });
     }
 

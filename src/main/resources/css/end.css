@@ -1,13 +1,10 @@
 .button {
     -fx-background-color: #404040;
-
     -fx-cursor: hand;
     -fx-border-radius: 4px;
-
-    -fx-font-size: 64px;
+    -fx-font-size: 48px;
     -fx-font-weight: bold;
     -fx-text-fill: #FAFAFA;
-
     -fx-alignment: center;
 }
 

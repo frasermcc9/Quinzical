@@ -47,7 +47,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
 
     @FXML
     protected Pane paneSolutions;
-    
+
     @FXML
     protected Button btnSubmit;
     protected List<TextArea> textAreas;
@@ -75,13 +75,13 @@ public abstract class AbstractQuestionController extends StandardSceneController
      */
     protected void onQuestionLoad() {
     }
-    
+
     protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
-        
+
         onQuestionLoad();
-        
+
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
 
@@ -100,7 +100,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
             ta.setMaxHeight(paneSolutions.getPrefHeight() / slnSize - slnSize);
             ta.setLayoutY(0 + i * paneSolutions.getPrefHeight() / slnSize + 1);
             ta.setPromptText("Enter your solution here...");
-            ta.setOnKeyPressed(this::onEnterPressed);
+            ta.setOnKeyPressed(this::onKeyPress);
 
             // Listen for when the text area is focused. When it is focused, set activeText to this text area. This is
             // for knowing which text area to insert the macron characters into when the buttons are chosen.
@@ -112,7 +112,8 @@ public abstract class AbstractQuestionController extends StandardSceneController
         textAreas.get(0).requestFocus();
     }
 
-    protected void onEnterPressed(KeyEvent e) {
+    protected void onKeyPress(KeyEvent e) {
+        keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof TextArea) {
                 TextArea ta = (TextArea) e.getSource();
@@ -129,6 +130,13 @@ public abstract class AbstractQuestionController extends StandardSceneController
     }
 
     /**
+     * Optional hook called when a key is pressed
+     */
+    protected void keyPressed(KeyCode code) {
+
+    }
+
+    /**
      * gets each button in the bar, and programs its handler Gets the text and current cursor location from the selected
      * text area and inserts the selected macron character after the cursor. Then reselect the text area and set the
      * cursor to after the inserted character.
@@ -141,6 +149,8 @@ public abstract class AbstractQuestionController extends StandardSceneController
             activeText.setText(newText);
             activeText.requestFocus();
             activeText.positionCaret(currentPos + 1);
+            //This is to fire a 'simulated' key event to notify that input was inserted in the text box
+            onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
         }));
     }
 
@@ -151,6 +161,5 @@ public abstract class AbstractQuestionController extends StandardSceneController
     protected void onReplayClick() {
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
-    
-    void areYouOk(){}
+
 }

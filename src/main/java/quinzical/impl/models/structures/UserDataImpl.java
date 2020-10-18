@@ -110,4 +110,9 @@ public class UserDataImpl implements Serializable, UserData {
     public AnalyticsEngineReader getAnalytics() {
         return this.analyticsEngine;
     }
+
+    @Override
+    public void incrementCoins(int value) {
+        this.coins += value;
+    }
 }
