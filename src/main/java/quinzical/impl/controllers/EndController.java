@@ -16,15 +16,23 @@ package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import javafx.animation.AnimationTimer;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
 /**
- * Controls the end game screen, where the total earnings are displayed and the option to go back to the main menu is
- * given.
+ * Controls the end game screen, where the total earnings are displayed and the
+ * option to go back to the main menu is given.
  */
 public class EndController extends StandardSceneController {
 
@@ -37,6 +45,9 @@ public class EndController extends StandardSceneController {
     @FXML
     private Label lblMoney;
 
+    @FXML
+    private HBox coinBox;
+
     /**
      * Return to the main menu
      */
@@ -47,10 +58,12 @@ public class EndController extends StandardSceneController {
 
     @Override
     protected void onLoad() {
+        coinBox.setVisible(false);
         int earnings = gameModel.getEarnings();
         animateLabel(earnings);
+        gameModel.getUserData().incrementCoins(earnings / 100);
+        ((Label) coinBox.getChildren().get(0)).setText("You Made " + earnings / 100 + " Coins!");
     }
-
 
     /**
      * Starts the earnings display animation
@@ -68,10 +81,30 @@ public class EndController extends StandardSceneController {
             @Override
             public void handle(long timestamp) {
                 currentValue += increment;
-                lblMoney.setText("$" + currentValue);
+                lblMoney.setText(currentValue + "");
                 if (currentValue == animateUpTo) {
                     stop();
+                    runCoinAnimation();
                 }
+            }
+
+            private void runCoinAnimation() {
+                ScaleTransition st = new ScaleTransition(Duration.seconds(1));
+                st.setFromX(0);
+                st.setFromY(0);
+                st.setToX(0.9);
+                st.setToY(0.9);
+                st.setNode(coinBox);
+
+                st.setInterpolator(new Interpolator() {
+                    @Override
+                    protected double curve(double t) {
+                        return -1.76 * (Math.pow(t, 3)) + 0.931 * (Math.pow(t, 2)) + 1.785 * t;
+                    }
+                });
+                st.playFromStart();
+                Platform.runLater(() -> coinBox.setVisible(true));
+
             }
         };
 
