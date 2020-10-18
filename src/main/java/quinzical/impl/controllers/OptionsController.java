@@ -24,10 +24,7 @@ import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -344,11 +341,11 @@ public class OptionsController extends StandardSceneController {
     //#region HELP
 
     @SuppressWarnings("unchecked")
-    private void loadHelpFromJson() throws URISyntaxException, IOException, JSONException {
-        URL resource = Entry.class.getClassLoader().getResource("quinzical/impl/help/help.json");
+    private void loadHelpFromJson() throws IOException, JSONException {
+        InputStream resource = Entry.class.getClassLoader().getResourceAsStream("quinzical/impl/help/help.json");
         if (resource == null) throw new IOException("Cannot find help file");
 
-        byte[] bytes = Files.readAllBytes(Paths.get(resource.toURI()));
+        byte[] bytes = resource.readAllBytes();
         JSONObject jsonObject = new JSONObject(new String(bytes));
 
         ArrayList<String> list = new ArrayList<>();
