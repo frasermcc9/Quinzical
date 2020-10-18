@@ -100,7 +100,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
             ta.setMaxHeight(paneSolutions.getPrefHeight() / slnSize - slnSize);
             ta.setLayoutY(0 + i * paneSolutions.getPrefHeight() / slnSize + 1);
             ta.setPromptText("Enter your solution here...");
-            ta.setOnKeyPressed(this::onEnterPressed);
+            ta.setOnKeyPressed(this::onKeyPress);
 
             // Listen for when the text area is focused. When it is focused, set activeText to this text area. This is
             // for knowing which text area to insert the macron characters into when the buttons are chosen.
@@ -112,7 +112,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
         textAreas.get(0).requestFocus();
     }
 
-    protected void onEnterPressed(KeyEvent e) {
+    protected void onKeyPress(KeyEvent e) {
         keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof TextArea) {
@@ -133,7 +133,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
      * Optional hook called when a key is pressed
      */
     protected void keyPressed(KeyCode code) {
-        
+
     }
 
     /**
@@ -149,6 +149,8 @@ public abstract class AbstractQuestionController extends StandardSceneController
             activeText.setText(newText);
             activeText.requestFocus();
             activeText.positionCaret(currentPos + 1);
+            //This is to fire a 'simulated' key event to notify that input was inserted in the text box
+            onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
         }));
     }
 
@@ -159,5 +161,5 @@ public abstract class AbstractQuestionController extends StandardSceneController
     protected void onReplayClick() {
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
-    
+
 }
