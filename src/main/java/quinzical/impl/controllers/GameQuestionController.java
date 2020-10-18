@@ -24,6 +24,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
@@ -52,23 +54,18 @@ public class GameQuestionController extends AbstractQuestionController {
     private Label lblPrompt;
 
     @FXML
-    private Button btnPass;
+    private ProgressBar timerProgressBar;
 
     @FXML
-    private ProgressBar timerProgressBar;
+    private HBox progressButtons;
+
+    @FXML
+    private Button btnNextQuestion;
 
     private TimerStrategy activeTimer;
 
 
     // #region Injected handlers
-
-    /**
-     * submits the currently inputted text as an answer to the question
-     */
-    @FXML
-    void onPassClicked() {
-        btnSubmit.fire();
-    }
 
     /**
      * gets the gameModel associated with this controller.
@@ -91,6 +88,8 @@ public class GameQuestionController extends AbstractQuestionController {
         this.lblPrompt.setText(prompt);
     }
 
+    // #endregion
+
     /**
      * submits the currently inputted text as an answer to the question
      */
@@ -109,15 +108,15 @@ public class GameQuestionController extends AbstractQuestionController {
 
         gameModel.answerActive(corrects.stream().allMatch(e -> e));
 
+        setSubmitButtonType(ButtonType.PASS);
         btnSubmit.setText("Categories");
         btnSubmit.setOnAction(this::handleReturnToCategories);
-        btnPass.setText("Next Question");
-        btnPass.setOnAction(e -> handleNextQuestion(question));
+        
+        progressButtons.getChildren().add(btnNextQuestion);
+        btnNextQuestion.setOnAction(e -> handleNextQuestion(question));
+        btnNextQuestion.requestFocus();
 
-        btnPass.requestFocus();
     }
-
-    // #endregion
 
     /**
      * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
@@ -187,15 +186,45 @@ public class GameQuestionController extends AbstractQuestionController {
      * answered.
      */
     private void refreshButtonState() {
-        btnSubmit.setOnAction(e -> onSubmitClicked());
-        btnPass.setOnAction(e -> onSubmitClicked());
-        btnPass.setText("Pass");
-        btnSubmit.setText("Submit");
+        progressButtons.getChildren().subList(1, progressButtons.getChildren().size()).clear();
+        setSubmitButtonType(ButtonType.PASS);
     }
 
     @Override
     protected void refresh() {
         refreshButtonState();
         super.refresh();
+    }
+
+    @Override
+    protected void keyPressed(KeyCode keyCode) {
+        if (keyCode == KeyCode.BACK_SPACE) {
+            if (textAreas.stream().anyMatch(t -> t.getText().isEmpty())) {
+                setSubmitButtonType(ButtonType.PASS);
+            }
+        } else {
+            setSubmitButtonType(ButtonType.SUBMIT);
+        }
+    }
+
+    private void setSubmitButtonType(ButtonType buttonType) {
+        btnSubmit.getStyleClass().clear();
+        btnSubmit.getStyleClass().addAll("transparent", "button");
+        switch (buttonType) {
+            case PASS:
+                btnSubmit.getStyleClass().add("pass-button");
+                btnSubmit.setText("Pass");
+                btnSubmit.setOnAction(e -> onSubmitClicked());
+                break;
+            case SUBMIT:
+                btnSubmit.getStyleClass().add("submit-button");
+                btnSubmit.setText("Submit");
+                btnSubmit.setOnAction(e -> onSubmitClicked());
+                break;
+        }
+    }
+
+    private enum ButtonType {
+        PASS, SUBMIT
     }
 }
