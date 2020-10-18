@@ -14,6 +14,7 @@
 
 package quinzical.impl.multiplayer;
 
+import com.google.inject.Inject;
 import io.socket.client.Socket;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -21,9 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import quinzical.impl.controllers.StandardSceneController;
-import quinzical.impl.multiplayer.models.ActiveGame;
 import quinzical.impl.multiplayer.models.Player;
 import quinzical.impl.multiplayer.models.SocketModel;
+import quinzical.interfaces.multiplayer.ActiveGame;
 
 
 public class RoundEndController extends StandardSceneController {
@@ -42,19 +43,22 @@ public class RoundEndController extends StandardSceneController {
     @FXML
     private Label lblPoints;
 
+    @Inject
+    private ActiveGame activeGame;
+
     @Override
     protected void onLoad() {
         columnName.setCellValueFactory(v -> v.getValue().nameProperty());
         columnPoints.setCellValueFactory(v -> v.getValue().scoreProperty());
-        tablePlayers.setItems(ActiveGame.getInstance().getPlayers());
+        tablePlayers.setItems(activeGame.getPlayers());
 
-        String userAns = ActiveGame.getInstance().getGivenSolution();
+        String userAns = activeGame.getGivenSolution();
         lblUserAns.setText("You answered: " + userAns);
 
 
-        String newUserAns = ActiveGame.getInstance().getGivenSolution();
-        String actualAns = ActiveGame.getInstance().getTrueSolution();
-        int points = ActiveGame.getInstance().getPoints();
+        String newUserAns = activeGame.getGivenSolution();
+        String actualAns = activeGame.getTrueSolution();
+        int points = activeGame.getPoints();
 
         Platform.runLater(() -> {
             lblServerAns.setText("The correct answer was: " + actualAns);

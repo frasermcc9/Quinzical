@@ -92,7 +92,7 @@
     -fx-alignment: center;
 }
 
-.title{
+.title {
     -fx-font-family: kiwi;
     -fx-font-size: 72;
     -fx-text-fill: white;
@@ -101,14 +101,42 @@
     -fx-alignment: center;
 }
 
-.name-text-field{
+.name-text-field {
     -fx-font-size: 24;
     -fx-background-color: #3d3d3d;
     -fx-text-fill: white;
 }
 
-.bright-label{
+.bright-label {
     -fx-font-size: 24;
     -fx-text-fill: white;
     -fx-alignment: center;
 }
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: #26aafc;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 5);
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.table-view .cell:selected {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-border-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+}
+
+.table-view .cell {
+    -fx-alignment: center;
+    -fx-background-color: #29292D;
+    -fx-border-color: #29292D;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+

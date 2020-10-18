@@ -149,6 +149,13 @@ public enum GameScene implements GameSceneFxmlLoader {
         public String getFxmlName() {
             return "multiplayer/round-end";
         }
+    },
+
+    MULTI_BROWSE {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/browse";
+        }
     }
 }
 
