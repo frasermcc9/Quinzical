@@ -47,7 +47,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
 
     @FXML
     protected Pane paneSolutions;
-    
+
     @FXML
     protected Button btnSubmit;
     protected List<TextArea> textAreas;
@@ -75,13 +75,13 @@ public abstract class AbstractQuestionController extends StandardSceneController
      */
     protected void onQuestionLoad() {
     }
-    
+
     protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
-        
+
         onQuestionLoad();
-        
+
         textAreas = new ArrayList<>();
         paneSolutions.getChildren().clear();
 
@@ -113,6 +113,7 @@ public abstract class AbstractQuestionController extends StandardSceneController
     }
 
     protected void onEnterPressed(KeyEvent e) {
+        keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof TextArea) {
                 TextArea ta = (TextArea) e.getSource();
@@ -126,6 +127,13 @@ public abstract class AbstractQuestionController extends StandardSceneController
             }
 
         }
+    }
+
+    /**
+     * Optional hook called when a key is pressed
+     */
+    protected void keyPressed(KeyCode code) {
+        
     }
 
     /**
@@ -152,5 +160,4 @@ public abstract class AbstractQuestionController extends StandardSceneController
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
     
-    void areYouOk(){}
 }
