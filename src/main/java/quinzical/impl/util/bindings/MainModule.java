@@ -26,6 +26,8 @@ import quinzical.impl.models.structures.AnalyticsEngineImpl;
 import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserDataImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
+import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.impl.multiplayer.models.ActiveGameImpl;
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questionverifier.QuestionVerifierFactoryImpl;
@@ -85,5 +87,7 @@ public class MainModule extends AbstractModule {
             bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://localhost:7373");
         else
             bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://20.190.113.34:7373");
+
+        bind(ActiveGame.class).to(ActiveGameImpl.class);
     }
 }

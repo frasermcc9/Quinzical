@@ -14,19 +14,28 @@
 
 package quinzical.impl.multiplayer;
 
+import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import quinzical.impl.multiplayer.models.ActiveGame;
+import quinzical.impl.constants.GameScene;
+import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.ActiveGame;
 
 import java.io.IOException;
 
 public class HostWaitController extends AbstractWaitController {
 
+    @Inject
+    ActiveGame activeGame;
+
+    @Inject
+    SceneHandler sceneHandler;
 
     @FXML
     void btnCancel(ActionEvent event) {
-
+        sceneHandler.setActiveScene(GameScene.MULTI_MENU);
+        socket.emit("quit");
     }
 
     @FXML
@@ -36,7 +45,7 @@ public class HostWaitController extends AbstractWaitController {
 
     @Override
     protected void addListeners() {
-        socket.on("gameStart", (objects) -> Platform.runLater(() -> ActiveGame.resetInstance().init()));
+        socket.on("gameStart", (objects) -> Platform.runLater(() -> activeGame.reset().init()));
     }
-    
+
 }

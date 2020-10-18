@@ -14,25 +14,32 @@
 
 package quinzical.impl.multiplayer;
 
+import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import quinzical.impl.multiplayer.models.ActiveGame;
-
-import java.io.IOException;
+import quinzical.impl.constants.GameScene;
+import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.ActiveGame;
 
 public class PlayerWaitController extends AbstractWaitController {
 
+    @Inject
+    private SceneHandler sceneHandler;
+
+    @Inject
+    private ActiveGame activeGame;
+
     @FXML
-    void btnCancel(ActionEvent event) throws IOException {
+    void btnCancel(ActionEvent event) {
         socket.emit("playerDisconnect");
-        App.setRoot("menu");
+        sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @Override
     protected void addListeners() {
         socket.on("gameStart", (objects) -> Platform.runLater(() -> {
-            ActiveGame.resetInstance().init();
+            activeGame.reset().init();
         }));
     }
 }

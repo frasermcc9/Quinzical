@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -23,29 +27,51 @@
   ~ limitations under the License.
   -->
 
-<VBox alignment="CENTER" prefHeight="462.0" prefWidth="639.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.GameController">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <Label alignment="TOP_CENTER" prefHeight="88.0" prefWidth="179.0" text="Game">
-      <font>
-         <Font size="36.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblQuestion" alignment="TOP_CENTER" prefHeight="110.0" prefWidth="537.0" text="QUESTION_PLACEHOLDER" wrapText="true">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblPrompt" text="PROMPT_PLACEHOLDER">
-      <font>
-         <Font size="18.0" />
-      </font>
-   </Label>
-   <TextField fx:id="txtInput" prefHeight="75.0" prefWidth="599.0" />
-   <Button mnemonicParsing="false" onAction="#onSubmitClick" prefHeight="54.0" prefWidth="122.0" text="Submit">
-      <font>
-         <Font size="24.0" />
-      </font>
-   </Button>
-</VBox>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.GameController">
+   <children>
+      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-spacing: 50;" styleClass="vbox">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <Label alignment="TOP_CENTER" prefHeight="105.0" prefWidth="463.0" styleClass="title" text="Game">
+            <font>
+               <Font size="36.0" />
+            </font>
+         </Label>
+         <Label fx:id="lblQuestion" alignment="TOP_CENTER" prefHeight="110.0" prefWidth="762.0" styleClass="bright-label" text="QUESTION_PLACEHOLDER" wrapText="true">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <Label fx:id="lblPrompt" styleClass="bright-label" text="PROMPT_PLACEHOLDER">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtInput" alignment="CENTER" onAction="#onSubmitted" prefHeight="75.0" prefWidth="599.0" styleClass="name-text-field">
+            <VBox.margin>
+               <Insets left="300.0" right="300.0" />
+            </VBox.margin>
+            <effect>
+               <DropShadow blurType="GAUSSIAN" color="#00000060" height="23.97" offsetX="4.0" offsetY="4.0" radius="19.6375" width="56.58" />
+            </effect>
+         </TextField>
+         <Label fx:id="lblStatus" prefHeight="35.0" prefWidth="605.0" styleClass="bright-label" text="Waiting For you to Submit...">
+            <VBox.margin>
+               <Insets bottom="-40.0" />
+            </VBox.margin>
+         </Label>
+         <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#onSubmitClick" prefHeight="54.0" prefWidth="122.0" text="Submit">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Button>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../css/global.css" />
+      <URL value="@../../../../css/multiplayer.css" />
+   </stylesheets>
+</AnchorPane>

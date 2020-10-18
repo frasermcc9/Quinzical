@@ -1,7 +1,9 @@
 package quinzical.impl.multiplayer.models;
 
+import com.google.inject.Singleton;
 import io.socket.client.Socket;
 
+@Singleton
 public class SocketModel {
     private static SocketModel instance;
     private String name;

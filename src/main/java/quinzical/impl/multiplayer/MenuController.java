@@ -50,26 +50,7 @@ public class MenuController extends StandardSceneController {
 
     @FXML
     void btnBrowse(ActionEvent event) {
-        socket.emit("browseGames");
-        socket.once("browseGameDataLoaded", (args) -> {
-            JSONArray array = ((JSONArray) args[0]);
-            int size = array.length();
-            for (int i = 0; i < size; i++) {
-                try {
-                    JSONObject a = (JSONObject) array.get(i);
-                    String code = (String) a.get("code");
-                    String host = (String) a.get("host");
-                    String questions = ((String) a.get("questions"));
-                    String currentPlayers = ((Integer) a.get("currentPlayers")).toString();
-                    String maxPlayers = ((String) a.get("maxPlayers"));
-                    String timePerQuestion = ((String) a.get("timePerQuestion"));
-                    System.out.println("Code: " + code + "   Players: " + currentPlayers + "/" + maxPlayers + "   " +
-                        "Questions: " + questions + "   Time per Question: " + timePerQuestion + "   Host: " + host);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        sceneHandler.setActiveScene(GameScene.MULTI_BROWSE);
     }
 
     @FXML
@@ -78,8 +59,8 @@ public class MenuController extends StandardSceneController {
     }
 
     @FXML
-    void btnJoin(ActionEvent event) {
-        String code = txtCode.getText();
+    void btnJoin() {        
+        String code = txtCode.getText().toUpperCase();
         socket.emit("joinGameRequest", name, code);
         socket.once("joinGameNotification", (arg) -> {
             if (arg[0].equals(false)) {
@@ -110,4 +91,8 @@ public class MenuController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
+    void joinGame(String code){
+        
+    }
+    
 }

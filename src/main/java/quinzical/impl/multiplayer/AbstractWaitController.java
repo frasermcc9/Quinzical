@@ -18,10 +18,13 @@ import io.socket.client.Socket;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import org.json.JSONArray;
 import org.json.JSONException;
+import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.StandardSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
@@ -48,6 +51,15 @@ public abstract class AbstractWaitController extends StandardSceneController {
         lblCode.setText(MultiplayerGame.getInstance().getCode());
 
 
+        socket.on("interrupt", objects -> Platform.runLater(() -> {
+            sceneHandler.setActiveScene(GameScene.MULTI_MENU);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK,
+                ButtonType.CANCEL);
+            alert.setTitle("The host disconnected");
+            alert.setHeaderText("The host quit the game. You have been returned to the menu.");
+            alert.showAndWait();
+        }));
+
         socket.on("playersChange", objects -> Platform.runLater(() -> {
 
             List<String> javaList = new ArrayList<>();
@@ -67,11 +79,11 @@ public abstract class AbstractWaitController extends StandardSceneController {
             Platform.runLater(() -> lblPlayers.setText(listPlayers.getItems().size() + "/" + objects[1]));
         }));
     }
-    
+
     /**
      * optional hook
      */
-    protected void addListeners(){
+    protected void addListeners() {
 
     }
 
