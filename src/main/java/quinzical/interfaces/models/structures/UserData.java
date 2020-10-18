@@ -49,5 +49,7 @@ public interface UserData {
 
     boolean isGameActive();
 
+    void incrementCoins(int value);
+
     AnalyticsEngineReader getAnalytics();
 }
