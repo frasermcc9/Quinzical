@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" styleClass="tile" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.CategorySelectorPaneController">
+   <children>
+      <VBox fx:id="container">
+         <children>
+            <StackPane fx:id="header" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblMarker" styleClass="tile-text" text="Label" />
+               </children></StackPane>
+            <StackPane fx:id="content" style="-fx-background-color: #232323;" VBox.vgrow="SOMETIMES">
+               <children>
+                  <Label fx:id="contentLabel" prefHeight="36.0" prefWidth="259.0" styleClass="category-label" text="Label">
+                     <font>
+                        <Font size="35.0" />
+                     </font></Label>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../../css/global.css" />
+      <URL value="@../../../../css/views/category-selector.css" />
+   </stylesheets>
+</StackPane>

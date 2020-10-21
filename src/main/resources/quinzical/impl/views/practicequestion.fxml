@@ -16,13 +16,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.PracticeQuestionController">
+<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: red;" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.PracticeQuestionController">
    <children>
-      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../images/landscapes/fields.jpg" />
-         </image>
-      </ImageView>
       <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 3;" styleClass="vbox" stylesheets="@../../../css/intro.css">
          <children>
             <Label prefHeight="106.0" prefWidth="134.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Label" />
@@ -47,7 +42,7 @@
                </graphic>
             </Button>
             <Label fx:id="lblPrompt" alignment="TOP_RIGHT" prefHeight="31.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-              <Pane fx:id="paneSolutions" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
+              <Pane fx:id="solutionContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
             <ButtonBar fx:id="macronBar" buttonOrder="L_HE+U+FBIX_NCYOA_" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="465.0" stylesheets="@../../../css/game-question.css">
                <buttons>
                   <Button mnemonicParsing="false" prefWidth="83.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ā" />

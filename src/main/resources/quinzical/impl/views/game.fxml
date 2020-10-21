@@ -1,79 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
-   <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../images/landscapes/fields.jpg" />
-      </image>
-   </ImageView>
-   <VBox alignment="CENTER" layoutX="2.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+<AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" styleClass="BOULDERS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
+   <VBox alignment="CENTER" layoutX="2.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <Label fx:id="txtHeading" prefHeight="68.0" prefWidth="422.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Select A Category">
             <VBox.margin>
                <Insets bottom="-20.0" top="20.0" />
             </VBox.margin>
          </Label>
-         <VBox fx:id="paneHeader" alignment="CENTER" prefHeight="487.0" prefWidth="1280.0" style="-fx-spacing: 20;">
+         <VBox fx:id="paneHeader" alignment="CENTER" prefHeight="412.0" prefWidth="1280.0" style="-fx-spacing: 25;">
             <children>
-               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" stylesheets="@../../../css/intro.css" text="Button">
-                  <styleClass>
-                     <String fx:value="button" />
-                     <String fx:value="transparent" />
-                  </styleClass>
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="400.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Button">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
+               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
+               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
+               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
+               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
+               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
             </children>
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin>
          </VBox>
-           <Button fx:id="btnMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
-               <font>
-                   <Font name="System Bold" size="26.0" />
-               </font>
-               <cursor>
-                   <Cursor fx:constant="HAND" />
-               </cursor>
-           </Button>
-         <HBox alignment="CENTER" prefHeight="55.0" prefWidth="1180.0" style="-fx-spacing: 25;">
+         <JFXButton fx:id="btnMenu" styleClass="material-button-small" text="Back" />
+         <HBox alignment="CENTER" prefHeight="39.0" prefWidth="1180.0" style="-fx-spacing: 25;">
             <children>
-                 <Label fx:id="labelEarnings" text="Your Earnings:" textFill="#c9c9c9">
+                 <Label fx:id="labelEarnings" styleClass="bright-bold-label" text="Your Earnings:" textFill="#c9c9c9">
                      <font>
                          <Font name="System Bold" size="28.0" />
                      </font>
                  </Label>
-                 <Label fx:id="labelEarningsVal" text="\$0" textFill="#c9c9c9">
+                 <Label fx:id="labelEarningsVal" styleClass="bright-bold-label" text="\$0" textFill="#c9c9c9">
                      <font>
                          <Font name="System Bold" size="28.0" />
                      </font>
@@ -88,4 +53,8 @@
      <cursor>
          <Cursor fx:constant="DEFAULT" />
      </cursor>
+   <stylesheets>
+      <URL value="@../../../css/global.css" />
+      <URL value="@../../../css/views/game-screen.css" />
+   </stylesheets>
  </AnchorPane>
