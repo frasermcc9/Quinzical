@@ -25,13 +25,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.strategies.timer.TimerContext;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +41,7 @@ import java.util.Map;
 public class SceneHandlerImpl implements SceneHandler {
 
     private final Scene scene;
-    private final Map<GameScene, FxmlInfo<StandardSceneController>> cachedScenes;
+    private final Map<GameScene, FxmlInfo<AbstractSceneController>> cachedScenes;
     @Inject
     Injector injector;
     @Inject
@@ -55,9 +54,9 @@ public class SceneHandlerImpl implements SceneHandler {
         this.cachedScenes = new HashMap<>();
     }
 
-    public StandardSceneController setActiveScene(GameScene newScene) {
+    public AbstractSceneController setActiveScene(GameScene newScene) {
 
-        FxmlInfo<StandardSceneController> fxmlInfo = null;
+        FxmlInfo<AbstractSceneController> fxmlInfo = null;
         if (cachedScenes.containsKey(newScene)) {
             fxmlInfo = cachedScenes.get(newScene);
         } else {
@@ -76,7 +75,7 @@ public class SceneHandlerImpl implements SceneHandler {
         AnchorPane.setBottomAnchor(p, 0.0);
         AnchorPane.setLeftAnchor(p, 0.0);
         AnchorPane.setRightAnchor(p, 0.0);
-        
+
         ((AnchorPane) scene.getRoot()).getChildren().add(p);
         timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> {
             Platform.runLater(() -> {
@@ -84,13 +83,13 @@ public class SceneHandlerImpl implements SceneHandler {
                     ((AnchorPane) scene.getRoot()).getChildren().remove(0);
             });
         }, 300);
-        
+
         var ft = new FadeTransition(Duration.millis(300));
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.setNode(p);
         ft.playFromStart();
-        
+
         //scene.setRoot(fxmlInfo.getParent());
         return fxmlInfo.getController();
     }
@@ -105,11 +104,9 @@ public class SceneHandlerImpl implements SceneHandler {
     }
 
     public void cacheScenes() {
-        try {
-            cachedScenes.put(GameScene.MULTI_INTRO, FxmlInfo.loadFXML(GameScene.MULTI_INTRO.getFxmlName(), injector));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        //cachedScenes.put(GameScene.MULTI_INTRO, FxmlInfo.loadFXML(GameScene.MULTI_INTRO.getFxmlName(), injector));
+
     }
 
 }
