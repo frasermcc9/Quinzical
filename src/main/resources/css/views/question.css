@@ -1,0 +1,69 @@
+/*
+ * Copyright 2020 Fraser McCallum and Braden Palmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.answer-field-default {
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #8d8d8d;
+
+    -fx-prompt-text-fill: #8d8d8d;
+    -fx-text-fill: #eaeaea;
+    -fx-highlight-fill: #03a9f4;
+
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.answer-field-default *.text {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+.answer-field-default .input-line {
+    -fx-background-color: white;
+}
+
+.answer-field-right {
+    -jfx-focus-color: linear-gradient(to right, #388e3c 25%, #6abf69 100%);
+    -fx-text-fill: #80e27e;
+
+}
+
+.answer-field-right .input-line {
+    -fx-background-color: linear-gradient(to right, #388e3c 25%, #6abf69 100%);
+}
+
+.answer-field-wrong {
+    -jfx-focus-color: linear-gradient(to right, #d32f2f 25%, #ff6659 100%);
+    -fx-text-fill: #ff7961;
+}
+
+.answer-field-wrong .input-line {
+    -fx-background-color: linear-gradient(to right, #d32f2f 25%, #ff6659 100%);
+}
+
+.solution-container {
+    -fx-border-radius: 0px;
+    -fx-border-color: #dddddd;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.4, 2, 2);
+    -fx-border-width: 0 1 0 1;
+    -fx-padding: 0 0 0 0;
+
+    -fx-background-color: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+}
