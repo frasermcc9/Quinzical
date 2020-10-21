@@ -17,13 +17,23 @@ package quinzical.impl.models;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
+import quinzical.impl.controllers.StandardSceneController;
 import quinzical.impl.models.structures.FxmlInfo;
+import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.strategies.timer.TimerContext;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Singleton class that handles switching between scenes on the main stage.
@@ -32,24 +42,57 @@ import java.io.IOException;
 public class SceneHandlerImpl implements SceneHandler {
 
     private final Scene scene;
+    private final Map<GameScene, FxmlInfo<StandardSceneController>> cachedScenes;
     @Inject
     Injector injector;
+    @Inject
+    TimerContext timerContext;
     private Theme activeTheme = null;
 
     @Inject
     public SceneHandlerImpl(Scene scene) {
         this.scene = scene;
+        this.cachedScenes = new HashMap<>();
     }
 
-    public <T> T setActiveScene(GameScene newScene) {
-        try {
-            final FxmlInfo<T> fxmlInfo = FxmlInfo.loadFXML(newScene.getFxmlName(), injector);
-            scene.setRoot(fxmlInfo.getParent());
-            return fxmlInfo.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+    public StandardSceneController setActiveScene(GameScene newScene) {
+
+        FxmlInfo<StandardSceneController> fxmlInfo = null;
+        if (cachedScenes.containsKey(newScene)) {
+            fxmlInfo = cachedScenes.get(newScene);
+        } else {
+            try {
+                fxmlInfo = FxmlInfo.loadFXML(newScene.getFxmlName(), injector);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
+        if (fxmlInfo == null) return null;
+
+        Parent p = fxmlInfo.getParent();
+
+        AnchorPane.setTopAnchor(p, 0.0);
+        AnchorPane.setBottomAnchor(p, 0.0);
+        AnchorPane.setLeftAnchor(p, 0.0);
+        AnchorPane.setRightAnchor(p, 0.0);
+        
+        ((AnchorPane) scene.getRoot()).getChildren().add(p);
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> {
+            Platform.runLater(() -> {
+                if (((AnchorPane) scene.getRoot()).getChildren().size() == 2)
+                    ((AnchorPane) scene.getRoot()).getChildren().remove(0);
+            });
+        }, 300);
+        
+        var ft = new FadeTransition(Duration.millis(300));
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.setNode(p);
+        ft.playFromStart();
+        
+        //scene.setRoot(fxmlInfo.getParent());
+        return fxmlInfo.getController();
     }
 
     @Override
@@ -59,6 +102,14 @@ public class SceneHandlerImpl implements SceneHandler {
 
     public Theme getActiveTheme() {
         return activeTheme;
+    }
+
+    public void cacheScenes() {
+        try {
+            cachedScenes.put(GameScene.MULTI_INTRO, FxmlInfo.loadFXML(GameScene.MULTI_INTRO.getFxmlName(), injector));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

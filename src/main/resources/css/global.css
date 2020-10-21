@@ -32,3 +32,47 @@
 .transparent {
     -fx-opacity: 0.8;
 }
+
+
+
+.MOUNTAINS {
+    -fx-background-image: url(../images/landscapes/mountains.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.BOULDERS {
+    -fx-background-image: url(../images/landscapes/boulders.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.FIELDS {
+    -fx-background-image: url(../images/landscapes/fields.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.AUCKLAND {
+    -fx-background-image: url(../images/landscapes/auckland.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.OCEAN {
+    -fx-background-image: url(../images/landscapes/ocean.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.HOBBIT {
+    -fx-background-image: url(../images/landscapes/hobbit.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.VOLCANO {
+    -fx-background-image: url(../images/landscapes/volcano.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
