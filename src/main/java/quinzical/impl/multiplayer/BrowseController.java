@@ -28,14 +28,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.models.SceneHandler;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class BrowseController extends StandardSceneController {
+public class BrowseController extends AbstractSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
 

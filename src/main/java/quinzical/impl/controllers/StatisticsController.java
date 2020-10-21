@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class StatisticsController extends StandardSceneController {
+public class StatisticsController extends AbstractSceneController {
 
     @Inject
     GameModel gameModel;
@@ -135,7 +135,7 @@ public class StatisticsController extends StandardSceneController {
         pieRatio.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/statistics" +
             ".css")).toExternalForm());
         pieRatio.applyCss();
-        pieRatio.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0.1, 3, 3);");
+        pieRatio.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.4, 3, 3);");
         pieRatio.setLegendVisible(false);
         pieRatio.setTitle("Correct Answer Ratio");
         pieRatio.setLabelLineLength(15);

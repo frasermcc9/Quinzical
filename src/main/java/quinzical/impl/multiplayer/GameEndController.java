@@ -21,13 +21,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.Player;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.multiplayer.ActiveGame;
 
 
-public class GameEndController extends StandardSceneController {
+public class GameEndController extends AbstractSceneController {
 
     @FXML
     private TableView<Player> tablePlayers;

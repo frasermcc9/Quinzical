@@ -21,11 +21,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.multiplayer.ActiveGame;
 
-public class GameController extends StandardSceneController {
+public class GameController extends AbstractSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();

@@ -24,14 +24,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.models.SceneHandler;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class EntryController extends StandardSceneController {
+public class EntryController extends AbstractSceneController {
 
     @Inject
     SceneHandler sceneHandler;
@@ -54,7 +54,7 @@ public class EntryController extends StandardSceneController {
         socket = IO.socket(socketUrl);
         SocketModel.getInstance().setName(txtName.getText()).setSocket(socket);
         setProgressVisible(true);
-        
+
         socket.once("connect", objects -> Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)));
         SocketModel.getInstance().connect();
     }

@@ -23,7 +23,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.GameSettings;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
@@ -32,7 +32,7 @@ import quinzical.interfaces.models.SceneHandler;
 
 import java.io.IOException;
 
-public class HostController extends StandardSceneController {
+public class HostController extends AbstractSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();

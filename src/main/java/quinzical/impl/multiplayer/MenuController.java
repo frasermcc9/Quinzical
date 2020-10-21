@@ -23,14 +23,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.models.SceneHandler;
 
-public class MenuController extends StandardSceneController {
+public class MenuController extends AbstractSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     private final String name = SocketModel.getInstance().getName();

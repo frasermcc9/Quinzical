@@ -15,7 +15,6 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,19 +31,18 @@ import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.SceneHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Controller for the practice menu scene
  */
-public class PracticeController extends StandardSceneController {
-    
+public class PracticeController extends AbstractSceneController {
+
     private String selectedCategory;
-    
+
     private Button selectedButton;
-    
+
     @Inject
     private SceneHandler sceneHandler;
 
@@ -62,10 +60,10 @@ public class PracticeController extends StandardSceneController {
 
     @FXML
     private Button btnOk;
-    
+
     @FXML
     private ScrollPane scrollPane;
-    
+
     /**
      * Fired when the ok button is pressed, gets a random question from the currently selected category and then
      * switches to the practice question scene.
@@ -73,7 +71,7 @@ public class PracticeController extends StandardSceneController {
     @FXML
     void btnOKPress(ActionEvent actionEvent) {
         if (selectedCategory != null) {
-            Question question = gameModel.getRandomQuestion(selectedCategory);
+            Question question = gameModel.getRandomQuestion();
             gameModel.activateQuestion(question);
             sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
         }
@@ -86,8 +84,8 @@ public class PracticeController extends StandardSceneController {
     void btnBackPress(ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
-    
-    
+
+
     @Override
     protected void onLoad() {
 
@@ -121,7 +119,7 @@ public class PracticeController extends StandardSceneController {
             btn.setPrefSize(scrollPane.getWidth() / 2, 70);
             btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             btn.getStyleClass().add("button-unselected");
-            
+
             btn.setOnAction(this::selectCategory);
 
             int colIdx = i % 2;
@@ -129,7 +127,7 @@ public class PracticeController extends StandardSceneController {
         }
 
         scrollPane.setContent(grid);
-         
+
     }
 
     private void selectCategory(ActionEvent e) {
@@ -146,21 +144,21 @@ public class PracticeController extends StandardSceneController {
 
         source.getStyleClass().clear();
         if (added) {
-            selectedCategory=category;
+            selectedCategory = category;
             source.getStyleClass().add("button-selected");
             source.setOnAction(this::deselectCategory);
-            
-            if(selectedButton != null){
+
+            if (selectedButton != null) {
                 selectedButton.getStyleClass().clear();
                 selectedButton.getStyleClass().add("button-unselected");
                 selectedButton.setOnAction(this::selectCategory);
             }
             selectedButton = source;
         } else {
-            selectedCategory=null;
+            selectedCategory = null;
             source.getStyleClass().add("button-unselected");
             source.setOnAction(this::selectCategory);
         }
-        btnOk.setDisable(selectedCategory==null);
+        btnOk.setDisable(selectedCategory == null);
     }
 }

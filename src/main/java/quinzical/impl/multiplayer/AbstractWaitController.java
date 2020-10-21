@@ -25,14 +25,14 @@ import javafx.scene.control.ListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
 import quinzical.impl.multiplayer.models.SocketModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractWaitController extends StandardSceneController {
+public abstract class AbstractWaitController extends AbstractSceneController {
     final protected Socket socket = SocketModel.getInstance().getSocket();
     final protected String name = SocketModel.getInstance().getName();
 

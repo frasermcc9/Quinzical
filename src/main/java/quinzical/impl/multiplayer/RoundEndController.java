@@ -21,13 +21,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.Player;
 import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.multiplayer.ActiveGame;
 
 
-public class RoundEndController extends StandardSceneController {
+public class RoundEndController extends AbstractSceneController {
 
     private final Socket socket = SocketModel.getInstance().getSocket();
     @FXML
