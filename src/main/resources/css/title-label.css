@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: kiwi;
-    src: url("./fonts/kiwi.ttf");
+    src: url(./fonts/kiwi.ttf);
 }
 
 .intro-title {
