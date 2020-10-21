@@ -38,7 +38,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     @Inject
     private UserData userData;
 
-    private double timerValue = 30;
+    private double timerValue = 25;
 
     /**
      * @return Gets the user value.
