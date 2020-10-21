@@ -27,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import quinzical.interfaces.models.SceneHandler;
 
-public abstract class StandardSceneController {
+public abstract class AbstractSceneController {
 
     @FXML
     protected AnchorPane background;
