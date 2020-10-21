@@ -14,7 +14,7 @@
 
 package quinzical.interfaces.strategies.questionverifier;
 
-import javafx.scene.control.TextArea;
+import com.jfoenix.controls.JFXTextArea;
 import quinzical.impl.util.questionparser.Solution;
 
 import java.util.List;
@@ -24,6 +24,6 @@ import java.util.List;
  * Manages the Verifying of solutions against some given text areas.
  */
 public interface QuestionVerifierStrategy {
-    List<Boolean> verifySolutions(List<Solution> solutions, List<TextArea> textAreas);
+    List<Boolean> verifySolutions(List<Solution> solutions, List<JFXTextArea> textAreas);
 }
 
