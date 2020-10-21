@@ -1,8 +1,8 @@
-import { inject, injectable } from "inversify";
-import { FACTORIES, TYPES } from "../bindings/types";
-import { Log } from "../helpers/Log";
-import { IdGenerationContext } from "../util/strategies/IdGenerator";
-import { Game, GameImpl } from "./Game";
+import {inject, injectable} from "inversify";
+import {FACTORIES, TYPES} from "../bindings/types";
+import {Log} from "../helpers/Log";
+import {IdGenerationContext} from "../util/strategies/IdGenerator";
+import {Game} from "./Game";
 
 @injectable()
 class GameRegisterImpl implements GameRegister {

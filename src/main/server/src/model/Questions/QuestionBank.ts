@@ -1,5 +1,5 @@
-import { injectable } from "inversify";
-import { Question, QuestionImpl } from "./Question";
+import {injectable} from "inversify";
+import {Question, QuestionImpl} from "./Question";
 import JsonQuestions from "./Questions.json";
 
 @injectable()

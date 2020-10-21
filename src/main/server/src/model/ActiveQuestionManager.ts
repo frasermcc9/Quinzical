@@ -1,8 +1,8 @@
-import { inject, injectable } from "inversify";
-import { TYPES } from "../bindings/types";
-import LogImpl, { Log } from "../helpers/Log";
-import { Player } from "./Player";
-import { Question } from "./Questions/Question";
+import {inject, injectable} from "inversify";
+import {TYPES} from "../bindings/types";
+import {Log} from "../helpers/Log";
+import {Player} from "./Player";
+import {Question} from "./Questions/Question";
 
 @injectable()
 class ActiveQuestionManagerImpl implements ActiveQuestionManager {

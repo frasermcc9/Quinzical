@@ -1,10 +1,10 @@
-import { inject, injectable } from "inversify";
+import {inject, injectable} from "inversify";
 import * as io from "socket.io";
-import { createServer, Server } from "http";
-import { TYPES } from "../bindings/types";
-import { Log } from "../helpers/Log";
-import { GameRegister } from "../model/GameRegister";
-import { GameSettings } from "../model/Game";
+import {createServer, Server} from "http";
+import {TYPES} from "../bindings/types";
+import {Log} from "../helpers/Log";
+import {GameRegister} from "../model/GameRegister";
+import {GameSettings} from "../model/Game";
 
 @injectable()
 class SocketManagerImpl {

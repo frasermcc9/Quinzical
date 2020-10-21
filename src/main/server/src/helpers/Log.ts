@@ -1,7 +1,7 @@
 import "reflect-metadata";
+import {inject, injectable} from "inversify";
 import chalk = require("chalk");
 import figlet = require("figlet");
-import { inject, injectable } from "inversify";
 
 @injectable()
 export default class LogImpl implements Log {

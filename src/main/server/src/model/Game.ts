@@ -1,14 +1,13 @@
-import { inject, injectable } from "inversify";
-import { Player, PlayerFactory, PlayerImpl, PlayerSummary } from "./Player";
-import { Question } from "./Questions/Question";
-import { Socket } from "socket.io";
-import { TYPES } from "../bindings/types";
-import { QuestionBank } from "./Questions/QuestionBank";
-import { ActiveQuestionManager } from "./ActiveQuestionManager";
-import { Timer } from "../helpers/Timer";
-import { EventEmitter } from "events";
-import { read } from "fs";
-import LogImpl, { Log } from "../helpers/Log";
+import {inject, injectable} from "inversify";
+import {Player, PlayerFactory, PlayerSummary} from "./Player";
+import {Question} from "./Questions/Question";
+import {Socket} from "socket.io";
+import {TYPES} from "../bindings/types";
+import {QuestionBank} from "./Questions/QuestionBank";
+import {ActiveQuestionManager} from "./ActiveQuestionManager";
+import {Timer} from "../helpers/Timer";
+import {EventEmitter} from "events";
+import {Log} from "../helpers/Log";
 
 @injectable()
 class GameImpl extends EventEmitter implements Game {
