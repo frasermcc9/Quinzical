@@ -21,11 +21,9 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
+import javafx.scene.effect.ColorAdjust;
 import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.models.structures.GameQuestion;
@@ -46,23 +44,17 @@ public class GameQuestionController extends AbstractQuestionController {
 
     @Inject
     TimerContext timerContext;
-
     @Inject
     private GameModel gameModel;
-
-    @FXML
-    private Label lblPrompt;
-
+    
     @FXML
     private ProgressBar timerProgressBar;
-
     @FXML
-    private HBox progressButtons;
-
-    @FXML
-    private Button btnNextQuestion;
+    private Label lblCounter;
 
     private TimerStrategy activeTimer;
+    private Timeline timeline;
+    private Timeline timelineCountdown;
 
 
     // #region Injected handlers
@@ -90,12 +82,21 @@ public class GameQuestionController extends AbstractQuestionController {
 
     // #endregion
 
+
+    @Override
+    void onPassClicked() {
+        onSubmitClicked();
+    }
+
     /**
      * submits the currently inputted text as an answer to the question
      */
     @FXML
     void onSubmitClicked() {
+        timeline.stop();
+        timelineCountdown.stop();
         activeTimer.stopTimeout();
+        textAreas.forEach(a -> a.setEffect(null));
 
         GameQuestion question = gameModel.getActiveQuestion();
 
@@ -111,7 +112,7 @@ public class GameQuestionController extends AbstractQuestionController {
         setSubmitButtonType(ButtonType.PASS);
         btnSubmit.setText("Categories");
         btnSubmit.setOnAction(this::handleReturnToCategories);
-        
+
         progressButtons.getChildren().add(btnNextQuestion);
         btnNextQuestion.setOnAction(e -> handleNextQuestion(question));
         btnNextQuestion.requestFocus();
@@ -126,25 +127,13 @@ public class GameQuestionController extends AbstractQuestionController {
         gameModel.answerActive(false);
         startTimer();
     }
-
-    private void startTimer() {
-        final Timeline timeline = new Timeline(
-            new KeyFrame(
-                Duration.ZERO,
-                new KeyValue(timerProgressBar.progressProperty(), 1)
-            ),
-            new KeyFrame(
-                Duration.seconds(gameModel.getTimerValue()),
-                new KeyValue(timerProgressBar.progressProperty(), 0)
-            )
-        );
-        timeline.playFromStart();
-
-        activeTimer = timerContext.createTimer(TimerType.DEFAULT);
-        activeTimer.setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
-            (int) gameModel.getTimerValue() * 1000);
+    
+    @Override
+    protected void refresh() {
+        refreshButtonState();
+        super.refresh();
     }
-
+    
     /**
      * Handles the return to the main game scene.
      */
@@ -181,50 +170,39 @@ public class GameQuestionController extends AbstractQuestionController {
         sceneHandler.setActiveScene(GameScene.END);
     }
 
-    /**
-     * refreshes the buttons onAction calls, back to the normal functions, as they change when a question is just
-     * answered.
-     */
-    private void refreshButtonState() {
-        progressButtons.getChildren().subList(1, progressButtons.getChildren().size()).clear();
-        setSubmitButtonType(ButtonType.PASS);
+
+    private void startTimer() {
+        ColorAdjust ca = new ColorAdjust();
+        ca.setHue(0);
+        timerProgressBar.setEffect(ca);
+        timeline = new Timeline(
+            new KeyFrame(
+                Duration.ZERO,
+                new KeyValue(timerProgressBar.progressProperty(), 1),
+                new KeyValue(ca.hueProperty(), 0)
+            ),
+            new KeyFrame(
+                Duration.seconds(gameModel.getTimerValue()),
+                new KeyValue(timerProgressBar.progressProperty(), 0),
+                new KeyValue(ca.hueProperty(), -0.85)
+            )
+        );
+        timeline.playFromStart();
+
+        lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
+        timelineCountdown = new Timeline(
+            new KeyFrame(
+                Duration.seconds(1),
+                event -> lblCounter.setText(Integer.parseInt(lblCounter.getText()) - 1 + "")
+            )
+        );
+        timelineCountdown.setCycleCount(Timeline.INDEFINITE);
+        timelineCountdown.playFromStart();
+
+        activeTimer = timerContext.createTimer(TimerType.DEFAULT);
+        activeTimer.setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
+            (int) gameModel.getTimerValue() * 1000);
     }
 
-    @Override
-    protected void refresh() {
-        refreshButtonState();
-        super.refresh();
-    }
 
-    @Override
-    protected void keyPressed(KeyCode keyCode) {
-        if (keyCode == KeyCode.BACK_SPACE) {
-            if (textAreas.stream().anyMatch(t -> t.getText().isEmpty())) {
-                setSubmitButtonType(ButtonType.PASS);
-            }
-        } else {
-            setSubmitButtonType(ButtonType.SUBMIT);
-        }
-    }
-
-    private void setSubmitButtonType(ButtonType buttonType) {
-        btnSubmit.getStyleClass().clear();
-        btnSubmit.getStyleClass().addAll("transparent", "button");
-        switch (buttonType) {
-            case PASS:
-                btnSubmit.getStyleClass().add("pass-button");
-                btnSubmit.setText("Pass");
-                btnSubmit.setOnAction(e -> onSubmitClicked());
-                break;
-            case SUBMIT:
-                btnSubmit.getStyleClass().add("submit-button");
-                btnSubmit.setText("Submit");
-                btnSubmit.setOnAction(e -> onSubmitClicked());
-                break;
-        }
-    }
-
-    private enum ButtonType {
-        PASS, SUBMIT
-    }
 }
