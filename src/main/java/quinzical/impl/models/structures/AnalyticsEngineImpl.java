@@ -62,11 +62,15 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     public int getQuestionsAnsweredForCategory(String category) {
-        return this.answeredByCategory.get(category) / 2;
+        Integer value = this.answeredByCategory.get(category);
+        if (value == null) return 0;
+        return value / 2;
     }
 
     public int getQuestionsCorrectForCategory(String category) {
-        return this.correctByCategory.get(category);
+        Integer value = this.correctByCategory.get(category);
+        if (value == null) return 0;
+        return value;
     }
 
     public int getQuestionsWrongForCategory(String category) {
