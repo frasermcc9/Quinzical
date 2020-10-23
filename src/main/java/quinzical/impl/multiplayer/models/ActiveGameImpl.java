@@ -31,6 +31,7 @@ public class ActiveGameImpl implements ActiveGame {
 
     private Question currentQuestion;
     private int points;
+    private int mostRecentPoints;
     private int duration;
 
     public ActiveGame reset() {
@@ -50,8 +51,10 @@ public class ActiveGameImpl implements ActiveGame {
         String solution = (String) socketObjectData[0];
         Integer points = (Integer) socketObjectData[1];
         updateUsersFromSocket((JSONArray) socketObjectData[2]);
+        Integer mostRecentPoints = (Integer) socketObjectData[3];
 
         this.points = points;
+        this.mostRecentPoints = mostRecentPoints;
         this.currentQuestion.setSolution(solution);
     }
 
@@ -144,6 +147,10 @@ public class ActiveGameImpl implements ActiveGame {
             }
             return null;
         }).collect(Collectors.toList()));
+    }
+
+    public int getMostRecentPoints() {
+        return mostRecentPoints;
     }
 }
 

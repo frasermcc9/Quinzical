@@ -34,8 +34,8 @@ public class HostWaitController extends AbstractWaitController {
 
     @FXML
     void btnCancel(ActionEvent event) {
-        sceneHandler.setActiveScene(GameScene.MULTI_MENU);
         socketModel.getSocket().emit("quit");
+        sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML

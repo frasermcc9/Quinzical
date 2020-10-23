@@ -38,6 +38,8 @@ public interface ActiveGame {
     String getPrompt();
 
     ActiveGame reset();
-    
+
     int getQuestionDuration();
+
+    int getMostRecentPoints();
 }
