@@ -14,69 +14,95 @@
 
 package quinzical.impl.multiplayer;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.jfoenix.controls.JFXMasonryPane;
 import io.socket.client.Socket;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import org.json.JSONArray;
 import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.AbstractSceneController;
+import quinzical.impl.controllers.components.TileController;
+import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModel;
+import quinzical.impl.multiplayer.models.SocketModelImpl;
+import quinzical.interfaces.multiplayer.SocketModel;
+import quinzical.interfaces.multiplayer.XpClass;
+import quinzical.interfaces.multiplayer.XpClassFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractWaitController extends AbstractSceneController {
-    final protected Socket socket = SocketModel.getInstance().getSocket();
-    final protected String name = SocketModel.getInstance().getName();
+public abstract class AbstractWaitController extends AbstractAlertController {
+    @Inject
+    protected SocketModel socketModel;
 
     @FXML
-    Label lblCode;
-
+    protected Label lblCode;
     @FXML
-    ListView<String> listPlayers;
-
+    protected Label lblPlayers;
     @FXML
-    Label lblPlayers;
+    protected JFXMasonryPane masonryPane;
+    @FXML
+    protected StackPane alertPane;
+
+    @Inject
+    Injector injector;
+    @Inject
+    private XpClassFactory xpClassFactory;
 
     void loadWaitScreen() {
 
-        listPlayers.setItems(MultiplayerGame.getInstance().getObservablePlayers());
+        Socket socket = socketModel.getSocket();
+        
         lblCode.setText(MultiplayerGame.getInstance().getCode());
 
 
         socket.on("interrupt", objects -> Platform.runLater(() -> {
-            sceneHandler.setActiveScene(GameScene.MULTI_MENU);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK,
-                ButtonType.CANCEL);
-            alert.setTitle("The host disconnected");
-            alert.setHeaderText("The host quit the game. You have been returned to the menu.");
-            alert.showAndWait();
+            createAlert("The Host Disconnected", "The host quit the game. You have been returned to the menu.",
+                () -> sceneHandler.setActiveScene(GameScene.MULTI_MENU));
         }));
 
         socket.on("playersChange", objects -> Platform.runLater(() -> {
 
-            List<String> javaList = new ArrayList<>();
+            List<String> nameList = new ArrayList<>();
+            List<XpClass> xpList = new ArrayList<>();
 
-            JSONArray jsonArray = (JSONArray) objects[0];
-            for (int i = 0; i < jsonArray.length(); i++) {
+            JSONArray nameArray = (JSONArray) objects[0];
+            JSONArray xpArray = (JSONArray) objects[1];
+            for (int i = 0; i < nameArray.length(); i++) {
                 try {
-                    javaList.add((String) jsonArray.get(i));
+                    nameList.add(nameArray.getString(i));
+                    xpList.add(xpClassFactory.createXp(xpArray.getInt(i)));
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
             }
-            ObservableList<String> mg = MultiplayerGame.getInstance().getObservablePlayers();
-            mg.clear();
-            mg.addAll(javaList);
 
-            Platform.runLater(() -> lblPlayers.setText(listPlayers.getItems().size() + "/" + objects[1]));
+            List<Parent> children = new ArrayList<>();
+
+            for (int i = 0; i < nameList.size(); i++) {
+                try {
+                    FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/lobby-player", injector);
+                    Parent p = fxmlInfo.getParent();
+                    children.add(p);
+                    fxmlInfo.getController().setContent(nameList.get(i), xpList.get(i).getLevel() + "");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            Platform.runLater(() -> {
+                masonryPane.getChildren().clear();
+                masonryPane.getChildren().addAll(children);
+                Platform.runLater(() -> masonryPane.requestLayout());
+
+                lblPlayers.setText(masonryPane.getChildren().size() + "/" + objects[2]);
+            });
         }));
     }
 
@@ -88,9 +114,9 @@ public abstract class AbstractWaitController extends AbstractSceneController {
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         loadWaitScreen();
         addListeners();
-        socket.emit("clientReady");
+        socketModel.getSocket().emit("clientReady");
     }
 }

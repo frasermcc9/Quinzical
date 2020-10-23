@@ -16,63 +16,104 @@ package quinzical.impl.multiplayer;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.AbstractSceneController;
-import quinzical.impl.multiplayer.models.SocketModel;
+import quinzical.impl.multiplayer.util.Util;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.SocketModel;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class EntryController extends AbstractSceneController {
+public class EntryController extends AbstractAlertController {
 
     @Inject
-    SceneHandler sceneHandler;
+    private SceneHandler sceneHandler;
     @Inject
     @Named("socketUrl")
     private String socketUrl;
+    @Inject
+    private SocketModel socketModel;
 
     @FXML
-    private TextField txtName;
+    private JFXTextField txtName;
     @FXML
-    private ProgressIndicator progressIndicator;
+    private JFXPasswordField txtPassword;
+
+    private static void createValidator(String message, TextField textField) {
+        textField.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                if (textField.getText().isBlank()) {
+                    textField.setEffect(null);
+                    textField.getStyleClass().add("invalid-field");
+                }
+            } else {
+                ColorAdjust ca = new ColorAdjust();
+                ca.setBrightness(1);
+                textField.setEffect(ca);
+                textField.getStyleClass().remove("invalid-field");
+            }
+        });
+    }
+
     @FXML
-    private Label lblProgress;
+    void btnConnect() throws URISyntaxException, IllegalAccessException, NoSuchFieldException, JSONException {
 
-    private Socket socket;
-
-    @FXML
-    void btnConnect() throws URISyntaxException, IOException {
-
-        socket = IO.socket(socketUrl);
-        SocketModel.getInstance().setName(txtName.getText()).setSocket(socket);
+        Socket socket = IO.socket(socketUrl);
+        socketModel.setName(txtName.getText()).setSocket(socket);
         setProgressVisible(true);
 
-        socket.once("connect", objects -> Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)));
-        SocketModel.getInstance().connect();
+        Object login = Util.asJson(new Login(txtName.getText(), txtPassword.getText()));
+
+        socket.once("connect", (_1) -> {
+            socket.emit("authentication", login);
+            socket.once("authenticated",
+                _2 -> Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)));
+            socket.once("unauthorized", _3 -> Platform.runLater(() -> {
+                createAlert("Could not Connect", "Could not connect to the online service. Please check your login " +
+                    "details and try again.");
+
+                setProgressVisible(false);
+            }));
+        });
+
+        socketModel.connect();
+    }
+
+    @FXML
+    void btnAccount() {
+        sceneHandler.setActiveScene(GameScene.MULTI_ACCOUNT);
     }
 
     @Override
     protected void onLoad() {
         setProgressVisible(false);
+        createValidator("Username cannot be blank", txtName);
+        createValidator("Password cannot be blank", txtPassword);
     }
 
-    private void setProgressVisible(boolean visible) {
-        progressIndicator.setVisible(visible);
-        lblProgress.setVisible(visible);
-    }
 
     @FXML
     void btnQuitClick() {
-        if (socket != null)
-            socket.close();
+        if (socketModel.getSocket() != null)
+            socketModel.destroy();
         sceneHandler.setActiveScene(GameScene.INTRO);
+    }
+
+    public static class Login {
+        public final String username;
+        public final String password;
+
+        public Login(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
     }
 }

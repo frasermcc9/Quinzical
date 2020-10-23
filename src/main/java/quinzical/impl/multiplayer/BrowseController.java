@@ -15,50 +15,36 @@
 package quinzical.impl.multiplayer;
 
 import com.google.inject.Inject;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import io.socket.client.Socket;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.SocketModel;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class BrowseController extends AbstractSceneController {
+public class BrowseController extends AbstractAlertController {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
-
+    @Inject
+    private SocketModel socketModel;
     @Inject
     private SceneHandler sceneHandler;
 
     @FXML
-    private TableView<GameData> tableGames;
-
-    @FXML
-    private TableColumn<GameData, String> colHost;
-
-    @FXML
-    private TableColumn<GameData, String> colPlayers;
-
-    @FXML
-    private TableColumn<GameData, String> colQuestions;
-
-    @FXML
-    private TableColumn<GameData, String> colTime;
-
-    @FXML
-    private TableColumn<GameData, String> colCode;
+    private JFXTreeTableView<GameData> tableBrowse;
 
     @FXML
     void btnCancel() {
@@ -67,16 +53,15 @@ public class BrowseController extends AbstractSceneController {
 
     @FXML
     void btnOk() {
-        GameData gameData = tableGames.getSelectionModel().getSelectedItem();
+        GameData gameData = tableBrowse.getSelectionModel().getSelectedItem().getValue();
 
-        socket.emit("joinGameRequest", SocketModel.getInstance().getName(), gameData.getCode());
+        Socket socket = socketModel.getSocket();
+
+        socket.emit("joinGameRequest", socketModel.getName(), gameData.getCode());
         socket.once("joinGameNotification", (arg) -> {
             if (arg[0].equals(false)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK,
-                    ButtonType.CANCEL);
-                alert.setTitle("Unable to Join Game");
-                alert.setHeaderText("You were unable to join the game.");
-                alert.showAndWait();
+                createAlert("Unable to Join Game", "You were unable to join the game.");
+
             } else {
                 JSONArray jsonArray = (JSONArray) arg[1];
                 MultiplayerGame mg = MultiplayerGame.getInstance();
@@ -97,7 +82,30 @@ public class BrowseController extends AbstractSceneController {
     @Override
     protected void onLoad() {
 
+        JFXTreeTableColumn<GameData, String> hostCol = new JFXTreeTableColumn<>("Host");
+        JFXTreeTableColumn<GameData, String> playersCol = new JFXTreeTableColumn<>("Players");
+        JFXTreeTableColumn<GameData, String> questionsCol = new JFXTreeTableColumn<>("Questions");
+        JFXTreeTableColumn<GameData, String> timeCol = new JFXTreeTableColumn<>("Time to Answer");
+        JFXTreeTableColumn<GameData, String> codeCol = new JFXTreeTableColumn<>("Code");
+
         ObservableList<GameData> list = observableArrayList();
+
+        Platform.runLater(() -> {
+            hostCol.setCellValueFactory(v -> v.getValue().getValue().hostProperty());
+            playersCol.setCellValueFactory(v -> v.getValue().getValue().playersProperty());
+            questionsCol.setCellValueFactory(v -> v.getValue().getValue().questionsProperty());
+            timeCol.setCellValueFactory(v -> v.getValue().getValue().timeProperty());
+            codeCol.setCellValueFactory(param -> param.getValue().getValue().codeProperty());
+
+            tableBrowse.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+
+            TreeItem<GameData> root = new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren);
+            tableBrowse.setRoot(root);
+            tableBrowse.setShowRoot(false);
+            tableBrowse.getColumns().setAll(hostCol, playersCol, questionsCol, timeCol, codeCol);
+        });
+
+        Socket socket = socketModel.getSocket();
 
         socket.emit("browseGames");
         socket.once("browseGameDataLoaded", (args) -> {
@@ -123,18 +131,11 @@ public class BrowseController extends AbstractSceneController {
                 }
             }
 
-            Platform.runLater(() -> {
-                colHost.setCellValueFactory(v -> v.getValue().hostProperty());
-                colPlayers.setCellValueFactory(v -> v.getValue().playersProperty());
-                colQuestions.setCellValueFactory(v -> v.getValue().questionsProperty());
-                colTime.setCellValueFactory(v -> v.getValue().timeProperty());
-                colCode.setCellValueFactory(v -> v.getValue().codeProperty());
-                tableGames.setItems(list);
-            });
+
         });
     }
 
-    private static class GameData {
+    private static class GameData extends RecursiveTreeObject<GameData> {
         private final SimpleStringProperty host;
         private final SimpleStringProperty players;
         private final SimpleStringProperty questions;

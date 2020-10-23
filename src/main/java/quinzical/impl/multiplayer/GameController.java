@@ -15,58 +15,144 @@
 package quinzical.impl.multiplayer;
 
 import com.google.inject.Inject;
-import io.socket.client.Socket;
+import com.jfoenix.controls.JFXProgressBar;
+import com.jfoenix.controls.JFXTextArea;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import quinzical.impl.controllers.AbstractSceneController;
-import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.interfaces.multiplayer.SocketModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameController extends AbstractSceneController {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
-    private final String name = SocketModel.getInstance().getName();
     @Inject
     private ActiveGame activeGame;
+    @Inject
+    private SocketModel socketModel;
 
     @FXML
     private Label lblQuestion;
-
     @FXML
-    private TextField txtInput;
-
+    private JFXTextArea txtInput;
     @FXML
     private Label lblPrompt;
-
-    @FXML
-    private Label lblStatus;
-
     @FXML
     private Button btnSubmit;
+    @FXML
+    private HBox macronBar;
+    @FXML
+    private JFXProgressBar timerProgressBar;
+    @FXML
+    private Label lblCounter;
+
+    private Timeline timeline;
+    private Timeline timelineCountdown;
 
     @FXML
-    void onSubmitClick(ActionEvent event) {
+    void onSubmitClick() {
+        timeline.stop();
+        timelineCountdown.stop();
+
         btnSubmit.setDisable(true);
         btnSubmit.setText("Submitted...");
-        lblStatus.setText("Waited for Others to Submit...");
+        btnSubmit.setText("Waiting for Others...");
         txtInput.setDisable(true);
         String submission = txtInput.getText();
         if (submission == null) {
             submission = "";
         }
         submission = submission.toLowerCase().trim();
-        socket.emit("questionAnswered", submission);
+        socketModel.getSocket().emit("questionAnswered", submission);
         activeGame.setGivenSolution(submission);
     }
 
     @Override
     protected void onLoad() {
+        startAnimations();
+        initMacronButtons();
+        
         lblQuestion.setText(activeGame.getQuestion());
         lblPrompt.setText(activeGame.getPrompt());
+
+        txtInput.focusedProperty().addListener((_l, _o, isFocused) -> focusFixer(isFocused, txtInput));
+        txtInput.setOnKeyPressed(this::onKeyPress);
+
         txtInput.requestFocus();
+    }
+
+    private void startAnimations() {
+        ColorAdjust ca = new ColorAdjust();
+        ca.setHue(0);
+        timerProgressBar.setEffect(ca);
+        timeline = new Timeline(
+            new KeyFrame(
+                Duration.ZERO,
+                new KeyValue(timerProgressBar.progressProperty(), 1),
+                new KeyValue(ca.hueProperty(), 0)
+            ),
+            new KeyFrame(
+                Duration.seconds(activeGame.getQuestionDuration()),
+                new KeyValue(timerProgressBar.progressProperty(), 0),
+                new KeyValue(ca.hueProperty(), -0.85)
+            )
+        );
+        timeline.playFromStart();
+
+        lblCounter.setText(Math.round(activeGame.getQuestionDuration()) + "");
+        timelineCountdown = new Timeline(
+            new KeyFrame(
+                Duration.seconds(1),
+                event -> lblCounter.setText(Integer.parseInt(lblCounter.getText()) - 1 + "")
+            )
+        );
+        timelineCountdown.setCycleCount(Timeline.INDEFINITE);
+        timelineCountdown.playFromStart();
+    }
+
+    private void onKeyPress(KeyEvent e) {
+        if (e.getCode() == KeyCode.ENTER) {
+            if (e.getSource() instanceof JFXTextArea) {
+                JFXTextArea ta = (JFXTextArea) e.getSource();
+                String text = ta.getText().trim();
+                ta.setText(text);
+                onSubmitClick();
+            }
+
+        }
+    }
+
+    private void focusFixer(Boolean isFocused, JFXTextArea field) {
+        if (isFocused) {
+            field.setEffect(null);
+        } else {
+            ColorAdjust colorFixer = new ColorAdjust();
+            colorFixer.setBrightness(1);
+            field.setEffect(colorFixer);
+        }
+    }
+
+    private void initMacronButtons() {
+        macronBar.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(btn -> btn.setOnAction(e -> {
+            if (!txtInput.isEditable()) return;
+            txtInput.insertText(txtInput.getCaretPosition(), btn.getText());
+            txtInput.requestFocus();
+            txtInput.positionCaret(txtInput.getCaretPosition());
+
+            onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
+        }));
     }
 
     @FXML
