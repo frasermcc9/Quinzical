@@ -76,21 +76,19 @@ public class SceneHandlerImpl implements SceneHandler {
         AnchorPane.setLeftAnchor(p, 0.0);
         AnchorPane.setRightAnchor(p, 0.0);
 
-        ((AnchorPane) scene.getRoot()).getChildren().add(p);
-        timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> {
-            Platform.runLater(() -> {
-                if (((AnchorPane) scene.getRoot()).getChildren().size() == 2)
-                    ((AnchorPane) scene.getRoot()).getChildren().remove(0);
-            });
-        }, 300);
+        Platform.runLater(() -> ((AnchorPane) scene.getRoot()).getChildren().add(p));
+
+        timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> Platform.runLater(() -> {
+            if (((AnchorPane) scene.getRoot()).getChildren().size() == 2)
+                ((AnchorPane) scene.getRoot()).getChildren().remove(0);
+        }), 300);
 
         var ft = new FadeTransition(Duration.millis(300));
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.setNode(p);
         ft.playFromStart();
-
-        //scene.setRoot(fxmlInfo.getParent());
+        
         return fxmlInfo.getController();
     }
 
