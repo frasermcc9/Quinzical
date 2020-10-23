@@ -24,7 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.components.CategorySelectorPaneController;
+import quinzical.impl.controllers.components.TileController;
 import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
@@ -96,18 +96,18 @@ public abstract class AbstractSelectorController extends AbstractSceneController
 
         for (int i = 0; i < categories.size(); i++) {
             try {
-                FxmlInfo<CategorySelectorPaneController> fxmlInfo = FxmlInfo.loadFXML("components/category-selection"
+                FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/category-selection"
                     , injector);
                 Parent p = fxmlInfo.getParent();
                 children.add(p);
 
-                CategorySelectorPaneController controller = fxmlInfo
+                TileController controller = fxmlInfo
                     .getController()
                     .setContent(categories.get(i), data.get(i));
 
                 p.setOnMouseEntered(this::hoverCard);
                 p.setOnMouseExited(this::hoverOffCard);
-                p.setOnMouseClicked((event -> selectCategory(event, controller.getCategory())));
+                p.setOnMouseClicked((event -> selectCategory(event, controller.getHeader())));
 
 
             } catch (IOException e) {
