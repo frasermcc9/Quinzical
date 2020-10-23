@@ -28,6 +28,8 @@ import quinzical.impl.models.structures.SpeakerManager;
 import quinzical.impl.models.structures.UserDataImpl;
 import quinzical.impl.models.structures.WindowsSpeakerManager;
 import quinzical.impl.multiplayer.models.ActiveGameImpl;
+import quinzical.impl.multiplayer.models.SocketModelImpl;
+import quinzical.impl.multiplayer.models.structures.XpClassFactoryImpl;
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questionverifier.QuestionVerifierFactoryImpl;
@@ -36,6 +38,8 @@ import quinzical.impl.util.strategies.timer.TimerContextImpl;
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.*;
 import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.interfaces.multiplayer.SocketModel;
+import quinzical.interfaces.multiplayer.XpClassFactory;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
@@ -48,15 +52,15 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  */
 public class MainModule extends AbstractModule {
 
-    private final static boolean TEST_MODE = false;
+    private final static boolean TEST_MODE = true;
 
     @Override
     protected void configure() {
-        
+
         Scene scene = new Scene(new AnchorPane());
         scene.getStylesheets().add(Entry.class.getResource("/css/global-font.css").toExternalForm());
         bind(Scene.class).toInstance(scene);
-        
+
         bind(QuestionCollection.class).to(QuestionCollectionImpl.class);
 
         bind(GameModel.class).to(GameModelImpl.class);
@@ -74,7 +78,7 @@ public class MainModule extends AbstractModule {
         bind(ObjectReaderStrategyFactory.class).to(ObjectReaderStrategyFactoryImpl.class);
 
         bind(PracticeModel.class).to(PracticeModelImpl.class);
-        
+
 
         if (System.getProperty("os.name").startsWith("Windows")) {
             bind(Speaker.class).to(WindowsSpeakerManager.class);
@@ -94,5 +98,8 @@ public class MainModule extends AbstractModule {
             bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://20.190.113.34:7373");
 
         bind(ActiveGame.class).to(ActiveGameImpl.class);
+
+        bind(XpClassFactory.class).to(XpClassFactoryImpl.class);
+        bind(SocketModel.class).to(SocketModelImpl.class);
     }
 }

@@ -12,6 +12,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.multiplayer.models.structures.Question;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.interfaces.multiplayer.SocketModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +23,26 @@ import static javafx.collections.FXCollections.observableArrayList;
 @Singleton
 public class ActiveGameImpl implements ActiveGame {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
     private ObservableList<Player> players = observableArrayList();
     @Inject
     private SceneHandler sceneHandler;
+    @Inject
+    private SocketModel socketModel;
 
     private Question currentQuestion;
     private int points;
+    private int duration;
 
     public ActiveGame reset() {
         this.players = observableArrayList();
         this.points = 0;
         currentQuestion = new Question(null, null);
         return this;
+    }
+
+    @Override
+    public int getQuestionDuration() {
+        return this.duration;
     }
 
     @Override
@@ -49,7 +57,9 @@ public class ActiveGameImpl implements ActiveGame {
 
 
     @Override
-    public void init() {
+    public void init(int duration) {
+        Socket socket = socketModel.getSocket();
+
         socket.on("newQuestion", (objects -> {
             currentQuestion = new Question((String) objects[0], (String) objects[1]);
             Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_GAME));
@@ -67,6 +77,7 @@ public class ActiveGameImpl implements ActiveGame {
 
         socket.on("goNextRound", objects -> socket.emit("readyToPlay"));
 
+        this.duration = duration;
 
         socket.emit("readyToPlay");
 

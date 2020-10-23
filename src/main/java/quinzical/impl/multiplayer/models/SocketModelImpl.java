@@ -2,45 +2,44 @@ package quinzical.impl.multiplayer.models;
 
 import com.google.inject.Singleton;
 import io.socket.client.Socket;
+import quinzical.interfaces.multiplayer.SocketModel;
 
 @Singleton
-public class SocketModel {
-    private static SocketModel instance;
+public class SocketModelImpl implements SocketModel {
     private String name;
     private Socket socket;
 
-    private SocketModel() {
+    public SocketModelImpl() {
     }
 
-    public static SocketModel getInstance() {
-        if (instance == null) {
-            instance = new SocketModel();
-        }
-        return instance;
-    }
-
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public SocketModel setName(String name) {
         this.name = name;
         return this;
     }
 
+    @Override
     public Socket getSocket() {
         return socket;
     }
 
+    @Override
     public SocketModel setSocket(Socket socket) {
         this.socket = socket;
         return this;
     }
 
+    @Override
     public void connect() {
         this.socket.connect();
     }
 
+    @Override
     public void destroy() {
         this.socket.off();
         this.socket.disconnect();

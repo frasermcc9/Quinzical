@@ -21,7 +21,7 @@ public interface ActiveGame {
 
     void setData(Object[] socketObjectData);
 
-    void init();
+    void init(int questionDuration);
 
     int getPoints();
 
@@ -38,4 +38,6 @@ public interface ActiveGame {
     String getPrompt();
 
     ActiveGame reset();
+    
+    int getQuestionDuration();
 }
