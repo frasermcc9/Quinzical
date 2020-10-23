@@ -1,0 +1,112 @@
+/*
+ * Copyright 2020 Fraser McCallum and Braden Palmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.name-field {
+    -jfx-focus-color: #339bfd;
+    -jfx-unfocus-color: #8d8d8d;
+
+    -fx-prompt-text-fill: #8d8d8d;
+    -fx-text-fill: #eaeaea;
+    -fx-highlight-fill: #03a9f4;
+
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.name-field *.text {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+.name-field .input-line {
+    -fx-background-color: white;
+}
+
+.invalid-field {
+    -jfx-focus-color: linear-gradient(to right, #d32f2f 25%, #ff6659 100%);
+    -fx-text-fill: #ff7961;
+}
+
+.invalid-field .input-line {
+    -fx-background-color: linear-gradient(to right, #d32f2f 25%, #ff6659 100%);
+}
+
+.multiplayer-table {
+    -fx-border-width: 0px;
+}
+
+.multiplayer-table .placeholder {
+    -fx-background-color: #3e3e3e;
+}
+
+
+.multiplayer-table .column-header,
+.multiplayer-table .column-header-background .filler {
+    -fx-background-color: #66bb6a;
+    -fx-border-width: 0;
+
+}
+
+.multiplayer-table .column-header .label {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 2, 3);
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.multiplayer-table .cell {
+    -fx-alignment: center;
+    -fx-background-color: #29292D;
+    -fx-border-color: #29292D;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.multiplayer-table .cell:selected {
+    -fx-border-color: linear-gradient(to right, #66bb6a 0%, #4caf50 25%, #43a047 75%, #388e3c 100%);
+}
+
+.multiplayer-table .scroll-bar:vertical .track {
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-color: #29292D;
+}
+
+.multiplayer-table .scroll-bar:vertical .thumb {
+    -fx-background-color: #181818;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0;
+}
+
+
+.multiplayer-table .scroll-bar:vertical .increment-button,
+.multiplayer-table .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0 10 0 0;
+}
+
+.multiplayer-table .scroll-bar:vertical .increment-arrow,
+.multiplayer-table .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0 0em;
+}

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <?import java.net.URL?>
-<StackPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" styleClass="tile" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.CategorySelectorPaneController">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" styleClass="tile" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.TileController">
    <children>
       <VBox fx:id="container">
          <children>
             <StackPane fx:id="header" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblMarker" styleClass="tile-text" text="Label" />
+                  <Label fx:id="lblMarker" styleClass="tile-text" text="Level" />
                </children></StackPane>
             <StackPane fx:id="content" style="-fx-background-color: #232323;" VBox.vgrow="SOMETIMES">
                <children>

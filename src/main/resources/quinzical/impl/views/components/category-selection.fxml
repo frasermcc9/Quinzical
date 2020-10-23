@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
-<StackPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" styleClass="tile" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.CategorySelectorPaneController">
+<StackPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" styleClass="tile" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.TileController">
    <children>
       <VBox fx:id="container">
          <children>

@@ -16,16 +16,20 @@
   ~ limitations under the License.
   -->
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import java.net.URL?>
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.HostController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.HostController">
    <children>
-      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" styleClass="vbox">
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
@@ -40,21 +44,13 @@
                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
                   <children>
                      <Label styleClass="bright-label" text="Questions:" />
-                     <Button fx:id="qDec" mnemonicParsing="false" onAction="#questionDec" text="&lt;">
-                        <HBox.margin>
-                           <Insets right="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="qDec" onAction="#questionDec" styleClass="material-button-small" text="&lt;" />
                      <Label fx:id="txtQuestions" prefHeight="35.0" prefWidth="47.0" styleClass="bright-label" text="5">
                         <HBox.margin>
                            <Insets left="-30.0" right="-30.0" />
                         </HBox.margin>
                      </Label>
-                     <Button fx:id="qInc" mnemonicParsing="false" onAction="#questionInc" text="&gt;">
-                        <HBox.margin>
-                           <Insets left="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="qInc" onAction="#questionInc" styleClass="material-button-small" text="&gt;" />
                   </children>
                </HBox>
                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
@@ -64,21 +60,13 @@
                            <Insets right="-18.0" />
                         </HBox.margin>
                      </Label>
-                     <Button fx:id="pDec" mnemonicParsing="false" onAction="#playersDec" text="&lt;">
-                        <HBox.margin>
-                           <Insets right="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="pDec" onAction="#playersDec" styleClass="material-button-small" text="&lt;" />
                      <Label fx:id="txtPlayers" prefHeight="35.0" prefWidth="45.0" styleClass="bright-label" text="5">
                         <HBox.margin>
                            <Insets left="-30.0" right="-30.0" />
                         </HBox.margin>
                      </Label>
-                     <Button fx:id="pInc" mnemonicParsing="false" onAction="#playersInc" text="&gt;">
-                        <HBox.margin>
-                           <Insets left="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="pInc" onAction="#playersInc" styleClass="material-button-small" text="&gt;" />
                   </children>
                </HBox>
                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
@@ -88,42 +76,30 @@
                            <Insets right="-60.0" />
                         </HBox.margin>
                      </Label>
-                     <Button fx:id="aDec" mnemonicParsing="false" onAction="#timeDec" text="&lt;">
-                        <HBox.margin>
-                           <Insets right="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="aDec" onAction="#timeDec" styleClass="material-button-small" text="&lt;" />
                      <Label fx:id="txtTime" prefHeight="35.0" prefWidth="47.0" styleClass="bright-label" text="10">
                         <HBox.margin>
                            <Insets left="-30.0" right="-30.0" />
                         </HBox.margin>
                      </Label>
-                     <Button fx:id="aInc" mnemonicParsing="false" onAction="#timeInc" text="&gt;">
-                        <HBox.margin>
-                           <Insets left="-40.0" />
-                        </HBox.margin>
-                     </Button>
+                     <JFXButton fx:id="aInc" onAction="#timeInc" styleClass="material-button-small" text="&gt;" />
                   </children>
                </HBox>
             </children>
          </VBox>
-         <Separator prefWidth="200.0" />
-         <CheckBox fx:id="chkPublic" mnemonicParsing="false" styleClass="bright-label" text="Public">
+         <JFXCheckBox fx:id="chkPublic" checkedColor="#4caf50" text="Public" textFill="#dddddd">
             <font>
                <Font size="24.0" />
             </font>
-         </CheckBox>
+         </JFXCheckBox>
          <Separator prefWidth="200.0" />
-         <Button mnemonicParsing="false" onAction="#btnStart" text="Start Game">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Button>
-         <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
+         <JFXButton onAction="#btnStart" styleClass="material-button" text="Start Game" />
+         <JFXButton onAction="#btnCancel" styleClass="material-button" text="Menu" />
       </VBox>
    </children>
    <stylesheets>
       <URL value="@../../../../css/global.css" />
       <URL value="@../../../../css/multiplayer.css" />
+      <URL value="@../../../../css/views/multiplayer-base.css" />
    </stylesheets>
 </AnchorPane>

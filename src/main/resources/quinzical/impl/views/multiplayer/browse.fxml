@@ -16,17 +16,18 @@
   ~ limitations under the License.
   -->
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import java.net.URL?>
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.BrowseController">
+
+<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.BrowseController">
    <children>
-      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" styleClass="vbox">
+      <VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
@@ -39,27 +40,18 @@
                </Label>
             </children>
          </VBox>
-         <TableView fx:id="tableGames" editable="true" prefHeight="384.0" prefWidth="840.0" style="-fx-background-color: #222222;">
-            <columns>
-               <TableColumn fx:id="colHost" prefWidth="208.0" text="Host" />
-               <TableColumn fx:id="colPlayers" prefWidth="101.0" text="Players" />
-               <TableColumn fx:id="colQuestions" prefWidth="178.0" text="Questions" />
-               <TableColumn fx:id="colTime" minWidth="0.0" prefWidth="71.0" text="Time Per Question" />
-               <TableColumn fx:id="colCode" prefWidth="318.0" text="Code" />
-            </columns>
+         <JFXTreeTableView fx:id="tableBrowse" styleClass="multiplayer-table">
             <VBox.margin>
                <Insets left="200.0" right="200.0" />
             </VBox.margin>
-            <columnResizePolicy>
-               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-         </TableView>
-         <Button mnemonicParsing="false" onAction="#btnOk" prefHeight="51.0" prefWidth="170.0" text="Select" />
-         <Button mnemonicParsing="false" onAction="#btnCancel" prefHeight="51.0" prefWidth="170.0" text="Cancel" />
+         </JFXTreeTableView>
+         <JFXButton minWidth="200.0" onAction="#btnOk" styleClass="material-button" text="Select Game" />
+         <JFXButton minWidth="200.0" onAction="#btnCancel" styleClass="material-button" text="Menu" />
       </VBox>
    </children>
    <stylesheets>
       <URL value="@../../../../css/global.css" />
-      <URL value="@../../../../css/multiplayer.css" />
+      <URL value="@../../../../css/views/multiplayer-base.css" />
+      <URL value="@../../../../css/title-label.css" />
    </stylesheets>
 </AnchorPane>

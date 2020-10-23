@@ -34,6 +34,11 @@
     src: url(./fonts/PermanentMarker-Regular.ttf);
 }
 
+@font-face {
+    font-family: kiwi;
+    src: url(./fonts/kiwi.ttf);
+}
+
 .root {
     -fx-font-family: "Roboto Regular";
 }

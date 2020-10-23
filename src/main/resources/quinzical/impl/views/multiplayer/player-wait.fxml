@@ -16,49 +16,61 @@
   ~ limitations under the License.
   -->
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import java.net.URL?>
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.PlayerWaitController">
+
+<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.PlayerWaitController">
    <children>
-      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" styleClass="vbox">
+      <VBox alignment="CENTER" prefHeight="462.0" prefWidth="508.0" spacing="20.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
-         <VBox alignment="CENTER">
+         <VBox alignment="CENTER" prefHeight="180.0" prefWidth="1240.0">
             <children>
-               <Label prefHeight="211.0" prefWidth="871.0" styleClass="intro-title" text="Game Code:">
+               <Label prefHeight="135.0" prefWidth="871.0" styleClass="title" stylesheets="@../../../../css/title-label.css" text="Game Code:">
                   <font>
                      <Font size="14.0" />
                   </font>
                </Label>
-               <Label fx:id="lblCode" alignment="CENTER" prefHeight="92.0" prefWidth="349.0" styleClass="title" text="Label">
+               <Label fx:id="lblCode" alignment="CENTER" prefHeight="92.0" prefWidth="349.0" styleClass="bright-bold-label" text="Label">
                   <font>
                      <Font size="24.0" />
                   </font>
                </Label>
             </children>
          </VBox>
-         <ListView fx:id="listPlayers" prefHeight="195.0" prefWidth="440.0" stylesheets="@../../../../css/list-view.css">
+         <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <content>
+               <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
+                  <padding>
+                     <Insets bottom="16" left="16" right="16" top="16" />
+                  </padding>
+               </JFXMasonryPane>
+            </content>
             <VBox.margin>
-               <Insets left="400.0" right="400.0" />
+               <Insets left="200.0" right="200.0" />
             </VBox.margin>
-         </ListView>
+         </ScrollPane>
          <Label fx:id="lblPlayers" styleClass="bright-label" text="0/0 Players">
             <font>
                <Font size="18.0" />
             </font>
          </Label>
-         <Button mnemonicParsing="false" onAction="#btnCancel" text="Cancel" />
+         <JFXButton onAction="#btnCancel" prefWidth="200.0" styleClass="material-button" text="Quit" />
       </VBox>
+      <StackPane fx:id="alertPane" mouseTransparent="true" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
    <stylesheets>
       <URL value="@../../../../css/global.css" />
-      <URL value="@../../../../css/multiplayer.css" />
+      <URL value="@../../../../css/views/game-lobby.css" />
+      <URL value="@../../../../css/views/multiplayer-base.css" />
    </stylesheets>
 </AnchorPane>
