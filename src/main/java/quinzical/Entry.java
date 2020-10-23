@@ -69,12 +69,14 @@ public class Entry extends Application {
         sceneHandler.setActiveScene(GameScene.INTRO);
 
         sceneHandler.cacheScenes();
-        
+
         // Show interface
         stage.setScene(injector.getInstance(Scene.class));
         stage.setTitle("Quinzical");
         stage.setMinWidth(1280);
+        stage.setWidth(1400);
         stage.setMinHeight(720);
+        stage.setHeight(800);
         stage.show();
 
         stage.getIcons().add(new Image(Entry.class.getResourceAsStream("APP_ICON_TWO.png")));
