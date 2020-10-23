@@ -14,49 +14,26 @@
 
 package quinzical.impl.multiplayer.models.structures;
 
-import com.google.common.math.DoubleMath;
+import quinzical.interfaces.multiplayer.XpClass;
+import quinzical.interfaces.multiplayer.XpClassFactory;
 
-import java.math.RoundingMode;
-
-public class XpFactory {
+public class XpClassFactoryImpl implements XpClassFactory {
+    @Override
     public XpClass createXp(int xp) {
-        return new XpClass(xp);
+        return new XpClassImpl(xp);
     }
 }
 
 
-class XpClass {
+class XpClassImpl implements XpClass {
     private final int xp;
 
-    public XpClass(int xp) {
+    public XpClassImpl(int xp) {
         this.xp = xp;
     }
 
-    /**
-     * Returns the level that a player with experience `x` would be
-     *
-     * @param x the cumulative xp of the player
-     * @return the level that the player would be
-     */
-    private static int inverseExpFunction(int x) {
-        for (int i = 0; ; i++) {
-            if (expFunction(i) > x) {
-                return Math.max(i - 1, 0);
-            }
-        }
-    }
-
-    /**
-     * Returns cumulative xp required to reach a level
-     *
-     * @param x the level
-     * @return the cumulative xp to reach this level
-     */
-    private static int expFunction(int x) {
-        return DoubleMath.roundToInt(50000 * Math.pow(1.05, x) - 48000, RoundingMode.HALF_UP);
-    }
-
+    @Override
     public int getLevel() {
-        return inverseExpFunction(xp);
+        return XpClass.inverseExpFunction(xp);
     }
 }
