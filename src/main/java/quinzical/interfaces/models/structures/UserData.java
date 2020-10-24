@@ -14,10 +14,12 @@
 
 package quinzical.interfaces.models.structures;
 
+import quinzical.impl.constants.Theme;
 import quinzical.impl.models.structures.GameQuestion;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserData {
 
@@ -52,4 +54,8 @@ public interface UserData {
     void incrementCoins(int value);
 
     AnalyticsEngineReader getAnalytics();
+
+    boolean addTheme(Theme theme);
+
+    Set<Theme> getUnlockedThemes();
 }

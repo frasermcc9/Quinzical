@@ -24,6 +24,13 @@
     -fx-pref-height: 720;
 }
 
+.vbox-base {
+    -fx-background-image: url(../images/overlays/other.png);
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+}
+
 .bright-label {
     -fx-font-size: 24;
     -fx-text-fill: white;
@@ -138,6 +145,42 @@
 
 .VOLCANO {
     -fx-background-image: url(../images/landscapes/volcano.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.LAKE {
+    -fx-background-image: url(../images/landscapes/lake.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.SNOW {
+    -fx-background-image: url(../images/landscapes/snow.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.MIST {
+    -fx-background-image: url(../images/landscapes/mist.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.SHEEP {
+    -fx-background-image: url(../images/landscapes/sheep.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.CAVE {
+    -fx-background-image: url(../images/landscapes/cave.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.DESERT {
+    -fx-background-image: url(../images/landscapes/desert.jpg);
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }

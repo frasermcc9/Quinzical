@@ -81,6 +81,12 @@ public enum GameScene implements GameSceneFxmlLoader {
             return "statistics";
         }
     },
+    STORE {
+        @Override
+        public String getFxmlName() {
+            return "store";
+        }
+    },
     CATEGORY_SELECTOR {
         @Override
         public String getFxmlName() {
