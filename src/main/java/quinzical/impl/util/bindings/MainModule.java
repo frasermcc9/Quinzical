@@ -23,10 +23,7 @@ import quinzical.impl.models.GameModelImpl;
 import quinzical.impl.models.PracticeModelImpl;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.SceneHandlerImpl;
-import quinzical.impl.models.structures.AnalyticsEngineImpl;
-import quinzical.impl.models.structures.SpeakerManager;
-import quinzical.impl.models.structures.UserDataImpl;
-import quinzical.impl.models.structures.WindowsSpeakerManager;
+import quinzical.impl.models.structures.*;
 import quinzical.impl.multiplayer.models.ActiveGameImpl;
 import quinzical.impl.multiplayer.models.SocketModelImpl;
 import quinzical.impl.multiplayer.models.structures.XpClassFactoryImpl;
@@ -69,6 +66,9 @@ public class MainModule extends AbstractModule {
         bind(AnalyticsEngineMutator.class).to(AnalyticsEngineImpl.class);
         bind(AnalyticsEngineReader.class).to(AnalyticsEngineImpl.class);
 
+        bind(ReadonlyPersistentSettings.class).to(PersistentSettingsImpl.class);
+        bind(PersistentSettings.class).to(PersistentSettingsImpl.class);
+        
         bind(SceneHandler.class).to(SceneHandlerImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
@@ -78,7 +78,6 @@ public class MainModule extends AbstractModule {
         bind(ObjectReaderStrategyFactory.class).to(ObjectReaderStrategyFactoryImpl.class);
 
         bind(PracticeModel.class).to(PracticeModelImpl.class);
-
 
         if (System.getProperty("os.name").startsWith("Windows")) {
             bind(Speaker.class).to(WindowsSpeakerManager.class);
