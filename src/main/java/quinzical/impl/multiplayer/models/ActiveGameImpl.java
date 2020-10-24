@@ -12,6 +12,7 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.multiplayer.models.structures.Question;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.interfaces.multiplayer.SocketModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,16 @@ import static javafx.collections.FXCollections.observableArrayList;
 @Singleton
 public class ActiveGameImpl implements ActiveGame {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
     private ObservableList<Player> players = observableArrayList();
     @Inject
     private SceneHandler sceneHandler;
+    @Inject
+    private SocketModel socketModel;
 
     private Question currentQuestion;
     private int points;
+    private int mostRecentPoints;
+    private int duration;
 
     public ActiveGame reset() {
         this.players = observableArrayList();
@@ -38,18 +42,27 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
+    public int getQuestionDuration() {
+        return this.duration;
+    }
+
+    @Override
     public void setData(Object[] socketObjectData) {
         String solution = (String) socketObjectData[0];
         Integer points = (Integer) socketObjectData[1];
         updateUsersFromSocket((JSONArray) socketObjectData[2]);
+        Integer mostRecentPoints = (Integer) socketObjectData[3];
 
         this.points = points;
+        this.mostRecentPoints = mostRecentPoints;
         this.currentQuestion.setSolution(solution);
     }
 
 
     @Override
-    public void init() {
+    public void init(int duration) {
+        Socket socket = socketModel.getSocket();
+
         socket.on("newQuestion", (objects -> {
             currentQuestion = new Question((String) objects[0], (String) objects[1]);
             Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_GAME));
@@ -67,6 +80,7 @@ public class ActiveGameImpl implements ActiveGame {
 
         socket.on("goNextRound", objects -> socket.emit("readyToPlay"));
 
+        this.duration = duration;
 
         socket.emit("readyToPlay");
 
@@ -133,6 +147,10 @@ public class ActiveGameImpl implements ActiveGame {
             }
             return null;
         }).collect(Collectors.toList()));
+    }
+
+    public int getMostRecentPoints() {
+        return mostRecentPoints;
     }
 }
 

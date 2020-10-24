@@ -18,23 +18,13 @@ import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
-import quinzical.impl.multiplayer.models.Player;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.multiplayer.ActiveGame;
 
 
-public class GameEndController extends StandardSceneController {
+public class GameEndController extends AbstractEndController {
 
-    @FXML
-    private TableView<Player> tablePlayers;
-    @FXML
-    private TableColumn<Player, String> columnName;
-    @FXML
-    private TableColumn<Player, String> columnPoints;
     @FXML
     private Label lblPoints;
 
@@ -44,11 +34,7 @@ public class GameEndController extends StandardSceneController {
     private ActiveGame activeGame;
 
     @Override
-    protected void onLoad() {
-        columnName.setCellValueFactory(v -> v.getValue().nameProperty());
-        columnPoints.setCellValueFactory(v -> v.getValue().scoreProperty());
-        tablePlayers.setItems(activeGame.getPlayers());
-
+    protected void initializeComponents() {
         int points = activeGame.getPoints();
         lblPoints.setText("You Finished With " + points + " Points!");
     }

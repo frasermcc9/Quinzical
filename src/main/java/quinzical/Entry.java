@@ -23,10 +23,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.constants.Theme;
 import quinzical.impl.util.bindings.MainModule;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.models.structures.PersistentSettings;
 
 import java.io.IOException;
 
@@ -56,22 +56,27 @@ public class Entry extends Application {
      * Sets up all the scenes for the application as well as attempt to save the game when the application is closed.
      */
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
 
         // Create the injection container
         injector = Guice.createInjector(new MainModule());
         SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
-        //set the background
-        sceneHandler.fireBackgroundChange(Theme.FIELDS);
+        //Apply settings
+        PersistentSettings persistentSettings = injector.getInstance(PersistentSettings.class);
+        persistentSettings.loadSettingsFromDisk().applySettings();
 
         // Set the active scene to the intro
         sceneHandler.setActiveScene(GameScene.INTRO);
+        sceneHandler.cacheScenes();
 
         // Show interface
         stage.setScene(injector.getInstance(Scene.class));
         stage.setTitle("Quinzical");
-        stage.setResizable(false);
+        stage.setMinWidth(1280);
+        stage.setWidth(1400);
+        stage.setMinHeight(720);
+        stage.setHeight(800);
         stage.show();
 
         stage.getIcons().add(new Image(Entry.class.getResourceAsStream("APP_ICON_TWO.png")));

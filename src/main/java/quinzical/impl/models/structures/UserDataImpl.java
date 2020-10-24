@@ -15,20 +15,28 @@
 package quinzical.impl.models.structures;
 
 import com.google.inject.Inject;
+import quinzical.impl.constants.Theme;
 import quinzical.interfaces.models.structures.AnalyticsEngineMutator;
 import quinzical.interfaces.models.structures.AnalyticsEngineReader;
 import quinzical.interfaces.models.structures.UserData;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserDataImpl implements Serializable, UserData {
 
+    private final static Set<Theme> DEFAULT_THEMES;
+
+    static {
+        DEFAULT_THEMES = new HashSet<>();
+        DEFAULT_THEMES.addAll(Arrays.asList(Theme.AUCKLAND, Theme.BOULDERS, Theme.MOUNTAINS, Theme.FIELDS, Theme.HOBBIT,
+            Theme.OCEAN, Theme.VOLCANO));
+    }
+
+    private final Set<Theme> unlockedThemes = new HashSet<>();
     @Inject
     private AnalyticsEngineMutator analyticsEngine;
     private Map<String, List<GameQuestion>> board;
-
     private int earnings = 0;
     private int coins = 0;
 
@@ -114,5 +122,15 @@ public class UserDataImpl implements Serializable, UserData {
     @Override
     public void incrementCoins(int value) {
         this.coins += value;
+    }
+
+    public boolean addTheme(Theme theme) {
+        return this.unlockedThemes.add(theme);
+    }
+
+    public Set<Theme> getUnlockedThemes() {
+        Set<Theme> set = DEFAULT_THEMES;
+        set.addAll(this.unlockedThemes);
+        return new HashSet<>(set);
     }
 }

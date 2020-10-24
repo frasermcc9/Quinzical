@@ -12,32 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.interfaces.models.structures;
 
-import com.google.inject.Inject;
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import quinzical.interfaces.models.SceneHandler;
+import quinzical.impl.constants.Theme;
 
-public abstract class StandardSceneController {
+public interface ReadonlyPersistentSettings {
+    Theme getTheme();
 
-    @FXML
-    protected ImageView background;
+    int getGap();
 
-    @Inject
-    protected SceneHandler sceneHandler;
+    int getSpeed();
 
-    @FXML
-    public final void initialize() {
-        this.background.setImage(sceneHandler.getActiveTheme().getImage());
-        
-        onLoad();
-        refresh();
-    }
-    
-    protected abstract void onLoad();
-    
-    protected void refresh() {
-    }
-    
+    int getAmp();
+
+    int getPitch();
+
+    double getTimer();
+
+    void applySettings();
 }

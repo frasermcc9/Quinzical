@@ -14,56 +14,33 @@
 
 package quinzical.impl.multiplayer;
 
-import com.google.inject.Inject;
-import io.socket.client.Socket;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import quinzical.impl.controllers.StandardSceneController;
-import quinzical.impl.multiplayer.models.Player;
-import quinzical.impl.multiplayer.models.SocketModel;
-import quinzical.interfaces.multiplayer.ActiveGame;
 
 
-public class RoundEndController extends StandardSceneController {
+public class RoundEndController extends AbstractEndController {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
     @FXML
-    private Label lblServerAns;
+    private Label lblCorrect;
     @FXML
-    private Label lblUserAns;
-    @FXML
-    private TableView<Player> tablePlayers;
-    @FXML
-    private TableColumn<Player, String> columnName;
-    @FXML
-    private TableColumn<Player, String> columnPoints;
+    private Label lblMessage;
     @FXML
     private Label lblPoints;
 
-    @Inject
-    private ActiveGame activeGame;
 
     @Override
-    protected void onLoad() {
-        columnName.setCellValueFactory(v -> v.getValue().nameProperty());
-        columnPoints.setCellValueFactory(v -> v.getValue().scoreProperty());
-        tablePlayers.setItems(activeGame.getPlayers());
+    protected void initializeComponents() {
 
-        String userAns = activeGame.getGivenSolution();
-        lblUserAns.setText("You answered: " + userAns);
-
-
-        String newUserAns = activeGame.getGivenSolution();
+        int added = activeGame.getMostRecentPoints();
+        int totalPoints = activeGame.getPoints();
+        boolean correct = added != 0;
         String actualAns = activeGame.getTrueSolution();
-        int points = activeGame.getPoints();
 
         Platform.runLater(() -> {
-            lblServerAns.setText("The correct answer was: " + actualAns);
-            lblUserAns.setText("You answered: " + newUserAns);
-            lblPoints.setText("You Have: " + points + " Points");
+            lblCorrect.setText(correct ? "CORRECT!" : "WRONG!");
+            lblMessage.setText(correct ? "+" + added + " Points!" : "The correct answer was " + actualAns);
+            lblPoints.setText("You have " + totalPoints + " points!");
         });
     }
 

@@ -20,6 +20,7 @@ import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.QuinzicalModel;
+import quinzical.interfaces.models.structures.PersistentSettings;
 import quinzical.interfaces.models.structures.UserData;
 
 import java.io.FileOutputStream;
@@ -37,8 +38,10 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
 
     @Inject
     private UserData userData;
+    @Inject
+    private PersistentSettings persistentSettings;
 
-    private double timerValue = 30;
+    private double timerValue = 25;
 
     /**
      * @return Gets the user value.
@@ -204,11 +207,17 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void saveGame() throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(userData);
-        out.close();
-        fileOut.close();
+        FileOutputStream save = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
+        ObjectOutputStream saveOut = new ObjectOutputStream(save);
+        saveOut.writeObject(userData);
+        saveOut.close();
+        save.close();
+
+        FileOutputStream settings = new FileOutputStream(System.getProperty("user.dir") + "/data/preferences.qdb");
+        ObjectOutputStream settingsOut = new ObjectOutputStream(settings);
+        settingsOut.writeObject(persistentSettings.loadSettingsFromGame());
+        settingsOut.close();
+        settings.close();
     }
 
     @Override // delegate

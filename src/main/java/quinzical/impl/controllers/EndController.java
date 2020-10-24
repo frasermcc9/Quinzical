@@ -17,10 +17,7 @@ package quinzical.impl.controllers;
 import com.google.inject.Inject;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,7 +31,7 @@ import quinzical.interfaces.models.SceneHandler;
  * Controls the end game screen, where the total earnings are displayed and the
  * option to go back to the main menu is given.
  */
-public class EndController extends StandardSceneController {
+public class EndController extends AbstractSceneController {
 
     @Inject
     private SceneHandler sceneHandler;

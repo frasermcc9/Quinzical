@@ -23,21 +23,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModel;
+import quinzical.impl.multiplayer.models.SocketModelImpl;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.SocketModel;
 
-public class MenuController extends StandardSceneController {
+public class MenuController extends AbstractSceneController {
 
-    private final Socket socket = SocketModel.getInstance().getSocket();
-    private final String name = SocketModel.getInstance().getName();
-    
     @Inject
     SceneHandler sceneHandler;
-    
+    @Inject
+    private SocketModel socketModel;
     @FXML
     private TextField txtCode;
     @FXML
@@ -45,7 +43,7 @@ public class MenuController extends StandardSceneController {
 
     @Override
     protected void onLoad() {
-        lblName.setText(name);
+        lblName.setText(socketModel.getName());
     }
 
     @FXML
@@ -59,7 +57,9 @@ public class MenuController extends StandardSceneController {
     }
 
     @FXML
-    void btnJoin() {        
+    void btnJoin() {
+        Socket socket = socketModel.getSocket();
+        String name = socketModel.getName();
         String code = txtCode.getText().toUpperCase();
         socket.emit("joinGameRequest", name, code);
         socket.once("joinGameNotification", (arg) -> {
@@ -85,14 +85,12 @@ public class MenuController extends StandardSceneController {
 
     @FXML
     void btnQuit(ActionEvent event) {
-        Platform.runLater(() -> {
-            SocketModel.getInstance().destroy();
-        });
+        Platform.runLater(() -> socketModel.destroy());
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
-    void joinGame(String code){
-        
+    void joinGame(String code) {
+
     }
-    
+
 }

@@ -1,5 +1,3 @@
-import LogImpl from "../helpers/Log";
-
 export const TYPES = {
     SocketManager: Symbol.for("SocketManager"),
     Log: Symbol.for("Log"),

@@ -16,6 +16,7 @@ package quinzical.interfaces.models;
 
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.constants.Theme;
+import quinzical.impl.controllers.AbstractSceneController;
 
 /**
  * Interface for SceneHandlerImpl. Handles the setting of the current active scene as well as backgroundChange and
@@ -25,7 +26,9 @@ public interface SceneHandler {
 
     void fireBackgroundChange(Theme img);
 
-    <T> T setActiveScene(GameScene newScene);
+    AbstractSceneController setActiveScene(GameScene newScene);
 
     Theme getActiveTheme();
+
+    void cacheScenes();
 }

@@ -1,8 +1,9 @@
 package quinzical.impl.multiplayer.models;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Player {
+public class Player extends RecursiveTreeObject<Player> {
     private final SimpleStringProperty score;
     private final SimpleStringProperty name;
 

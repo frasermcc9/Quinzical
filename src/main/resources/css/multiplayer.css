@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright 2020 Fraser McCallum and Braden Palmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,33 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-.button {
-    -fx-background-color: #404040;
-
-    -fx-cursor: hand;
-    -fx-border-radius: 4px;
-
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FAFAFA;
-
-    -fx-alignment: center;
-}
-
-.button:hover {
-    -fx-background-color: #c4dff2;
-    -fx-text-fill: #131313;
-}
-
-.button:pressed {
-    -fx-background-color: #9c9c9c;
-}
-
-.button:disabled {
-    -fx-background-color: #262626;
-    -fx-text-fill: #757575;
-}
+ 
 
 .transparent {
     -fx-opacity: 0.8;
@@ -78,10 +52,7 @@
     -fx-pref-height: 720;
 }
 
-@font-face {
-    font-family: kiwi;
-    src: url("./fonts/kiwi.ttf");
-}
+
 
 .intro-title {
     -fx-font-family: kiwi;

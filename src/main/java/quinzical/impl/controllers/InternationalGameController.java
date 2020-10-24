@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class InternationalGameController extends StandardSceneController{
+public class InternationalGameController extends AbstractSceneController {
     
     private final List<Button> buttons = new ArrayList<>();
     @Inject

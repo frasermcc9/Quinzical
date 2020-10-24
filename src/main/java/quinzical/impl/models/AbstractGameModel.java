@@ -15,7 +15,6 @@
 package quinzical.impl.models;
 
 import com.google.inject.Inject;
-import javafx.scene.control.TextArea;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.events.ActiveQuestionObserver;
 import quinzical.interfaces.models.QuinzicalModel;
@@ -63,7 +62,7 @@ public abstract class AbstractGameModel implements QuinzicalModel {
         this.activeQuestion = question;
         fireActiveQuestionUpdate();
     }
-    
+
     @Override
     public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
         activeObservers.add(fn);
@@ -71,25 +70,6 @@ public abstract class AbstractGameModel implements QuinzicalModel {
 
     protected void fireActiveQuestionUpdate() {
         this.activeObservers.forEach(ActiveQuestionObserver::fireActiveQuestion);
-    }
-
-    /**
-     * Sets the colour of the text areas to either red or green,
-     * depending on if they were incorrect or correct as per
-     * the corrects list.
-     * 
-     * @param textAreas - The list of textAreas to be coloured
-     * @param corrects -  The list of Boolean values showing which text areas are right and wrong.
-     */
-    @Override
-    public void colourTextAreas(List<TextArea> textAreas, List<Boolean> corrects) {
-        for (int i = 0; i < textAreas.size(); i++) {
-            if (corrects.get(i)) {
-                textAreas.get(i).setStyle("-fx-background-color: #ceffc3; -fx-text-fill: #ceffc3");
-            } else {
-                textAreas.get(i).setStyle("-fx-background-color: #ff858c; -fx-text-fill: #ffc7ca");
-            }
-        }
     }
 
     /**

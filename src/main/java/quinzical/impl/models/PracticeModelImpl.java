@@ -19,19 +19,25 @@ import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.PracticeModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The model for the practice mode, providing the ability to get new questions and 
- * set a certain question as the current "active" question.
+ * The model for the practice mode, providing the ability to get new questions and set a certain question as the current
+ * "active" question.
  */
 @Singleton
 public class PracticeModelImpl extends AbstractGameModel implements PracticeModel {
 
+    private List<String> categories;
+
+    @Override
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     /**
      * Gets a random question from the given category
-     * 
+     *
      * @param category - The category that the random question will be got for.
      * @return - A random question from the given category.
      */
@@ -42,12 +48,16 @@ public class PracticeModelImpl extends AbstractGameModel implements PracticeMode
         return questions.get((int) (Math.random() * questions.size()));
     }
 
+    @Override
+    public Question getRandomQuestion() {
+        String selected = categories.get((int) Math.floor(Math.random() * categories.size()));
+        return getRandomQuestion(selected);
+    }
 
 
     /**
-     * Sets the given question as the active question, which is the 
-     * question being currently answered.
-     * 
+     * Sets the given question as the active question, which is the question being currently answered.
+     *
      * @param question - The question to be set as the active question.
      */
     @Override

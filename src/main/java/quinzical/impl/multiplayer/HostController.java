@@ -15,31 +15,30 @@
 package quinzical.impl.multiplayer;
 
 import com.google.inject.Inject;
+import com.jfoenix.controls.JFXCheckBox;
 import io.socket.client.Socket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.StandardSceneController;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.GameSettings;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModel;
 import quinzical.impl.multiplayer.util.Util;
 import quinzical.interfaces.models.SceneHandler;
+import quinzical.interfaces.multiplayer.SocketModel;
 
 import java.io.IOException;
 
-public class HostController extends StandardSceneController {
-
-    private final Socket socket = SocketModel.getInstance().getSocket();
-    private final String name = SocketModel.getInstance().getName();
+public class HostController extends AbstractSceneController {
 
     @Inject
+    private SocketModel socketModel;
+    @Inject
     private SceneHandler sceneHandler;
-    
+
     @FXML
     private Button qDec;
     @FXML
@@ -59,7 +58,7 @@ public class HostController extends StandardSceneController {
     @FXML
     private Button aInc;
     @FXML
-    private CheckBox chkPublic;
+    private JFXCheckBox chkPublic;
 
     @FXML
     void btnCancel(ActionEvent event) throws IOException {
@@ -68,6 +67,9 @@ public class HostController extends StandardSceneController {
 
     @FXML
     void btnStart(ActionEvent event) throws IllegalAccessException, NoSuchFieldException, JSONException {
+
+        Socket socket = socketModel.getSocket();
+        String name = socketModel.getName();
 
         int questions = parseToInt(txtQuestions);
         if (questions == 0) questions = 10;

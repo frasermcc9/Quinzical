@@ -20,8 +20,8 @@ import quinzical.Entry;
 import java.util.Objects;
 
 /**
- * provides the different themes that the game can have, as well
- * as the getImage() method to get the associated image for the theme.
+ * provides the different themes that the game can have, as well as the getImage() method to get the associated image
+ * for the theme.
  */
 public enum Theme implements ImageProvider {
     MOUNTAINS {
@@ -37,14 +37,14 @@ public enum Theme implements ImageProvider {
                 "/landscapes/boulders.jpg")));
         }
     },
-    
+
     FIELDS {
         public Image getImage() {
             return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
                 "/landscapes/fields.jpg")));
         }
     },
-    
+
     AUCKLAND {
         public Image getImage() {
             return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
@@ -58,22 +58,66 @@ public enum Theme implements ImageProvider {
                 "/landscapes/ocean.jpg")));
         }
     },
-    
+
     HOBBIT {
         public Image getImage() {
             return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
                 "/landscapes/hobbit.jpg")));
         }
     },
-    
+
     VOLCANO {
         public Image getImage() {
             return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
                 "/landscapes/volcano.jpg")));
         }
+    },
+
+    LAKE {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/lake.jpg")));
+        }
+    },
+
+    MIST {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/mist.jpg")));
+        }
+    },
+
+    SNOW {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/snow.jpg")));
+        }
+    },
+
+    SHEEP {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/sheep.jpg")));
+        }
+    },
+
+    CAVE {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/cave.jpg")));
+        }
+    },
+
+    DESERT {
+        public Image getImage() {
+            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
+                "/landscapes/desert.jpg")));
+        }
     }
+
+
 }
 
-interface ImageProvider{
+interface ImageProvider {
     Image getImage();
 }

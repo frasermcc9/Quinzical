@@ -16,9 +16,7 @@ package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import quinzical.impl.constants.Attempts;
 import quinzical.impl.constants.GameScene;
@@ -38,22 +36,14 @@ public class PracticeQuestionController extends AbstractQuestionController {
 
     @Inject
     private PracticeModel gameModel;
-
-    @FXML
-    private Label lblPrompt;
-
-    @FXML
-    private Button btnPass;
-
-    @FXML
-    private Label lblAttempts;
-
-    @FXML
-    private Label lblHint;
-
     @Inject()
     @Named("attempts")
     private int attempts;
+
+    @FXML
+    private Label lblAttempts;
+    @FXML
+    private Label lblHint;
 
     /**
      * Called when the submit button is clicked. When called it gets the solutions to the current question and compares
@@ -68,6 +58,11 @@ public class PracticeQuestionController extends AbstractQuestionController {
         List<Solution> solutions = question.getSolutionsCopy();
         List<Boolean> corrects;
 
+        solutionContainer.getChildren().forEach(text -> {
+            text.setEffect(null);
+        });
+
+
         attempts++;
         switch (attempts) {
             case 1:
@@ -75,10 +70,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
                     .verifySolutions(solutions, textAreas);
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_2.getMessage());
-                    gameModel.colourTextAreas(textAreas, corrects);
+                    colourTextAreas(textAreas, corrects);
                 } else {
-                    attempts = 0;
-                    btnPass.requestFocus();
                     prepForNewQuestion();
                 }
                 break;
@@ -87,10 +80,8 @@ public class PracticeQuestionController extends AbstractQuestionController {
                     .verifySolutions(solutions, textAreas);
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_3.getMessage());
-                    gameModel.colourTextAreas(textAreas, corrects);
+                    colourTextAreas(textAreas, corrects);
                 } else {
-                    attempts = 0;
-                    btnPass.requestFocus();
                     prepForNewQuestion();
                 }
                 break;
@@ -100,12 +91,28 @@ public class PracticeQuestionController extends AbstractQuestionController {
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_4.getMessage());
                 }
-                attempts = 0;
-                btnPass.requestFocus();
-                textAreas.forEach(textArea -> textArea.setEditable(false));
                 prepForNewQuestion();
                 break;
         }
+    }
+
+    @Override
+    protected void refresh() {
+        refreshButtonState();
+        super.refresh();
+    }
+
+    private void prepForNewQuestion() {
+        attempts = 0;
+        getNewQuestion();
+        textAreas.forEach(textArea -> textArea.setEditable(false));
+        setSubmitButtonType(ButtonType.PASS);
+        btnSubmit.setText("Categories");
+        btnSubmit.setOnAction(e -> sceneHandler.setActiveScene(GameScene.PRACTICE));
+
+        progressButtons.getChildren().add(btnNextQuestion);
+        btnNextQuestion.setOnAction(e -> sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION));
+        btnNextQuestion.requestFocus();
     }
 
     /**
@@ -130,50 +137,26 @@ public class PracticeQuestionController extends AbstractQuestionController {
         this.lblPrompt.setText(prompt);
     }
 
-    /**
-     * Sets the scenes state in the prepping for next question state, where the question has been answered but the user
-     * has not asked for a new question yet.
-     */
-    private void prepForNewQuestion() {
-        btnPass.setText("Next Question");
-        btnSubmit.setDisable(true);
-        btnPass.setOnAction(e -> getNewQuestion());
-    }
-
 
     /**
      * Called when the pass button is clicked, to go to a new question.
      */
     @FXML
     void onPassClicked() {
-        getNewQuestion();
+        attempts = 2;
+        onSubmitClicked();
     }
-
-
-    /**
-     * Called when the back button is clicked, sets the active scene to the practice menu.
-     */
-    @FXML
-    void onBackClicked(ActionEvent actionEvent) {
-        sceneHandler.setActiveScene(GameScene.PRACTICE);
-    }
-
 
     /**
      * Get a new random question, ensuring it is not the same as the previous question, and then setting the question as
      * the gameModels current active question.
      */
     private void getNewQuestion() {
-        Question question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+        Question question = gameModel.getRandomQuestion();
         while (question.equals(gameModel.getActiveQuestion())) {
-            question = gameModel.getRandomQuestion(gameModel.getActiveQuestion().getCategory());
+            question = gameModel.getRandomQuestion();
         }
         gameModel.activateQuestion(question);
-        btnSubmit.setDisable(false);
-        btnPass.setText("Pass");
-        btnPass.setOnAction(e -> getNewQuestion());
-        this.lblAttempts.setText(Attempts.ATTEMPT_1.getMessage());
-        refresh();
     }
 
     /**

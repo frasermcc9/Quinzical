@@ -18,16 +18,15 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import quinzical.Entry;
 import quinzical.impl.models.GameModelImpl;
 import quinzical.impl.models.PracticeModelImpl;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.SceneHandlerImpl;
-import quinzical.impl.models.structures.AnalyticsEngineImpl;
-import quinzical.impl.models.structures.SpeakerManager;
-import quinzical.impl.models.structures.UserDataImpl;
-import quinzical.impl.models.structures.WindowsSpeakerManager;
-import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.impl.models.structures.*;
 import quinzical.impl.multiplayer.models.ActiveGameImpl;
+import quinzical.impl.multiplayer.models.SocketModelImpl;
+import quinzical.impl.multiplayer.models.structures.XpClassFactoryImpl;
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questiongenerator.QuestionGeneratorStrategyFactoryImpl;
 import quinzical.impl.util.strategies.questionverifier.QuestionVerifierFactoryImpl;
@@ -35,6 +34,9 @@ import quinzical.impl.util.strategies.textnormaliser.TextNormaliserStrategyFacto
 import quinzical.impl.util.strategies.timer.TimerContextImpl;
 import quinzical.interfaces.models.*;
 import quinzical.interfaces.models.structures.*;
+import quinzical.interfaces.multiplayer.ActiveGame;
+import quinzical.interfaces.multiplayer.SocketModel;
+import quinzical.interfaces.multiplayer.XpClassFactory;
 import quinzical.interfaces.strategies.objectreader.ObjectReaderStrategyFactory;
 import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrategyFactory;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
@@ -47,10 +49,15 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  */
 public class MainModule extends AbstractModule {
 
-    private final static boolean TEST_MODE = false;
+    private final static boolean TEST_MODE = true;
 
     @Override
     protected void configure() {
+
+        Scene scene = new Scene(new AnchorPane());
+        scene.getStylesheets().add(Entry.class.getResource("/css/global-font.css").toExternalForm());
+        bind(Scene.class).toInstance(scene);
+
         bind(QuestionCollection.class).to(QuestionCollectionImpl.class);
 
         bind(GameModel.class).to(GameModelImpl.class);
@@ -59,6 +66,9 @@ public class MainModule extends AbstractModule {
         bind(AnalyticsEngineMutator.class).to(AnalyticsEngineImpl.class);
         bind(AnalyticsEngineReader.class).to(AnalyticsEngineImpl.class);
 
+        bind(ReadonlyPersistentSettings.class).to(PersistentSettingsImpl.class);
+        bind(PersistentSettings.class).to(PersistentSettingsImpl.class);
+        
         bind(SceneHandler.class).to(SceneHandlerImpl.class);
 
         bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
@@ -81,13 +91,14 @@ public class MainModule extends AbstractModule {
 
         bind(TimerContext.class).to(TimerContextImpl.class);
 
-        bind(Scene.class).toInstance(new Scene(new AnchorPane()));
-
         if (TEST_MODE)
             bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://localhost:7373");
         else
             bind(String.class).annotatedWith(Names.named("socketUrl")).toInstance("http://20.190.113.34:7373");
 
         bind(ActiveGame.class).to(ActiveGameImpl.class);
+
+        bind(XpClassFactory.class).to(XpClassFactoryImpl.class);
+        bind(SocketModel.class).to(SocketModelImpl.class);
     }
 }

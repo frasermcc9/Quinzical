@@ -15,8 +15,12 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.animation.Animation;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
@@ -29,19 +33,19 @@ import java.io.IOException;
 /**
  * Controller class for the intro screen.
  */
-public class IntroController extends StandardSceneController {
+public class IntroController extends AbstractSceneController {
 
     @Inject
     private SceneHandler sceneHandler;
-
     @Inject
     private GameModelSaver gameModel;
-
     @Inject
     private ObjectReaderStrategyFactory objectReader;
 
     @FXML
     private Button btnLoadGame;
+    @FXML
+    private Label lblfunny;
 
 
     /**
@@ -65,12 +69,9 @@ public class IntroController extends StandardSceneController {
         sceneHandler.setActiveScene(GameScene.OPTIONS);
     }
 
-    /**
-     * When the practice button is clicked, change the scene to the main practice board.
-     */
     @FXML
-    void btnPracticeModePress() {
-        sceneHandler.setActiveScene(GameScene.PRACTICE);
+    void btnAchievementsClick() {
+        sceneHandler.setActiveScene(GameScene.STORE);
     }
 
     @FXML
@@ -82,6 +83,17 @@ public class IntroController extends StandardSceneController {
     @Override
     protected void onLoad() {
         handleLoadGameButton();
+        lblfunny.setVisible(false);
+//        var st = new ScaleTransition(Duration.seconds(0.5));
+//        st.setNode(lblfunny);
+//        st.setFromX(0.7);
+//        st.setFromY(0.7);
+//        st.setToX(0.85);
+//        st.setToY(0.85);
+//        st.setAutoReverse(true);
+//        st.setCycleCount(Animation.INDEFINITE);
+//        st.playFromStart();
+
     }
 
     /**

@@ -28,11 +28,11 @@
 }
 
 .data0.chart-pie {
-    -fx-pie-color: #0a9cfc;
+    -fx-pie-color: #0277bd;
 }
 
 .data1.chart-pie {
-    -fx-pie-color: #fc9b0a;
+    -fx-pie-color: #ff8f00;
 }
 
 .table-view .column-header,

@@ -34,18 +34,21 @@ public class HostWaitController extends AbstractWaitController {
 
     @FXML
     void btnCancel(ActionEvent event) {
+        socketModel.getSocket().emit("quit");
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
-        socket.emit("quit");
     }
 
     @FXML
     void btnStart(ActionEvent event) throws IOException {
-        socket.emit("startGame");
+        socketModel.getSocket().emit("startGame");
     }
 
     @Override
     protected void addListeners() {
-        socket.on("gameStart", (objects) -> Platform.runLater(() -> activeGame.reset().init()));
+        socketModel.getSocket().on("gameStart", (objects) -> Platform.runLater(() -> {
+            int time = Integer.parseInt(objects[0].toString());
+            activeGame.reset().init(time);
+        }));
     }
 
 }

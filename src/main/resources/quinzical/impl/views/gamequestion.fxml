@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import java.net.URL?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameQuestionController">
-   <ImageView fx:id="background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../images/landscapes/fields.jpg" />
-      </image>
-   </ImageView>
-   <VBox alignment="CENTER" style="-fx-spacing: 15;" styleClass="vbox" stylesheets="@../../../css/intro.css">
+<?import java.lang.String?>
+<?import java.net.URL?>
+<AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameQuestionController">
+   <VBox alignment="CENTER" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <Label styleClass="title" stylesheets="@../../../css/title-label.css" text="Here's Your Question" />
          <Button mnemonicParsing="false" onAction="#onReplayClick" prefHeight="27.0" prefWidth="38.0" style="-fx-opacity: 1; -fx-background-color: transparent;">
@@ -46,59 +35,48 @@
             </graphic>
          </Button>
          <Label fx:id="lblPrompt" alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-           <Pane fx:id="paneSolutions" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="589.0" stylesheets="@../../../css/intro.css" />
-         <ButtonBar fx:id="macronBar" prefHeight="40.0" prefWidth="340.0" stylesheets="@../../../css/game-question.css">
-           <buttons>
-               <Button mnemonicParsing="false" prefWidth="83.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ā" />
-               <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ē" />
-               <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ī" />
-             <Button minWidth="20.0" mnemonicParsing="false" prefHeight="20.0" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ū" />
-               <Button mnemonicParsing="false" styleClass="macron-button" stylesheets="@../../../css/game-question.css" text="ō" />
-           </buttons>
+         <VBox fx:id="solutionContainer" alignment="TOP_CENTER" prefWidth="480.0" styleClass="solution-container">
             <VBox.margin>
                <Insets left="400.0" right="400.0" />
             </VBox.margin>
-         </ButtonBar>
-         <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
+         </VBox>
+         <HBox fx:id="macronBar" alignment="CENTER" style="-fx-spacing: 10;">
             <children>
-               <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="280.0" text="Submit">
-                  <font>
-                     <Font name="System Bold" size="26.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <stylesheets>
-                     <URL value="@../../../css/intro.css" />
-                     <URL value="@../../../css/game-question.css" />
-                  </stylesheets>
-                  <styleClass>
-                     <String fx:value="transparent" />
-                     <String fx:value="submit-button" />
-                  </styleClass>
-               </Button>
-               <Button fx:id="btnNextQuestion" mnemonicParsing="false" onAction="#onSubmitClicked" prefHeight="65.0" prefWidth="280.0" text="Next Question">
-                  <font>
-                     <Font name="System Bold" size="26.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-                  <stylesheets>
-                     <URL value="@../../../css/intro.css" />
-                     <URL value="@../../../css/game-question.css" />
-                  </stylesheets>
-                  <styleClass>
-                     <String fx:value="transparent" />
-                     <String fx:value="submit-button" />
-                  </styleClass>
-               </Button>
+               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ā" />
+               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ē" />
+               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ī" />
+               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ō" />
+               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ū" />
             </children>
          </HBox>
-         <ProgressBar fx:id="timerProgressBar" prefHeight="32.0" prefWidth="1280.0" progress="1.0" stylesheets="@../../../css/game-question.css" />
+         <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
+            <children>
+               <JFXButton fx:id="btnSubmit" minHeight="60.0" minWidth="200.0" onAction="#onSubmitClicked" styleClass="material-button" text="Submit" />
+               <JFXButton fx:id="btnNextQuestion" minHeight="60.0" minWidth="200.0" onAction="#onSubmitClicked" text="Next Question">
+                  <styleClass>
+                     <String fx:value="material-button" />
+                     <String fx:value="material-button-green" />
+                  </styleClass>
+               </JFXButton>
+            </children>
+         </HBox>
+         <JFXProgressBar fx:id="timerProgressBar" prefHeight="18.0" prefWidth="485.0" progress="0.29">
+            <effect>
+               <ColorAdjust hue="-0.86" />
+            </effect>
+         </JFXProgressBar>
+         <Label fx:id="lblCounter" styleClass="bright-bold-label" text="25">
+            <VBox.margin>
+               <Insets top="-15.0" />
+            </VBox.margin>
+         </Label>
       </children>
    </VBox>
      <cursor>
          <Cursor fx:constant="DEFAULT" />
      </cursor>
+   <stylesheets>
+      <URL value="@../../../css/global.css" />
+      <URL value="@../../../css/views/question.css" />
+   </stylesheets>
  </AnchorPane>

@@ -15,7 +15,6 @@
 package quinzical.interfaces.models.structures;
 
 import javafx.util.Pair;
-import quinzical.impl.controllers.StatisticsController;
 
 import java.util.List;
 

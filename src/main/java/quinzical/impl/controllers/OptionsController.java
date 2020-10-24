@@ -1,6 +1,9 @@
 package quinzical.impl.controllers;
 
+import com.google.common.math.LinearTransformation;
 import com.google.inject.Inject;
+import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.JFXSlider;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +33,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class OptionsController extends StandardSceneController {
+
+// #endregion
+
+public class OptionsController extends AbstractSceneController {
 
     static final int DEFAULT_PITCH;
     static final int DEFAULT_SPEED;
@@ -37,7 +45,7 @@ public class OptionsController extends StandardSceneController {
     static final double DEFAULT_TIMER;
 
     static {
-        DEFAULT_TIMER = 30;
+        DEFAULT_TIMER = 25;
         DEFAULT_PITCH = 50;
         DEFAULT_SPEED = 175;
         DEFAULT_AMP = 100;
@@ -53,6 +61,8 @@ public class OptionsController extends StandardSceneController {
     @Inject
     private QuestionCollection questionCollection;
 
+    //#region Components
+
     @FXML
     private Label lblTheme;
     @FXML
@@ -63,7 +73,6 @@ public class OptionsController extends StandardSceneController {
     private Label lblAdvanced;
     @FXML
     private ListView<Theme> themeList;
-
     @FXML
     private Slider sliderSpeed;
     @FXML
@@ -73,8 +82,9 @@ public class OptionsController extends StandardSceneController {
     @FXML
     private Slider sliderPitch;
     @FXML
-    private Slider sliderTimer;
-
+    private JFXSlider sliderTimer;
+    @FXML
+    private ScrollPane helpScrollPane;
     @FXML
     private HBox hboxContainer;
     @FXML
@@ -85,7 +95,6 @@ public class OptionsController extends StandardSceneController {
     private VBox vboxHelp;
     @FXML
     private VBox vboxAdvanced;
-
     @FXML
     private VBox vboxHelpList;
     @FXML
@@ -94,46 +103,82 @@ public class OptionsController extends StandardSceneController {
     private Label helpTitle;
     @FXML
     private Label helpContent;
+    @FXML
+    private StackPane dialogRoot;
+
+    //#endregion
 
     private VBox activeVbox;
     private Label activeLabel;
 
     @Override
     protected void onLoad() {
-
         try {
             loadHelpFromJson();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
-
-        ObservableList<Theme> list = FXCollections.observableArrayList(Theme.values());
+        ObservableList<Theme> list = FXCollections.observableArrayList(gameModel.getUserData().getUnlockedThemes());
         themeList.setItems(list);
         themeList.getSelectionModel().select(sceneHandler.getActiveTheme());
         themeList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             sceneHandler.fireBackgroundChange(newValue);
-            background.setImage(newValue.getImage());
+            this.refresh();
+            activeVbox = null;
+            themeHovered();
         });
 
         sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
         sliderTimer.setValue(gameModel.getTimerValue());
-        sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED, (int) sliderSpeed.getValue()));
+
+        sliderSpeed.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.SPEED,
+            (int) sliderSpeed.getValue()));
         sliderSpeed.setValue(speakerMutator.getSpeed());
-        sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH, (int) sliderPitch.getValue()));
+
+        sliderPitch.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.PITCH,
+            (int) sliderPitch.getValue()));
         sliderPitch.setValue(speakerMutator.getPitch());
-        sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE, (int) sliderAmp.getValue()));
+
+        sliderAmp.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.AMPLITUDE,
+            (int) sliderAmp.getValue()));
         sliderAmp.setValue(speakerMutator.getAmplitude());
-        sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP, (int) sliderGap.getValue()));
+
+        sliderGap.valueProperty().addListener(e -> adjustSpeaker(SpeechProperty.GAP,
+            (int) sliderGap.getValue()));
         sliderGap.setValue(speakerMutator.getGap());
+
+        sliderTimer.setMin(5);
+        sliderTimer.setMax(45);
+
+        JFXScrollPane.smoothScrolling(helpScrollPane);
+
+        sliderTimer.setValue(gameModel.getTimerValue());
+        sliderTimer.valueProperty().addListener(((observable, oldValue, newValue) -> applySliderColor(newValue,
+            sliderTimer)));
+        
     }
 
+    private void applySliderColor(Number newValue, JFXSlider jfxSlider) {
+        @SuppressWarnings("UnstableApiUsage")
+        double transform = LinearTransformation.mapping(5, 0).and(45, 130).transform(newValue.doubleValue());
+        Color colorStart = Color.hsb(transform, 0.4, 1);
+        Color colorEnd = Color.hsb(transform, 0.6, 1);
+        String hexEnd = String.format("#%02X%02X%02X",
+            (int) (colorStart.getRed() * 255),
+            (int) (colorStart.getGreen() * 255),
+            (int) (colorStart.getBlue() * 255));
+        String hexStart = String.format("#%02X%02X%02X",
+            (int) (colorEnd.getRed() * 255),
+            (int) (colorEnd.getGreen() * 255),
+            (int) (colorEnd.getBlue() * 255));
+        StackPane track = (StackPane) jfxSlider.getChildrenUnmodifiable().get(3);
+        track.setStyle("-fx-background-color: linear-gradient(to right, " + hexStart + " 0%," + hexEnd + " 100%)");
+    }
 
     @FXML
     void btnMenuClick() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
-
-    //#region ACCESSIBILITY
 
     /**
      * Adjusts the Speakers properties according to the value and the property that is being changed.
@@ -157,6 +202,8 @@ public class OptionsController extends StandardSceneController {
                 break;
         }
     }
+
+    //#region ACCESSIBILITY
 
     /**
      * Sets the pitch back to the default value and puts the slider in the correct position for that.
@@ -232,10 +279,6 @@ public class OptionsController extends StandardSceneController {
         questionCollection.regenerateQuestionsFromDisk();
     }
 
-    //#endregion
-
-    //#region ANIMATORS
-
     @FXML
     void advancedHovered(MouseEvent event) {
         if (activeVbox == vboxAdvanced) return;
@@ -248,8 +291,12 @@ public class OptionsController extends StandardSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
+    //#endregion
+
+    //#region ANIMATORS
+
     @FXML
-    void helpHovered(MouseEvent event) {
+    void helpHovered() {
         if (activeVbox == vboxHelp) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -261,7 +308,7 @@ public class OptionsController extends StandardSceneController {
     }
 
     @FXML
-    void themeHovered(MouseEvent event) {
+    void themeHovered() {
         if (activeVbox == vboxTheme) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -273,7 +320,7 @@ public class OptionsController extends StandardSceneController {
     }
 
     @FXML
-    void accessHovered(MouseEvent event) {
+    void accessHovered() {
         if (activeVbox == vboxAccess) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -335,11 +382,6 @@ public class OptionsController extends StandardSceneController {
         timeline.playFromStart();
     }
 
-
-    //#endregion
-
-    //#region HELP
-
     @SuppressWarnings("unchecked")
     private void loadHelpFromJson() throws IOException, JSONException {
         InputStream resource = Entry.class.getClassLoader().getResourceAsStream("quinzical/impl/help/help.json");
@@ -374,6 +416,15 @@ public class OptionsController extends StandardSceneController {
         });
     }
 
+    @Override
+    protected void refresh() {
+        this.background.getStyleClass().clear();
+        this.background.getStyleClass().add(sceneHandler.getActiveTheme().name());
+    }
+
+    //#endregion
+
+
     @FXML
     void onHelpReturnClick(MouseEvent event) {
         if (activeVbox == vboxHelp) return;
@@ -385,9 +436,6 @@ public class OptionsController extends StandardSceneController {
         activeLabel = lblHelp;
         animateInSettings(activeVbox, activeLabel);
     }
-
-    // #endregion
-
 
     /**
      * The different possible speech properties, used in adjustSpeaker .

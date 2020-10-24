@@ -1,5 +1,5 @@
-import { Socket } from "socket.io";
-import { Question, SendableQuestionData } from "./Questions/Question";
+import {Socket} from "socket.io";
+import {SendableQuestionData} from "./Questions/Question";
 
 class PlayerImpl implements Player {
     private points: number = 0;

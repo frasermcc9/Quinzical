@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Controller class for the Game view. This is the view that contains the question board.
  */
-public class GameController extends StandardSceneController {
+public class GameController extends AbstractSceneController {
 
     private final List<Button> buttons = new ArrayList<>();
     @Inject
@@ -90,9 +90,8 @@ public class GameController extends StandardSceneController {
             Button btn = buttons.get(i);
 
             btn.getStyleClass().clear();
-            btn.getStyleClass().add("button");
-            btn.getStyleClass().add("transparent");
-
+            btn.getStyleClass().add("material-button");
+            
             String category = keys.get(i);
             int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
                 Integer::sum);
@@ -117,14 +116,13 @@ public class GameController extends StandardSceneController {
             GameQuestion q = questions.get(i);
 
             if (q.isAnswered()) {
+                btn.getStyleClass().clear();
+                btn.getStyleClass().add("material-button");
                 if (q.isCorrect()) {
-                    btn.getStyleClass().clear();
-                    btn.getStyleClass().add("rightButton");
+                    btn.getStyleClass().add("material-button-green");
                 } else {
-                    btn.getStyleClass().clear();
-                    btn.getStyleClass().add("wrongButton");
+                    btn.getStyleClass().add("material-button-red");
                 }
-                btn.getStyleClass().add("transparent");
             }
 
             btn.setText(q.getValue() + "");

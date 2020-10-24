@@ -33,17 +33,10 @@ public enum GameScene implements GameSceneFxmlLoader {
         }
     },
 
-    INTERNATIONAL_GAME {
-        @Override
-        public String getFxmlName() {
-            return "internationalgame";
-        }
-    },
-
     PRACTICE {
         @Override
         public String getFxmlName() {
-            return "practicecategoryselector";
+            return "practice-selector";
         }
     },
 
@@ -64,7 +57,7 @@ public enum GameScene implements GameSceneFxmlLoader {
     PRACTICE_QUESTION {
         @Override
         public String getFxmlName() {
-            return "practicequestion";
+            return "practice-question";
         }
     },
 
@@ -86,6 +79,12 @@ public enum GameScene implements GameSceneFxmlLoader {
         @Override
         public String getFxmlName() {
             return "statistics";
+        }
+    },
+    STORE {
+        @Override
+        public String getFxmlName() {
+            return "store";
         }
     },
     CATEGORY_SELECTOR {
@@ -155,6 +154,12 @@ public enum GameScene implements GameSceneFxmlLoader {
         @Override
         public String getFxmlName() {
             return "multiplayer/browse";
+        }
+    },
+    MULTI_ACCOUNT {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/create-account";
         }
     }
 }

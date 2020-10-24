@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" style="-fx-background-color: #232323;" styleClass="AUCKLAND" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.StoreController">
+   <children>
+      <VBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Most Popular" />
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+               <content>
+                  <JFXMasonryPane fx:id="storeContainer" HSpacing="10" VSpacing="10">
+                     <padding>
+                        <Insets bottom="16" left="16" right="16" top="16" />
+                     </padding>
+                  </JFXMasonryPane>
+               </content>
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;">
+               <children>
+                  <Label fx:id="coinLabel" text="00x Coins" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" offsetX="2.0" offsetY="2.0" spread="0.05" />
+                     </effect>
+                  </Label>
+                  <ImageView fitHeight="107.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/coin.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" offsetX="3.0" offsetY="3.0" />
+                     </effect>
+                  </ImageView>
+               </children>
+            </HBox>
+            <JFXButton minWidth="120.0" onAction="#btnBackPress" styleClass="material-button" text="Back">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></JFXButton>
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../../css/views/category-selector.css" />
+      <URL value="@../../../css/global.css" />
+   </stylesheets>
+</AnchorPane>
