@@ -71,7 +71,7 @@ public class IntroController extends AbstractSceneController {
 
     @FXML
     void btnAchievementsClick() {
-
+        sceneHandler.setActiveScene(GameScene.STORE);
     }
 
     @FXML
