@@ -72,7 +72,6 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
                     solutions.remove(solution);
                     corrects.add(true);
                     solutionFound = true;
-                    System.out.println(textArea.getStyleClass());
                     textArea.getStyleClass().removeAll("answer-field-wrong");
                     textArea.getStyleClass().add("answer-field-right");
                     break;
