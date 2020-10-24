@@ -118,7 +118,7 @@ public class OptionsController extends AbstractSceneController {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        ObservableList<Theme> list = FXCollections.observableArrayList(Theme.values());
+        ObservableList<Theme> list = FXCollections.observableArrayList(gameModel.getUserData().getUnlockedThemes());
         themeList.setItems(list);
         themeList.getSelectionModel().select(sceneHandler.getActiveTheme());
         themeList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -152,10 +152,10 @@ public class OptionsController extends AbstractSceneController {
 
         JFXScrollPane.smoothScrolling(helpScrollPane);
 
+        sliderTimer.setValue(gameModel.getTimerValue());
         sliderTimer.valueProperty().addListener(((observable, oldValue, newValue) -> applySliderColor(newValue,
             sliderTimer)));
-        sliderTimer.setValue(25);
-
+        
     }
 
     private void applySliderColor(Number newValue, JFXSlider jfxSlider) {
