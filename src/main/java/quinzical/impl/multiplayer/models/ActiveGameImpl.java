@@ -75,7 +75,7 @@ public class ActiveGameImpl implements ActiveGame {
         socket.once("gameFinished", (objects) -> {
             updateUsersFromSocket((JSONArray) objects[0]);
             socket.off("newQuestion").off("roundOver").off("goNextRound");
-            Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_GAME__END));
+            Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_GAME_END));
         });
 
         socket.on("goNextRound", objects -> socket.emit("readyToPlay"));
