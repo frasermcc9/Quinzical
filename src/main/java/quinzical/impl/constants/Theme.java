@@ -15,109 +15,58 @@
 package quinzical.impl.constants;
 
 import javafx.scene.image.Image;
-import quinzical.Entry;
-
-import java.util.Objects;
 
 /**
  * provides the different themes that the game can have, as well as the getImage() method to get the associated image
  * for the theme.
  */
-public enum Theme implements ImageProvider {
+public enum Theme {
     MOUNTAINS {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/mountains.jpg")));
-        }
     },
 
     BOULDERS {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/boulders.jpg")));
-        }
     },
 
     FIELDS {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/fields.jpg")));
-        }
     },
 
     AUCKLAND {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/auckland.jpg")));
-        }
     },
 
     OCEAN {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/ocean.jpg")));
-        }
     },
 
     HOBBIT {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/hobbit.jpg")));
-        }
     },
 
     VOLCANO {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/volcano.jpg")));
-        }
     },
 
     LAKE {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/lake.jpg")));
-        }
     },
 
     MIST {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/mist.jpg")));
-        }
     },
 
     SNOW {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/snow.jpg")));
-        }
     },
 
     SHEEP {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/sheep.jpg")));
-        }
     },
 
     CAVE {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/cave.jpg")));
-        }
     },
 
     DESERT {
-        public Image getImage() {
-            return new Image(Objects.requireNonNull(Entry.class.getClassLoader().getResourceAsStream("images" +
-                "/landscapes/desert.jpg")));
-        }
     }
 
 
 }
 
+/**
+ * @deprecated this is no longer used since background loading is now handled by stylesheets.
+ */
+@Deprecated(since = "25/10")
 interface ImageProvider {
     Image getImage();
 }
