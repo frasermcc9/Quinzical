@@ -16,7 +16,6 @@ package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -53,11 +52,7 @@ public class GameController extends AbstractSceneController {
 
     @Override
     protected void onLoad() {
-        for (Node b : paneHeader.getChildren()) {
-            if (b instanceof Button) {
-                buttons.add((Button) b);
-            }
-        }
+        paneHeader.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(buttons::add);
     }
 
     @Override
@@ -91,7 +86,7 @@ public class GameController extends AbstractSceneController {
 
             btn.getStyleClass().clear();
             btn.getStyleClass().add("material-button");
-            
+
             String category = keys.get(i);
             int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
                 Integer::sum);
@@ -138,7 +133,7 @@ public class GameController extends AbstractSceneController {
      */
     private void activateQuestion(GameQuestion gameQuestion) {
         gameModel.activateQuestion(gameQuestion);
-        sceneHandler.setActiveScene(GameScene.GAME_QUESTION);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME_QUESTION)).start();
     }
 
     /**
