@@ -73,6 +73,9 @@ public abstract class AbstractSceneController {
         ).playFromStart();
     }
 
+    /**
+     * Called when the scene is initiated. Calls template methods for onLoad() and refresh().
+     */
     @FXML
     public final void initialize() {
         onLoad();
@@ -82,7 +85,6 @@ public abstract class AbstractSceneController {
     }
 
     protected abstract void onLoad();
-
 
     protected void refresh() {
     }
