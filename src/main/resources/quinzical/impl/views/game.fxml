@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" styleClass="BOULDERS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.GameController">
    <VBox alignment="CENTER" layoutX="2.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -15,13 +18,28 @@
                <Insets bottom="-20.0" top="20.0" />
             </VBox.margin>
          </Label>
-         <VBox fx:id="paneHeader" alignment="CENTER" prefHeight="412.0" prefWidth="1280.0" style="-fx-spacing: 25;">
+         <VBox fx:id="paneHeader" alignment="CENTER" prefHeight="412.0" style="-fx-spacing: 25;" VBox.vgrow="NEVER">
             <children>
-               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
-               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
-               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
-               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
-               <JFXButton minHeight="60.0" prefWidth="300.0" styleClass="material-button" />
+               <JFXButton minHeight="60.0" minWidth="300.0" styleClass="material-button">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding></JFXButton>
+               <JFXButton minHeight="60.0" minWidth="300.0" styleClass="material-button">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding></JFXButton>
+               <JFXButton minHeight="60.0" minWidth="300.0" styleClass="material-button">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding></JFXButton>
+               <JFXButton minHeight="60.0" minWidth="300.0" styleClass="material-button">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding></JFXButton>
+               <JFXButton minHeight="60.0" minWidth="300.0" styleClass="material-button">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding></JFXButton>
             </children>
             <VBox.margin>
                <Insets top="20.0" />

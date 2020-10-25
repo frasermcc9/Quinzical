@@ -16,9 +16,8 @@ package quinzical.impl.util.strategies.questiongenerator;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import quinzical.impl.models.QuestionCollectionImpl;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
@@ -30,12 +29,14 @@ import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrate
 import java.util.List;
 import java.util.Map;
 
-class QuestionGeneratorStrategyFactoryImplTest {
+import static org.junit.Assert.assertEquals;
+
+public class QuestionGeneratorStrategyFactoryImplTest {
 
     static Injector injector;
 
-    @BeforeAll
-    static void before() {
+    @BeforeClass
+    public static void before() {
         injector = Guice.createInjector(binder -> {
             binder.bind(QuestionGeneratorStrategyFactory.class).to(QuestionGeneratorStrategyFactoryImpl.class);
             binder.bind(QuestionCollection.class).to(QuestionCollectionImpl.class);
@@ -49,9 +50,9 @@ class QuestionGeneratorStrategyFactoryImplTest {
         QuestionGeneratorStrategy strategy = factory.createInternationalQuestionStrategy();
         Map<String, List<GameQuestion>> board = strategy.generateQuestions();
 
-        Assertions.assertEquals(5, board.size());
+        assertEquals(5, board.size());
         board.forEach((category, questions) -> {
-            Assertions.assertEquals(5, questions.size());
+            assertEquals(5, questions.size());
         });
     }
 

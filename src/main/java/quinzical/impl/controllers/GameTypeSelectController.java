@@ -83,7 +83,7 @@ public class GameTypeSelectController extends AbstractSceneController {
             if (j == i) {
                 createScaleAnimation(image, 400, 1.1);
                 btnPlay.setDisable(false);
-                btnPlay.setOnAction(a -> buttonActions[i].run());
+                btnPlay.setOnAction(a -> new Thread(buttonActions[i]).start());
             } else {
                 createScaleAnimation(image, 400, 0.9);
             }

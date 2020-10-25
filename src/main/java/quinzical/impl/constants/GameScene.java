@@ -108,7 +108,7 @@ public enum GameScene implements GameSceneFxmlLoader {
         }
     },
 
-    MULTI_GAME__END {
+    MULTI_GAME_END {
         @Override
         public String getFxmlName() {
             return "multiplayer/game-end";

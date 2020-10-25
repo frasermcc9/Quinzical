@@ -15,12 +15,9 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
-import javafx.animation.Animation;
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
@@ -53,7 +50,7 @@ public class IntroController extends AbstractSceneController {
      */
     @FXML
     void btnLoadGamePress() {
-        sceneHandler.setActiveScene(GameScene.GAME);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME)).start();
     }
 
     /**
@@ -61,24 +58,29 @@ public class IntroController extends AbstractSceneController {
      */
     @FXML
     void btnNewGamePress() {
-        sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT)).start();
     }
 
     @FXML
     void btnOptionsPress() {
-        sceneHandler.setActiveScene(GameScene.OPTIONS);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.OPTIONS)).start();
     }
 
     @FXML
     void btnAchievementsClick() {
-        sceneHandler.setActiveScene(GameScene.STORE);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.STORE)).start();
+
     }
 
     @FXML
     void btnStatisticsClick() {
-        sceneHandler.setActiveScene(GameScene.STATISTICS);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.STATISTICS)).start();
     }
 
+    @FXML
+    void btnOnlineClick() {
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_INTRO)).start();
+    }
 
     @Override
     protected void onLoad() {
@@ -128,12 +130,4 @@ public class IntroController extends AbstractSceneController {
             btnLoadGame.setDisable(true);
         }
     }
-
-
-    @FXML
-    void btnOnlineClick() {
-        sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
-    }
-
-
 }

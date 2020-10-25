@@ -17,6 +17,7 @@ package quinzical.impl.controllers;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.jfoenix.controls.JFXMasonryPane;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -46,21 +47,28 @@ public class StoreController extends AbstractSceneController {
     @FXML
     private JFXMasonryPane storeContainer;
 
+    /**
+     * Return to the main menu
+     */
     @FXML
     void btnBackPress() {
-        sceneHandler.setActiveScene(GameScene.INTRO);
+        Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.INTRO));
     }
 
     @Override
     protected void onLoad() {
         this.loadShop();
-        //Platform.runLater(this::loadShop);
     }
 
+    /**
+     * Loads the shop components.
+     */
     private void loadShop() {
+        // Setup showing how much currency the user has
         UserData userData = gameModel.getUserData();
         coinLabel.setText(userData.getCoins() + "x Coins");
 
+        // These are the items to be sold
         int[] costs = new int[]{150, 25, 150, 100, 50, 25};
         Theme[] themes = new Theme[]{Theme.LAKE, Theme.MIST, Theme.SNOW, Theme.SHEEP, Theme.CAVE, Theme.DESERT};
 
@@ -90,4 +98,5 @@ public class StoreController extends AbstractSceneController {
         }
         storeContainer.getChildren().addAll(toAdd);
     }
+    
 }

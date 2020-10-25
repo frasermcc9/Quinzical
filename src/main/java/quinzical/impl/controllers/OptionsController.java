@@ -31,12 +31,20 @@ import quinzical.interfaces.models.structures.SpeakerMutator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
-// #endregion
-
+/**
+ * Options controller is the class that provides the logic for the options view.
+ * <p>
+ * Recommended to view this class with the regions folded.
+ *
+ * @author Fraser McCallum
+ */
 public class OptionsController extends AbstractSceneController {
+
+    //#region DEFAULT VALUES 
 
     static final int DEFAULT_PITCH;
     static final int DEFAULT_SPEED;
@@ -52,6 +60,10 @@ public class OptionsController extends AbstractSceneController {
         DEFAULT_GAP = 0;
     }
 
+    //#endregion
+
+    //#region Components
+
     @Inject
     private SceneHandler sceneHandler;
     @Inject
@@ -60,8 +72,6 @@ public class OptionsController extends AbstractSceneController {
     private GameModel gameModel;
     @Inject
     private QuestionCollection questionCollection;
-
-    //#region Components
 
     @FXML
     private Label lblTheme;
@@ -106,18 +116,27 @@ public class OptionsController extends AbstractSceneController {
     @FXML
     private StackPane dialogRoot;
 
-    //#endregion
-
     private VBox activeVbox;
     private Label activeLabel;
 
+    //#endregion
+
+    //#region HANDLERS AND LOADING
+
+    /**
+     * Initialize the help menu.
+     */
     @Override
     protected void onLoad() {
+        //load the JSON help files
         try {
             loadHelpFromJson();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+        JFXScrollPane.smoothScrolling(helpScrollPane);
+
+        //load the themes
         ObservableList<Theme> list = FXCollections.observableArrayList(gameModel.getUserData().getUnlockedThemes());
         themeList.setItems(list);
         themeList.getSelectionModel().select(sceneHandler.getActiveTheme());
@@ -128,6 +147,8 @@ public class OptionsController extends AbstractSceneController {
             themeHovered();
         });
 
+
+        //initialize the sliders
         sliderTimer.valueProperty().addListener(e -> gameModel.setTimerValue(sliderTimer.getValue()));
         sliderTimer.setValue(gameModel.getTimerValue());
 
@@ -150,35 +171,29 @@ public class OptionsController extends AbstractSceneController {
         sliderTimer.setMin(5);
         sliderTimer.setMax(45);
 
-        JFXScrollPane.smoothScrolling(helpScrollPane);
-
         sliderTimer.setValue(gameModel.getTimerValue());
         sliderTimer.valueProperty().addListener(((observable, oldValue, newValue) -> applySliderColor(newValue,
             sliderTimer)));
-        
+
     }
 
-    private void applySliderColor(Number newValue, JFXSlider jfxSlider) {
-        @SuppressWarnings("UnstableApiUsage")
-        double transform = LinearTransformation.mapping(5, 0).and(45, 130).transform(newValue.doubleValue());
-        Color colorStart = Color.hsb(transform, 0.4, 1);
-        Color colorEnd = Color.hsb(transform, 0.6, 1);
-        String hexEnd = String.format("#%02X%02X%02X",
-            (int) (colorStart.getRed() * 255),
-            (int) (colorStart.getGreen() * 255),
-            (int) (colorStart.getBlue() * 255));
-        String hexStart = String.format("#%02X%02X%02X",
-            (int) (colorEnd.getRed() * 255),
-            (int) (colorEnd.getGreen() * 255),
-            (int) (colorEnd.getBlue() * 255));
-        StackPane track = (StackPane) jfxSlider.getChildrenUnmodifiable().get(3);
-        track.setStyle("-fx-background-color: linear-gradient(to right, " + hexStart + " 0%," + hexEnd + " 100%)");
+    @Override
+    protected void refresh() {
+        this.background.getStyleClass().clear();
+        this.background.getStyleClass().add(sceneHandler.getActiveTheme().name());
     }
 
+    /**
+     * Return to the main menu.
+     */
     @FXML
     void btnMenuClick() {
-        sceneHandler.setActiveScene(GameScene.INTRO);
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.INTRO)).start();
     }
+
+    //#endregion
+
+    //#region ACCESSIBILITY
 
     /**
      * Adjusts the Speakers properties according to the value and the property that is being changed.
@@ -202,8 +217,6 @@ public class OptionsController extends AbstractSceneController {
                 break;
         }
     }
-
-    //#region ACCESSIBILITY
 
     /**
      * Sets the pitch back to the default value and puts the slider in the correct position for that.
@@ -260,6 +273,11 @@ public class OptionsController extends AbstractSceneController {
 
     //#region ADVANCED
 
+    /**
+     * Resets the local data.
+     * <p>
+     * First confirms the user wishes to delete the data, and then executes the reset data on the user data object.
+     */
     @FXML
     void btnResetLocalData() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -273,14 +291,26 @@ public class OptionsController extends AbstractSceneController {
         }
     }
 
+    /**
+     * Calls the main method of the question parser class. This handles parsing text files to valid question database
+     * files.
+     */
     @FXML
     void btnLoadNewQuestionSet() {
         Serializer.main(null);
         questionCollection.regenerateQuestionsFromDisk();
     }
 
+
+    //#endregion
+
+    //#region ANIMATORS
+
+    /**
+     * Animate in the advanced submenu.
+     */
     @FXML
-    void advancedHovered(MouseEvent event) {
+    void advancedHovered() {
         if (activeVbox == vboxAdvanced) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -291,10 +321,9 @@ public class OptionsController extends AbstractSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
-    //#endregion
-
-    //#region ANIMATORS
-
+    /**
+     * Animate in the help submenu.
+     */
     @FXML
     void helpHovered() {
         if (activeVbox == vboxHelp) return;
@@ -307,6 +336,9 @@ public class OptionsController extends AbstractSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
+    /**
+     * Animate in the theme submenu.
+     */
     @FXML
     void themeHovered() {
         if (activeVbox == vboxTheme) return;
@@ -319,6 +351,9 @@ public class OptionsController extends AbstractSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
+    /**
+     * Animate in the accessibility submenu.
+     */
     @FXML
     void accessHovered() {
         if (activeVbox == vboxAccess) return;
@@ -331,6 +366,12 @@ public class OptionsController extends AbstractSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
+    /**
+     * Helper method to animate in a particular submenu, and also highlight the label used to access that submenu.
+     *
+     * @param vBox  the VBox to animate in.
+     * @param label the label that should be animated in (grown in size).
+     */
     private void animateInSettings(VBox vBox, Label label) {
         final Timeline timeline = new Timeline(
             new KeyFrame(
@@ -356,6 +397,13 @@ public class OptionsController extends AbstractSceneController {
         timeline.playFromStart();
     }
 
+    /**
+     * Helper method to animate out a particular submenu, and also reduce the size of the label used to access that
+     * submenu.
+     *
+     * @param vBox  the VBox to animate out.
+     * @param label the label that should be animated out (reduced in size).
+     */
     private void animateOutSettings(VBox vBox, Label label) {
         if (vBox == null) return;
         final Timeline timeline = new Timeline(
@@ -382,51 +430,83 @@ public class OptionsController extends AbstractSceneController {
         timeline.playFromStart();
     }
 
-    @SuppressWarnings("unchecked")
-    private void loadHelpFromJson() throws IOException, JSONException {
-        InputStream resource = Entry.class.getClassLoader().getResourceAsStream("quinzical/impl/help/help.json");
-        if (resource == null) throw new IOException("Cannot find help file");
-
-        byte[] bytes = resource.readAllBytes();
-        JSONObject jsonObject = new JSONObject(new String(bytes));
-
-        ArrayList<String> list = new ArrayList<>();
-        jsonObject.sortedKeys().forEachRemaining(k -> list.add((String) k));
-        list.forEach(title -> {
-            try {
-                JSONObject contentObject = jsonObject.getJSONObject(title);
-                String content = contentObject.getString("content");
-
-                Label lbl = new Label(title);
-                vboxHelpList.getChildren().add(lbl);
-                lbl.setOnMouseClicked(action -> {
-                    helpTitle.setText(title);
-                    helpContent.setText(content);
-                    if (activeVbox == vboxHelpPage) return;
-                    if (activeVbox != null) {
-                        animateOutSettings(activeVbox, lblHelp);
-                    }
-                    activeVbox = vboxHelpPage;
-                    activeLabel = lblHelp;
-                    animateInSettings(activeVbox, activeLabel);
-                });
-            } catch (JSONException jsonException) {
-                jsonException.printStackTrace();
-            }
-        });
+    private void applySliderColor(Number newValue, JFXSlider jfxSlider) {
+        @SuppressWarnings("UnstableApiUsage")
+        double transform = LinearTransformation.mapping(5, 0).and(45, 130).transform(newValue.doubleValue());
+        Color colorStart = Color.hsb(transform, 0.4, 1);
+        Color colorEnd = Color.hsb(transform, 0.6, 1);
+        String hexEnd = String.format("#%02X%02X%02X",
+            (int) (colorStart.getRed() * 255),
+            (int) (colorStart.getGreen() * 255),
+            (int) (colorStart.getBlue() * 255));
+        String hexStart = String.format("#%02X%02X%02X",
+            (int) (colorEnd.getRed() * 255),
+            (int) (colorEnd.getGreen() * 255),
+            (int) (colorEnd.getBlue() * 255));
+        StackPane track = (StackPane) jfxSlider.getChildrenUnmodifiable().get(3);
+        track.setStyle("-fx-background-color: linear-gradient(to right, " + hexStart + " 0%," + hexEnd + " 100%)");
     }
 
-    @Override
-    protected void refresh() {
-        this.background.getStyleClass().clear();
-        this.background.getStyleClass().add(sceneHandler.getActiveTheme().name());
-    }
 
     //#endregion
 
+    //#region HELP
 
+    /**
+     * Loads the json help file and places all the entries into the help menus.
+     * <p>
+     * The help json file contains all help entries for the game. This method will parse that file, and load each entry
+     * into the box where an option can be selected. The method also adds event handlers to each link, setting the help
+     * text to the necessary content.
+     * <p>
+     * The suppress warnings is used (and required) due to conversion from Iterator to Iterator<String>. This is
+     * guaranteed to not fail, as the keys of the JSON must be strings.
+     *
+     * @throws IOException   JSON file not found
+     * @throws JSONException Error reading the JSON file
+     */
+    @SuppressWarnings("unchecked")
+    private void loadHelpFromJson() throws IOException, JSONException {
+        //Get json resource
+        InputStream resource = Entry.class.getClassLoader().getResourceAsStream("quinzical/impl/help/help.json");
+        if (resource == null) throw new IOException("Cannot find help file");
+
+        //Read json
+        byte[] bytes = resource.readAllBytes();
+        JSONObject jsonObject = new JSONObject(new String(bytes));
+
+        //Sort json keys and convert from Iterator to List.
+        List<String> list = new ArrayList<>();
+        jsonObject.sortedKeys().forEachRemaining(k -> list.add((String) k));
+
+        //For each entry in the list, add it to the help entry box. Also add a click listener that will display the 
+        // help content.
+        for (String title : list) {
+            JSONObject contentObject = jsonObject.getJSONObject(title);
+            String content = contentObject.getString("content");
+
+            Label lbl = new Label(title);
+            vboxHelpList.getChildren().add(lbl);
+            lbl.setOnMouseClicked(action -> {
+                helpTitle.setText(title);
+                helpContent.setText(content);
+                if (activeVbox == vboxHelpPage) return;
+                if (activeVbox != null) {
+                    animateOutSettings(activeVbox, lblHelp);
+                }
+                activeVbox = vboxHelpPage;
+                activeLabel = lblHelp;
+                animateInSettings(activeVbox, activeLabel);
+            });
+
+        }
+    }
+
+    /**
+     * For when a help entry is exited. Return to the main help menu.
+     */
     @FXML
-    void onHelpReturnClick(MouseEvent event) {
+    void onHelpReturnClick() {
         if (activeVbox == vboxHelp) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -437,11 +517,12 @@ public class OptionsController extends AbstractSceneController {
         animateInSettings(activeVbox, activeLabel);
     }
 
+    //#endregion
+
     /**
      * The different possible speech properties, used in adjustSpeaker .
      */
     private enum SpeechProperty {
         SPEED, PITCH, AMPLITUDE, GAP
     }
-
 }
