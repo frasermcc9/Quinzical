@@ -17,14 +17,14 @@ package quinzical.impl.util.strategies.timer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import quinzical.interfaces.strategies.timer.TimerContext;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-class TimerContextImplTest {
+public class TimerContextImplTest {
     @Test
     public void TestFunctionIsExecutedEventually() throws ExecutionException, InterruptedException {
 
@@ -39,6 +39,6 @@ class TimerContextImplTest {
         CompletableFuture<String> future = new CompletableFuture<>();
         timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> future.complete("Success"), 100);
 
-        Assertions.assertEquals("Success", future.get());
+        Assert.assertEquals("Success", future.get());
     }
 }
