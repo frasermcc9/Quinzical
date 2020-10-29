@@ -34,6 +34,9 @@ import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An abstract class used by all of the question controllers
+ */
 public abstract class AbstractQuestionController extends AbstractSceneController {
 
     @Inject
@@ -84,6 +87,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
     abstract void onPassClicked();
 
+    /**
+     * Checks if all the text fields are empty when a button is pressed,
+     * setting the submit button to pass if so and submit otherwise
+     */
     protected void keyPressed(KeyCode keyCode) {
         if (!textAreas.get(0).isEditable()) return;
         if (keyCode == KeyCode.BACK_SPACE) {
@@ -101,6 +108,9 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         Platform.runLater(() -> textAreas.get(0).requestFocus());
     }
 
+    /**
+     * Ensures that the macron buttons will be initialised when this scene is loaded
+     */
     @Override
     protected void onLoad() {
         initMacronButtons();
@@ -112,6 +122,11 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     protected void onQuestionLoad() {
     }
 
+    /**
+     * Sets up the current question from the game model,
+     * setting all of the relevant text fields and 
+     * calls the speaking of the question
+     */
     protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
@@ -159,6 +174,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         }
     }
 
+    /**
+     * Checks for if the enter key is pressed, and attempts
+     * to press the submit button if valid
+     */
     protected void onKeyPress(KeyEvent e) {
         keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
@@ -205,6 +224,12 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
 
+    /**
+     * Sets the submit button to either pass or submit,
+     * depending on what buttonType was passed in
+     * 
+     * @param buttonType The type of button to set the submit button to
+     */
     protected void setSubmitButtonType(ButtonType buttonType) {
         btnSubmit.getStyleClass().clear();
         btnSubmit.getStyleClass().addAll("material-button");
@@ -231,7 +256,9 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         setSubmitButtonType(ButtonType.PASS);
     }
 
-
+    /**
+     * The available types of buttons used for the submit button
+     */
     protected enum ButtonType {
         PASS, SUBMIT
     }

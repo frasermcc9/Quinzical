@@ -15,6 +15,10 @@ import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
 
+/**
+ * Controller for the game type selection view where the player selects
+ * the type of game they will play
+ */
 public class GameTypeSelectController extends AbstractSceneController {
 
     private static final Runnable[] buttonActions = new Runnable[3];
@@ -37,16 +41,28 @@ public class GameTypeSelectController extends AbstractSceneController {
     @FXML
     private Label lblInternational;
 
+    /**
+     * Returns the screen to the intro menu when the back button is pressed
+     */
     @FXML
     void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
+    /**
+     * Toggles the loading international question indicator
+     * 
+     * @param visible whether to turn the indicator on or off
+     */
     private void setProgressVisible(boolean visible) {
         progressIndicator.setVisible(visible);
         lblProgress.setVisible(visible);
     }
 
+    /**
+     * Checks if the international mode is unlocked or not and sets 
+     * the elements of the scene depending on the fact.
+     */
     @Override
     protected void onLoad() {
         setProgressVisible(false);
@@ -77,6 +93,14 @@ public class GameTypeSelectController extends AbstractSceneController {
         }
     }
 
+    /**
+     * Disables all of the images except for the specified image,
+     * used to show the user which game type is currently selected
+     * 
+     * @param i the image in the image container to not disable
+     * @param start the start of the range of images to disable
+     * @param end the end of the range of images to disable
+     */
     private void disableImagesExcept(int i, int start, int end) {
         for (int j = start; j < end; j++) {
             Node image = imageContainer.getChildren().get(j);
@@ -90,12 +114,18 @@ public class GameTypeSelectController extends AbstractSceneController {
         }
     }
 
+    /**
+     * Initialises the list of actions that can happen when the play button is pressed
+     */
     private void setFunctions() {
         buttonActions[0] = () -> sceneHandler.setActiveScene(GameScene.PRACTICE);
         buttonActions[1] = () -> sceneHandler.setActiveScene(GameScene.CATEGORY_SELECTOR);
         buttonActions[2] = this::loadInternational;
     }
 
+    /**
+     * Attempt to load in a new set of international questions
+     */
     private void loadInternational() {
         setProgressVisible(true);
         Task<Void> task = new Task<>() {

@@ -102,6 +102,9 @@ public class PracticeQuestionController extends AbstractQuestionController {
         super.refresh();
     }
 
+    /**
+     * Sets up the scene for a new question, resetting the relevant buttons and text areas
+     */
     private void prepForNewQuestion() {
         attempts = 0;
         getNewQuestion();

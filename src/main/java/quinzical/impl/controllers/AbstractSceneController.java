@@ -27,6 +27,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import quinzical.interfaces.models.SceneHandler;
 
+/**
+ * An abstract class that is used by all of the other scenes
+ */
 public abstract class AbstractSceneController {
 
     @FXML
@@ -35,6 +38,14 @@ public abstract class AbstractSceneController {
     @Inject
     protected SceneHandler sceneHandler;
 
+    /**
+     * Creates an animation that changes the size of a given node
+     * to a new size over a given time
+     * 
+     * @param node The node that the animation will be of
+     * @param ms The time for the animation to play over
+     * @param toSize The final size of the node after the animation
+     */
     protected static void createScaleAnimation(Node node, int ms, double toSize) {
         ScaleTransition st = new ScaleTransition(Duration.millis(ms));
         st.setNode(node);
@@ -45,6 +56,14 @@ public abstract class AbstractSceneController {
         st.playFromStart();
     }
 
+    /**
+     * Adjusts the brightness of a given node over a certain time
+     * and to a certain level of brightness
+     * 
+     * @param node The node that will chang in brightness
+     * @param ms The time that the brightness change will occur over
+     * @param toLevel The final brightness of the node at the end of the time
+     */
     protected static void adjustBrightness(Node node, int ms, double toLevel) {
         ColorAdjust ca = new ColorAdjust();
         node.setEffect(ca);

@@ -23,6 +23,9 @@ import quinzical.interfaces.models.PracticeModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the practice mode selector scene
+ */
 public class PracticeSelectorController extends AbstractSelectorController {
 
     private final List<String> selectedCategories = new ArrayList<>();
@@ -41,6 +44,9 @@ public class PracticeSelectorController extends AbstractSelectorController {
         sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
     }
 
+    /**
+     * Gets the list of currently selected categories
+     */
     @Override
     protected List<String> getSelectedCategories() {
         return this.selectedCategories;
@@ -51,6 +57,9 @@ public class PracticeSelectorController extends AbstractSelectorController {
         return this.gameModel;
     }
 
+    /**
+     * Updates the counter for the total selected categories
+     */
     @Override
     protected void modifyCounterLabel() {
         this.lblSelected.setText("Selected: " + selectedCategories.size());

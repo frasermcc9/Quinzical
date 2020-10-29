@@ -61,22 +61,34 @@ public class IntroController extends AbstractSceneController {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT)).start();
     }
 
+    /**
+     * When the options button is clicked, change the scene to the options screen
+     */
     @FXML
     void btnOptionsPress() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.OPTIONS)).start();
     }
 
+    /**
+     * Sets the current scene to the store page
+     */
     @FXML
     void btnAchievementsClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.STORE)).start();
 
     }
 
+    /**
+     * Sets the current scene to the statistics view
+     */
     @FXML
     void btnStatisticsClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.STATISTICS)).start();
     }
 
+    /**
+     * Sets the current scene to the online view
+     */
     @FXML
     void btnOnlineClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_INTRO)).start();
