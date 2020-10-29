@@ -71,7 +71,7 @@ public class GameController extends AbstractSceneController {
     /**
      * Refreshes the question board. Does this by setting the style of all the buttons and adding the needed handlers.
      * Fired when the state of some question updates.
-     */
+     */ 
     private void refreshBoard() {
 
         btnMenu.setOnAction(event -> sceneHandler.setActiveScene(GameScene.INTRO));
