@@ -65,6 +65,13 @@
                <Insets left="350.0" right="350.0" />
             </VBox.margin>
          </Separator>
+         <JFXButton minWidth="250.0" onAction="#btnProfile" styleClass="material-button" text="Profile" />
+         <JFXButton minWidth="250.0" onAction="#btnLeaderboard" styleClass="material-button" text="Leaderboard" />
+         <Separator prefWidth="200.0">
+            <VBox.margin>
+               <Insets left="350.0" right="350.0" />
+            </VBox.margin>
+         </Separator>
          <JFXButton minWidth="250.0" onAction="#btnQuit" styleClass="material-button" text="Disconnect" />
       </VBox>
    </children>

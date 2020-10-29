@@ -4,13 +4,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="background" style="-fx-background-color: black;" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.IntroController">
+<AnchorPane fx:id="background" style="-fx-background-color: black;" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.menus.IntroController">
     <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 25;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Label prefHeight="148.0" prefWidth="639.0" styleClass="intro-title" stylesheets="@../../../css/title-label.css" text="Quinzical">
             <font>
@@ -52,16 +50,4 @@
          </font>
       </JFXButton>
     </VBox>
-   <StackPane layoutX="696.0" layoutY="74.0" prefHeight="131.0" prefWidth="380.0">
-      <children>
-         <Label fx:id="lblfunny" alignment="CENTER" contentDisplay="CENTER" pickOnBounds="false" prefHeight="194.0" prefWidth="431.0" style="-fx-rotate: -10;" text="Quinzical Runs on 3 Billion Devices" textAlignment="CENTER" textFill="#fffb00" wrapText="true">
-            <font>
-               <Font name="System Bold" size="33.0" />
-            </font>
-            <effect>
-               <DropShadow blurType="GAUSSIAN" />
-            </effect>
-         </Label>
-      </children>
-   </StackPane>
 </AnchorPane>
