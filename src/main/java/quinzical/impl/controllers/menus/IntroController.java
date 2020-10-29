@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.menus;
 
 import com.google.inject.Inject;
 import javafx.animation.Animation;
@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.UserData;
@@ -44,9 +45,6 @@ public class IntroController extends AbstractSceneController {
 
     @FXML
     private Button btnLoadGame;
-    @FXML
-    private Label lblfunny;
-
 
     /**
      * Sets the active scene to the main game scene where you select categories and questions from.
@@ -88,17 +86,6 @@ public class IntroController extends AbstractSceneController {
     @Override
     protected void onLoad() {
         handleLoadGameButton();
-        lblfunny.setVisible(true);
-        var st = new ScaleTransition(Duration.seconds(0.5));
-        st.setNode(lblfunny);
-        st.setFromX(0.7);
-        st.setFromY(0.7);
-        st.setToX(0.85);
-        st.setToY(0.85);
-        st.setAutoReverse(true);
-        st.setCycleCount(Animation.INDEFINITE);
-        st.playFromStart();
-
     }
 
     /**

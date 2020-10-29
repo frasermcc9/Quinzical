@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.game;
 
 import com.google.inject.Inject;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractSelectorController;
 import quinzical.interfaces.models.GameModel;
 
 import java.util.ArrayList;

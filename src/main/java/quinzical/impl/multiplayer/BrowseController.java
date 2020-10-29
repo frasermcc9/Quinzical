@@ -80,6 +80,7 @@ public class BrowseController extends AbstractAlertController {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onLoad() {
 
         JFXTreeTableColumn<GameData, String> hostCol = new JFXTreeTableColumn<>("Host");

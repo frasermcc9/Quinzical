@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers.game;
+package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import com.jfoenix.controls.JFXTextArea;
@@ -25,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import quinzical.impl.controllers.AbstractSceneController;
+import quinzical.impl.controllers.game.GameQuestionController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.models.SceneHandler;
@@ -60,11 +61,12 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     protected JFXTextArea activeText = null;
 
     /**
-     * Sets the colour of the text areas to either red or green, depending on if they were incorrect or correct as per
-     * the corrects list.
+     * Sets the colour of the text areas to either red or green, depending on if
+     * they were incorrect or correct as per the corrects list.
      *
      * @param textAreas - The list of textAreas to be coloured
-     * @param corrects  -  The list of Boolean values showing which text areas are right and wrong.
+     * @param corrects  - The list of Boolean values showing which text areas are
+     *                  right and wrong.
      */
     protected static void colourTextAreas(List<JFXTextArea> textAreas, List<Boolean> corrects) {
         for (int i = 0; i < textAreas.size(); i++) {
@@ -80,12 +82,13 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
     protected abstract void setPrompts(String hint, String prompt);
 
-    abstract void onSubmitClicked();
+    protected abstract void onSubmitClicked();
 
-    abstract void onPassClicked();
+    protected abstract void onPassClicked();
 
     protected void keyPressed(KeyCode keyCode) {
-        if (!textAreas.get(0).isEditable()) return;
+        if (!textAreas.get(0).isEditable())
+            return;
         if (keyCode == KeyCode.BACK_SPACE) {
             if (textAreas.stream().allMatch(t -> t.getText().isEmpty())) {
                 setSubmitButtonType(GameQuestionController.ButtonType.PASS);
@@ -114,6 +117,13 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     protected void onQuestionLoad() {
     }
 
+    /**
+     * Hook with default behaviour
+     */
+    protected void speakQuestion(String question) {
+        speaker.speak(question);
+    }
+
     protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
@@ -125,7 +135,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
         setPrompts(gameQuestion.getHint(), gameQuestion.getPrompt() + ":");
 
-        speaker.speak(gameQuestion.getHint());
+        speakQuestion(gameQuestion.getHint());
 
         int slnSize = gameQuestion.getSolutions().size();
 
@@ -138,8 +148,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
             ca.setBrightness(1);
             field.setEffect(ca);
 
-            // Listen for when the text area is focused. When it is focused, set activeText to this text area. This is
-            // for knowing which text area to insert the macron characters into when the buttons are chosen.
+            // Listen for when the text area is focused. When it is focused, set activeText
+            // to this text area. This is
+            // for knowing which text area to insert the macron characters into when the
+            // buttons are chosen.
             field.focusedProperty().addListener((_l, _o, isFocused) -> focusFixer(isFocused, field));
             field.setOnKeyPressed(this::onKeyPress);
             field.setPrefHeight(0);
@@ -183,23 +195,27 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     }
 
     /**
-     * gets each button in the bar, and programs its handler Gets the text and current cursor location from the selected
-     * text area and inserts the selected macron character after the cursor. Then reselect the text area and set the
+     * gets each button in the bar, and programs its handler Gets the text and
+     * current cursor location from the selected text area and inserts the selected
+     * macron character after the cursor. Then reselect the text area and set the
      * cursor to after the inserted character.
      */
     protected void initMacronButtons() {
-        macronBar.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(btn -> btn.setOnAction(e -> {
-            if (!textAreas.get(0).isEditable()) return;
-            activeText.insertText(activeText.getCaretPosition(), btn.getText());
-            activeText.requestFocus();
-            activeText.positionCaret(activeText.getCaretPosition());
+        macronBar.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b)
+                .forEach(btn -> btn.setOnAction(e -> {
+                    if (!textAreas.get(0).isEditable())
+                        return;
+                    activeText.insertText(activeText.getCaretPosition(), btn.getText());
+                    activeText.requestFocus();
+                    activeText.positionCaret(activeText.getCaretPosition());
 
-            onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
-        }));
+                    onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
+                }));
     }
 
     /**
-     * Called when the replay button is clicked, repeats the question hint using the speaker.
+     * Called when the replay button is clicked, repeats the question hint using the
+     * speaker.
      */
     @FXML
     protected void onReplayClick() {
@@ -224,14 +240,13 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     }
 
     /**
-     * refreshes the buttons onAction calls, back to the normal functions, as they change when a question is just
-     * answered.
+     * refreshes the buttons onAction calls, back to the normal functions, as they
+     * change when a question is just answered.
      */
     protected void refreshButtonState() {
         progressButtons.getChildren().subList(1, progressButtons.getChildren().size()).clear();
         setSubmitButtonType(ButtonType.PASS);
     }
-
 
     protected enum ButtonType {
         PASS, SUBMIT

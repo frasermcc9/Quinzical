@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.game;
 
 import com.google.inject.Inject;
 import javafx.animation.KeyFrame;
@@ -26,14 +26,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractQuestionController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Solution;
 import quinzical.impl.util.strategies.questionverifier.VerifierType;
-import quinzical.impl.util.strategies.timer.TimerType;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
-import quinzical.interfaces.strategies.timer.TimerContext;
-import quinzical.interfaces.strategies.timer.TimerStrategy;
 
 import java.util.List;
 
@@ -43,16 +41,13 @@ import java.util.List;
 public class GameQuestionController extends AbstractQuestionController {
 
     @Inject
-    TimerContext timerContext;
-    @Inject
     private GameModel gameModel;
-    
+
     @FXML
     private ProgressBar timerProgressBar;
     @FXML
     private Label lblCounter;
 
-    private TimerStrategy activeTimer;
     private Timeline timeline;
     private Timeline timelineCountdown;
 
@@ -84,7 +79,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
 
     @Override
-    void onPassClicked() {
+    protected void onPassClicked() {
         onSubmitClicked();
     }
 
@@ -92,10 +87,9 @@ public class GameQuestionController extends AbstractQuestionController {
      * submits the currently inputted text as an answer to the question
      */
     @FXML
-    void onSubmitClicked() {
+    protected void onSubmitClicked() {
         timeline.stop();
         timelineCountdown.stop();
-        activeTimer.stopTimeout();
         textAreas.forEach(a -> a.setEffect(null));
 
         GameQuestion question = gameModel.getActiveQuestion();
@@ -124,16 +118,22 @@ public class GameQuestionController extends AbstractQuestionController {
      */
     @Override
     protected void onQuestionLoad() {
+        lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
+        timerProgressBar.setProgress(1);
         gameModel.answerActive(false);
-        startTimer();
     }
-    
+
+    @Override
+    protected void speakQuestion(String question) {
+        speaker.speak(question, this::startTimer);
+    }
+
     @Override
     protected void refresh() {
         refreshButtonState();
         super.refresh();
     }
-    
+
     /**
      * Handles the return to the main game scene.
      */
@@ -175,6 +175,7 @@ public class GameQuestionController extends AbstractQuestionController {
         ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
+
         timeline = new Timeline(
             new KeyFrame(
                 Duration.ZERO,
@@ -187,21 +188,22 @@ public class GameQuestionController extends AbstractQuestionController {
                 new KeyValue(ca.hueProperty(), -0.85)
             )
         );
-        timeline.playFromStart();
 
-        lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
         timelineCountdown = new Timeline(
             new KeyFrame(
                 Duration.seconds(1),
                 event -> lblCounter.setText(Integer.parseInt(lblCounter.getText()) - 1 + "")
             )
         );
-        timelineCountdown.setCycleCount(Timeline.INDEFINITE);
-        timelineCountdown.playFromStart();
 
-        activeTimer = timerContext.createTimer(TimerType.DEFAULT);
-        activeTimer.setTimeout(() -> Platform.runLater(() -> btnSubmit.fire()),
-            (int) gameModel.getTimerValue() * 1000);
+        timelineCountdown.setCycleCount(Timeline.INDEFINITE);
+        timeline.setOnFinished((event) -> Platform.runLater(() -> {
+            btnSubmit.fire();
+            lblCounter.setText("0");
+        }));
+
+        timelineCountdown.playFromStart();
+        timeline.playFromStart();
     }
 
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers.game;
+package quinzical.impl.controllers.menus;
 
 import com.google.inject.Inject;
 import com.jfoenix.controls.JFXSpinner;

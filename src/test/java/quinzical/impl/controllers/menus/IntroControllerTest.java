@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.menus;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;

@@ -26,7 +26,6 @@ import org.json.JSONException;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModelImpl;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.multiplayer.SocketModel;
 
@@ -82,15 +81,21 @@ public class MenuController extends AbstractSceneController {
         });
     }
 
+    @FXML
+    void btnProfile(ActionEvent event) {
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_PROFILE)).start();
+    }
+    
+    @FXML
+    void btnLeaderboard(ActionEvent event) {
+        new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_LEADERBOARD)).start();
+    }
+
 
     @FXML
     void btnQuit(ActionEvent event) {
         Platform.runLater(() -> socketModel.destroy());
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
-    }
-
-    void joinGame(String code) {
-
     }
 
 }

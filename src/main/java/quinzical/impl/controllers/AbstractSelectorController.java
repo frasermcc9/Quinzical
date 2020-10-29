@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers.game;
+package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -142,12 +142,12 @@ public abstract class AbstractSelectorController extends AbstractSceneController
     }
 
     @FXML
-    void btnBackPress() {
+    protected void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT);
     }
 
     @FXML
-    void btnOKPress() {
+    protected void btnOKPress() {
         generateQuestionsAndProgress();
     }
 }

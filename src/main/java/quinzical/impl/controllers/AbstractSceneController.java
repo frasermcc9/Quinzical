@@ -19,6 +19,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -34,6 +35,8 @@ public abstract class AbstractSceneController {
 
     @Inject
     protected SceneHandler sceneHandler;
+
+    private String passedInfo;
 
     protected static void createScaleAnimation(Node node, int ms, double toSize) {
         ScaleTransition st = new ScaleTransition(Duration.millis(ms));
@@ -84,9 +87,34 @@ public abstract class AbstractSceneController {
         this.background.getStyleClass().add(sceneHandler.getActiveTheme().name());
     }
 
-    protected abstract void onLoad();
+    protected void onLoad() {
+    }
 
     protected void refresh() {
     }
 
+    /**
+     * Repeatedly requests focus on a component, since sometimes JavaFX is buggy and doesn't like to request focus with
+     * just one try :)
+     *
+     * @param node    The node to request focus on
+     * @param retries Maximum number of times to try request focus before stopping
+     */
+    protected void focusRequester(Node node, int retries) {
+        if (retries == 0) return;
+        Platform.runLater(() -> {
+            if (!node.isFocused()) {
+                node.requestFocus();
+                focusRequester(node, retries - 1);
+            }
+        });
+    }
+
+    protected void usePassedData(String passedInfo) {
+    }
+
+    public void passData(String data) {
+        this.passedInfo = data;
+        usePassedData(passedInfo);
+    }
 }

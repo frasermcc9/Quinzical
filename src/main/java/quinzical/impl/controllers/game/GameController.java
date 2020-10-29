@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.game;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.SceneHandler;
