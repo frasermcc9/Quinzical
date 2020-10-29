@@ -21,6 +21,10 @@ import quinzical.interfaces.models.GameModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the category selector screen, where the user selects what 
+ * categories they want questions from
+ */
 public class CategorySelectorController extends AbstractSelectorController {
 
     private final List<String> selectedCategories = new ArrayList<>();
@@ -28,23 +32,37 @@ public class CategorySelectorController extends AbstractSelectorController {
     @Inject
     private GameModel gameModel;
 
+    /**
+     * Gets the gameModel
+     */
     @Override
     protected GameModel getModel() {
         return this.gameModel;
     }
 
+    /**
+     * Generates a set of questions according to the selected categories and then
+     * sets the scene to the question board section
+     */
     @Override
     protected void generateQuestionsAndProgress() {
         gameModel.generateGameQuestionSetFromCategories(selectedCategories);
         sceneHandler.setActiveScene(GameScene.GAME);
     }
 
+    /**
+     * Updates the amount of categories selected label and sets the ok 
+     * button to disabled if the amount is not 5
+     */
     @Override
     protected void modifyCounterLabel() {
         this.lblSelected.setText("Selected: " + selectedCategories.size() + "/5");
         btnOk.setDisable(selectedCategories.size() != 5);
     }
 
+    /**
+     * Gets the list of categories that are currently selected
+     */
     @Override
     protected List<String> getSelectedCategories() {
         return this.selectedCategories;
