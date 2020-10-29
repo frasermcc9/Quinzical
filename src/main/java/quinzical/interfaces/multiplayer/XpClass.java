@@ -44,4 +44,10 @@ public interface XpClass {
     }
 
     int getLevel();
+
+    int xpRemainingInLevel();
+
+    int xpDeltaBetweenLevels();
+
+    int xpThroughLevel();
 }
