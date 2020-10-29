@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.practice;
 
 import com.google.inject.Inject;
 import javafx.event.ActionEvent;
@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.SceneHandler;

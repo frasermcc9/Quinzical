@@ -15,9 +15,12 @@
 package quinzical.impl.controllers;
 
 import com.google.inject.Inject;
+import javafx.animation.Animation;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.interfaces.models.GameModelSaver;
 import quinzical.interfaces.models.SceneHandler;
@@ -85,16 +88,16 @@ public class IntroController extends AbstractSceneController {
     @Override
     protected void onLoad() {
         handleLoadGameButton();
-        lblfunny.setVisible(false);
-//        var st = new ScaleTransition(Duration.seconds(0.5));
-//        st.setNode(lblfunny);
-//        st.setFromX(0.7);
-//        st.setFromY(0.7);
-//        st.setToX(0.85);
-//        st.setToY(0.85);
-//        st.setAutoReverse(true);
-//        st.setCycleCount(Animation.INDEFINITE);
-//        st.playFromStart();
+        lblfunny.setVisible(true);
+        var st = new ScaleTransition(Duration.seconds(0.5));
+        st.setNode(lblfunny);
+        st.setFromX(0.7);
+        st.setFromY(0.7);
+        st.setToX(0.85);
+        st.setToY(0.85);
+        st.setAutoReverse(true);
+        st.setCycleCount(Animation.INDEFINITE);
+        st.playFromStart();
 
     }
 

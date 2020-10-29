@@ -200,21 +200,28 @@ public class StatisticsController extends AbstractSceneController {
     }
 
     private ObservableList<PieChart.Data> wrongChartData() {
-        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForIncorrectAnswers(5);
-        return observableArrayList(
-            data.stream()
-                .map(d -> new PieChart.Data(d.getKey() + " (" + d.getValue() + ")", d.getValue()))
-                .collect(Collectors.toList())
-        );
+        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForIncorrectAnswers();
+        return createSecondaryChartData(data);
     }
 
     private ObservableList<PieChart.Data> rightChartData() {
-        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForCorrectAnswers(5);
-        return observableArrayList(
+        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForCorrectAnswers();
+        return createSecondaryChartData(data);
+    }
+
+    private ObservableList<PieChart.Data> createSecondaryChartData(List<Pair<String, Integer>> data) {
+        var list = observableArrayList(
             data.stream()
+                .limit(8)
                 .map(d -> new PieChart.Data(d.getKey() + " (" + d.getValue() + ")", d.getValue()))
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
+
+        var other = data.stream()
+            .skip(8)
+            .reduce(0, (total, current) -> total + current.getValue(), Integer::sum);
+
+        list.add(new PieChart.Data("Other" + "(" + other + ")", other));
+        return list;
     }
 
 

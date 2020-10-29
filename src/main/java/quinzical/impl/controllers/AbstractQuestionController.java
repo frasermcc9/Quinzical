@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.game;
 
 import com.google.inject.Inject;
 import com.jfoenix.controls.JFXTextArea;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +24,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.models.SceneHandler;
@@ -91,14 +91,16 @@ public abstract class AbstractQuestionController extends AbstractSceneController
                 setSubmitButtonType(GameQuestionController.ButtonType.PASS);
             }
         } else {
-            setSubmitButtonType(GameQuestionController.ButtonType.SUBMIT);
+            if (activeText.getText().length() > 0) {
+                setSubmitButtonType(GameQuestionController.ButtonType.SUBMIT);
+            }
         }
     }
 
     @Override
     protected void refresh() {
         initialiseQuestion();
-        Platform.runLater(() -> textAreas.get(0).requestFocus());
+        focusRequester(textAreas.get(0), 10);
     }
 
     @Override
@@ -145,7 +147,6 @@ public abstract class AbstractQuestionController extends AbstractSceneController
             solutionContainer.getChildren().add(field);
             textAreas.add(field);
         }
-        textAreas.get(0).requestFocus();
     }
 
     private void focusFixer(Boolean isFocused, JFXTextArea field) {

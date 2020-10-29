@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package quinzical.impl.controllers;
+package quinzical.impl.controllers.practice;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import quinzical.impl.constants.Attempts;
 import quinzical.impl.constants.GameScene;
+import quinzical.impl.controllers.AbstractQuestionController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.impl.util.questionparser.Question;
 import quinzical.impl.util.questionparser.Solution;
@@ -52,7 +53,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * of attempts.
      */
     @FXML
-    void onSubmitClicked() {
+    protected void onSubmitClicked() {
 
         GameQuestion question = gameModel.getActiveQuestion();
         List<Solution> solutions = question.getSolutionsCopy();
@@ -142,7 +143,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * Called when the pass button is clicked, to go to a new question.
      */
     @FXML
-    void onPassClicked() {
+    protected void onPassClicked() {
         attempts = 2;
         onSubmitClicked();
     }
