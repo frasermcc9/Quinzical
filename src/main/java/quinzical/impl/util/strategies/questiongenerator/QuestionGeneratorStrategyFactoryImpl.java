@@ -161,7 +161,7 @@ class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
         Map<String, List<Question>> questions = questionCollection.getQuestions();
 
         // Shuffle the list of categories and pick 5.
-        ArrayList<String> allCategories = new ArrayList<>(questions.keySet());
+        List<String> allCategories = new ArrayList<>(questions.keySet());
         Collections.shuffle(allCategories);
         List<String> chosen = allCategories.subList(0, 5);
 
