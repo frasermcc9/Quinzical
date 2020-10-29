@@ -166,11 +166,16 @@ public class GameQuestionController extends AbstractQuestionController {
 
     }
 
+    /**
+     * Displays the end of game view
+     */
     private void handleCompletion() {
         sceneHandler.setActiveScene(GameScene.END);
     }
 
-
+    /**
+     * Starts the timer for the question answering
+     */
     private void startTimer() {
         ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);

@@ -14,8 +14,12 @@
 
 package quinzical.impl.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.inject.Inject;
 import com.jfoenix.controls.JFXTextArea;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +28,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.controllers.game.GameQuestionController;
 import quinzical.impl.models.structures.GameQuestion;
 import quinzical.interfaces.models.QuinzicalModel;
@@ -32,9 +35,9 @@ import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * An abstract class used by all of the question controllers
+ */
 public abstract class AbstractQuestionController extends AbstractSceneController {
 
     @Inject
@@ -86,6 +89,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
     protected abstract void onPassClicked();
 
+    /**
+     * Checks if all the text fields are empty when a button is pressed, setting the
+     * submit button to pass if so and submit otherwise
+     */
     protected void keyPressed(KeyCode keyCode) {
         if (!textAreas.get(0).isEditable())
             return;
@@ -106,6 +113,9 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         focusRequester(textAreas.get(0), 10);
     }
 
+    /**
+     * Ensures that the macron buttons will be initialised when this scene is loaded
+     */
     @Override
     protected void onLoad() {
         initMacronButtons();
@@ -124,6 +134,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         speaker.speak(question);
     }
 
+    /*
+     * Sets up the current question from the game model, setting all of the
+     * relevant text fields and calls the speaking of the question
+     */
     protected final void initialiseQuestion() {
 
         GameQuestion gameQuestion = getGameModel().getActiveQuestion();
@@ -172,6 +186,10 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         }
     }
 
+    /**
+     * Checks for if the enter key is pressed, and attempts to press the submit
+     * button if valid
+     */
     protected void onKeyPress(KeyEvent e) {
         keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
@@ -222,6 +240,12 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
 
+    /**
+     * Sets the submit button to either pass or submit, depending on what buttonType
+     * was passed in
+     * 
+     * @param buttonType The type of button to set the submit button to
+     */
     protected void setSubmitButtonType(ButtonType buttonType) {
         btnSubmit.getStyleClass().clear();
         btnSubmit.getStyleClass().addAll("material-button");
@@ -248,6 +272,9 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         setSubmitButtonType(ButtonType.PASS);
     }
 
+    /**
+     * The available types of buttons used for the submit button
+     */
     protected enum ButtonType {
         PASS, SUBMIT
     }
