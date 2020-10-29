@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-.xp-label {
-    -fx-font-size: 28;
-    -fx-text-fill: #ffb300;
-    -fx-alignment: center;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 4, 0.2, 2, 2);
+.jfx-dialog-overlay-pane {
+    -fx-background-color: rgba(0.0, 0.0, 0.0, 0.1);
 }
 
-.jfx-progress-bar > .track, .jfx-progress-bar > .bar {
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.3, 4, 4);
+.dialog-trigger {
+    -fx-background-color: WHITE;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 14px;
 }
 
-.jfx-progress-bar > .bar {
-    -fx-background-color: linear-gradient(to right, #4caf50 0%, #80e27e 100%);
+.jfx-layout-heading .label {
+    -fx-font-size: 20px;
+}
+
+.dialog-accept {
+    -fx-text-fill: #03A9F4;
+    -fx-font-weight: BOLD;
+    -fx-padding: 0.7em 0.8em;
 }

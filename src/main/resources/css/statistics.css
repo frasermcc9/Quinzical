@@ -28,26 +28,54 @@
 }
 
 .data0.chart-pie {
-    -fx-pie-color: #0277bd;
+    -fx-pie-color: #2196f3;
 }
 
 .data1.chart-pie {
-    -fx-pie-color: #ff8f00;
+    -fx-pie-color: #f44336;
+}
+
+.data2.chart-pie {
+    -fx-pie-color: #673ab7;
+}
+
+.data3.chart-pie {
+    -fx-pie-color: #ffa726;
+}
+
+.data4.chart-pie {
+    -fx-pie-color: #ffee58;
+}
+
+.data5.chart-pie {
+    -fx-pie-color: #66bb6a;
+}
+
+.data6.chart-pie {
+    -fx-pie-color: #8d6e63;
+}
+
+.data7.chart-pie {
+    -fx-pie-color: #ec407a;
+}
+
+.data8.chart-pie {
+    -fx-pie-color: #bdbdbd;
 }
 
 .table-view .column-header,
 .table-view .column-header-background .filler {
-    -fx-background-color:  #26aafc;
+    -fx-background-color: #26aafc;
 }
 
-.table-view .column-header .label{
+.table-view .column-header .label {
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 5);
     -fx-font-weight: bold;
     -fx-alignment: CENTER;
 }
 
-.table-view .cell{
+.table-view .cell {
     -fx-alignment: center;
     -fx-background-color: #29292D;
     -fx-border-color: #29292D;
