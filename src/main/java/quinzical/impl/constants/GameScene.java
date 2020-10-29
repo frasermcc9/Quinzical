@@ -161,6 +161,18 @@ public enum GameScene implements GameSceneFxmlLoader {
         public String getFxmlName() {
             return "multiplayer/create-account";
         }
+    },
+    MULTI_LEADERBOARD {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/leaderboard";
+        }
+    },
+    MULTI_PROFILE {
+        @Override
+        public String getFxmlName() {
+            return "multiplayer/profile";
+        }
     }
 }
 

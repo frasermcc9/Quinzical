@@ -28,11 +28,14 @@ public interface AnalyticsEngineReader {
     List<String> getQuestionsAnsweredByCategory(List<String> categories);
 
     /**
-     * 
      * @param points the maximum number of data points to return
      * @return list of the users most wrong categories, and the amount wrong
      */
-    List<Pair<String,Integer>> getPairsForIncorrectAnswers(int points);
+    List<Pair<String, Integer>> getPairsForIncorrectAnswers(int points);
 
     List<Pair<String, Integer>> getPairsForCorrectAnswers(int points);
+
+    List<Pair<String, Integer>> getPairsForIncorrectAnswers();
+
+    List<Pair<String, Integer>> getPairsForCorrectAnswers();
 }

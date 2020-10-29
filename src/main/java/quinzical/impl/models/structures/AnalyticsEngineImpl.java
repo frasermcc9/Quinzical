@@ -157,6 +157,14 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .collect(Collectors.toList());
     }
 
+    public List<Pair<String, Integer>> getPairsForIncorrectAnswers() {
+        return answeredByCategory.keySet()
+            .stream()
+            .sorted(Comparator.comparingInt(this::getQuestionsWrongForCategory).reversed())
+            .map(s -> new Pair<>(s, getQuestionsWrongForCategory(s)))
+            .collect(Collectors.toList());
+    }
+
     @Override
     public List<Pair<String, Integer>> getPairsForCorrectAnswers(int points) {
         return answeredByCategory.keySet()
@@ -164,6 +172,15 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .sorted(Comparator.comparingInt(this::getQuestionsCorrectForCategory).reversed())
             .map(s -> new Pair<>(s, getQuestionsCorrectForCategory(s)))
             .limit(points)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pair<String, Integer>> getPairsForCorrectAnswers() {
+        return answeredByCategory.keySet()
+            .stream()
+            .sorted(Comparator.comparingInt(this::getQuestionsCorrectForCategory).reversed())
+            .map(s -> new Pair<>(s, getQuestionsCorrectForCategory(s)))
             .collect(Collectors.toList());
     }
 }
