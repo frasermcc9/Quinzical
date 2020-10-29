@@ -14,9 +14,7 @@
 
 package quinzical.interfaces.models.structures;
 
-public interface SpeakerMutator {
-
-    void speak(String text);
+public interface SpeakerMutator extends Speaker {
 
     int getPitch();
 

@@ -17,4 +17,6 @@ package quinzical.interfaces.models.structures;
 public interface Speaker {
 
     void speak(String text);
+    
+    void speak(String text, Runnable onCompletion);
 }

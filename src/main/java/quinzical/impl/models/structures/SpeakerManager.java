@@ -15,6 +15,7 @@
 package quinzical.impl.models.structures;
 
 import com.google.inject.Singleton;
+import javafx.application.Platform;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.models.structures.SpeakerMutator;
 
@@ -36,69 +37,16 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     private int speed = 175;
     private int gap = 0;
 
+    public SpeakerManager() {
+    }
+
     public int getPitch() {
         return pitch;
     }
 
-    public int getAmplitude() {
-        return amplitude;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getGap() {
-        return gap;
-    }
-
-    public SpeakerManager() {
-    }
-
-    /**
-     * Speaks the given text.
-     *
-     * @param text the text to speak
-     */
-    @Override
-    public void speak(final String text) {
-        execute("espeak",
-            "-p", Integer.toString(pitch),
-            "-a", Integer.toString(amplitude),
-            "-s", Integer.toString(speed),
-            "-g", Integer.toString(gap),
-            text);
-    }
-
-    /**
-     * Creates the speaker thread and keeps it in the speaker field. When execute is called, the currently active
-     * speaker is stopped and replaced by the new one.
-     */
-    private void execute(final String... command) {
-        if (speaker != null && speaker.isAlive()) {
-            speaker.interrupt();
-        }
-        speaker = new Thread(() -> {
-
-            ProcessBuilder pb = new ProcessBuilder(command);
-            Process process = null;
-            try {
-                process = pb.start();
-                process.waitFor();
-                process.destroy();
-            } catch (IOException ignored) {
-
-            } catch (InterruptedException e) {
-                process.destroy();
-            }
-        });
-        speaker.start();
-    }
-
-
     /**
      * Sets the pitch of the speaker
-     * 
+     *
      * @param pitch - The pitch that the speaker will talk in (how high or low the voice sounds)
      */
     @Override
@@ -109,9 +57,13 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.pitch = pitch;
     }
 
+    public int getAmplitude() {
+        return amplitude;
+    }
+
     /**
      * Sets the amplitude of the speaker
-     * 
+     *
      * @param amplitude - The amplitude to be set (how loud the voice is)
      */
     @Override
@@ -122,9 +74,13 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.amplitude = amplitude;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
     /**
      * Sets the reading speed of the speaker
-     * 
+     *
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
     @Override
@@ -135,9 +91,13 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.speed = speed;
     }
 
+    public int getGap() {
+        return gap;
+    }
+
     /**
      * Sets the gap between words for the speaker
-     * 
+     *
      * @param gap - How long to wait between each word spoken
      */
     @Override
@@ -146,5 +106,56 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
             throw new IllegalArgumentException("The gap between words must be positive number");
         }
         this.gap = gap;
+    }
+
+    /**
+     * Speaks the given text.
+     *
+     * @param text the text to speak
+     */
+    @Override
+    public void speak(final String text, final Runnable callback) {
+        execute(callback, "espeak",
+            "-p", Integer.toString(pitch),
+            "-a", Integer.toString(amplitude),
+            "-s", Integer.toString(speed),
+            "-g", Integer.toString(gap),
+            text);
+    }
+
+    /**
+     * Speaks the given text.
+     *
+     * @param text the text to speak
+     */
+    @Override
+    public void speak(final String text) {
+        speak(text, () -> {
+        });
+    }
+
+    /**
+     * Creates the speaker thread and keeps it in the speaker field. When execute is called, the currently active
+     * speaker is stopped and replaced by the new one.
+     */
+    private void execute(Runnable callback, final String... command) {
+        if (speaker != null && speaker.isAlive()) {
+            speaker.interrupt();
+        }
+        speaker = new Thread(() -> {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            Process process = null;
+            try {
+                process = pb.start();
+                process.waitFor();
+                process.destroy();
+                Platform.runLater(callback);
+            } catch (IOException ignored) {
+
+            } catch (InterruptedException e) {
+                process.destroy();
+            }
+        });
+        speaker.start();
     }
 }

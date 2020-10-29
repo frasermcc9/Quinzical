@@ -15,27 +15,45 @@
 package quinzical.impl.models.structures;
 
 import com.google.inject.Singleton;
+import javafx.application.Platform;
 
 /**
- * An extension of SpeakerManager that is used when the OS is windows, meaning
- * that festival cannot be used
+ * An extension of SpeakerManager that is used when the OS is windows, meaning that festival cannot be used
  */
 @Singleton
 public class WindowsSpeakerManager extends SpeakerManager {
 
     /**
      * "Speaks" the inputted text (prints it out)
-     * 
+     *
      * @param text the text to speak
      */
     @Override
+    public void speak(String text, Runnable callback) {
+        execute(text, callback);
+    }
+
+    @Override
     public void speak(String text) {
-        System.out.println("Operating System is windows. Printing TTS: " + text);
+        speak(text, () -> {
+        });
+    }
+
+    private void execute(String text, Runnable runnable) {
+        new Thread(() -> {
+            System.out.println("Operating System is windows. Printing TTS: " + text);
+            try {
+                Thread.sleep(2000);
+                Platform.runLater(runnable);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**
      * Prints out the inputted pitch value, ensuring that this function is called when it should be
-     * 
+     *
      * @param pitch - The pitch that the speaker will talk in (how high or low the voice sounds)
      */
     @Override
@@ -46,7 +64,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
 
     /**
      * Prints out the inputted amplitude, ensuring that this function is called when it should be
-     * 
+     *
      * @param amplitude - The amplitude to be set (how loud the voice is)
      */
     @Override
@@ -57,7 +75,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
 
     /**
      * Prints out the inputted reading speed, ensuring that this function is called when it should be
-     * 
+     *
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
     @Override
@@ -68,7 +86,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
 
     /**
      * Prints out the inputted gap, ensuring that this function is called when it should be
-     * 
+     *
      * @param gap - How long to wait between each word spoken
      */
     @Override
