@@ -49,7 +49,7 @@ import quinzical.interfaces.strategies.timer.TimerContext;
  */
 public class MainModule extends AbstractModule {
 
-    private final static boolean TEST_MODE = true;
+    private final static boolean TEST_MODE = false;
 
     @Override
     protected void configure() {
