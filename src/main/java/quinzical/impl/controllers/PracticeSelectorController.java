@@ -23,7 +23,9 @@ import quinzical.interfaces.models.PracticeModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Controller for the practice mode selector scene
+ */
 public class PracticeSelectorController extends AbstractSelectorController {
 
     private final List<String> selectedCategories = new ArrayList<>();

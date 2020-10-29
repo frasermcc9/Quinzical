@@ -85,7 +85,9 @@ public class PracticeController extends AbstractSceneController {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
-
+    /**
+     * Sets up the Category grid
+     */
     @Override
     protected void onLoad() {
 
@@ -130,14 +132,23 @@ public class PracticeController extends AbstractSceneController {
 
     }
 
+    /**
+     * Sets the category as selected
+     */
     private void selectCategory(ActionEvent e) {
         buttonToggle(e, true);
     }
 
+    /**
+     * Sets the category as deselected
+     */
     private void deselectCategory(ActionEvent e) {
         buttonToggle(e, false);
     }
 
+    /**
+     * Toggles the specified button, showing if it is selected or not
+     */
     private void buttonToggle(ActionEvent e, boolean added) {
         Button source = (Button) e.getSource();
         String category = source.getText();

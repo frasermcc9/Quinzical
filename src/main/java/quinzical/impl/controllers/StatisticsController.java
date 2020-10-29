@@ -28,6 +28,9 @@ import java.util.stream.IntStream;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * Controller for the statistics scene
+ */
 public class StatisticsController extends AbstractSceneController {
 
     @Inject
@@ -60,6 +63,9 @@ public class StatisticsController extends AbstractSceneController {
     @FXML
     private Button btnChartReset;
 
+    /**
+     * Creates the the statistics visualisation when the scene is loaded
+     */
     @Override
     protected void onLoad() {
         Platform.runLater(() -> {
@@ -69,6 +75,9 @@ public class StatisticsController extends AbstractSceneController {
         });
     }
 
+    /**
+     * Creates a list of data to be used in the pie chart
+     */
     private ObservableList<PieChart.Data> createAnswerData() {
         int correct = gameModel.getUserData().getCorrect();
         int incorrect = gameModel.getUserData().getIncorrect();
@@ -79,6 +88,9 @@ public class StatisticsController extends AbstractSceneController {
         return observableArrayList(correctData, incorrectData);
     }
 
+    /**
+     * Sets up the table for the most answered question data
+     */
     private void createMostAnsweredTable() {
         ObservableList<String> categories =
             observableArrayList(gameModel.getUserData().getAnalytics().getMostAnsweredCategories());
@@ -89,6 +101,9 @@ public class StatisticsController extends AbstractSceneController {
             answered);
     }
 
+    /**
+     * Sets up the table for the most challenging questions data
+     */
     private void createMostChallengingTable() {
         ObservableList<String> categories =
             observableArrayList(gameModel.getUserData().getAnalytics().getMostChallengingCategories());
@@ -99,6 +114,9 @@ public class StatisticsController extends AbstractSceneController {
             answered);
     }
 
+    /**
+     * Creates a table using the inputted data
+     */
     private void createNameValueTable(TableView<NameValuePair> table, TableColumn<NameValuePair, String> names,
                                       TableColumn<NameValuePair, String> values, ObservableList<String> nameList,
                                       ObservableList<String> valueList) {
@@ -112,6 +130,12 @@ public class StatisticsController extends AbstractSceneController {
         ));
     }
 
+    /**
+     * Creates a scale animation for the given node
+     * 
+     * @param node The node that the animation is for
+     * @return The animation for the given node
+     */
     private ScaleTransition createScaleAnimation(Node node) {
         final ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.seconds(0.7));
@@ -129,6 +153,9 @@ public class StatisticsController extends AbstractSceneController {
         return scaleTransition;
     }
 
+    /**
+     * Creates a pie chart from data got from createAnswerData
+     */
     private void createChart() {
         pieRatio.setData(createAnswerData());
         ScaleTransition scaleTransition = createScaleAnimation(pieRatio);
@@ -142,7 +169,7 @@ public class StatisticsController extends AbstractSceneController {
         scaleTransition.play();
         setChartStateOne(false);
     }
-
+    
     private void setChartStateOne(boolean reloadData) {
         if (reloadData)
             pieRatio.setData(createAnswerData());
@@ -217,7 +244,9 @@ public class StatisticsController extends AbstractSceneController {
         );
     }
 
-
+    /**
+     * Returns the scene back to the main menu
+     */
     @FXML
     void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
