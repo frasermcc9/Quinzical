@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox fx:id="container" alignment="CENTER" style="-fx-spacing: 25;" stylesheets="@../../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.StoreItem">
    <children>
-      <VBox alignment="CENTER" style="-fx-spacing: 25; -fx-background-color: rgba(0,0,0,0.4);" VBox.vgrow="ALWAYS">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-spacing: 25; -fx-background-color: rgba(0,0,0,0.4);" VBox.vgrow="ALWAYS">
          <children>
             <Label fx:id="lblType" styleClass="bright-bold-label" text="Theme" />
             <Label fx:id="lblDescription" styleClass="bright-bold-label" text="LAKE" />

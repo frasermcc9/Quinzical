@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<?import java.net.URL?>
+<?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.practice.PracticeQuestionController">
    <VBox alignment="CENTER" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -52,8 +52,8 @@
          <Label fx:id="lblAttempts" alignment="TOP_RIGHT" prefHeight="48.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="3 Attempts Left" textAlignment="CENTER" />
          <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
             <children>
-               <JFXButton fx:id="btnSubmit" minHeight="60.0" minWidth="200.0" onAction="#onSubmitClicked" styleClass="material-button" text="Submit" />
-               <JFXButton fx:id="btnNextQuestion" minHeight="60.0" minWidth="200.0" onAction="#onSubmitClicked" text="Next Question">
+               <JFXButton fx:id="btnSubmit" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked" styleClass="material-button" text="Submit" />
+               <JFXButton fx:id="btnNextQuestion" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked" text="Next Question">
                   <styleClass>
                      <String fx:value="material-button" />
                      <String fx:value="material-button-green" />
