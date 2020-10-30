@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-@font-face {
-    font-family: kiwi;
-    src: url(./fonts/kiwi.ttf);
-}
-
 .intro-title {
     -fx-font-family: kiwi;
     -fx-font-size: 144;
