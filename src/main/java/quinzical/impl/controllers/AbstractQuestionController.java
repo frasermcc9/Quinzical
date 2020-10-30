@@ -14,12 +14,9 @@
 
 package quinzical.impl.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.inject.Inject;
 import com.jfoenix.controls.JFXTextArea;
-
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,6 +31,9 @@ import quinzical.interfaces.models.QuinzicalModel;
 import quinzical.interfaces.models.SceneHandler;
 import quinzical.interfaces.models.structures.Speaker;
 import quinzical.interfaces.strategies.questionverifier.QuestionVerifierFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An abstract class used by all of the question controllers
@@ -94,16 +94,19 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * submit button to pass if so and submit otherwise
      */
     protected void keyPressed(KeyCode keyCode) {
-        if (!textAreas.get(0).isEditable())
-            return;
+        if (!textAreas.get(0).isEditable()) return;
+        if (keyCode == KeyCode.ENTER) return;
+        
         if (keyCode == KeyCode.BACK_SPACE) {
             if (textAreas.stream().allMatch(t -> t.getText().isEmpty())) {
                 setSubmitButtonType(GameQuestionController.ButtonType.PASS);
             }
         } else {
-            if (activeText.getText().length() > 0) {
-                setSubmitButtonType(GameQuestionController.ButtonType.SUBMIT);
-            }
+            Platform.runLater(() -> {
+                if (activeText.getText().length() > 0) {
+                    setSubmitButtonType(GameQuestionController.ButtonType.SUBMIT);
+                }
+            });
         }
     }
 
@@ -130,7 +133,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     /**
      * Hook with default behaviour
      */
-    protected void speakQuestion(String question) {
+    protected void initialSpeak(String question) {
         speaker.speak(question);
     }
 
@@ -149,7 +152,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
         setPrompts(gameQuestion.getHint(), gameQuestion.getPrompt() + ":");
 
-        speakQuestion(gameQuestion.getHint());
+        initialSpeak(gameQuestion.getHint());
 
         int slnSize = gameQuestion.getSolutions().size();
 
@@ -220,15 +223,15 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      */
     protected void initMacronButtons() {
         macronBar.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b)
-                .forEach(btn -> btn.setOnAction(e -> {
-                    if (!textAreas.get(0).isEditable())
-                        return;
-                    activeText.insertText(activeText.getCaretPosition(), btn.getText());
-                    activeText.requestFocus();
-                    activeText.positionCaret(activeText.getCaretPosition());
+            .forEach(btn -> btn.setOnAction(e -> {
+                if (!textAreas.get(0).isEditable())
+                    return;
+                activeText.insertText(activeText.getCaretPosition(), btn.getText());
+                activeText.requestFocus();
+                activeText.positionCaret(activeText.getCaretPosition());
 
-                    onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
-                }));
+                onKeyPress(new KeyEvent(null, null, null, null, false, false, false, false));
+            }));
     }
 
     /**
@@ -243,7 +246,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     /**
      * Sets the submit button to either pass or submit, depending on what buttonType
      * was passed in
-     * 
+     *
      * @param buttonType The type of button to set the submit button to
      */
     protected void setSubmitButtonType(ButtonType buttonType) {
