@@ -43,7 +43,8 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     /**
      * Speaks the given text.
      *
-     * @param text the text to speak
+     * @param text     the text to speak
+     * @param callback function to execute once callback is complete
      */
     @Override
     public void speak(final String text, final Runnable callback) {
@@ -69,6 +70,9 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     /**
      * Creates the speaker thread and keeps it in the speaker field. When execute is called, the currently active
      * speaker is stopped and replaced by the new one.
+     *
+     * @param callback function to run once the process is complete
+     * @param command  bash command to execute
      */
     private void execute(Runnable callback, final String... command) {
         if (speaker != null && speaker.isAlive()) {
