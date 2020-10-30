@@ -134,6 +134,7 @@ public class GameQuestionController extends AbstractQuestionController {
         awaitingAnswer = true;
         lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
         timerProgressBar.setProgress(1);
+        timerProgressBar.setEffect(null);
         gameModel.answerActive(false);
     }
 
@@ -191,11 +192,11 @@ public class GameQuestionController extends AbstractQuestionController {
      * Starts the timer for the question answering
      */
     private void startTimer() {
-        if (!awaitingAnswer) return;
         ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
-
+        if (!awaitingAnswer) return;
+        
         timeline = new Timeline(
             new KeyFrame(
                 Duration.ZERO,
