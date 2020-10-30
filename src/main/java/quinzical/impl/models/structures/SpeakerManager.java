@@ -40,6 +40,59 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
     public SpeakerManager() {
     }
 
+    /**
+     * Speaks the given text.
+     *
+     * @param text the text to speak
+     */
+    @Override
+    public void speak(final String text, final Runnable callback) {
+        execute(callback, "espeak",
+            "-p", Integer.toString(pitch),
+            "-a", Integer.toString(amplitude),
+            "-s", Integer.toString(speed),
+            "-g", Integer.toString(gap),
+            text);
+    }
+
+    /**
+     * Speaks the given text.
+     *
+     * @param text the text to speak
+     */
+    @Override
+    public void speak(final String text) {
+        speak(text, () -> {
+        });
+    }
+
+    /**
+     * Creates the speaker thread and keeps it in the speaker field. When execute is called, the currently active
+     * speaker is stopped and replaced by the new one.
+     */
+    private void execute(Runnable callback, final String... command) {
+        if (speaker != null && speaker.isAlive()) {
+            speaker.interrupt();
+        }
+        speaker = new Thread(() -> {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            Process process = null;
+            try {
+                process = pb.start();
+                process.waitFor();
+                process.destroy();
+                Platform.runLater(callback);
+            } catch (IOException ignored) {
+
+            } catch (InterruptedException e) {
+                process.destroy();
+            }
+        });
+        //This thread will not prevent the application from closing.
+        speaker.setDaemon(true);
+        speaker.start();
+    }
+
     public int getPitch() {
         return pitch;
     }
@@ -106,56 +159,5 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
             throw new IllegalArgumentException("The gap between words must be positive number");
         }
         this.gap = gap;
-    }
-
-    /**
-     * Speaks the given text.
-     *
-     * @param text the text to speak
-     */
-    @Override
-    public void speak(final String text, final Runnable callback) {
-        execute(callback, "espeak",
-            "-p", Integer.toString(pitch),
-            "-a", Integer.toString(amplitude),
-            "-s", Integer.toString(speed),
-            "-g", Integer.toString(gap),
-            text);
-    }
-
-    /**
-     * Speaks the given text.
-     *
-     * @param text the text to speak
-     */
-    @Override
-    public void speak(final String text) {
-        speak(text, () -> {
-        });
-    }
-
-    /**
-     * Creates the speaker thread and keeps it in the speaker field. When execute is called, the currently active
-     * speaker is stopped and replaced by the new one.
-     */
-    private void execute(Runnable callback, final String... command) {
-        if (speaker != null && speaker.isAlive()) {
-            speaker.interrupt();
-        }
-        speaker = new Thread(() -> {
-            ProcessBuilder pb = new ProcessBuilder(command);
-            Process process = null;
-            try {
-                process = pb.start();
-                process.waitFor();
-                process.destroy();
-                Platform.runLater(callback);
-            } catch (IOException ignored) {
-
-            } catch (InterruptedException e) {
-                process.destroy();
-            }
-        });
-        speaker.start();
     }
 }
