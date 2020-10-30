@@ -58,6 +58,7 @@
     -fx-font-size: 24;
     -fx-text-fill: linear-gradient(to right, #f5f5f5 0%, #ffffff 100%);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.4, 4, 4);
+    -fx-padding: 15, 15, 15, 15;
     -fx-alignment: center;
     -fx-font-weight: bold;
     -fx-background-radius: 4px;
