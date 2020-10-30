@@ -34,6 +34,7 @@ import quinzical.interfaces.models.GameModel;
 import quinzical.interfaces.models.QuinzicalModel;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controls the question scene for the main game
@@ -50,6 +51,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
     private Timeline timeline;
     private Timeline timelineCountdown;
+    private boolean awaitingAnswer = true;
 
 
     // #region Injected handlers
@@ -88,20 +90,31 @@ public class GameQuestionController extends AbstractQuestionController {
      */
     @FXML
     protected void onSubmitClicked() {
-        timeline.stop();
-        timelineCountdown.stop();
+        awaitingAnswer = false;
+        if (timeline != null) {
+            timeline.stop();
+        }
+        if (timelineCountdown != null) {
+            timelineCountdown.stop();
+        }
         textAreas.forEach(a -> a.setEffect(null));
+        textAreas.forEach(textArea -> textArea.setEditable(false));
 
         GameQuestion question = gameModel.getActiveQuestion();
-
         List<Solution> solutions = question.getSolutionsCopy();
-
-        textAreas.forEach(textArea -> textArea.setEditable(false));
 
         List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
             .verifySolutions(solutions, textAreas);
-
-        gameModel.answerActive(corrects.stream().allMatch(e -> e));
+        final boolean allCorrect = corrects.stream().allMatch(a -> a);
+        if (allCorrect) {
+            speaker.speak("Correct");
+        } else {
+            speaker.speak("The correct answer was " +
+                solutions.stream()
+                    .map(s -> s.getVariants().get(0))
+                    .collect(Collectors.joining(" ")));
+        }
+        gameModel.answerActive(allCorrect);
 
         setSubmitButtonType(ButtonType.PASS);
         btnSubmit.setText("Categories");
@@ -118,13 +131,14 @@ public class GameQuestionController extends AbstractQuestionController {
      */
     @Override
     protected void onQuestionLoad() {
+        awaitingAnswer = true;
         lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
         timerProgressBar.setProgress(1);
         gameModel.answerActive(false);
     }
 
     @Override
-    protected void speakQuestion(String question) {
+    protected void initialSpeak(String question) {
         speaker.speak(question, this::startTimer);
     }
 
@@ -177,6 +191,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Starts the timer for the question answering
      */
     private void startTimer() {
+        if (!awaitingAnswer) return;
         ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
@@ -203,8 +218,10 @@ public class GameQuestionController extends AbstractQuestionController {
 
         timelineCountdown.setCycleCount(Timeline.INDEFINITE);
         timeline.setOnFinished((event) -> Platform.runLater(() -> {
-            btnSubmit.fire();
-            lblCounter.setText("0");
+            if (awaitingAnswer) {
+                btnSubmit.fire();
+                lblCounter.setText("0");
+            }
         }));
 
         timelineCountdown.playFromStart();
