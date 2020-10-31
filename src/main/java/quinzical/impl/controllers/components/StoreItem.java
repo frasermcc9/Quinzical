@@ -57,8 +57,8 @@ public class StoreItem<ItemType> {
 
     public final void setBuyAction(final Runnable runnable) {
         btnBuy.setOnAction(a -> {
-            runnable.run();
             gameModel.getUserData().incrementCoins(-cost);
+            runnable.run();
         });
     }
 
