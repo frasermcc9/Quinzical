@@ -23,23 +23,23 @@ public class MultiplayerGame {
         return instance;
     }
 
-    public String getCode() {
+    public final String getCode() {
         return code;
     }
 
-    public void setCode(final String code) {
+    public final void setCode(final String code) {
         this.code = code;
     }
 
-    public ObservableList<String> getObservablePlayers() {
+    public final ObservableList<String> getObservablePlayers() {
         return players;
     }
 
-    public void addPlayer(final String playerName) {
+    public final void addPlayer(final String playerName) {
         this.players.add(playerName);
     }
 
-    public void removePlayer(final String playerName) {
+    public final void removePlayer(final String playerName) {
         this.players.remove(playerName);
     }
 }

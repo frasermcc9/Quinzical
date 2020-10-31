@@ -36,7 +36,7 @@ public abstract class AbstractAlertController extends AbstractSceneController {
     @FXML
     private Label lblProgress;
 
-    protected void createAlert(final String title, final String alertContent, final Runnable runnable) {
+    protected final void createAlert(final String title, final String alertContent, final Runnable runnable) {
         final JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text(title));
         content.setBody(new Text(alertContent));
@@ -58,12 +58,12 @@ public abstract class AbstractAlertController extends AbstractSceneController {
         Platform.runLater(dialog::show);
     }
 
-    protected void createAlert(final String title, final String alertContent) {
+    protected final void createAlert(final String title, final String alertContent) {
         createAlert(title, alertContent, () -> {
         });
     }
 
-    protected void setProgressVisible(final boolean visible) {
+    protected final void setProgressVisible(final boolean visible) {
         progressIndicator.setVisible(visible);
         lblProgress.setVisible(visible);
     }

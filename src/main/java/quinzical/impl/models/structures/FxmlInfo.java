@@ -39,11 +39,11 @@ public class FxmlInfo<T> {
     }
 
 
-    public Parent getParent() {
+    public final Parent getParent() {
         return parent;
     }
 
-    public T getController() {
+    public final T getController() {
         return controller;
     }
 }

@@ -70,7 +70,7 @@ public class PracticeController extends AbstractSceneController {
      * switches to the practice question scene.
      */
     @FXML
-    void btnOKPress(final ActionEvent actionEvent) {
+    final void btnOKPress(final ActionEvent actionEvent) {
         if (selectedCategory != null) {
             final Question question = gameModel.getRandomQuestion();
             gameModel.activateQuestion(question);
@@ -82,7 +82,7 @@ public class PracticeController extends AbstractSceneController {
      * Sets the scene to the intro scene when the back button is pressed.
      */
     @FXML
-    void btnBackPress(final ActionEvent actionEvent) {
+    final void btnBackPress(final ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -90,7 +90,7 @@ public class PracticeController extends AbstractSceneController {
      * Sets up the Category grid
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
 
         btnOk.setDisable(true);
 

@@ -11,58 +11,58 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.practice.PracticeQuestionController">
-   <VBox alignment="CENTER" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-         <Label styleClass="title" stylesheets="@../../../css/title-label.css" text="Here's Your Question" />
-         <Label fx:id="lblHint" alignment="TOP_RIGHT" prefHeight="80.0" prefWidth="776.0" stylesheets="@../../../css/game-question.css" text="Label" wrapText="true" />
-         <Button mnemonicParsing="false" onAction="#onReplayClick" prefHeight="27.0" prefWidth="38.0" style="-fx-opacity: 1; -fx-background-color: transparent;">
-            <tooltip>
+    <VBox alignment="CENTER" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label styleClass="title" stylesheets="@../../../css/title-label.css" text="Here's Your Question"/>
+        <Label fx:id="lblHint" alignment="TOP_RIGHT" prefHeight="80.0" prefWidth="776.0"
+               stylesheets="@../../../css/game-question.css" text="Label" wrapText="true"/>
+        <Button mnemonicParsing="false" onAction="#onReplayClick" prefHeight="27.0" prefWidth="38.0"
+                style="-fx-opacity: 1; -fx-background-color: transparent;">
+           <tooltip>
                <Tooltip text="Replay Text-to-Speech">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
+                   <font>
+                       <Font size="16.0"/>
+                   </font>
                </Tooltip>
-            </tooltip>
-            <graphic>
+           </tooltip>
+           <graphic>
                <ImageView fitHeight="37.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../../../images/replay.png" />
-                  </image>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
+                   <cursor>
+                       <Cursor fx:constant="HAND"/>
+                   </cursor>
+                   <Image url="@../../../images/replay.png"/>
                </ImageView>
-            </graphic>
-         </Button>
-         <Label fx:id="lblPrompt" alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="Label" />
-         <VBox fx:id="solutionContainer" alignment="TOP_CENTER" prefWidth="480.0" styleClass="solution-container">
-            <VBox.margin>
-               <Insets left="400.0" right="400.0" />
-            </VBox.margin>
-         </VBox>
-         <HBox fx:id="macronBar" alignment="CENTER" style="-fx-spacing: 10;">
-            <children>
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ā" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ē" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ī" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ō" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ū" />
-            </children>
-         </HBox>
-         <Label fx:id="lblAttempts" alignment="TOP_RIGHT" prefHeight="48.0" prefWidth="737.0" stylesheets="@../../../css/game-question.css" text="3 Attempts Left" textAlignment="CENTER" />
-         <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 40;">
-            <children>
-               <JFXButton fx:id="btnSubmit" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked" styleClass="material-button" text="Submit" />
-               <JFXButton fx:id="btnNextQuestion" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked" text="Next Question">
-                  <styleClass>
-                     <String fx:value="material-button" />
-                     <String fx:value="material-button-green" />
-                  </styleClass>
-               </JFXButton>
-            </children>
-         </HBox>
-      </children>
-   </VBox>
+           </graphic>
+        </Button>
+        <Label fx:id="lblPrompt" alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="737.0"
+               stylesheets="@../../../css/game-question.css" text="Label"/>
+        <VBox fx:id="solutionContainer" alignment="TOP_CENTER" prefWidth="480.0" styleClass="solution-container">
+           <VBox.margin>
+               <Insets left="400.0" right="400.0"/>
+           </VBox.margin>
+        </VBox>
+        <HBox fx:id="macronBar" alignment="CENTER" style="-fx-spacing: 10;">
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ā"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ē"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ī"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ō"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ū"/>
+        </HBox>
+        <Label fx:id="lblAttempts" alignment="TOP_RIGHT" prefHeight="48.0" prefWidth="737.0"
+               stylesheets="@../../../css/game-question.css" text="3 Attempts Left" textAlignment="CENTER"/>
+        <HBox fx:id="progressButtons" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
+              style="-fx-spacing: 40;">
+            <JFXButton fx:id="btnSubmit" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked"
+                       styleClass="material-button" text="Submit"/>
+            <JFXButton fx:id="btnNextQuestion" minHeight="60.0" minWidth="230.0" onAction="#onSubmitClicked"
+                       text="Next Question">
+                <styleClass>
+                    <String fx:value="material-button"/>
+                    <String fx:value="material-button-green"/>
+                </styleClass>
+            </JFXButton>
+        </HBox>
+    </VBox>
      <cursor>
          <Cursor fx:constant="DEFAULT" />
      </cursor>

@@ -45,7 +45,7 @@ public class QuestionGeneratorStrategyFactoryImplTest {
     }
 
     @Test
-    public void TestInternationalQuestionApi() {
+    public final void TestInternationalQuestionApi() {
         final QuestionGeneratorStrategyFactory factory = injector.getInstance(QuestionGeneratorStrategyFactory.class);
         final QuestionGeneratorStrategy strategy = factory.createInternationalQuestionStrategy();
         final Map<String, List<GameQuestion>> board = strategy.generateQuestions();

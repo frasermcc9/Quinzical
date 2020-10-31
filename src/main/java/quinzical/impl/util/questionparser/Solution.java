@@ -33,8 +33,8 @@ public class Solution implements Serializable {
      */
     public Solution(final String[] solutions) {
         for (String s : solutions) {
-            s = s.trim();
-            variants.add(s);
+            String trim = s.trim();
+            variants.add(trim);
         }
     }
 
@@ -45,15 +45,15 @@ public class Solution implements Serializable {
      */
     public Solution(final List<String> solutions) {
         for (String s : solutions) {
-            s = s.trim();
-            variants.add(s);
+            String trim = s.trim();
+            variants.add(trim);
         }
     }
 
     /**
      * Gets the a copy of the variants of this solution object.
      */
-    public List<String> getVariants() {
+    public final List<String> getVariants() {
         return new ArrayList<>(variants);
     }
 }

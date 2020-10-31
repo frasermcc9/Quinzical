@@ -52,12 +52,12 @@ public class StoreController extends AbstractSceneController {
      * Return to the main menu
      */
     @FXML
-    void btnBackPress() {
+    final void btnBackPress() {
         Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.INTRO));
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         this.loadShop();
     }
 

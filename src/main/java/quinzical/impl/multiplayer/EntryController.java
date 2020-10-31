@@ -64,7 +64,7 @@ public class EntryController extends AbstractAlertController {
     }
 
     @FXML
-    void btnConnect() throws URISyntaxException, IllegalAccessException, NoSuchFieldException, JSONException {
+    final void btnConnect() throws URISyntaxException, IllegalAccessException, NoSuchFieldException, JSONException {
 
         final Socket socket = IO.socket(socketUrl);
         socketModel.setName(txtName.getText()).setSocket(socket);
@@ -100,12 +100,12 @@ public class EntryController extends AbstractAlertController {
     }
 
     @FXML
-    void btnAccount() {
+    final void btnAccount() {
         sceneHandler.setActiveScene(GameScene.MULTI_ACCOUNT);
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
         createValidator("Username cannot be blank", txtName);
         createValidator("Password cannot be blank", txtPassword);
@@ -113,7 +113,7 @@ public class EntryController extends AbstractAlertController {
 
 
     @FXML
-    void btnQuitClick() {
+    final void btnQuitClick() {
         if (socketModel.getSocket() != null)
             socketModel.destroy();
         sceneHandler.setActiveScene(GameScene.INTRO);

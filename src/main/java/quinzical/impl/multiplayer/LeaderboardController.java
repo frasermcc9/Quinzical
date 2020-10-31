@@ -56,19 +56,19 @@ public class LeaderboardController extends AbstractSceneController {
     private ObservableList<PlayerData> playerList;
 
     @FXML
-    void btnCancel() {
+    final void btnCancel() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)).start();
     }
 
     @FXML
-    void btnProfile() {
+    final void btnProfile() {
         final String name = tableBrowse.getSelectionModel().getSelectedItem().getValue().getName();
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_PROFILE).passData(name)).start();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onLoad() {
+    protected final void onLoad() {
         playerList = observableArrayList();
         new Thread(this::createLeaderboard).start();
 
@@ -123,19 +123,19 @@ public class LeaderboardController extends AbstractSceneController {
             this.xp = new SimpleIntegerProperty(xp);
         }
 
-        public String getName() {
+        public final String getName() {
             return name.get();
         }
 
-        public SimpleStringProperty nameProperty() {
+        public final SimpleStringProperty nameProperty() {
             return name;
         }
 
-        public int getXp() {
+        public final int getXp() {
             return xp.get();
         }
 
-        public SimpleIntegerProperty xpProperty() {
+        public final SimpleIntegerProperty xpProperty() {
             return xp;
         }
     }

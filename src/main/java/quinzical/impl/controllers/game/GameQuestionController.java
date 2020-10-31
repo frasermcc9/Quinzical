@@ -62,7 +62,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * @return - the gameModel that this controller uses
      */
     @Override
-    protected QuinzicalModel getGameModel() {
+    protected final QuinzicalModel getGameModel() {
         return this.gameModel;
     }
 
@@ -73,7 +73,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
-    protected void setPrompts(final String hint, final String prompt) {
+    protected final void setPrompts(final String hint, final String prompt) {
         this.lblPrompt.setText(prompt);
     }
 
@@ -81,7 +81,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
 
     @Override
-    protected void onPassClicked() {
+    protected final void onPassClicked() {
         onSubmitClicked();
     }
 
@@ -89,7 +89,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * submits the currently inputted text as an answer to the question
      */
     @FXML
-    protected void onSubmitClicked() {
+    protected final void onSubmitClicked() {
         awaitingAnswer = false;
         if (timeline != null) {
             timeline.stop();
@@ -130,7 +130,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
      */
     @Override
-    protected void onQuestionLoad() {
+    protected final void onQuestionLoad() {
         awaitingAnswer = true;
         lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
         timerProgressBar.setProgress(1);
@@ -139,12 +139,12 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     @Override
-    protected void initialSpeak(final String question) {
+    protected final void initialSpeak(final String question) {
         speaker.speak(question, this::startTimer);
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         refreshButtonState();
         super.refresh();
     }

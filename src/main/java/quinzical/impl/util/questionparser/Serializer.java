@@ -55,13 +55,13 @@ public class Serializer {
 
 
             for (String line : lines) {
-                line = line.trim();
-                if (!line.matches("^.*\\|.*\\|.*$")) {
-                    activeCategory = line;
+                String trim = line.trim();
+                if (!trim.matches("^.*\\|.*\\|.*$")) {
+                    activeCategory = trim;
                     M.put(activeCategory, new ArrayList<>());
                     continue;
                 }
-                final String[] parts = line.split("\\|");
+                final String[] parts = trim.split("\\|");
                 final String hint = parts[0].trim();
                 final String prompt = parts[1].trim();
 

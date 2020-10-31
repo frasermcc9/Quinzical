@@ -54,7 +54,7 @@ public class SceneHandlerImpl implements SceneHandler {
         this.cachedScenes = new HashMap<>();
     }
 
-    public AbstractSceneController setActiveScene(final GameScene newScene) {
+    public final AbstractSceneController setActiveScene(final GameScene newScene) {
 
         FxmlInfo<AbstractSceneController> fxmlInfo = null;
         if (cachedScenes.containsKey(newScene)) {
@@ -93,11 +93,11 @@ public class SceneHandlerImpl implements SceneHandler {
     }
 
     @Override
-    public void fireBackgroundChange(final Theme theme) {
+    public final void fireBackgroundChange(final Theme theme) {
         activeTheme = theme;
     }
 
-    public Theme getActiveTheme() {
+    public final Theme getActiveTheme() {
         return activeTheme;
     }
 

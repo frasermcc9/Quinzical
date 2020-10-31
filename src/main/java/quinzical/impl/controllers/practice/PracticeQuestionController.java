@@ -53,7 +53,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * of attempts.
      */
     @FXML
-    protected void onSubmitClicked() {
+    protected final void onSubmitClicked() {
 
         final GameQuestion question = gameModel.getActiveQuestion();
         final List<Solution> solutions = question.getSolutionsCopy();
@@ -98,7 +98,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         refreshButtonState();
         super.refresh();
     }
@@ -125,7 +125,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * @return the gameModel that this controller is using.
      */
     @Override
-    protected QuinzicalModel getGameModel() {
+    protected final QuinzicalModel getGameModel() {
         return this.gameModel;
     }
 
@@ -136,7 +136,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
-    protected void setPrompts(final String hint, final String prompt) {
+    protected final void setPrompts(final String hint, final String prompt) {
         this.lblHint.setText(hint);
         this.lblPrompt.setText(prompt);
     }
@@ -146,7 +146,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * Called when the pass button is clicked, to go to a new question.
      */
     @FXML
-    protected void onPassClicked() {
+    protected final void onPassClicked() {
         attempts = 2;
         onSubmitClicked();
     }
@@ -168,7 +168,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * state.
      */
     @Override
-    protected void onQuestionLoad() {
+    protected final void onQuestionLoad() {
         this.btnSubmit.setDisable(false);
     }
 

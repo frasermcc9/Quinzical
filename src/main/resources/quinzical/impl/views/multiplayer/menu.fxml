@@ -26,58 +26,61 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.MenuController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" styleClass="vbox" stylesheets="@../../../../css/multiplayer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <Label fx:id="lblName" styleClass="title" stylesheets="@../../../../css/multiplayer.css" text="NAME_PLACEHOLDER">
-            <font>
-               <Font size="30.0" />
-            </font>
-         </Label>
-         <Separator prefWidth="200.0">
-            <VBox.margin>
-               <Insets left="350.0" right="350.0" />
-            </VBox.margin>
-         </Separator>
-         <JFXButton minWidth="250.0" onAction="#btnHost" styleClass="material-button" text="Host Game" />
-         <Separator prefWidth="200.0">
-            <VBox.margin>
-               <Insets left="350.0" right="350.0" />
-            </VBox.margin>
-         </Separator>
-         <JFXButton minWidth="250.0" onAction="#btnBrowse" styleClass="material-button" text="Browse Games" />
-         <Separator prefWidth="200.0">
-            <VBox.margin>
-               <Insets left="350.0" right="350.0" />
-            </VBox.margin>
-         </Separator>
-         <JFXTextField fx:id="txtCode" prefHeight="25.0" prefWidth="250.0" promptText="Enter Join Code" styleClass="name-field">
-            <VBox.margin>
-               <Insets left="500.0" right="500.0" />
-            </VBox.margin>
-         </JFXTextField>
-         <JFXButton minWidth="250.0" onAction="#btnJoin" styleClass="material-button" text="Join Game" />
-         <Separator prefWidth="200.0">
-            <VBox.margin>
-               <Insets left="350.0" right="350.0" />
-            </VBox.margin>
-         </Separator>
-         <JFXButton minWidth="250.0" onAction="#btnProfile" styleClass="material-button" text="Profile" />
-         <JFXButton minWidth="250.0" onAction="#btnLeaderboard" styleClass="material-button" text="Leaderboard" />
-         <Separator prefWidth="200.0">
-            <VBox.margin>
-               <Insets left="350.0" right="350.0" />
-            </VBox.margin>
-         </Separator>
-         <JFXButton minWidth="250.0" onAction="#btnQuit" styleClass="material-button" text="Disconnect" />
-      </VBox>
-   </children>
-   <stylesheets>
-      <URL value="@../../../../css/global.css" />
-      <URL value="@../../../../css/views/multiplayer-base.css" />
-      <URL value="@../../../../css/title-label.css" />
-   </stylesheets>
+<AnchorPane fx:id="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="quinzical.impl.multiplayer.MenuController">
+    <stylesheets>
+        <URL value="@../../../../css/global.css"/>
+        <URL value="@../../../../css/views/multiplayer-base.css"/>
+        <URL value="@../../../../css/title-label.css"/>
+    </stylesheets>
+    <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" styleClass="vbox"
+          stylesheets="@../../../../css/multiplayer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
+        <Label fx:id="lblName" styleClass="title" stylesheets="@../../../../css/multiplayer.css"
+               text="NAME_PLACEHOLDER">
+          <font>
+              <Font size="30.0"/>
+          </font>
+        </Label>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+              <Insets left="350.0" right="350.0"/>
+          </VBox.margin>
+        </Separator>
+        <JFXButton minWidth="250.0" onAction="#btnHost" styleClass="material-button" text="Host Game"/>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+              <Insets left="350.0" right="350.0"/>
+          </VBox.margin>
+        </Separator>
+        <JFXButton minWidth="250.0" onAction="#btnBrowse" styleClass="material-button" text="Browse Games"/>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+              <Insets left="350.0" right="350.0"/>
+          </VBox.margin>
+        </Separator>
+        <JFXTextField fx:id="txtCode" prefHeight="25.0" prefWidth="250.0" promptText="Enter Join Code"
+                      styleClass="name-field">
+          <VBox.margin>
+              <Insets left="500.0" right="500.0"/>
+          </VBox.margin>
+        </JFXTextField>
+        <JFXButton minWidth="250.0" onAction="#btnJoin" styleClass="material-button" text="Join Game"/>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+              <Insets left="350.0" right="350.0"/>
+          </VBox.margin>
+        </Separator>
+        <JFXButton minWidth="250.0" onAction="#btnProfile" styleClass="material-button" text="Profile"/>
+        <JFXButton minWidth="250.0" onAction="#btnLeaderboard" styleClass="material-button" text="Leaderboard"/>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+              <Insets left="350.0" right="350.0"/>
+          </VBox.margin>
+        </Separator>
+        <JFXButton minWidth="250.0" onAction="#btnQuit" styleClass="material-button" text="Disconnect"/>
+    </VBox>
 </AnchorPane>

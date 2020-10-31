@@ -50,7 +50,7 @@ public abstract class AbstractGameModel implements QuinzicalModel {
      * @return current active question, or null if there isn't one.
      */
     @Override
-    public GameQuestion getActiveQuestion() {
+    public final GameQuestion getActiveQuestion() {
         return this.activeQuestion;
     }
 
@@ -58,17 +58,17 @@ public abstract class AbstractGameModel implements QuinzicalModel {
      * Sets the active question in the game.
      */
     @Override
-    public void activateQuestion(final GameQuestion question) {
+    public final void activateQuestion(final GameQuestion question) {
         this.activeQuestion = question;
         fireActiveQuestionUpdate();
     }
 
     @Override
-    public void onActiveQuestionUpdate(final ActiveQuestionObserver fn) {
+    public final void onActiveQuestionUpdate(final ActiveQuestionObserver fn) {
         activeObservers.add(fn);
     }
 
-    protected void fireActiveQuestionUpdate() {
+    protected final void fireActiveQuestionUpdate() {
         this.activeObservers.forEach(ActiveQuestionObserver::fireActiveQuestion);
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractGameModel implements QuinzicalModel {
      *
      * @return - The list of all categories, expressed as strings that are the names of each category.
      */
-    public List<String> getCategories() {
+    public final List<String> getCategories() {
         return new ArrayList<>(questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions().keySet());
     }
 }

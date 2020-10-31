@@ -59,7 +59,7 @@ public class TileController {
         header.setStyle("-fx-background-color: " + newHex);
     }
 
-    public TileController setContent(final String content, final String ratio) {
+    public final TileController setContent(final String content, final String ratio) {
         contentLabel.setText(content);
         setHeaderColourFromString(content);
 
@@ -67,7 +67,7 @@ public class TileController {
         return this;
     }
 
-    public String getHeader() {
+    public final String getHeader() {
         return this.contentLabel.getText();
     }
 }

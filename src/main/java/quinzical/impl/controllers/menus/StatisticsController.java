@@ -82,7 +82,7 @@ public class StatisticsController extends AbstractSceneController {
      * Creates the the statistics visualisation when the scene is loaded
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         Platform.runLater(() -> {
             createChart();
             createMostAnsweredTable();
@@ -236,7 +236,7 @@ public class StatisticsController extends AbstractSceneController {
     }
 
     @FXML
-    void resetChartClick() {
+    final void resetChartClick() {
         btnChartReset.setDisable(true);
         setChartStateOne();
     }
@@ -270,7 +270,7 @@ public class StatisticsController extends AbstractSceneController {
      * Returns the scene back to the main menu
      */
     @FXML
-    void btnBackPress() {
+    final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -288,27 +288,27 @@ public class StatisticsController extends AbstractSceneController {
             this.value = new SimpleStringProperty(value);
         }
 
-        public String getName() {
+        public final String getName() {
             return name.get();
         }
 
-        public void setName(final String name) {
+        public final void setName(final String name) {
             this.name.set(name);
         }
 
-        public SimpleStringProperty nameProperty() {
+        public final SimpleStringProperty nameProperty() {
             return name;
         }
 
-        public String getValue() {
+        public final String getValue() {
             return value.get();
         }
 
-        public void setValue(final int value) {
+        public final void setValue(final int value) {
             this.value.set(value + "");
         }
 
-        public SimpleStringProperty valueProperty() {
+        public final SimpleStringProperty valueProperty() {
             return value;
         }
     }

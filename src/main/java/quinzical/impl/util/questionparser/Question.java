@@ -59,7 +59,7 @@ public class Question implements Serializable {
     /**
      * gets the category of this question
      */
-    public String getCategory() {
+    public final String getCategory() {
         return category;
     }
 
@@ -69,7 +69,7 @@ public class Question implements Serializable {
      * @param solutions - the solution to add to this question
      * @return - the question the solutions are being added to
      */
-    public Question addSolution(final String[] solutions) {
+    public final Question addSolution(final String[] solutions) {
         final Solution s = new Solution(solutions);
         this.solutions.add(s);
         return this;
@@ -78,28 +78,28 @@ public class Question implements Serializable {
     /**
      * gets the hint for this question
      */
-    public String getHint() {
+    public final String getHint() {
         return hint;
     }
 
     /**
      * gets the solutions for this question
      */
-    public List<Solution> getSolutions() {
+    public final List<Solution> getSolutions() {
         return solutions;
     }
 
     /**
      * gets a copy of the solutions for this question (so that they cant be changed)
      */
-    public List<Solution> getSolutionsCopy() {
+    public final List<Solution> getSolutionsCopy() {
         return new ArrayList<>(solutions);
     }
 
     /**
      * gets the prompt for this question
      */
-    public String getPrompt() {
+    public final String getPrompt() {
         return prompt;
     }
 
@@ -110,7 +110,7 @@ public class Question implements Serializable {
      * @return - whether or not the inputted question and this are the same
      */
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Question question = (Question) o;

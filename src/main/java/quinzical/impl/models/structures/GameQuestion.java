@@ -37,37 +37,37 @@ public class GameQuestion extends Question {
         super(question);
     }
 
-    public void answer(final boolean correct) {
+    public final void answer(final boolean correct) {
         this.answerable = false;
         this.answered = true;
         this.correct = correct;
     }
 
-    public boolean isCorrect() {
+    public final boolean isCorrect() {
         return this.correct;
     }
 
-    public int getValue() {
+    public final int getValue() {
         return value;
     }
 
-    public void setValue(final int value) {
+    public final void setValue(final int value) {
         this.value = value;
     }
 
-    public boolean isAnswerable() {
+    public final boolean isAnswerable() {
         return answerable;
     }
 
-    public void setAnswerable(final boolean answerable) {
+    public final void setAnswerable(final boolean answerable) {
         this.answerable = answerable;
     }
 
-    public boolean isAnswered() {
+    public final boolean isAnswered() {
         return answered;
     }
     
-    public void setAnswered(final boolean answered) {
+    public final void setAnswered(final boolean answered) {
         this.answered = answered;
     }
 

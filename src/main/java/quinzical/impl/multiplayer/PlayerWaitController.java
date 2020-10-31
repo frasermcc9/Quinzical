@@ -30,13 +30,13 @@ public class PlayerWaitController extends AbstractWaitController {
     private ActiveGame activeGame;
 
     @FXML
-    void btnCancel(final ActionEvent event) {
+    final void btnCancel(final ActionEvent event) {
         socketModel.getSocket().emit("playerDisconnect");
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @Override
-    protected void addListeners() {
+    protected final void addListeners() {
         socketModel.getSocket().on("gameStart", (objects) -> Platform.runLater(() -> {
             final int time = Integer.parseInt(objects[0].toString());
             activeGame.reset().init(time);

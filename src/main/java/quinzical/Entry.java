@@ -56,7 +56,7 @@ public class Entry extends Application {
      * Sets up all the scenes for the application as well as attempt to save the game when the application is closed.
      */
     @Override
-    public void start(final Stage stage) {
+    public final void start(final Stage stage) {
 
         // Create the injection container
         injector = Guice.createInjector(new MainModule());

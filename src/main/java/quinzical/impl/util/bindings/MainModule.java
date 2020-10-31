@@ -52,7 +52,7 @@ public class MainModule extends AbstractModule {
     private final static boolean TEST_MODE = false;
 
     @Override
-    protected void configure() {
+    protected final void configure() {
 
         final Scene scene = new Scene(new AnchorPane());
         scene.getStylesheets().add(Entry.class.getResource("/css/global-font.css").toExternalForm());

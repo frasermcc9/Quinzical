@@ -142,7 +142,7 @@ public class OptionsController extends AbstractSceneController {
      * Initialize the help menu.
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         //load the JSON help files
         try {
             loadHelpFromJson();
@@ -193,7 +193,7 @@ public class OptionsController extends AbstractSceneController {
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         this.background.getStyleClass().clear();
         this.background.getStyleClass().add(sceneHandler.getActiveTheme().name());
     }
@@ -202,7 +202,7 @@ public class OptionsController extends AbstractSceneController {
      * Return to the main menu.
      */
     @FXML
-    void btnMenuClick() {
+    final void btnMenuClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.INTRO)).start();
     }
 
@@ -237,7 +237,7 @@ public class OptionsController extends AbstractSceneController {
      * Sets the pitch back to the default value and puts the slider in the correct position for that.
      */
     @FXML
-    void pitchDefault() {
+    final void pitchDefault() {
         speakerMutator.setPitch(DEFAULT_PITCH);
         sliderPitch.setValue(DEFAULT_PITCH);
     }
@@ -246,7 +246,7 @@ public class OptionsController extends AbstractSceneController {
      * Sets the speed back to the default value and puts the slider in the correct position for that.
      */
     @FXML
-    void speedDefault() {
+    final void speedDefault() {
         speakerMutator.setSpeed(DEFAULT_SPEED);
         sliderSpeed.setValue(DEFAULT_SPEED);
     }
@@ -255,7 +255,7 @@ public class OptionsController extends AbstractSceneController {
      * Sets the amplitude back to the default value and puts the slider in the correct position for that.
      */
     @FXML
-    void ampDefault() {
+    final void ampDefault() {
         speakerMutator.setAmplitude(DEFAULT_AMP);
         sliderAmp.setValue(DEFAULT_AMP);
     }
@@ -264,13 +264,13 @@ public class OptionsController extends AbstractSceneController {
      * Sets the speaker gap back to the default value and puts the slider in the correct position for that.
      */
     @FXML
-    void gapDefault() {
+    final void gapDefault() {
         speakerMutator.setGap(DEFAULT_GAP);
         sliderGap.setValue(DEFAULT_GAP);
     }
 
     @FXML
-    void timerDefault() {
+    final void timerDefault() {
         gameModel.setTimerValue(DEFAULT_TIMER);
         sliderTimer.setValue(DEFAULT_TIMER);
     }
@@ -279,7 +279,7 @@ public class OptionsController extends AbstractSceneController {
      * Runs a sample message of the speaker to show the user what it sounds like.
      */
     @FXML
-    void onSampleClick(final MouseEvent event) {
+    final void onSampleClick(final MouseEvent event) {
         speakerMutator.speak("Hello, welcome to Quinzical!");
     }
 
@@ -294,7 +294,7 @@ public class OptionsController extends AbstractSceneController {
      * First confirms the user wishes to delete the data, and then executes the reset data on the user data object.
      */
     @FXML
-    void btnResetLocalData() {
+    final void btnResetLocalData() {
         final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Data Deletion");
         alert.setHeaderText("Are you sure you want to delete your local user data?");
@@ -311,7 +311,7 @@ public class OptionsController extends AbstractSceneController {
      * files.
      */
     @FXML
-    void btnLoadNewQuestionSet() {
+    final void btnLoadNewQuestionSet() {
         Serializer.main(null);
         questionCollection.regenerateQuestionsFromDisk();
     }
@@ -325,7 +325,7 @@ public class OptionsController extends AbstractSceneController {
      * Animate in the advanced submenu.
      */
     @FXML
-    void advancedHovered() {
+    final void advancedHovered() {
         if (activeVbox == vboxAdvanced) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -340,7 +340,7 @@ public class OptionsController extends AbstractSceneController {
      * Animate in the help submenu.
      */
     @FXML
-    void helpHovered() {
+    final void helpHovered() {
         if (activeVbox == vboxHelp) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -355,7 +355,7 @@ public class OptionsController extends AbstractSceneController {
      * Animate in the theme submenu.
      */
     @FXML
-    void themeHovered() {
+    final void themeHovered() {
         if (activeVbox == vboxTheme) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -370,7 +370,7 @@ public class OptionsController extends AbstractSceneController {
      * Animate in the accessibility submenu.
      */
     @FXML
-    void accessHovered() {
+    final void accessHovered() {
         if (activeVbox == vboxAccess) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);
@@ -520,7 +520,7 @@ public class OptionsController extends AbstractSceneController {
      * For when a help entry is exited. Return to the main help menu.
      */
     @FXML
-    void onHelpReturnClick() {
+    final void onHelpReturnClick() {
         if (activeVbox == vboxHelp) return;
         if (activeVbox != null) {
             animateOutSettings(activeVbox, activeLabel);

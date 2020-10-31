@@ -30,7 +30,7 @@ public class RoundEndController extends AbstractEndController {
 
 
     @Override
-    protected void initializeComponents() {
+    protected final void initializeComponents() {
 
         final int added = activeGame.getMostRecentPoints();
         final int totalPoints = activeGame.getPoints();

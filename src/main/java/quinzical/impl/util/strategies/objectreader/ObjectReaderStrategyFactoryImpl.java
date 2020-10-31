@@ -29,7 +29,7 @@ public class ObjectReaderStrategyFactoryImpl implements ObjectReaderStrategyFact
      * @param <T> The type of object being read. This is used as a cast.
      * @return the object reader strategy.
      */
-    public <T> ObjectReaderStrategy<T> createObjectReader() {
+    public final <T> ObjectReaderStrategy<T> createObjectReader() {
         return new DefaultObjectReaderStrategy<>();
     }
 }
@@ -50,14 +50,18 @@ class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
      * @throws ClassNotFoundException If the class being casted to cannot be found.
      */
     @Override
-    public T readObject(final String dirname) throws IOException, ClassNotFoundException {
+    public final T readObject(final String dirname) throws IOException, ClassNotFoundException {
 
         final FileInputStream fileIn = new FileInputStream(dirname);
         final ObjectInputStream in = new ObjectInputStream(fileIn);
-        final Object obj = in.readObject();
-        in.close();
-        fileIn.close();
-
+        final Object obj;
+        try {
+            obj = in.readObject();
+        } finally {
+            in.close();
+            fileIn.close();
+        }
+        
         if (obj != null) {
             @SuppressWarnings("unchecked") final T obj1 = (T) obj;
             return obj1;

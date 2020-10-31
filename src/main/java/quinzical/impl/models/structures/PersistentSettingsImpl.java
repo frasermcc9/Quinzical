@@ -45,7 +45,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
 
     private double timer = 25;
 
-    public PersistentSettings loadSettingsFromDisk() {
+    public final PersistentSettings loadSettingsFromDisk() {
         final ObjectReaderStrategy<PersistentSettings> strategy = objectReaderStrategyFactory.createObjectReader();
 
         try {
@@ -64,7 +64,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
         return this;
     }
 
-    public void applySettings() {
+    public final void applySettings() {
         this.gameModel.setTimerValue(timer);
 
         this.speakerMutator.setGap(gap);
@@ -75,7 +75,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
         this.sceneHandler.fireBackgroundChange(theme);
     }
 
-    public PersistentSettings loadSettingsFromGame() {
+    public final PersistentSettings loadSettingsFromGame() {
         timer = gameModel.getTimerValue();
 
         gap = speakerMutator.getGap();
@@ -89,62 +89,62 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public Theme getTheme() {
+    public final Theme getTheme() {
         return theme;
     }
 
     @Override
-    public void setTheme(final Theme theme) {
+    public final void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
     @Override
-    public int getGap() {
+    public final int getGap() {
         return gap;
     }
 
     @Override
-    public void setGap(final int gap) {
+    public final void setGap(final int gap) {
         this.gap = gap;
     }
 
     @Override
-    public int getSpeed() {
+    public final int getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(final int speed) {
+    public final void setSpeed(final int speed) {
         this.speed = speed;
     }
 
     @Override
-    public int getAmp() {
+    public final int getAmp() {
         return amp;
     }
 
     @Override
-    public void setAmp(final int amp) {
+    public final void setAmp(final int amp) {
         this.amp = amp;
     }
 
     @Override
-    public int getPitch() {
+    public final int getPitch() {
         return pitch;
     }
 
     @Override
-    public void setPitch(final int pitch) {
+    public final void setPitch(final int pitch) {
         this.pitch = pitch;
     }
 
     @Override
-    public double getTimer() {
+    public final double getTimer() {
         return timer;
     }
 
     @Override
-    public void setTimer(final double timer) {
+    public final void setTimer(final double timer) {
         this.timer = timer;
     }
 }

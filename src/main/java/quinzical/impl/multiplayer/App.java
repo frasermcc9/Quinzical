@@ -27,8 +27,6 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    public static boolean TEST_MODE = true;
-
     private static Scene scene;
 
     public static void setRoot(final String fxml) {
@@ -49,7 +47,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(final Stage stage) throws IOException {
+    public final void start(final Stage stage) throws IOException {
         scene = new Scene(loadFXML("entry"), 640, 480);
         stage.setScene(scene);
         stage.show();

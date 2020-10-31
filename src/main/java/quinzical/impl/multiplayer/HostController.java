@@ -61,12 +61,12 @@ public class HostController extends AbstractSceneController {
     private JFXCheckBox chkPublic;
 
     @FXML
-    void btnCancel(final ActionEvent event) throws IOException {
+    final void btnCancel(final ActionEvent event) throws IOException {
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML
-    void btnStart(final ActionEvent event) throws IllegalAccessException, NoSuchFieldException, JSONException {
+    final void btnStart(final ActionEvent event) throws IllegalAccessException, NoSuchFieldException, JSONException {
 
         final Socket socket = socketModel.getSocket();
         final String name = socketModel.getName();
@@ -103,42 +103,42 @@ public class HostController extends AbstractSceneController {
     }
 
     @FXML
-    void playersDec(final ActionEvent event) {
+    final void playersDec(final ActionEvent event) {
         final int val = parseToInt(txtPlayers) - 1;
         txtPlayers.setText(val + "");
         checkValues(val, 2, 10, pDec, pInc);
     }
 
     @FXML
-    void playersInc(final ActionEvent event) {
+    final void playersInc(final ActionEvent event) {
         final int val = parseToInt(txtPlayers) + 1;
         txtPlayers.setText(val + "");
         checkValues(val, 2, 10, pDec, pInc);
     }
 
     @FXML
-    void questionDec(final ActionEvent event) {
+    final void questionDec(final ActionEvent event) {
         final int val = parseToInt(txtQuestions) - 1;
         txtQuestions.setText(val + "");
         checkValues(val, 2, 25, qDec, qInc);
     }
 
     @FXML
-    void questionInc(final ActionEvent event) {
+    final void questionInc(final ActionEvent event) {
         final int val = parseToInt(txtQuestions) + 1;
         txtQuestions.setText(val + "");
         checkValues(val, 2, 25, qDec, qInc);
     }
 
     @FXML
-    void timeDec(final ActionEvent event) {
+    final void timeDec(final ActionEvent event) {
         final int val = parseToInt(txtTime) - 1;
         txtTime.setText(val + "");
         checkValues(val, 5, 30, aDec, aInc);
     }
 
     @FXML
-    void timeInc(final ActionEvent event) {
+    final void timeInc(final ActionEvent event) {
         final int val = parseToInt(txtTime) + 1;
         txtTime.setText(val + "");
         checkValues(val, 5, 30, aDec, aInc);

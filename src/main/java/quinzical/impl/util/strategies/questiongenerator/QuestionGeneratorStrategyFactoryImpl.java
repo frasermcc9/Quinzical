@@ -63,7 +63,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * Creates the strategy for loading questions for a regular game - i.e. 5 categories with 5 questions each.
      */
     @Override
-    public QuestionGeneratorStrategy createGameQuestionStrategy() {
+    public final QuestionGeneratorStrategy createGameQuestionStrategy() {
         return gameQuestionGeneratorStrategyProvider.get();
     }
 
@@ -71,7 +71,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * Creates the strategy for loading questions for a practice game.
      */
     @Override
-    public QuestionGeneratorStrategy createPracticeQuestionStrategy() {
+    public final QuestionGeneratorStrategy createPracticeQuestionStrategy() {
         return practiceQuestionGeneratorStrategyProvider.get();
 
     }
@@ -83,7 +83,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * @return the QuestionGeneratorStrategy that will generate the questions.
      */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategoryStrategy(final String[] categories) {
+    public final QuestionGeneratorStrategy createSelectedCategoryStrategy(final String[] categories) {
         return createSelectedCategoryStrategy(List.of(categories));
     }
 
@@ -95,7 +95,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * @see #createGameQuestionStrategy()
      */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategoryStrategy(final List<String> categories) {
+    public final QuestionGeneratorStrategy createSelectedCategoryStrategy(final List<String> categories) {
         final SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
         strategy.setCategories(categories);
         return strategy;
@@ -107,7 +107,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * @return the strategy, which when executed, will return international questions and categories.
      */
     @Override
-    public QuestionGeneratorStrategy createInternationalQuestionStrategy() {
+    public final QuestionGeneratorStrategy createInternationalQuestionStrategy() {
         return internationalQuestionGeneratorStrategyProvider.get();
     }
 }
@@ -124,7 +124,7 @@ class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
      * Generates questions for practice mode
      */
     @Override
-    public Map<String, List<GameQuestion>> generateQuestions() {
+    public final Map<String, List<GameQuestion>> generateQuestions() {
 
         final Map<String, List<GameQuestion>> questions = new HashMap<>();
 
@@ -160,7 +160,7 @@ class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
      * Generates a question set for the game.
      */
     @Override
-    public Map<String, List<GameQuestion>> generateQuestions() {
+    public final Map<String, List<GameQuestion>> generateQuestions() {
         final Map<String, List<Question>> questions = questionCollection.getQuestions();
 
         // Shuffle the list of categories and pick 5.
@@ -182,12 +182,12 @@ class SelectedCategoryGeneratorStrategy implements QuestionGeneratorStrategy {
 
     private List<String> categories;
 
-    public void setCategories(final List<String> categories) {
+    public final void setCategories(final List<String> categories) {
         this.categories = categories;
     }
 
     @Override
-    public Map<String, List<GameQuestion>> generateQuestions() {
+    public final Map<String, List<GameQuestion>> generateQuestions() {
         final Map<String, List<Question>> questions = questionCollection.getQuestions();
 
         final Map<String, List<GameQuestion>> questionBoard = new LinkedHashMap<>();
@@ -222,7 +222,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
     OkHttpClient client = new OkHttpClient();
 
     @Override
-    public Map<String, List<GameQuestion>> generateQuestions() {
+    public final Map<String, List<GameQuestion>> generateQuestions() {
 
         final Map<String, List<GameQuestion>> questions = new LinkedHashMap<>();
 
@@ -238,25 +238,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
             // Convert the api response into a useful format
             for (int i = 0; i < array.length(); i++) {
                 final JSONObject object = (JSONObject) array.get(i);
-                bindings.add(new CategoryNumberBinding() {
-                    @Override
-                    public String name() {
-                        try {
-                            return object.get("title").toString();
-                        } catch (final JSONException jsonException) {
-                            return null;
-                        }
-                    }
-
-                    @Override
-                    public String id() {
-                        try {
-                            return object.get("id").toString();
-                        } catch (final JSONException jsonException) {
-                            return null;
-                        }
-                    }
-                });
+                bindings.add(new CategoryNumberBinding(object));
             }
 
             //Get 5 categories from API
@@ -339,18 +321,27 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
     }
 
     private String removeArtifacts(String fromApi) {
-        fromApi = fromApi.replaceAll("\\\\", ""); //remove backslashes
-        fromApi = fromApi.replaceAll("<.>", ""); //remove html opening tags
-        fromApi = fromApi.replaceAll("<..>", ""); //remove html closing tags
-        return fromApi;
+        String s = fromApi.replaceAll("\\\\", ""); //remove backslashes
+        s = s.replaceAll("<.>", ""); //remove html opening tags
+        s = s.replaceAll("<..>", ""); //remove html closing tags
+        return s;
     }
 
-    /**
-     * Data interface for pairs of category names to their id in the api.
-     */
-    private interface CategoryNumberBinding {
-        String name();
+    private static class CategoryNumberBinding {
+        private final String name;
+        private final String id;
 
-        String id();
+        public CategoryNumberBinding(JSONObject object) throws JSONException {
+            this.name = object.getString("title");
+            this.id = object.getString("id");
+        }
+
+        public final String name() {
+            return name;
+        }
+
+        public final String id() {
+            return id;
+        }
     }
 }

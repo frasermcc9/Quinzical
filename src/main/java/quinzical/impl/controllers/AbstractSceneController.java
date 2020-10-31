@@ -119,7 +119,7 @@ public abstract class AbstractSceneController {
      * @param node    The node to request focus on
      * @param retries Maximum number of times to try request focus before stopping
      */
-    protected void focusRequester(final Node node, final int retries) {
+    protected final void focusRequester(final Node node, final int retries) {
         if (retries == 0) return;
         Platform.runLater(() -> {
             if (!node.isFocused()) {
@@ -132,7 +132,7 @@ public abstract class AbstractSceneController {
     protected void usePassedData(final String passedInfo) {
     }
 
-    public void passData(final String data) {
+    public final void passData(final String data) {
         this.passedInfo = data;
         usePassedData(passedInfo);
     }

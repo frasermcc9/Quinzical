@@ -6,38 +6,40 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="background" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.practice.PracticeController">
-   <children>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox">
-         <children>
-            <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Select Your Category" />
-            <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="354.0" prefWidth="680.0" stylesheets="@../../../css/Category-Selector.css">
-               <VBox.margin>
-                  <Insets left="300.0" right="300.0" />
-               </VBox.margin>
-            </ScrollPane>
-            <Button fx:id="btnOk" mnemonicParsing="false" onAction="#btnOKPress" opacity="0.9" prefHeight="56.0" prefWidth="250.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="OK">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator prefHeight="28.0" prefWidth="580.0">
-               <VBox.margin>
-                  <Insets left="350.0" right="350.0" />
-               </VBox.margin>
-            </Separator>
-            <Button mnemonicParsing="false" onAction="#btnBackPress" opacity="0.9" prefHeight="56.0" prefWidth="250.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </VBox>
-   </children>
+<AnchorPane fx:id="background" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.practice.PracticeController">
+    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox">
+        <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css"
+               text="Select Your Category"/>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="354.0" prefWidth="680.0"
+                    stylesheets="@../../../css/Category-Selector.css">
+            <VBox.margin>
+                <Insets left="300.0" right="300.0"/>
+            </VBox.margin>
+        </ScrollPane>
+        <Button fx:id="btnOk" mnemonicParsing="false" onAction="#btnOKPress" opacity="0.9" prefHeight="56.0"
+                prefWidth="250.0" styleClass="transparent" stylesheets="@../../../css/intro.css" text="OK">
+            <font>
+                <Font name="System Bold" size="23.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <Separator prefHeight="28.0" prefWidth="580.0">
+            <VBox.margin>
+                <Insets left="350.0" right="350.0"/>
+            </VBox.margin>
+        </Separator>
+        <Button mnemonicParsing="false" onAction="#btnBackPress" opacity="0.9" prefHeight="56.0" prefWidth="250.0"
+                styleClass="transparent" stylesheets="@../../../css/intro.css" text="Back">
+            <font>
+                <Font name="System Bold" size="23.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+    </VBox>
 </AnchorPane>

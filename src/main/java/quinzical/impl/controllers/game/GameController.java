@@ -52,12 +52,12 @@ public class GameController extends AbstractSceneController {
     private Label txtHeading;
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         paneHeader.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(buttons::add);
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         this.refreshBoard();
         this.refreshValue();
     }

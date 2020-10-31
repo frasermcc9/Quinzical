@@ -39,7 +39,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public void resetData() {
+    public final void resetData() {
         correctByCategory.clear();
         answeredByCategory.clear();
         setCategoriesAnswered(0);
@@ -48,57 +48,57 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public int getQuestionsAnswered() {
+    public final int getQuestionsAnswered() {
         return questionsAnswered / 2;
     }
 
     @Override
-    public void setQuestionsAnswered(final int questionsAnswered) {
+    public final void setQuestionsAnswered(final int questionsAnswered) {
         this.questionsAnswered = questionsAnswered;
     }
 
-    public double getCorrectRatioForCategory(final String category) {
+    public final double getCorrectRatioForCategory(final String category) {
         return (double) getQuestionsCorrectForCategory(category) / getQuestionsAnsweredForCategory(category);
     }
 
-    public int getQuestionsAnsweredForCategory(final String category) {
+    public final int getQuestionsAnsweredForCategory(final String category) {
         final Integer value = this.answeredByCategory.get(category);
         if (value == null) return 0;
         return value / 2;
     }
 
-    public int getQuestionsCorrectForCategory(final String category) {
+    public final int getQuestionsCorrectForCategory(final String category) {
         final Integer value = this.correctByCategory.get(category);
         if (value == null) return 0;
         return value;
     }
 
-    public int getQuestionsWrongForCategory(final String category) {
+    public final int getQuestionsWrongForCategory(final String category) {
         return getQuestionsAnsweredForCategory(category) - getQuestionsCorrectForCategory(category);
     }
 
     @Override
-    public int getCategoriesAnswered() {
+    public final int getCategoriesAnswered() {
         return categoriesAnswered;
     }
 
     @Override
-    public void setCategoriesAnswered(final int categoriesAnswered) {
+    public final void setCategoriesAnswered(final int categoriesAnswered) {
         this.categoriesAnswered = categoriesAnswered;
     }
 
     @Override
-    public int getCorrectAnswers() {
+    public final int getCorrectAnswers() {
         return correctAnswers;
     }
 
     @Override
-    public void setCorrectAnswers(final int correctAnswers) {
+    public final void setCorrectAnswers(final int correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
 
     @Override
-    public void answerQuestion(final String category, final boolean correct) {
+    public final void answerQuestion(final String category, final boolean correct) {
         final int addToAnswered = 1;
         int addToCorrect = 0;
         if (correct) {
@@ -114,7 +114,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public List<String> getMostAnsweredCategories() {
+    public final List<String> getMostAnsweredCategories() {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingInt(answeredByCategory::get).reversed())
@@ -122,7 +122,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .collect(Collectors.toList());
     }
 
-    public List<String> getQuestionsAnsweredByCategory(final List<String> categories) {
+    public final List<String> getQuestionsAnsweredByCategory(final List<String> categories) {
         return categories
             .stream()
             .map(this::getQuestionsAnsweredForCategory)
@@ -131,7 +131,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public List<String> getMostChallengingCategories() {
+    public final List<String> getMostChallengingCategories() {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingDouble(this::getCorrectRatioForCategory))
@@ -140,7 +140,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public List<String> getCorrectRatiosOfCategories(final List<String> categories) {
+    public final List<String> getCorrectRatiosOfCategories(final List<String> categories) {
         return categories
             .stream()
             .map(this::getCorrectRatioForCategory)
@@ -148,7 +148,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .collect(Collectors.toList());
     }
 
-    public List<Pair<String, Integer>> getPairsForIncorrectAnswers(final int points) {
+    public final List<Pair<String, Integer>> getPairsForIncorrectAnswers(final int points) {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingInt(this::getQuestionsWrongForCategory).reversed())
@@ -157,7 +157,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
             .collect(Collectors.toList());
     }
 
-    public List<Pair<String, Integer>> getPairsForIncorrectAnswers() {
+    public final List<Pair<String, Integer>> getPairsForIncorrectAnswers() {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingInt(this::getQuestionsWrongForCategory).reversed())
@@ -166,7 +166,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public List<Pair<String, Integer>> getPairsForCorrectAnswers(final int points) {
+    public final List<Pair<String, Integer>> getPairsForCorrectAnswers(final int points) {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingInt(this::getQuestionsCorrectForCategory).reversed())
@@ -176,7 +176,7 @@ public class AnalyticsEngineImpl implements Serializable, AnalyticsEngineMutator
     }
 
     @Override
-    public List<Pair<String, Integer>> getPairsForCorrectAnswers() {
+    public final List<Pair<String, Integer>> getPairsForCorrectAnswers() {
         return answeredByCategory.keySet()
             .stream()
             .sorted(Comparator.comparingInt(this::getQuestionsCorrectForCategory).reversed())

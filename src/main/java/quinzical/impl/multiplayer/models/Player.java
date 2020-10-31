@@ -12,11 +12,11 @@ public class Player extends RecursiveTreeObject<Player> {
         this.name = new SimpleStringProperty(name);
     }
 
-    public SimpleStringProperty scoreProperty() {
+    public final SimpleStringProperty scoreProperty() {
         return score;
     }
 
-    public SimpleStringProperty nameProperty() {
+    public final SimpleStringProperty nameProperty() {
         return name;
     }
 }

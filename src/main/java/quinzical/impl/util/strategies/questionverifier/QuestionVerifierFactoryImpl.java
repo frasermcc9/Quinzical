@@ -92,7 +92,7 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
      * @return - A verifier of the requested type.
      */
     @Override
-    public QuestionVerifierStrategy getQuestionVerifier(final VerifierType type) {
+    public final QuestionVerifierStrategy getQuestionVerifier(final VerifierType type) {
         switch (type) {
             case FILL_SOLUTION:
                 return questionVerifierStrategyProvider.get();
@@ -128,7 +128,7 @@ class DefaultQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
         final List<Solution> solutionCopy = new ArrayList<>(solutions);
 
@@ -167,7 +167,7 @@ class PracticeQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
         final List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutions, textAreas,
             textNormaliserFactory);
@@ -202,7 +202,7 @@ class HintQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
         final List<Solution> solutionCopy = new ArrayList<>(solutions);
 

@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class TimerContextImplTest {
     @Test
-    public void TestFunctionIsExecutedEventually() throws ExecutionException, InterruptedException {
+    public final void TestFunctionIsExecutedEventually() throws ExecutionException, InterruptedException {
 
         final Injector injector = Guice.createInjector(new AbstractModule() {
             @Override

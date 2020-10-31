@@ -65,7 +65,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * @param category The category to be toggled
      * @param added Whether the category is currently selected or not
      */
-    protected void buttonToggle(final MouseEvent e, final String category, final boolean added) {
+    protected final void buttonToggle(final MouseEvent e, final String category, final boolean added) {
         final Node source = (Node) e.getSource();
 
         if (added) {
@@ -90,7 +90,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * Loads in all of the categories in the game model and shows them all on the scene
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         btnOk.setDisable(true);
         final List<String> categories = getModel().getCategories()
             .stream()
@@ -134,7 +134,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * 
      * @param category The category to be selected
      */
-    protected void selectCategory(final MouseEvent e, final String category) {
+    protected final void selectCategory(final MouseEvent e, final String category) {
         buttonToggle(e, category, true);
     }
 
@@ -143,14 +143,14 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      *
      * @param category The category to be deselected
      */
-    protected void deselectCategory(final MouseEvent e, final String category) {
+    protected final void deselectCategory(final MouseEvent e, final String category) {
         buttonToggle(e, category, false);
     }
 
     /**
      * Displays the hover animation when the user hovers over a category
      */
-    protected void hoverCard(final MouseEvent e) {
+    protected final void hoverCard(final MouseEvent e) {
         final Object source = e.getSource();
         if (source instanceof Node) {
             createScaleAnimation((Node) source, 150, 1.1);
@@ -161,7 +161,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * Displays the un-hover animation when the user is no longer hovering 
      * over a category
      */
-    protected void hoverOffCard(final MouseEvent e) {
+    protected final void hoverOffCard(final MouseEvent e) {
         final Object source = e.getSource();
         if (source instanceof Node) {
             createScaleAnimation((Node) source, 150, 1);
@@ -172,7 +172,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * Sets the current scene to the game type select screen
      */
     @FXML
-    protected void btnBackPress() {
+    protected final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT);
     }
 
@@ -180,7 +180,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * Called when the ok button is pressed, proceeding to the question board
      */
     @FXML
-    protected void btnOKPress() {
+    protected final void btnOKPress() {
         generateQuestionsAndProgress();
     }
 }

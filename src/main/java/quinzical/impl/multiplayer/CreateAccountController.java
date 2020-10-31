@@ -50,7 +50,7 @@ public class CreateAccountController extends AbstractAlertController {
     private JFXPasswordField txtConfirm;
 
     @FXML
-    void btnCreate() {
+    final void btnCreate() {
         final String username = txtName.getText().trim();
         final String password = txtPassword.getText();
         if (username.isBlank()) txtName.setPromptText("Please give a valid username");
@@ -108,12 +108,12 @@ public class CreateAccountController extends AbstractAlertController {
     }
 
     @FXML
-    void btnQuitClick() {
+    final void btnQuitClick() {
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
     }
 

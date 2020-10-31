@@ -97,7 +97,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         speaker.start();
     }
 
-    public int getPitch() {
+    public final int getPitch() {
         return pitch;
     }
 
@@ -114,7 +114,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.pitch = pitch;
     }
 
-    public int getAmplitude() {
+    public final int getAmplitude() {
         return amplitude;
     }
 
@@ -131,7 +131,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.amplitude = amplitude;
     }
 
-    public int getSpeed() {
+    public final int getSpeed() {
         return speed;
     }
 
@@ -148,7 +148,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
         this.speed = speed;
     }
 
-    public int getGap() {
+    public final int getGap() {
         return gap;
     }
 

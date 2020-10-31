@@ -41,22 +41,22 @@ public class MenuController extends AbstractSceneController {
     private Label lblName;
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         lblName.setText(socketModel.getName());
     }
 
     @FXML
-    void btnBrowse(final ActionEvent event) {
+    final void btnBrowse(final ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.MULTI_BROWSE);
     }
 
     @FXML
-    void btnHost(final ActionEvent event) {
+    final void btnHost(final ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.MULTI_HOST);
     }
 
     @FXML
-    void btnJoin() {
+    final void btnJoin() {
         final Socket socket = socketModel.getSocket();
         final String name = socketModel.getName();
         final String code = txtCode.getText().toUpperCase();
@@ -82,18 +82,18 @@ public class MenuController extends AbstractSceneController {
     }
 
     @FXML
-    void btnProfile(final ActionEvent event) {
+    final void btnProfile(final ActionEvent event) {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_PROFILE)).start();
     }
     
     @FXML
-    void btnLeaderboard(final ActionEvent event) {
+    final void btnLeaderboard(final ActionEvent event) {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_LEADERBOARD)).start();
     }
 
 
     @FXML
-    void btnQuit(final ActionEvent event) {
+    final void btnQuit(final ActionEvent event) {
         Platform.runLater(() -> socketModel.destroy());
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }

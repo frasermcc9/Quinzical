@@ -29,57 +29,58 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.GameController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-spacing: 30;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <Label styleClass="title" stylesheets="@../../../../css/title-label.css" text="Here's Your Question" />
-         <Label fx:id="lblQuestion" alignment="TOP_CENTER" prefHeight="110.0" prefWidth="762.0" styleClass="bright-label" text="QUESTION_PLACEHOLDER" textAlignment="CENTER" wrapText="true">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Label>
-         <Label fx:id="lblPrompt" styleClass="bright-label" text="PROMPT_PLACEHOLDER" textAlignment="CENTER">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Label>
-         <JFXTextArea fx:id="txtInput" prefHeight="32.0" prefWidth="1240.0" promptText="Enter Your Answer" styleClass="answer-field-default">
-            <VBox.margin>
-               <Insets left="250.0" right="250.0" />
-            </VBox.margin>
-         </JFXTextArea>
-         <HBox fx:id="macronBar" alignment="CENTER" style="-fx-spacing: 10;">
-            <children>
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ā" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ē" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ī" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ō" />
-               <JFXButton minWidth="50.0" styleClass="material-button-small" text="ū" />
-            </children>
-         </HBox>
-         <JFXButton fx:id="btnSubmit" minWidth="290.0" onAction="#onSubmitClick" prefHeight="14.0" text="Submit">
-            <styleClass>
-               <String fx:value="material-button-green" />
-               <String fx:value="material-button" />
-            </styleClass>
-         </JFXButton>
-         <JFXProgressBar fx:id="timerProgressBar" prefHeight="18.0" prefWidth="485.0" progress="0.31">
-            <effect>
-               <ColorAdjust hue="-0.86" />
-            </effect>
-            <VBox.margin>
-               <Insets bottom="-25.0" />
-            </VBox.margin>
-         </JFXProgressBar>
-         <Label fx:id="lblCounter" styleClass="bright-bold-label" text="25" />
-      </VBox>
-   </children>
-   <stylesheets>
-      <URL value="@../../../../css/global.css" />
-      <URL value="@../../../../css/multiplayer.css" />
-      <URL value="@../../../../css/views/question.css" />
-   </stylesheets>
+<AnchorPane fx:id="background" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.multiplayer.GameController">
+    <stylesheets>
+        <URL value="@../../../../css/global.css"/>
+        <URL value="@../../../../css/multiplayer.css"/>
+        <URL value="@../../../../css/views/question.css"/>
+    </stylesheets>
+    <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-spacing: 30;"
+          styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <padding>
+          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
+        <Label styleClass="title" stylesheets="@../../../../css/title-label.css" text="Here's Your Question"/>
+        <Label fx:id="lblQuestion" alignment="TOP_CENTER" prefHeight="110.0" prefWidth="762.0" styleClass="bright-label"
+               text="QUESTION_PLACEHOLDER" textAlignment="CENTER" wrapText="true">
+          <font>
+              <Font size="24.0"/>
+          </font>
+        </Label>
+        <Label fx:id="lblPrompt" styleClass="bright-label" text="PROMPT_PLACEHOLDER" textAlignment="CENTER">
+          <font>
+              <Font size="18.0"/>
+          </font>
+        </Label>
+        <JFXTextArea fx:id="txtInput" prefHeight="32.0" prefWidth="1240.0" promptText="Enter Your Answer"
+                     styleClass="answer-field-default">
+          <VBox.margin>
+              <Insets left="250.0" right="250.0"/>
+          </VBox.margin>
+        </JFXTextArea>
+        <HBox fx:id="macronBar" alignment="CENTER" style="-fx-spacing: 10;">
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ā"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ē"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ī"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ō"/>
+            <JFXButton minWidth="50.0" styleClass="material-button-small" text="ū"/>
+        </HBox>
+        <JFXButton fx:id="btnSubmit" minWidth="290.0" onAction="#onSubmitClick" prefHeight="14.0" text="Submit">
+          <styleClass>
+              <String fx:value="material-button-green"/>
+              <String fx:value="material-button"/>
+          </styleClass>
+        </JFXButton>
+        <JFXProgressBar fx:id="timerProgressBar" prefHeight="18.0" prefWidth="485.0" progress="0.31">
+          <effect>
+              <ColorAdjust hue="-0.86"/>
+          </effect>
+          <VBox.margin>
+              <Insets bottom="-25.0"/>
+          </VBox.margin>
+        </JFXProgressBar>
+        <Label fx:id="lblCounter" styleClass="bright-bold-label" text="25"/>
+    </VBox>
 </AnchorPane>

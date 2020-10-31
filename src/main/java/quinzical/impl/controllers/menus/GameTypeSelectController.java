@@ -60,7 +60,7 @@ public class GameTypeSelectController extends AbstractSceneController {
      * Returns the screen to the intro menu when the back button is pressed
      */
     @FXML
-    void btnBackPress() {
+    final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -79,7 +79,7 @@ public class GameTypeSelectController extends AbstractSceneController {
      * the elements of the scene depending on the fact.
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
         btnPlay.setDisable(true);
         setFunctions();

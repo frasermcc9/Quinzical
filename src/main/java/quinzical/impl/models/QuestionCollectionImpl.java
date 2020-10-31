@@ -53,17 +53,17 @@ public class QuestionCollectionImpl implements QuestionCollection {
      * Returns a copy of the question map.
      */
     @Override
-    public Map<String, List<Question>> getQuestions() {
+    public final Map<String, List<Question>> getQuestions() {
         return new LinkedHashMap<>(this.questionMap);
     }
 
     @Override
-    public void regenerateQuestionsFromDisk() {
+    public final void regenerateQuestionsFromDisk() {
         regenerateQuestionsFromDisk(false);
     }
 
     @Override
-    public void regenerateQuestionsFromDisk(final boolean silent) {
+    public final void regenerateQuestionsFromDisk(final boolean silent) {
         try {
             final ObjectReaderStrategy<Map<String, List<Question>>> strategy =
                 objectReaderStrategyFactory.createObjectReader();

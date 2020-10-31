@@ -50,12 +50,12 @@ public class EndController extends AbstractSceneController {
      * Return to the main menu
      */
     @FXML
-    void btnDonePress() {
+    final void btnDonePress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         coinBox.setVisible(false);
         final int earnings = gameModel.getEarnings();
         animateLabel(earnings);

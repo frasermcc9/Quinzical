@@ -29,12 +29,12 @@ public class WindowsSpeakerManager extends SpeakerManager {
      * @param text the text to speak
      */
     @Override
-    public void speak(final String text, final Runnable callback) {
+    public final void speak(final String text, final Runnable callback) {
         execute(text, callback);
     }
 
     @Override
-    public void speak(final String text) {
+    public final void speak(final String text) {
         speak(text, () -> {
         });
     }
@@ -57,7 +57,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
      * @param pitch - The pitch that the speaker will talk in (how high or low the voice sounds)
      */
     @Override
-    public void setPitch(final int pitch) {
+    public final void setPitch(final int pitch) {
         super.setPitch(pitch);
         System.out.println("Operating System is windows. Printing new pitch: " + pitch);
     }
@@ -68,7 +68,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
      * @param amplitude - The amplitude to be set (how loud the voice is)
      */
     @Override
-    public void setAmplitude(final int amplitude) {
+    public final void setAmplitude(final int amplitude) {
         super.setAmplitude(amplitude);
         System.out.println("Operating System is windows. Printing new amplitude: " + amplitude);
     }
@@ -79,7 +79,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
     @Override
-    public void setSpeed(final int speed) {
+    public final void setSpeed(final int speed) {
         super.setSpeed(speed);
         System.out.println("Operating System is windows. Printing new speed: " + speed);
     }
@@ -90,7 +90,7 @@ public class WindowsSpeakerManager extends SpeakerManager {
      * @param gap - How long to wait between each word spoken
      */
     @Override
-    public void setGap(final int gap) {
+    public final void setGap(final int gap) {
         super.setGap(gap);
         System.out.println("Operating System is windows. Printing new gap: " + gap);
     }

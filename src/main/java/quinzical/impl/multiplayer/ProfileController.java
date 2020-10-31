@@ -61,22 +61,22 @@ public class ProfileController extends AbstractAlertController {
     private Label lblXp;
 
     @FXML
-    void btnCancel() {
+    final void btnCancel() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)).start();
     }
 
     @FXML
-    void btnSearch() {
+    final void btnSearch() {
         new Thread(() -> getPlayerInfo(txtSearch.getText().trim())).start();
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         getPlayerInfo(socketModel.getName());
     }
 
     @Override
-    protected void usePassedData(final String passedInfo) {
+    protected final void usePassedData(final String passedInfo) {
         final String query;
         if (passedInfo == null) {
             query = socketModel.getName();
@@ -86,7 +86,7 @@ public class ProfileController extends AbstractAlertController {
         new Thread(() -> getPlayerInfo(query)).start();
     }
 
-    public void getPlayerInfo(final String player) {
+    public final void getPlayerInfo(final String player) {
         final OkHttpClient client = new OkHttpClient();
 
         final Request request = new Request.Builder()

@@ -47,12 +47,12 @@ public class BrowseController extends AbstractAlertController {
     private JFXTreeTableView<GameData> tableBrowse;
 
     @FXML
-    void btnCancel() {
+    final void btnCancel() {
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML
-    void btnOk() {
+    final void btnOk() {
         final GameData gameData = tableBrowse.getSelectionModel().getSelectedItem().getValue();
 
         final Socket socket = socketModel.getSocket();
@@ -81,7 +81,7 @@ public class BrowseController extends AbstractAlertController {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onLoad() {
+    protected final void onLoad() {
 
         final JFXTreeTableColumn<GameData, String> hostCol = new JFXTreeTableColumn<>("Host");
         final JFXTreeTableColumn<GameData, String> playersCol = new JFXTreeTableColumn<>("Players");
@@ -151,63 +151,63 @@ public class BrowseController extends AbstractAlertController {
             this.code = new SimpleStringProperty(code);
         }
 
-        public String getHost() {
+        public final String getHost() {
             return host.get();
         }
 
-        public void setHost(final String host) {
+        public final void setHost(final String host) {
             this.host.set(host);
         }
 
-        public SimpleStringProperty hostProperty() {
+        public final SimpleStringProperty hostProperty() {
             return host;
         }
 
-        public String getPlayers() {
+        public final String getPlayers() {
             return players.get();
         }
 
-        public void setPlayers(final String players) {
+        public final void setPlayers(final String players) {
             this.players.set(players);
         }
 
-        public SimpleStringProperty playersProperty() {
+        public final SimpleStringProperty playersProperty() {
             return players;
         }
 
-        public String getQuestions() {
+        public final String getQuestions() {
             return questions.get();
         }
 
-        public void setQuestions(final String questions) {
+        public final void setQuestions(final String questions) {
             this.questions.set(questions);
         }
 
-        public SimpleStringProperty questionsProperty() {
+        public final SimpleStringProperty questionsProperty() {
             return questions;
         }
 
-        public String getTime() {
+        public final String getTime() {
             return time.get();
         }
 
-        public void setTime(final String time) {
+        public final void setTime(final String time) {
             this.time.set(time);
         }
 
-        public SimpleStringProperty timeProperty() {
+        public final SimpleStringProperty timeProperty() {
             return time;
         }
 
-        public String getCode() {
+        public final String getCode() {
             return code.get();
         }
 
-        public void setCode(final String code) {
+        public final void setCode(final String code) {
             this.code.set(code);
         }
 
-        public SimpleStringProperty codeProperty() {
+        public final SimpleStringProperty codeProperty() {
             return code;
         }
     }

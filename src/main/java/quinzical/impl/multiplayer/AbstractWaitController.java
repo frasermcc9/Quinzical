@@ -55,7 +55,7 @@ public abstract class AbstractWaitController extends AbstractAlertController {
     @Inject
     private XpClassFactory xpClassFactory;
 
-    void loadWaitScreen() {
+    final void loadWaitScreen() {
 
         final Socket socket = socketModel.getSocket();
         
@@ -99,7 +99,6 @@ public abstract class AbstractWaitController extends AbstractAlertController {
                 masonryPane.getChildren().clear();
                 masonryPane.getChildren().addAll(children);
                 Platform.runLater(() -> masonryPane.requestLayout());
-
                 lblPlayers.setText(masonryPane.getChildren().size() + "/" + objects[2]);
             });
         }));

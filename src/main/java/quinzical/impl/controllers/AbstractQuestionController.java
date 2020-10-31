@@ -93,7 +93,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * Checks if all the text fields are empty when a button is pressed, setting the
      * submit button to pass if so and submit otherwise
      */
-    protected void keyPressed(final KeyCode keyCode) {
+    protected final void keyPressed(final KeyCode keyCode) {
         if (!textAreas.get(0).isEditable()) return;
         if (keyCode == KeyCode.ENTER) return;
         
@@ -120,7 +120,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * Ensures that the macron buttons will be initialised when this scene is loaded
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         initMacronButtons();
     }
 
@@ -193,7 +193,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * Checks for if the enter key is pressed, and attempts to press the submit
      * button if valid
      */
-    protected void onKeyPress(final KeyEvent e) {
+    protected final void onKeyPress(final KeyEvent e) {
         keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof JFXTextArea) {
@@ -221,7 +221,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * macron character after the cursor. Then reselect the text area and set the
      * cursor to after the inserted character.
      */
-    protected void initMacronButtons() {
+    protected final void initMacronButtons() {
         macronBar.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b)
             .forEach(btn -> btn.setOnAction(e -> {
                 if (!textAreas.get(0).isEditable())
@@ -239,7 +239,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * speaker.
      */
     @FXML
-    protected void onReplayClick() {
+    protected final void onReplayClick() {
         speaker.speak(getGameModel().getActiveQuestion().getHint());
     }
 
@@ -249,7 +249,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      *
      * @param buttonType The type of button to set the submit button to
      */
-    protected void setSubmitButtonType(final ButtonType buttonType) {
+    protected final void setSubmitButtonType(final ButtonType buttonType) {
         btnSubmit.getStyleClass().clear();
         btnSubmit.getStyleClass().addAll("material-button");
         switch (buttonType) {
@@ -270,7 +270,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * refreshes the buttons onAction calls, back to the normal functions, as they
      * change when a question is just answered.
      */
-    protected void refreshButtonState() {
+    protected final void refreshButtonState() {
         progressButtons.getChildren().subList(1, progressButtons.getChildren().size()).clear();
         setSubmitButtonType(ButtonType.PASS);
     }

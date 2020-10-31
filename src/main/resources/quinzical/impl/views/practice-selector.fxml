@@ -8,36 +8,37 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane fx:id="background" style="-fx-background-color: #232323;" styleClass="AUCKLAND" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.practice.PracticeSelectorController">
-   <children>
-      <VBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css" text="Select Your Categories" />
-            <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER">
-               <content>
-                  <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
-                     <padding>
-                        <Insets bottom="16" left="16" right="16" top="16" />
-                     </padding>
-                  </JFXMasonryPane>
-               </content>
-               <VBox.margin>
-                  <Insets left="200.0" right="200.0" />
-               </VBox.margin>
-            </ScrollPane>
-            <Label fx:id="lblSelected" styleClass="bright-label" text="Selected: 0" />
-            <JFXButton fx:id="btnOk" onAction="#btnOKPress" prefHeight="51.0" prefWidth="250.0" styleClass="material-button" text="Ok" />
-            <Separator prefHeight="28.0" prefWidth="580.0">
-               <VBox.margin>
-                  <Insets left="350.0" right="350.0" />
-               </VBox.margin>
-            </Separator>
-            <JFXButton minWidth="120.0" onAction="#btnBackPress" styleClass="material-button" text="Back" />
-         </children>
-      </VBox>
-   </children>
-   <stylesheets>
-      <URL value="@../../../css/views/category-selector.css" />
-      <URL value="@../../../css/global.css" />
-   </stylesheets>
+<AnchorPane fx:id="background" style="-fx-background-color: #232323;" styleClass="AUCKLAND"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="quinzical.impl.controllers.practice.PracticeSelectorController">
+    <stylesheets>
+        <URL value="@../../../css/views/category-selector.css"/>
+        <URL value="@../../../css/global.css"/>
+    </stylesheets>
+    <VBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 15;" styleClass="vbox"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <Label prefHeight="100.0" prefWidth="669.0" styleClass="title" stylesheets="@../../../css/title-label.css"
+               text="Select Your Categories"/>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER">
+            <VBox.margin>
+                <Insets left="200.0" right="200.0"/>
+            </VBox.margin>
+            <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
+                <padding>
+                    <Insets bottom="16" left="16" right="16" top="16"/>
+                </padding>
+            </JFXMasonryPane>
+        </ScrollPane>
+        <Label fx:id="lblSelected" styleClass="bright-label" text="Selected: 0"/>
+        <JFXButton fx:id="btnOk" onAction="#btnOKPress" prefHeight="51.0" prefWidth="250.0"
+                   styleClass="material-button" text="Ok"/>
+        <Separator prefHeight="28.0" prefWidth="580.0">
+            <VBox.margin>
+                <Insets left="350.0" right="350.0"/>
+            </VBox.margin>
+        </Separator>
+        <JFXButton minWidth="120.0" onAction="#btnBackPress" styleClass="material-button" text="Back"/>
+    </VBox>
 </AnchorPane>

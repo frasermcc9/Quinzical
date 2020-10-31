@@ -40,95 +40,95 @@ public class UserDataImpl implements Serializable, UserData {
     private int earnings = 0;
     private int coins = 0;
 
-    public void answerQuestion(final String category, final boolean correct) {
+    public final void answerQuestion(final String category, final boolean correct) {
         analyticsEngine.answerQuestion(category, correct);
 
     }
 
-    public void finishCategory() {
+    public final void finishCategory() {
         this.analyticsEngine.setCategoriesAnswered(this.analyticsEngine.getCategoriesAnswered() + 1);
     }
 
     @Override
-    public int getCorrect() {
+    public final int getCorrect() {
         return analyticsEngine.getCorrectAnswers();
     }
 
     @Override
-    public int getIncorrect() {
+    public final int getIncorrect() {
         return analyticsEngine.getQuestionsAnswered() - getCorrect();
     }
 
     @Override
-    public void LoadSavedData(final Map<String, List<GameQuestion>> board, final int earnings) {
+    public final void LoadSavedData(final Map<String, List<GameQuestion>> board, final int earnings) {
         this.board = board;
         this.earnings = earnings;
     }
 
     @Override
-    public Map<String, List<GameQuestion>> getBoard() {
+    public final Map<String, List<GameQuestion>> getBoard() {
         return board;
     }
 
     @Override
-    public void createNewBoard(final Map<String, List<GameQuestion>> board) {
+    public final void createNewBoard(final Map<String, List<GameQuestion>> board) {
         this.board = board;
         this.earnings = 0;
     }
 
     @Override
-    public boolean isInternationalUnlocked() {
+    public final boolean isInternationalUnlocked() {
         return analyticsEngine.getCategoriesAnswered() > 2;
     }
 
     @Override
-    public int getEarnings() {
+    public final int getEarnings() {
         return earnings;
     }
 
     @Override
-    public void incrementEarnings(final int earnings) {
+    public final void incrementEarnings(final int earnings) {
         this.earnings += earnings;
     }
 
     @Override
-    public int getCoins() {
+    public final int getCoins() {
         return coins;
     }
 
     @Override
-    public void setCoins(final int coins) {
+    public final void setCoins(final int coins) {
         this.coins = coins;
     }
 
     /**
      * Resets the user data. Does not reset coins.
      */
-    public void resetUserData() {
+    public final void resetUserData() {
         this.board = null;
         this.earnings = 0;
         this.analyticsEngine.resetData();
     }
 
     @Override
-    public boolean isGameActive() {
+    public final boolean isGameActive() {
         return this.board != null;
     }
 
-    public AnalyticsEngineReader getAnalytics() {
+    public final AnalyticsEngineReader getAnalytics() {
         return this.analyticsEngine;
     }
 
     @Override
-    public void incrementCoins(final int value) {
+    public final void incrementCoins(final int value) {
         this.coins += value;
     }
 
-    public boolean addTheme(final Theme theme) {
+    public final boolean addTheme(final Theme theme) {
         return this.unlockedThemes.add(theme);
     }
 
-    public Set<Theme> getUnlockedThemes() {
+    public final Set<Theme> getUnlockedThemes() {
         final Set<Theme> set = DEFAULT_THEMES;
         set.addAll(this.unlockedThemes);
         return new HashSet<>(set);

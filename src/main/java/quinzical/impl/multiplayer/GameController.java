@@ -59,7 +59,7 @@ public class GameController extends AbstractSceneController {
     private Timeline timelineCountdown;
 
     @FXML
-    void onSubmitClick() {
+    final void onSubmitClick() {
         timeline.stop();
         timelineCountdown.stop();
 
@@ -77,7 +77,7 @@ public class GameController extends AbstractSceneController {
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         startAnimations();
         initMacronButtons();
         
@@ -153,7 +153,7 @@ public class GameController extends AbstractSceneController {
     }
 
     @FXML
-    void onSubmitted(final ActionEvent event) {
+    final void onSubmitted(final ActionEvent event) {
         btnSubmit.fire();
     }
 }

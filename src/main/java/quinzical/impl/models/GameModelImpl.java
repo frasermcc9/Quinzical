@@ -47,7 +47,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return Gets the user value.
      */
     @Override
-    public int getEarnings() {
+    public final int getEarnings() {
         return userData.getEarnings();
     }
 
@@ -56,7 +56,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param number the amount to increase by
      */
-    public void increaseValueBy(final int number) {
+    public final void increaseValueBy(final int number) {
         this.userData.incrementEarnings(number);
     }
 
@@ -70,7 +70,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return the next game question in category, or null.
      */
     @Override
-    public GameQuestion getNextActiveQuestion(final GameQuestion question) {
+    public final GameQuestion getNextActiveQuestion(final GameQuestion question) {
         final String category = question.getCategory();
         final int index = this.userData.getBoard().get(category).indexOf(question);
         if (index == 4) {
@@ -88,7 +88,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * category as answerable.
      */
     @Override
-    public void answerActive(final boolean correct) {
+    public final void answerActive(final boolean correct) {
         final GameQuestion question = this.activeQuestion;
         this.activeQuestion.answer(correct);
         // this.activeQuestion = null;
@@ -115,7 +115,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * Generates a new set of questions.
      */
     @Override
-    public void generateNewGameQuestionSet() {
+    public final void generateNewGameQuestionSet() {
         final Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createGameQuestionStrategy()
             .generateQuestions();
         this.userData.createNewBoard(board);
@@ -126,7 +126,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * that can be somewhat slow to execute.
      */
     @Override
-    public void generateInternationalQuestions() {
+    public final void generateInternationalQuestions() {
         final Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createInternationalQuestionStrategy()
             .generateQuestions();
         this.userData.createNewBoard(board);
@@ -137,7 +137,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param categories String array of categories to generate questions from. Must be of length 5.
      */
-    public void generateGameQuestionSetFromCategories(final String[] categories) {
+    public final void generateGameQuestionSetFromCategories(final String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
     }
 
@@ -146,7 +146,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param categories String list of categories. Must be at least size 5.
      */
-    public void generateGameQuestionSetFromCategories(final List<String> categories) {
+    public final void generateGameQuestionSetFromCategories(final List<String> categories) {
         if (categories.size() != 5)
             throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
 
@@ -155,11 +155,11 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         this.userData.createNewBoard(board);
     }
 
-    public double getTimerValue() {
+    public final double getTimerValue() {
         return timerValue;
     }
 
-    public void setTimerValue(final double value) {
+    public final void setTimerValue(final double value) {
         timerValue = value;
     }
 
@@ -167,7 +167,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * Returns map containing the questions for the current game.
      */
     @Override
-    public Map<String, List<GameQuestion>> getBoardQuestions() {
+    public final Map<String, List<GameQuestion>> getBoardQuestions() {
         return userData.getBoard();
     }
 
@@ -175,7 +175,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return the number of questions that are unanswered
      */
     @Override
-    public int numberOfQuestionsRemaining(final Map<String, List<GameQuestion>> boardQuestions) {
+    public final int numberOfQuestionsRemaining(final Map<String, List<GameQuestion>> boardQuestions) {
         return boardQuestions.values().stream().reduce(0,
             (sub, el) -> sub
                 + el.stream().reduce(0, (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum),
@@ -186,7 +186,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return the number of questions that are unanswered
      */
     @Override
-    public int numberOfQuestionsRemaining() {
+    public final int numberOfQuestionsRemaining() {
         return numberOfQuestionsRemaining(this.userData.getBoard());
     }
 
@@ -196,7 +196,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @param userData the game state that has been saved.
      */
     @Override
-    public void loadSaveData(final UserData userData) {
+    public final void loadSaveData(final UserData userData) {
         this.userData = userData;
     }
 
@@ -206,7 +206,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @throws IOException if the folder hierarchy is broken.
      */
     @Override
-    public void saveGame() throws IOException {
+    public final void saveGame() throws IOException {
         final FileOutputStream save = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
         final ObjectOutputStream saveOut = new ObjectOutputStream(save);
         saveOut.writeObject(userData);
@@ -221,12 +221,12 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
     }
 
     @Override // delegate
-    public boolean isGameActive() {
+    public final boolean isGameActive() {
         return userData.isGameActive();
     }
 
     @Override // delegate
-    public boolean isInternationalUnlocked() {
+    public final boolean isInternationalUnlocked() {
         return userData.isInternationalUnlocked();
     }
 
@@ -234,7 +234,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * {@inheritDoc}
      */
     @Override
-    public UserData getUserData() {
+    public final UserData getUserData() {
         return this.userData;
     }
 
