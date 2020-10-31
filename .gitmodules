@@ -1,0 +1,3 @@
+[submodule "src/server"]
+	path = src/server
+	url = https://github.com/frasermcc9/quinzical-server
