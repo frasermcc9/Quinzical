@@ -51,15 +51,6 @@ public class PracticeController extends AbstractSceneController {
     private PracticeModel gameModel;
 
     @FXML
-    private ComboBox<String> comboCategories;
-
-    @FXML
-    private ListView<String> listCategories;
-
-    @FXML
-    private ImageView imgBackground;
-
-    @FXML
     private Button btnOk;
 
     @FXML
@@ -70,7 +61,7 @@ public class PracticeController extends AbstractSceneController {
      * switches to the practice question scene.
      */
     @FXML
-    final void btnOKPress(final ActionEvent actionEvent) {
+    final void btnOKPress() {
         if (selectedCategory != null) {
             final Question question = gameModel.getRandomQuestion();
             gameModel.activateQuestion(question);
@@ -82,7 +73,7 @@ public class PracticeController extends AbstractSceneController {
      * Sets the scene to the intro scene when the back button is pressed.
      */
     @FXML
-    final void btnBackPress(final ActionEvent actionEvent) {
+    final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
