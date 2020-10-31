@@ -46,31 +46,7 @@ public class QuestionCollectionImpl implements QuestionCollection {
     @Inject
     public QuestionCollectionImpl(ObjectReaderStrategyFactory objectReaderStrategyFactory) {
         this.objectReaderStrategyFactory = objectReaderStrategyFactory;
-        regenerateQuestionsFromDisk();
-    }
-
-    /**
-     * @deprecated not implemented.
-     */
-    @Deprecated
-    public void SerializeQuestionDatabase() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-
-    /**
-     * @deprecated not implemented.
-     */
-    @Deprecated
-    public void AddQuestionToDatabase() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Method not implemented");
-    }
-
-    /**
-     * @deprecated not implemented.
-     */
-    @Deprecated
-    public void RemoveQuestionFromDatabase() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Method not implemented");
+        regenerateQuestionsFromDisk(true);
     }
 
     /**
@@ -83,11 +59,16 @@ public class QuestionCollectionImpl implements QuestionCollection {
 
     @Override
     public void regenerateQuestionsFromDisk() {
+        regenerateQuestionsFromDisk(false);
+    }
+
+    @Override
+    public void regenerateQuestionsFromDisk(boolean silent) {
         try {
             ObjectReaderStrategy<Map<String, List<Question>>> strategy =
                 objectReaderStrategyFactory.createObjectReader();
             Map<String, List<Question>> tempMap = strategy.readObject(System.getProperty("user.dir") + "/data" +
-                "/question2.qdb");
+                "/question.qdb");
 
             Map<String, List<Question>> filteredMap = new LinkedHashMap<>();
 
@@ -97,25 +78,29 @@ public class QuestionCollectionImpl implements QuestionCollection {
                 .filter(k -> tempMap.get(k).size() >= 5)
                 .forEach(k -> filteredMap.put(k, tempMap.get(k)));
 
-            if (filteredMap.size() < 5) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Warning: There are insufficient categories with " +
-                    "more than five questions. New games will not load properly.", ButtonType.OK,
-                    ButtonType.CANCEL);
-                alert.setTitle("Warning: Invalid Question Set Loaded");
-                alert.setHeaderText("Pressing cancel will abort all question loading. Press ok to load the current " +
-                    "question set.");
-                alert.showAndWait();
-
-                if (alert.getResult() != ButtonType.OK) {
-                    return;
-                }
+            if (filteredMap.size() < 5 && !silent) {
+                boolean result = this.showAlert();
+                if (!result) return;
             }
+
             questionMap = filteredMap;
 
         } catch (IOException | ClassNotFoundException i) {
             System.out.println("Error: " + i.getMessage());
         }
         assert questionMap != null;
+    }
+
+    private boolean showAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Pressing cancel will abort all question loading. Press ok " +
+            "to load the current question set.", ButtonType.OK,
+            ButtonType.CANCEL);
+        alert.setTitle("Warning: Invalid Question Set Loaded");
+        alert.setHeaderText("Warning: There are insufficient categories with more than five questions. New games will" +
+            " not load properly.");
+        alert.showAndWait();
+
+        return alert.getResult() == ButtonType.OK;
     }
 
 
