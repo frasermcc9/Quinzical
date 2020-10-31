@@ -77,12 +77,24 @@ public class EntryController extends AbstractAlertController {
             socket.once("authenticated",
                 _2 -> Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.MULTI_MENU)));
             socket.once("unauthorized", _3 -> Platform.runLater(() -> {
-                createAlert("Could not Connect", "Could not connect to the online service. Please check your login " +
-                    "details and try again.");
+                createAlert("Could not Connect", "Could not connect to the online service. This is most likely an " +
+                    "issue with your login details.");
 
                 setProgressVisible(false);
             }));
         });
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(4000);
+                socket.off();
+                Platform.runLater(() -> setProgressVisible(false));
+                createAlert("Could not Connect", "Could not connect to the online service. Most often this error " +
+                    "message is fixed by trying to reconnect immediately.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
 
         socketModel.connect();
     }
