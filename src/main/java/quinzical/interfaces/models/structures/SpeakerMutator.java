@@ -14,6 +14,15 @@
 
 package quinzical.interfaces.models.structures;
 
+/**
+ * Speaker class handles speaking text from the TTS Engine. Extends {@link Speaker} with methods for changing the
+ * settings of the TTS engine.
+ *
+ * @author Fraser McCallum
+ * @see Speaker
+ * @see quinzical.impl.models.structures.SpeakerManager
+ * @since 1.0
+ */
 public interface SpeakerMutator extends Speaker {
 
     int getPitch();

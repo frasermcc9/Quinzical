@@ -23,6 +23,9 @@ import java.util.Map;
 /**
  * Interface of GameModelImpl class. Handles various factors for the game, such as the game questions and the users
  * earnings.
+ *
+ * @author Fraser McCallum
+ * @since 1.0
  */
 public interface GameModel extends QuinzicalModel {
 
@@ -53,8 +56,13 @@ public interface GameModel extends QuinzicalModel {
     double getTimerValue();
 
     void setTimerValue(double value);
-    
+
     boolean isInternationalUnlocked();
 
+    /**
+     * Gets the userdata associated with this game
+     *
+     * @return the userdata associated with this game
+     */
     UserData getUserData();
 }

@@ -230,6 +230,9 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         return userData.isInternationalUnlocked();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserData getUserData() {
         return this.userData;

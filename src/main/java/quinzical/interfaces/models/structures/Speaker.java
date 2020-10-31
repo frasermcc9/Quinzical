@@ -14,9 +14,32 @@
 
 package quinzical.interfaces.models.structures;
 
+/**
+ * Speaker class handles speaking text from the TTS Engine.
+ *
+ * @author Fraser McCallum
+ * @see SpeakerMutator
+ * @see quinzical.impl.models.structures.SpeakerManager
+ * @since 1.0
+ */
 public interface Speaker {
 
+    /**
+     * Speaks given text through the speaker manager. Only one speaker can be active at a time. New speak requests will
+     * terminate any existing ones.
+     *
+     * @param text the text to speak.
+     */
     void speak(String text);
-    
-    void speak(String text, Runnable onCompletion);
+
+    /**
+     * Speaks given text through the speaker manager and executes a function upon completion. Only one speaker can be
+     * active at a time. New speak requests will terminate any existing ones.
+     * <p>
+     * The callback function will not execute if a new speech request is made.
+     *
+     * @param text     the text to speak
+     * @param callback function to execute once the speaker is completed.
+     */
+    void speak(String text, Runnable callback);
 }

@@ -11,13 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package quinzical.interfaces.events;
 
 /**
  * Functional interface with no arguments. Is fired when a question is activated.
  */
 @FunctionalInterface
+@Deprecated(since = "1.1")
 public interface ActiveQuestionObserver {
     void fireActiveQuestion();
 }

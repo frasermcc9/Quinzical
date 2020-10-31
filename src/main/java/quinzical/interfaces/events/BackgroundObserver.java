@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
  * passed as the argument.
  */
 @FunctionalInterface
+@Deprecated(since = "1.1")
 public interface BackgroundObserver {
     void updateBackground(Image img);
 }

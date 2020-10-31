@@ -18,6 +18,7 @@ package quinzical.interfaces.events;
  * Functional interface with no arguments. Fired when the question board is updated.
  */
 @FunctionalInterface
+@Deprecated(since = "1.1")
 public interface QuestionBoardObserver {
     void updateQuestionDisplay();
 }

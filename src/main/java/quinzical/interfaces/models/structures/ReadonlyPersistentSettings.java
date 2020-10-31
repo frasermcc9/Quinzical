@@ -16,18 +16,52 @@ package quinzical.interfaces.models.structures;
 
 import quinzical.impl.constants.Theme;
 
+/**
+ * Interface for {@link quinzical.impl.models.structures.PersistentSettingsImpl} class. This interface is designed for
+ * the class which stores user settings to disks in between play sessions. Use this interface if you only need to read
+ * settings.
+ *
+ * @author Fraser McCallum
+ * @see PersistentSettings
+ * @see quinzical.interfaces.models.GameModelSaver
+ * @see quinzical.impl.models.structures.PersistentSettingsImpl
+ * @since 1.1
+ */
 public interface ReadonlyPersistentSettings {
+    /**
+     * Get the theme in the persistent settings.
+     *
+     * @return the theme that has been saved.
+     */
     Theme getTheme();
 
+    /**
+     * @return the saved gap.
+     */
     int getGap();
 
+    /**
+     * @return the saved speed.
+     */
     int getSpeed();
 
+    /**
+     * @return the saved amp.
+     */
     int getAmp();
 
+    /**
+     * @return the saved pitch.
+     */
     int getPitch();
 
+    /**
+     * @return the saved timer duration.
+     */
     double getTimer();
 
+    /**
+     * Applies the settings that are saved in this object to the game.
+     */
     void applySettings();
 }

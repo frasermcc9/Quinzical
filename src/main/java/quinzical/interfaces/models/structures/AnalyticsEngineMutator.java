@@ -14,24 +14,74 @@
 
 package quinzical.interfaces.models.structures;
 
-import java.util.List;
-
+/**
+ * Analytics engine mutator has full access to mutating methods to the analytics engine class. Use this for when data
+ * needs to be changed inside the analytics engine class. If you simply need to read data from the analytics engine,
+ * then the {@link AnalyticsEngineReader} should be used instead.
+ * <p>
+ * This interface extends {@link AnalyticsEngineReader}.
+ *
+ * @author Fraser McCallum
+ * @see AnalyticsEngineReader for when data needs to only be read.
+ * @see quinzical.impl.models.structures.AnalyticsEngineImpl
+ * @since 1.1
+ */
 public interface AnalyticsEngineMutator extends AnalyticsEngineReader {
+    /**
+     * Gets the number of questions that have been answered
+     *
+     * @return the number of questions answered.
+     */
     int getQuestionsAnswered();
 
+    /**
+     * Sets the number of questions that have been answered
+     *
+     * @param questionsAnswered what to set the number of questions that have been answered to.
+     */
     void setQuestionsAnswered(int questionsAnswered);
 
+    /**
+     * Returns the total number of categories that have been answered
+     *
+     * @return the total number of categories that have been answered
+     */
     int getCategoriesAnswered();
 
+    /**
+     * Sets the number of categories that have been answered.
+     *
+     * @param categoriesAnswered what to set the number of categories that have been completely answered to.
+     */
     void setCategoriesAnswered(int categoriesAnswered);
 
+    /**
+     * Gets the number of correct answers that have been given in total.
+     *
+     * @return the number of correct answers that the player has answered.
+     */
     int getCorrectAnswers();
 
+    /**
+     * Gets the number of correct answers that have been given in total.
+     *
+     * @param correctAnswers the number of answers to set the internal correct answer tracker to.
+     */
     void setCorrectAnswers(int correctAnswers);
 
+    /**
+     * Indicate that a question has been answered.
+     *
+     * @param category the category that the question has come from.
+     * @param correct  whether the question was correct.
+     * @implNote Note this method has non-intuitive usage. This method should be called twice per question answered. The
+     * first time should be called false, then the second time should be called with whether it was actually right or
+     * wrong.
+     */
     void answerQuestion(String category, boolean correct);
 
-    List<String> getMostAnsweredCategories();
-    
+    /**
+     * Resets all data stored in the analytics engine.
+     */
     void resetData();
 }
