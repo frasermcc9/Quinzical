@@ -49,12 +49,12 @@ public class SceneHandlerImpl implements SceneHandler {
     private Theme activeTheme = null;
 
     @Inject
-    public SceneHandlerImpl(Scene scene) {
+    public SceneHandlerImpl(final Scene scene) {
         this.scene = scene;
         this.cachedScenes = new HashMap<>();
     }
 
-    public AbstractSceneController setActiveScene(GameScene newScene) {
+    public AbstractSceneController setActiveScene(final GameScene newScene) {
 
         FxmlInfo<AbstractSceneController> fxmlInfo = null;
         if (cachedScenes.containsKey(newScene)) {
@@ -62,14 +62,14 @@ public class SceneHandlerImpl implements SceneHandler {
         } else {
             try {
                 fxmlInfo = FxmlInfo.loadFXML(newScene.getFxmlName(), injector);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
             }
 
         }
         if (fxmlInfo == null) return null;
 
-        Parent p = fxmlInfo.getParent();
+        final Parent p = fxmlInfo.getParent();
 
         AnchorPane.setTopAnchor(p, 0.0);
         AnchorPane.setBottomAnchor(p, 0.0);
@@ -83,7 +83,7 @@ public class SceneHandlerImpl implements SceneHandler {
                 ((AnchorPane) scene.getRoot()).getChildren().remove(0);
         }), 300);
 
-        var ft = new FadeTransition(Duration.millis(300));
+        final var ft = new FadeTransition(Duration.millis(300));
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.setNode(p);
@@ -93,7 +93,7 @@ public class SceneHandlerImpl implements SceneHandler {
     }
 
     @Override
-    public void fireBackgroundChange(Theme theme) {
+    public void fireBackgroundChange(final Theme theme) {
         activeTheme = theme;
     }
 

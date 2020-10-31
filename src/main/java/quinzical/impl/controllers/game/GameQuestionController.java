@@ -73,7 +73,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
-    protected void setPrompts(String hint, String prompt) {
+    protected void setPrompts(final String hint, final String prompt) {
         this.lblPrompt.setText(prompt);
     }
 
@@ -100,10 +100,10 @@ public class GameQuestionController extends AbstractQuestionController {
         textAreas.forEach(a -> a.setEffect(null));
         textAreas.forEach(textArea -> textArea.setEditable(false));
 
-        GameQuestion question = gameModel.getActiveQuestion();
-        List<Solution> solutions = question.getSolutionsCopy();
+        final GameQuestion question = gameModel.getActiveQuestion();
+        final List<Solution> solutions = question.getSolutionsCopy();
 
-        List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
+        final List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
             .verifySolutions(solutions, textAreas);
         final boolean allCorrect = corrects.stream().allMatch(a -> a);
         if (allCorrect) {
@@ -139,7 +139,7 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     @Override
-    protected void initialSpeak(String question) {
+    protected void initialSpeak(final String question) {
         speaker.speak(question, this::startTimer);
     }
 
@@ -152,7 +152,7 @@ public class GameQuestionController extends AbstractQuestionController {
     /**
      * Handles the return to the main game scene.
      */
-    private void handleReturnToCategories(ActionEvent e) {
+    private void handleReturnToCategories(final ActionEvent e) {
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
@@ -165,13 +165,13 @@ public class GameQuestionController extends AbstractQuestionController {
      *
      * @param question - The current active question.
      */
-    private void handleNextQuestion(GameQuestion question) {
+    private void handleNextQuestion(final GameQuestion question) {
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
         }
 
-        GameQuestion next = gameModel.getNextActiveQuestion(question);
+        final GameQuestion next = gameModel.getNextActiveQuestion(question);
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
@@ -192,7 +192,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Starts the timer for the question answering
      */
     private void startTimer() {
-        ColorAdjust ca = new ColorAdjust();
+        final ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
         if (!awaitingAnswer) return;

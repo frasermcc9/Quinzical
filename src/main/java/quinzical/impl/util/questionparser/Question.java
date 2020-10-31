@@ -38,7 +38,7 @@ public class Question implements Serializable {
      * @param hint - the hint for the question
      * @param prompt - the prompt for the question
      */
-    public Question(String category, String hint, String prompt) {
+    public Question(final String category, final String hint, final String prompt) {
         this.hint = hint;
         this.prompt = prompt;
         this.category = category;
@@ -49,7 +49,7 @@ public class Question implements Serializable {
      *
      * @param q question to copy
      */
-    public Question(Question q) {
+    public Question(final Question q) {
         this.hint = q.hint;
         this.solutions.addAll(q.solutions);
         this.prompt = q.prompt;
@@ -69,8 +69,8 @@ public class Question implements Serializable {
      * @param solutions - the solution to add to this question
      * @return - the question the solutions are being added to
      */
-    public Question addSolution(String[] solutions) {
-        Solution s = new Solution(solutions);
+    public Question addSolution(final String[] solutions) {
+        final Solution s = new Solution(solutions);
         this.solutions.add(s);
         return this;
     }
@@ -110,10 +110,10 @@ public class Question implements Serializable {
      * @return - whether or not the inputted question and this are the same
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
+        final Question question = (Question) o;
         return Objects.equals(hint, question.hint) &&
             Objects.equals(solutions, question.solutions) &&
             Objects.equals(prompt, question.prompt) &&

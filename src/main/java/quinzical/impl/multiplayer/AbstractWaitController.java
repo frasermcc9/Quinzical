@@ -57,7 +57,7 @@ public abstract class AbstractWaitController extends AbstractAlertController {
 
     void loadWaitScreen() {
 
-        Socket socket = socketModel.getSocket();
+        final Socket socket = socketModel.getSocket();
         
         lblCode.setText(MultiplayerGame.getInstance().getCode());
 
@@ -69,29 +69,29 @@ public abstract class AbstractWaitController extends AbstractAlertController {
 
         socket.on("playersChange", objects -> Platform.runLater(() -> {
 
-            List<String> nameList = new ArrayList<>();
-            List<XpClass> xpList = new ArrayList<>();
+            final List<String> nameList = new ArrayList<>();
+            final List<XpClass> xpList = new ArrayList<>();
 
-            JSONArray nameArray = (JSONArray) objects[0];
-            JSONArray xpArray = (JSONArray) objects[1];
+            final JSONArray nameArray = (JSONArray) objects[0];
+            final JSONArray xpArray = (JSONArray) objects[1];
             for (int i = 0; i < nameArray.length(); i++) {
                 try {
                     nameList.add(nameArray.getString(i));
                     xpList.add(xpClassFactory.createXp(xpArray.getInt(i)));
-                } catch (JSONException jsonException) {
+                } catch (final JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
             }
 
-            List<Parent> children = new ArrayList<>();
+            final List<Parent> children = new ArrayList<>();
 
             for (int i = 0; i < nameList.size(); i++) {
                 try {
-                    FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/lobby-player", injector);
-                    Parent p = fxmlInfo.getParent();
+                    final FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/lobby-player", injector);
+                    final Parent p = fxmlInfo.getParent();
                     children.add(p);
                     fxmlInfo.getController().setContent(nameList.get(i), xpList.get(i).getLevel() + "");
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                 }
             }

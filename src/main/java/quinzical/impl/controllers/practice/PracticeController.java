@@ -70,9 +70,9 @@ public class PracticeController extends AbstractSceneController {
      * switches to the practice question scene.
      */
     @FXML
-    void btnOKPress(ActionEvent actionEvent) {
+    void btnOKPress(final ActionEvent actionEvent) {
         if (selectedCategory != null) {
-            Question question = gameModel.getRandomQuestion();
+            final Question question = gameModel.getRandomQuestion();
             gameModel.activateQuestion(question);
             sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
         }
@@ -82,7 +82,7 @@ public class PracticeController extends AbstractSceneController {
      * Sets the scene to the intro scene when the back button is pressed.
      */
     @FXML
-    void btnBackPress(ActionEvent actionEvent) {
+    void btnBackPress(final ActionEvent actionEvent) {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -94,29 +94,29 @@ public class PracticeController extends AbstractSceneController {
 
         btnOk.setDisable(true);
 
-        List<String> categories = gameModel.getCategories()
+        final List<String> categories = gameModel.getCategories()
             .stream()
             .sorted(String::compareToIgnoreCase)
             .collect(Collectors.toList());
 
-        int size = categories.size();
+        final int size = categories.size();
 
-        GridPane grid = new GridPane();
+        final GridPane grid = new GridPane();
 
         for (int rowIndex = 0; rowIndex < size / 2 + 1; rowIndex++) {
-            RowConstraints rc = new RowConstraints();
+            final RowConstraints rc = new RowConstraints();
             rc.setVgrow(Priority.SOMETIMES);
             rc.setFillHeight(true);
             grid.getRowConstraints().add(rc);
         }
         for (int colIndex = 0; colIndex < 2; colIndex++) {
-            ColumnConstraints cc = new ColumnConstraints();
+            final ColumnConstraints cc = new ColumnConstraints();
             cc.setHgrow(Priority.SOMETIMES);
             cc.setFillWidth(true);
             grid.getColumnConstraints().add(cc);
         }
         for (int i = 0; i < size; i++) {
-            Button btn = new Button();
+            final Button btn = new Button();
             btn.setText(categories.get(i));
             btn.setMinSize(scrollPane.getWidth() / 2, 70);
             btn.setPrefSize(scrollPane.getWidth() / 2, 70);
@@ -125,7 +125,7 @@ public class PracticeController extends AbstractSceneController {
 
             btn.setOnAction(this::selectCategory);
 
-            int colIdx = i % 2;
+            final int colIdx = i % 2;
             grid.add(btn, colIdx, i / 2);
         }
 
@@ -136,23 +136,23 @@ public class PracticeController extends AbstractSceneController {
     /**
      * Sets the category as selected
      */
-    private void selectCategory(ActionEvent e) {
+    private void selectCategory(final ActionEvent e) {
         buttonToggle(e, true);
     }
 
     /**
      * Sets the category as deselected
      */
-    private void deselectCategory(ActionEvent e) {
+    private void deselectCategory(final ActionEvent e) {
         buttonToggle(e, false);
     }
 
     /**
      * Toggles the specified button, showing if it is selected or not
      */
-    private void buttonToggle(ActionEvent e, boolean added) {
-        Button source = (Button) e.getSource();
-        String category = source.getText();
+    private void buttonToggle(final ActionEvent e, final boolean added) {
+        final Button source = (Button) e.getSource();
+        final String category = source.getText();
 
         source.getStyleClass().clear();
         if (added) {

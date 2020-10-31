@@ -33,11 +33,11 @@ public class GameQuestion extends Question {
      *
      * @param question the question to transform into a game question.
      */
-    public GameQuestion(Question question) {
+    public GameQuestion(final Question question) {
         super(question);
     }
 
-    public void answer(boolean correct) {
+    public void answer(final boolean correct) {
         this.answerable = false;
         this.answered = true;
         this.correct = correct;
@@ -51,7 +51,7 @@ public class GameQuestion extends Question {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(final int value) {
         this.value = value;
     }
 
@@ -59,7 +59,7 @@ public class GameQuestion extends Question {
         return answerable;
     }
 
-    public void setAnswerable(boolean answerable) {
+    public void setAnswerable(final boolean answerable) {
         this.answerable = answerable;
     }
 
@@ -67,7 +67,7 @@ public class GameQuestion extends Question {
         return answered;
     }
     
-    public void setAnswered(boolean answered) {
+    public void setAnswered(final boolean answered) {
         this.answered = answered;
     }
 

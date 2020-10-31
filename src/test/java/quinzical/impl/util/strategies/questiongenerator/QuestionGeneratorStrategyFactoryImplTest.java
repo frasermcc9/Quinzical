@@ -46,9 +46,9 @@ public class QuestionGeneratorStrategyFactoryImplTest {
 
     @Test
     public void TestInternationalQuestionApi() {
-        QuestionGeneratorStrategyFactory factory = injector.getInstance(QuestionGeneratorStrategyFactory.class);
-        QuestionGeneratorStrategy strategy = factory.createInternationalQuestionStrategy();
-        Map<String, List<GameQuestion>> board = strategy.generateQuestions();
+        final QuestionGeneratorStrategyFactory factory = injector.getInstance(QuestionGeneratorStrategyFactory.class);
+        final QuestionGeneratorStrategy strategy = factory.createInternationalQuestionStrategy();
+        final Map<String, List<GameQuestion>> board = strategy.generateQuestions();
 
         assertEquals(5, board.size());
         board.forEach((category, questions) -> {

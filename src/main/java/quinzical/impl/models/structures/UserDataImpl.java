@@ -40,7 +40,7 @@ public class UserDataImpl implements Serializable, UserData {
     private int earnings = 0;
     private int coins = 0;
 
-    public void answerQuestion(String category, boolean correct) {
+    public void answerQuestion(final String category, final boolean correct) {
         analyticsEngine.answerQuestion(category, correct);
 
     }
@@ -60,7 +60,7 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
-    public void LoadSavedData(Map<String, List<GameQuestion>> board, int earnings) {
+    public void LoadSavedData(final Map<String, List<GameQuestion>> board, final int earnings) {
         this.board = board;
         this.earnings = earnings;
     }
@@ -71,7 +71,7 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
-    public void createNewBoard(Map<String, List<GameQuestion>> board) {
+    public void createNewBoard(final Map<String, List<GameQuestion>> board) {
         this.board = board;
         this.earnings = 0;
     }
@@ -87,7 +87,7 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
-    public void incrementEarnings(int earnings) {
+    public void incrementEarnings(final int earnings) {
         this.earnings += earnings;
     }
 
@@ -97,7 +97,7 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
-    public void setCoins(int coins) {
+    public void setCoins(final int coins) {
         this.coins = coins;
     }
 
@@ -120,16 +120,16 @@ public class UserDataImpl implements Serializable, UserData {
     }
 
     @Override
-    public void incrementCoins(int value) {
+    public void incrementCoins(final int value) {
         this.coins += value;
     }
 
-    public boolean addTheme(Theme theme) {
+    public boolean addTheme(final Theme theme) {
         return this.unlockedThemes.add(theme);
     }
 
     public Set<Theme> getUnlockedThemes() {
-        Set<Theme> set = DEFAULT_THEMES;
+        final Set<Theme> set = DEFAULT_THEMES;
         set.addAll(this.unlockedThemes);
         return new HashSet<>(set);
     }

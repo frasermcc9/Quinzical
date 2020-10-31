@@ -46,10 +46,10 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     private double timer = 25;
 
     public PersistentSettings loadSettingsFromDisk() {
-        ObjectReaderStrategy<PersistentSettings> strategy = objectReaderStrategyFactory.createObjectReader();
+        final ObjectReaderStrategy<PersistentSettings> strategy = objectReaderStrategyFactory.createObjectReader();
 
         try {
-            PersistentSettings settings = strategy.readObject(System.getProperty("user.dir") + "/data/preferences.qdb");
+            final PersistentSettings settings = strategy.readObject(System.getProperty("user.dir") + "/data/preferences.qdb");
 
             theme = settings.getTheme();
             gap = settings.getGap();
@@ -57,7 +57,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
             amp = settings.getAmp();
             pitch = settings.getPitch();
             timer = settings.getTimer();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             //dont really care if this happens. It will just use default settings.
         }
 
@@ -94,7 +94,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setTheme(Theme theme) {
+    public void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
@@ -104,7 +104,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setGap(int gap) {
+    public void setGap(final int gap) {
         this.gap = gap;
     }
 
@@ -114,7 +114,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         this.speed = speed;
     }
 
@@ -124,7 +124,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setAmp(int amp) {
+    public void setAmp(final int amp) {
         this.amp = amp;
     }
 
@@ -134,7 +134,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setPitch(int pitch) {
+    public void setPitch(final int pitch) {
         this.pitch = pitch;
     }
 
@@ -144,7 +144,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public void setTimer(double timer) {
+    public void setTimer(final double timer) {
         this.timer = timer;
     }
 }

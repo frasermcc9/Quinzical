@@ -110,7 +110,7 @@ public class IntroController extends AbstractSceneController {
             return;
         }
 
-        UserData saveData;
+        final UserData saveData;
         try {
             saveData = objectReader.<UserData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
                 "/save.qdb");
@@ -123,7 +123,7 @@ public class IntroController extends AbstractSceneController {
                 btnLoadGame.setDisable(true);
             }
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (final IOException | ClassNotFoundException e) {
             //if no game data is found
             btnLoadGame.setDisable(true);
         }

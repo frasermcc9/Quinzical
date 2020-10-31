@@ -32,10 +32,10 @@ public class RoundEndController extends AbstractEndController {
     @Override
     protected void initializeComponents() {
 
-        int added = activeGame.getMostRecentPoints();
-        int totalPoints = activeGame.getPoints();
-        boolean correct = added != 0;
-        String actualAns = activeGame.getTrueSolution();
+        final int added = activeGame.getMostRecentPoints();
+        final int totalPoints = activeGame.getPoints();
+        final boolean correct = added != 0;
+        final String actualAns = activeGame.getTrueSolution();
 
         Platform.runLater(() -> {
             lblCorrect.setText(correct ? "CORRECT!" : "WRONG!");

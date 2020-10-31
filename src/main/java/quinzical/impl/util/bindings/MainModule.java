@@ -54,7 +54,7 @@ public class MainModule extends AbstractModule {
     @Override
     protected void configure() {
 
-        Scene scene = new Scene(new AnchorPane());
+        final Scene scene = new Scene(new AnchorPane());
         scene.getStylesheets().add(Entry.class.getResource("/css/global-font.css").toExternalForm());
         bind(Scene.class).toInstance(scene);
 

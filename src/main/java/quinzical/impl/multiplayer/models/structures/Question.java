@@ -7,7 +7,7 @@ public class Question {
     private String solution;
     private String givenSolution;
 
-    public Question(String question, String prompt) {
+    public Question(final String question, final String prompt) {
         this.question = question;
         this.prompt = prompt;
     }
@@ -24,7 +24,7 @@ public class Question {
         return givenSolution;
     }
 
-    public void setGivenSolution(String givenSolution) {
+    public void setGivenSolution(final String givenSolution) {
         this.givenSolution = givenSolution;
     }
 
@@ -32,7 +32,7 @@ public class Question {
         return solution;
     }
 
-    public void setSolution(String solution) {
+    public void setSolution(final String solution) {
         this.solution = solution;
     }
 }

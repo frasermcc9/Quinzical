@@ -62,7 +62,7 @@ public class LeaderboardController extends AbstractSceneController {
 
     @FXML
     void btnProfile() {
-        String name = tableBrowse.getSelectionModel().getSelectedItem().getValue().getName();
+        final String name = tableBrowse.getSelectionModel().getSelectedItem().getValue().getName();
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_PROFILE).passData(name)).start();
     }
 
@@ -72,8 +72,8 @@ public class LeaderboardController extends AbstractSceneController {
         playerList = observableArrayList();
         new Thread(this::createLeaderboard).start();
 
-        JFXTreeTableColumn<PlayerData, String> nameCol = new JFXTreeTableColumn<>("Name");
-        JFXTreeTableColumn<PlayerData, Number> xpCol = new JFXTreeTableColumn<>("Experience");
+        final JFXTreeTableColumn<PlayerData, String> nameCol = new JFXTreeTableColumn<>("Name");
+        final JFXTreeTableColumn<PlayerData, Number> xpCol = new JFXTreeTableColumn<>("Experience");
 
         Platform.runLater(() -> {
             nameCol.setCellValueFactory(v -> v.getValue().getValue().nameProperty());
@@ -81,7 +81,7 @@ public class LeaderboardController extends AbstractSceneController {
 
             tableBrowse.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 
-            TreeItem<PlayerData> root = new RecursiveTreeItem<>(playerList, RecursiveTreeObject::getChildren);
+            final TreeItem<PlayerData> root = new RecursiveTreeItem<>(playerList, RecursiveTreeObject::getChildren);
             tableBrowse.setRoot(root);
             tableBrowse.setShowRoot(false);
 
@@ -90,26 +90,26 @@ public class LeaderboardController extends AbstractSceneController {
     }
 
     private void createLeaderboard() {
-        OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
             .url(socketUrl + "/leaders")
             .build();
 
         try {
-            Response response = client.newCall(request).execute();
-            ResponseBody responseBody = response.body();
+            final Response response = client.newCall(request).execute();
+            final ResponseBody responseBody = response.body();
 
             assert responseBody != null;
-            JSONArray array = new JSONArray(responseBody.string());
+            final JSONArray array = new JSONArray(responseBody.string());
 
             for (int i = 0; i < array.length(); i++) {
-                JSONObject player = array.getJSONObject(i);
+                final JSONObject player = array.getJSONObject(i);
                 playerList.add(new PlayerData(player.getString("name"), player.getInt("XP")));
             }
 
 
-        } catch (IOException | JSONException e) {
+        } catch (final IOException | JSONException e) {
             e.printStackTrace();
         }
     }
@@ -118,7 +118,7 @@ public class LeaderboardController extends AbstractSceneController {
         private final SimpleStringProperty name;
         private final SimpleIntegerProperty xp;
 
-        public PlayerData(String name, int xp) {
+        public PlayerData(final String name, final int xp) {
             this.name = new SimpleStringProperty(name);
             this.xp = new SimpleIntegerProperty(xp);
         }

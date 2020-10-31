@@ -27,7 +27,7 @@ public class MultiplayerGame {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(final String code) {
         this.code = code;
     }
 
@@ -35,11 +35,11 @@ public class MultiplayerGame {
         return players;
     }
 
-    public void addPlayer(String playerName) {
+    public void addPlayer(final String playerName) {
         this.players.add(playerName);
     }
 
-    public void removePlayer(String playerName) {
+    public void removePlayer(final String playerName) {
         this.players.remove(playerName);
     }
 }

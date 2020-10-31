@@ -58,13 +58,13 @@ public abstract class AbstractGameModel implements QuinzicalModel {
      * Sets the active question in the game.
      */
     @Override
-    public void activateQuestion(GameQuestion question) {
+    public void activateQuestion(final GameQuestion question) {
         this.activeQuestion = question;
         fireActiveQuestionUpdate();
     }
 
     @Override
-    public void onActiveQuestionUpdate(ActiveQuestionObserver fn) {
+    public void onActiveQuestionUpdate(final ActiveQuestionObserver fn) {
         activeObservers.add(fn);
     }
 

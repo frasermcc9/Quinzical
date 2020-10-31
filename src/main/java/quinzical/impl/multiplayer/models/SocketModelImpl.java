@@ -18,7 +18,7 @@ public class SocketModelImpl implements SocketModel {
     }
 
     @Override
-    public SocketModel setName(String name) {
+    public SocketModel setName(final String name) {
         this.name = name;
         return this;
     }
@@ -29,7 +29,7 @@ public class SocketModelImpl implements SocketModel {
     }
 
     @Override
-    public SocketModel setSocket(Socket socket) {
+    public SocketModel setSocket(final Socket socket) {
         this.socket = socket;
         return this;
     }

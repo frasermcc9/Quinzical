@@ -56,7 +56,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param number the amount to increase by
      */
-    public void increaseValueBy(int number) {
+    public void increaseValueBy(final int number) {
         this.userData.incrementEarnings(number);
     }
 
@@ -70,9 +70,9 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return the next game question in category, or null.
      */
     @Override
-    public GameQuestion getNextActiveQuestion(GameQuestion question) {
-        String category = question.getCategory();
-        int index = this.userData.getBoard().get(category).indexOf(question);
+    public GameQuestion getNextActiveQuestion(final GameQuestion question) {
+        final String category = question.getCategory();
+        final int index = this.userData.getBoard().get(category).indexOf(question);
         if (index == 4) {
             return null;
         } else {
@@ -88,12 +88,12 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * category as answerable.
      */
     @Override
-    public void answerActive(boolean correct) {
-        GameQuestion question = this.activeQuestion;
+    public void answerActive(final boolean correct) {
+        final GameQuestion question = this.activeQuestion;
         this.activeQuestion.answer(correct);
         // this.activeQuestion = null;
 
-        GameQuestion next = getNextActiveQuestion(question);
+        final GameQuestion next = getNextActiveQuestion(question);
         if (next != null) {
             next.setAnswerable(true);
         } else {
@@ -116,7 +116,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void generateNewGameQuestionSet() {
-        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createGameQuestionStrategy()
+        final Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createGameQuestionStrategy()
             .generateQuestions();
         this.userData.createNewBoard(board);
     }
@@ -127,7 +127,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void generateInternationalQuestions() {
-        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createInternationalQuestionStrategy()
+        final Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory.createInternationalQuestionStrategy()
             .generateQuestions();
         this.userData.createNewBoard(board);
     }
@@ -137,7 +137,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param categories String array of categories to generate questions from. Must be of length 5.
      */
-    public void generateGameQuestionSetFromCategories(String[] categories) {
+    public void generateGameQuestionSetFromCategories(final String[] categories) {
         generateGameQuestionSetFromCategories(List.of(categories));
     }
 
@@ -146,11 +146,11 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      *
      * @param categories String list of categories. Must be at least size 5.
      */
-    public void generateGameQuestionSetFromCategories(List<String> categories) {
+    public void generateGameQuestionSetFromCategories(final List<String> categories) {
         if (categories.size() != 5)
             throw new IllegalArgumentException("Generating game questions from category must be given 5 categories.");
 
-        Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory
+        final Map<String, List<GameQuestion>> board = questionGeneratorStrategyFactory
             .createSelectedCategoryStrategy(categories).generateQuestions();
         this.userData.createNewBoard(board);
     }
@@ -159,7 +159,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
         return timerValue;
     }
 
-    public void setTimerValue(double value) {
+    public void setTimerValue(final double value) {
         timerValue = value;
     }
 
@@ -175,7 +175,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @return the number of questions that are unanswered
      */
     @Override
-    public int numberOfQuestionsRemaining(Map<String, List<GameQuestion>> boardQuestions) {
+    public int numberOfQuestionsRemaining(final Map<String, List<GameQuestion>> boardQuestions) {
         return boardQuestions.values().stream().reduce(0,
             (sub, el) -> sub
                 + el.stream().reduce(0, (acc, curr) -> acc + (curr.isAnswered() ? 0 : 1), Integer::sum),
@@ -196,7 +196,7 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      * @param userData the game state that has been saved.
      */
     @Override
-    public void loadSaveData(UserData userData) {
+    public void loadSaveData(final UserData userData) {
         this.userData = userData;
     }
 
@@ -207,14 +207,14 @@ public class GameModelImpl extends AbstractGameModel implements GameModel, GameM
      */
     @Override
     public void saveGame() throws IOException {
-        FileOutputStream save = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
-        ObjectOutputStream saveOut = new ObjectOutputStream(save);
+        final FileOutputStream save = new FileOutputStream(System.getProperty("user.dir") + "/data/save.qdb");
+        final ObjectOutputStream saveOut = new ObjectOutputStream(save);
         saveOut.writeObject(userData);
         saveOut.close();
         save.close();
 
-        FileOutputStream settings = new FileOutputStream(System.getProperty("user.dir") + "/data/preferences.qdb");
-        ObjectOutputStream settingsOut = new ObjectOutputStream(settings);
+        final FileOutputStream settings = new FileOutputStream(System.getProperty("user.dir") + "/data/preferences.qdb");
+        final ObjectOutputStream settingsOut = new ObjectOutputStream(settings);
         settingsOut.writeObject(persistentSettings.loadSettingsFromGame());
         settingsOut.close();
         settings.close();

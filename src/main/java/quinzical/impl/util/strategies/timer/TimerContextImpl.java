@@ -28,7 +28,7 @@ public class TimerContextImpl implements TimerContext {
     }
 
     @Override
-    public TimerStrategy createTimer(TimerType timerType) {
+    public TimerStrategy createTimer(final TimerType timerType) {
         switch (timerType) {
             case DEFAULT:
                 return defaultTimerStrategyProvider.get();
@@ -48,7 +48,7 @@ class DefaultTimerStrategy implements TimerStrategy {
             try {
                 Thread.sleep(delay);
                 runnable.run();
-            } catch (InterruptedException ignored) {
+            } catch (final InterruptedException ignored) {
             }
         });
 

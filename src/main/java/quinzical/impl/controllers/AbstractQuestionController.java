@@ -71,7 +71,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * @param corrects  - The list of Boolean values showing which text areas are
      *                  right and wrong.
      */
-    protected static void colourTextAreas(List<JFXTextArea> textAreas, List<Boolean> corrects) {
+    protected static void colourTextAreas(final List<JFXTextArea> textAreas, final List<Boolean> corrects) {
         for (int i = 0; i < textAreas.size(); i++) {
             if (corrects.get(i)) {
                 textAreas.get(i).getStyleClass().add("answer-field-right");
@@ -93,7 +93,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * Checks if all the text fields are empty when a button is pressed, setting the
      * submit button to pass if so and submit otherwise
      */
-    protected void keyPressed(KeyCode keyCode) {
+    protected void keyPressed(final KeyCode keyCode) {
         if (!textAreas.get(0).isEditable()) return;
         if (keyCode == KeyCode.ENTER) return;
         
@@ -133,7 +133,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
     /**
      * Hook with default behaviour
      */
-    protected void initialSpeak(String question) {
+    protected void initialSpeak(final String question) {
         speaker.speak(question);
     }
 
@@ -143,7 +143,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      */
     protected final void initialiseQuestion() {
 
-        GameQuestion gameQuestion = getGameModel().getActiveQuestion();
+        final GameQuestion gameQuestion = getGameModel().getActiveQuestion();
 
         onQuestionLoad();
 
@@ -154,14 +154,14 @@ public abstract class AbstractQuestionController extends AbstractSceneController
 
         initialSpeak(gameQuestion.getHint());
 
-        int slnSize = gameQuestion.getSolutions().size();
+        final int slnSize = gameQuestion.getSolutions().size();
 
         for (int i = 0; i < slnSize; i++) {
             final JFXTextArea field = new JFXTextArea();
             field.getStyleClass().add("answer-field-default");
             field.setPromptText("Enter your solution here...");
 
-            ColorAdjust ca = new ColorAdjust();
+            final ColorAdjust ca = new ColorAdjust();
             ca.setBrightness(1);
             field.setEffect(ca);
 
@@ -178,12 +178,12 @@ public abstract class AbstractQuestionController extends AbstractSceneController
         }
     }
 
-    private void focusFixer(Boolean isFocused, JFXTextArea field) {
+    private void focusFixer(final Boolean isFocused, final JFXTextArea field) {
         activeText = isFocused ? field : activeText;
         if (isFocused || !textAreas.get(0).isEditable()) {
             field.setEffect(null);
         } else {
-            ColorAdjust colorFixer = new ColorAdjust();
+            final ColorAdjust colorFixer = new ColorAdjust();
             colorFixer.setBrightness(1);
             field.setEffect(colorFixer);
         }
@@ -193,14 +193,14 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      * Checks for if the enter key is pressed, and attempts to press the submit
      * button if valid
      */
-    protected void onKeyPress(KeyEvent e) {
+    protected void onKeyPress(final KeyEvent e) {
         keyPressed(e.getCode());
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof JFXTextArea) {
-                JFXTextArea ta = (JFXTextArea) e.getSource();
-                String text = ta.getText().trim();
+                final JFXTextArea ta = (JFXTextArea) e.getSource();
+                final String text = ta.getText().trim();
                 ta.setText(text);
-                int idx = textAreas.indexOf(ta);
+                final int idx = textAreas.indexOf(ta);
                 if (idx + 1 == textAreas.size()) {
                     if (text.isBlank()) {
                         onPassClicked();
@@ -249,7 +249,7 @@ public abstract class AbstractQuestionController extends AbstractSceneController
      *
      * @param buttonType The type of button to set the submit button to
      */
-    protected void setSubmitButtonType(ButtonType buttonType) {
+    protected void setSubmitButtonType(final ButtonType buttonType) {
         btnSubmit.getStyleClass().clear();
         btnSubmit.getStyleClass().addAll("material-button");
         switch (buttonType) {

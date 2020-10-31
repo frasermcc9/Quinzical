@@ -31,25 +31,25 @@ public class App extends Application {
 
     private static Scene scene;
 
-    public static void setRoot(String fxml) {
+    public static void setRoot(final String fxml) {
         try {
             scene.setRoot(loadFXML(fxml));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+    private static Parent loadFXML(final String fxml) throws IOException {
+        final FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) throws IOException {
         scene = new Scene(loadFXML("entry"), 640, 480);
         stage.setScene(scene);
         stage.show();

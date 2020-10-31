@@ -65,8 +65,8 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * @param category The category to be toggled
      * @param added Whether the category is currently selected or not
      */
-    protected void buttonToggle(MouseEvent e, String category, boolean added) {
-        Node source = (Node) e.getSource();
+    protected void buttonToggle(final MouseEvent e, final String category, final boolean added) {
+        final Node source = (Node) e.getSource();
 
         if (added) {
             getSelectedCategories().add(category);
@@ -92,28 +92,28 @@ public abstract class AbstractSelectorController extends AbstractSceneController
     @Override
     protected void onLoad() {
         btnOk.setDisable(true);
-        List<String> categories = getModel().getCategories()
+        final List<String> categories = getModel().getCategories()
             .stream()
             .sorted(String::compareToIgnoreCase)
             .collect(Collectors.toList());
 
-        List<String> data = getModel().getUserData().getAnalytics()
+        final List<String> data = getModel().getUserData().getAnalytics()
             .getCorrectRatiosOfCategories(categories)
             .stream()
             .map(Double::parseDouble)
             .map(v -> Double.isNaN(v) ? 0 + "%" : Math.round(v * 100) + "%")
             .collect(Collectors.toList());
 
-        List<Parent> children = new ArrayList<>();
+        final List<Parent> children = new ArrayList<>();
 
         for (int i = 0; i < categories.size(); i++) {
             try {
-                FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/category-selection"
+                final FxmlInfo<TileController> fxmlInfo = FxmlInfo.loadFXML("components/category-selection"
                     , injector);
-                Parent p = fxmlInfo.getParent();
+                final Parent p = fxmlInfo.getParent();
                 children.add(p);
 
-                TileController controller = fxmlInfo
+                final TileController controller = fxmlInfo
                     .getController()
                     .setContent(categories.get(i), data.get(i));
 
@@ -122,7 +122,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
                 p.setOnMouseClicked((event -> selectCategory(event, controller.getHeader())));
 
 
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
@@ -134,7 +134,7 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * 
      * @param category The category to be selected
      */
-    protected void selectCategory(MouseEvent e, String category) {
+    protected void selectCategory(final MouseEvent e, final String category) {
         buttonToggle(e, category, true);
     }
 
@@ -143,15 +143,15 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      *
      * @param category The category to be deselected
      */
-    protected void deselectCategory(MouseEvent e, String category) {
+    protected void deselectCategory(final MouseEvent e, final String category) {
         buttonToggle(e, category, false);
     }
 
     /**
      * Displays the hover animation when the user hovers over a category
      */
-    protected void hoverCard(MouseEvent e) {
-        Object source = e.getSource();
+    protected void hoverCard(final MouseEvent e) {
+        final Object source = e.getSource();
         if (source instanceof Node) {
             createScaleAnimation((Node) source, 150, 1.1);
         }
@@ -161,8 +161,8 @@ public abstract class AbstractSelectorController extends AbstractSceneController
      * Displays the un-hover animation when the user is no longer hovering 
      * over a category
      */
-    protected void hoverOffCard(MouseEvent e) {
-        Object source = e.getSource();
+    protected void hoverOffCard(final MouseEvent e) {
+        final Object source = e.getSource();
         if (source instanceof Node) {
             createScaleAnimation((Node) source, 150, 1);
         }

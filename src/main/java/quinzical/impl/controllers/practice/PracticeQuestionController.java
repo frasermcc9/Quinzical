@@ -55,9 +55,9 @@ public class PracticeQuestionController extends AbstractQuestionController {
     @FXML
     protected void onSubmitClicked() {
 
-        GameQuestion question = gameModel.getActiveQuestion();
-        List<Solution> solutions = question.getSolutionsCopy();
-        List<Boolean> corrects;
+        final GameQuestion question = gameModel.getActiveQuestion();
+        final List<Solution> solutions = question.getSolutionsCopy();
+        final List<Boolean> corrects;
 
         solutionContainer.getChildren().forEach(text -> {
             text.setEffect(null);
@@ -136,7 +136,7 @@ public class PracticeQuestionController extends AbstractQuestionController {
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
-    protected void setPrompts(String hint, String prompt) {
+    protected void setPrompts(final String hint, final String prompt) {
         this.lblHint.setText(hint);
         this.lblPrompt.setText(prompt);
     }

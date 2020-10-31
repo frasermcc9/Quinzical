@@ -50,17 +50,16 @@ class DefaultObjectReaderStrategy<T> implements ObjectReaderStrategy<T> {
      * @throws ClassNotFoundException If the class being casted to cannot be found.
      */
     @Override
-    public T readObject(String dirname) throws IOException, ClassNotFoundException {
+    public T readObject(final String dirname) throws IOException, ClassNotFoundException {
 
-        FileInputStream fileIn = new FileInputStream(dirname);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Object obj = in.readObject();
+        final FileInputStream fileIn = new FileInputStream(dirname);
+        final ObjectInputStream in = new ObjectInputStream(fileIn);
+        final Object obj = in.readObject();
         in.close();
         fileIn.close();
 
         if (obj != null) {
-            @SuppressWarnings("unchecked")
-            T obj1 = (T) obj;
+            @SuppressWarnings("unchecked") final T obj1 = (T) obj;
             return obj1;
         } else {
             return null;

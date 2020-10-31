@@ -74,21 +74,21 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
      * @param callback function to run once the process is complete
      * @param command  bash command to execute
      */
-    private void execute(Runnable callback, final String... command) {
+    private void execute(final Runnable callback, final String... command) {
         if (speaker != null && speaker.isAlive()) {
             speaker.interrupt();
         }
         speaker = new Thread(() -> {
-            ProcessBuilder pb = new ProcessBuilder(command);
+            final ProcessBuilder pb = new ProcessBuilder(command);
             Process process = null;
             try {
                 process = pb.start();
                 process.waitFor();
                 process.destroy();
                 Platform.runLater(callback);
-            } catch (IOException ignored) {
+            } catch (final IOException ignored) {
 
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 process.destroy();
             }
         });
@@ -107,7 +107,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
      * @param pitch - The pitch that the speaker will talk in (how high or low the voice sounds)
      */
     @Override
-    public void setPitch(int pitch) {
+    public void setPitch(final int pitch) {
         if (pitch < 0 || pitch > 99) {
             throw new IllegalArgumentException("The pitch must be be between 0 and 99");
         }
@@ -124,7 +124,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
      * @param amplitude - The amplitude to be set (how loud the voice is)
      */
     @Override
-    public void setAmplitude(int amplitude) {
+    public void setAmplitude(final int amplitude) {
         if (amplitude < 0 || amplitude > 200) {
             throw new IllegalArgumentException("The amplitude must be be between 0 and 200");
         }
@@ -141,7 +141,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
      * @param speed - Reading speed (recommended range between 80 ~ 500)
      */
     @Override
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         if (speed < 1) {
             throw new IllegalArgumentException("The speed must be above 0");
         }
@@ -158,7 +158,7 @@ public class SpeakerManager implements SpeakerMutator, Speaker {
      * @param gap - How long to wait between each word spoken
      */
     @Override
-    public void setGap(int gap) {
+    public void setGap(final int gap) {
         if (gap < 0) {
             throw new IllegalArgumentException("The gap between words must be positive number");
         }

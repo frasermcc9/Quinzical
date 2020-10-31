@@ -83,7 +83,7 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * @return the QuestionGeneratorStrategy that will generate the questions.
      */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategoryStrategy(String[] categories) {
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(final String[] categories) {
         return createSelectedCategoryStrategy(List.of(categories));
     }
 
@@ -95,8 +95,8 @@ public class QuestionGeneratorStrategyFactoryImpl implements QuestionGeneratorSt
      * @see #createGameQuestionStrategy()
      */
     @Override
-    public QuestionGeneratorStrategy createSelectedCategoryStrategy(List<String> categories) {
-        SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
+    public QuestionGeneratorStrategy createSelectedCategoryStrategy(final List<String> categories) {
+        final SelectedCategoryGeneratorStrategy strategy = selectedCategoryGeneratorStrategyProvider.get();
         strategy.setCategories(categories);
         return strategy;
     }
@@ -126,12 +126,12 @@ class PracticeQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
     @Override
     public Map<String, List<GameQuestion>> generateQuestions() {
 
-        Map<String, List<GameQuestion>> questions = new HashMap<>();
+        final Map<String, List<GameQuestion>> questions = new HashMap<>();
 
         questionCollection.getQuestions().forEach((k, v) -> {
-            List<GameQuestion> list = new ArrayList<>();
+            final List<GameQuestion> list = new ArrayList<>();
             v.forEach(q -> {
-                GameQuestion question = new GameQuestion(q);
+                final GameQuestion question = new GameQuestion(q);
                 question.setAnswerable(true);
                 list.add(new GameQuestion(question));
             });
@@ -161,12 +161,12 @@ class GameQuestionGeneratorStrategy implements QuestionGeneratorStrategy {
      */
     @Override
     public Map<String, List<GameQuestion>> generateQuestions() {
-        Map<String, List<Question>> questions = questionCollection.getQuestions();
+        final Map<String, List<Question>> questions = questionCollection.getQuestions();
 
         // Shuffle the list of categories and pick 5.
-        List<String> allCategories = new ArrayList<>(questions.keySet());
+        final List<String> allCategories = new ArrayList<>(questions.keySet());
         Collections.shuffle(allCategories);
-        List<String> chosen = allCategories.subList(0, 5);
+        final List<String> chosen = allCategories.subList(0, 5);
 
         return factory.createSelectedCategoryStrategy(chosen).generateQuestions();
     }
@@ -182,24 +182,24 @@ class SelectedCategoryGeneratorStrategy implements QuestionGeneratorStrategy {
 
     private List<String> categories;
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(final List<String> categories) {
         this.categories = categories;
     }
 
     @Override
     public Map<String, List<GameQuestion>> generateQuestions() {
-        Map<String, List<Question>> questions = questionCollection.getQuestions();
+        final Map<String, List<Question>> questions = questionCollection.getQuestions();
 
-        Map<String, List<GameQuestion>> questionBoard = new LinkedHashMap<>();
+        final Map<String, List<GameQuestion>> questionBoard = new LinkedHashMap<>();
 
-        for (String category : categories) {
-            List<Question> availableQuestions = new ArrayList<>(questions.get(category));
-            List<GameQuestion> categoryQuestions = new ArrayList<>();
+        for (final String category : categories) {
+            final List<Question> availableQuestions = new ArrayList<>(questions.get(category));
+            final List<GameQuestion> categoryQuestions = new ArrayList<>();
 
             Collections.shuffle(availableQuestions);
 
             for (int i = 0; i < 5; i++) {
-                GameQuestion q = new GameQuestion(availableQuestions.get(i));
+                final GameQuestion q = new GameQuestion(availableQuestions.get(i));
                 q.setValue((i + 1) * 100);
                 if (i == 0) {
                     q.setAnswerable(true);
@@ -224,26 +224,26 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
     @Override
     public Map<String, List<GameQuestion>> generateQuestions() {
 
-        Map<String, List<GameQuestion>> questions = new LinkedHashMap<>();
+        final Map<String, List<GameQuestion>> questions = new LinkedHashMap<>();
 
-        List<CategoryNumberBinding> bindings = new ArrayList<>(5);
+        final List<CategoryNumberBinding> bindings = new ArrayList<>(5);
 
         try {
             // Get 5 categories
-            int offset = (int) (Math.random() * 10000);
-            ResponseBody response = run("https://jservice.io/api/categories?count=5&offset=" + offset);
-            String responseString = response.string();
-            JSONArray array = new JSONArray(responseString);
+            final int offset = (int) (Math.random() * 10000);
+            final ResponseBody response = run("https://jservice.io/api/categories?count=5&offset=" + offset);
+            final String responseString = response.string();
+            final JSONArray array = new JSONArray(responseString);
 
             // Convert the api response into a useful format
             for (int i = 0; i < array.length(); i++) {
-                JSONObject object = (JSONObject) array.get(i);
+                final JSONObject object = (JSONObject) array.get(i);
                 bindings.add(new CategoryNumberBinding() {
                     @Override
                     public String name() {
                         try {
                             return object.get("title").toString();
-                        } catch (JSONException jsonException) {
+                        } catch (final JSONException jsonException) {
                             return null;
                         }
                     }
@@ -252,7 +252,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
                     public String id() {
                         try {
                             return object.get("id").toString();
-                        } catch (JSONException jsonException) {
+                        } catch (final JSONException jsonException) {
                             return null;
                         }
                     }
@@ -260,10 +260,10 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
             }
 
             //Get 5 categories from API
-            List<String> data = bindings.stream().map(b -> {
+            final List<String> data = bindings.stream().map(b -> {
                 try {
                     return requestQuestions(b.id()).get();
-                } catch (InterruptedException | ExecutionException e) {
+                } catch (final InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                     return null;
                 }
@@ -271,15 +271,15 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
 
             // For each category
             for (int j = 0; j < bindings.size(); j++) {
-                CategoryNumberBinding binding = bindings.get(j);
-                String clues = data.get(j);
+                final CategoryNumberBinding binding = bindings.get(j);
+                final String clues = data.get(j);
 
-                List<GameQuestion> gameQuestions = new ArrayList<>(5);
+                final List<GameQuestion> gameQuestions = new ArrayList<>(5);
                 questions.put(binding.name(), gameQuestions);
 
                 // Convert json array to normal java list
-                JSONArray clueArray = new JSONArray(clues);
-                List<JSONObject> jsonObjects = new ArrayList<>();
+                final JSONArray clueArray = new JSONArray(clues);
+                final List<JSONObject> jsonObjects = new ArrayList<>();
                 for (int i = 0; i < clueArray.length(); i++) {
                     jsonObjects.add(clueArray.getJSONObject(i));
                 }
@@ -287,10 +287,10 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
 
                 // Add five clues to the question map
                 for (int i = 0; i < 5; i++) {
-                    String sln = removeArtifacts(jsonObjects.get(i).getString("answer"));
-                    String question = removeArtifacts(jsonObjects.get(i).getString("question"));
+                    final String sln = removeArtifacts(jsonObjects.get(i).getString("answer"));
+                    final String question = removeArtifacts(jsonObjects.get(i).getString("question"));
 
-                    GameQuestion gameQuestion = new GameQuestion(
+                    final GameQuestion gameQuestion = new GameQuestion(
                         new Question(
                             binding.name(),
                             question,
@@ -306,7 +306,7 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
             }
             return questions;
 
-        } catch (IOException | JSONException e) {
+        } catch (final IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
@@ -319,20 +319,20 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
      * @return Response body from the http request
      * @throws IOException when the http request fails to execute.
      */
-    private ResponseBody run(String url) throws IOException {
-        Request request = new Request.Builder()
+    private ResponseBody run(final String url) throws IOException {
+        final Request request = new Request.Builder()
             .url(url)
             .build();
 
-        Response response = client.newCall(request).execute();
+        final Response response = client.newCall(request).execute();
         return response.body();
     }
 
-    private CompletableFuture<String> requestQuestions(String id) {
+    private CompletableFuture<String> requestQuestions(final String id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return run("https://jservice.io/api/clues?category=" + id).string();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 return null;
             }
         });

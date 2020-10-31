@@ -47,11 +47,11 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
-    public void setData(Object[] socketObjectData) {
-        String solution = (String) socketObjectData[0];
-        Integer points = (Integer) socketObjectData[1];
+    public void setData(final Object[] socketObjectData) {
+        final String solution = (String) socketObjectData[0];
+        final Integer points = (Integer) socketObjectData[1];
         updateUsersFromSocket((JSONArray) socketObjectData[2]);
-        Integer mostRecentPoints = (Integer) socketObjectData[3];
+        final Integer mostRecentPoints = (Integer) socketObjectData[3];
 
         this.points = points;
         this.mostRecentPoints = mostRecentPoints;
@@ -60,8 +60,8 @@ public class ActiveGameImpl implements ActiveGame {
 
 
     @Override
-    public void init(int duration) {
-        Socket socket = socketModel.getSocket();
+    public void init(final int duration) {
+        final Socket socket = socketModel.getSocket();
 
         socket.on("newQuestion", (objects -> {
             currentQuestion = new Question((String) objects[0], (String) objects[1]);
@@ -101,7 +101,7 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
-    public void setGivenSolution(String givenSolution) {
+    public void setGivenSolution(final String givenSolution) {
         this.currentQuestion.setGivenSolution(givenSolution);
 
     }
@@ -129,12 +129,12 @@ public class ActiveGameImpl implements ActiveGame {
         return currentQuestion.getPrompt();
     }
 
-    private void updateUsersFromSocket(JSONArray topPlayers) {
-        List<JSONObject> parsedObjects = new ArrayList<>();
+    private void updateUsersFromSocket(final JSONArray topPlayers) {
+        final List<JSONObject> parsedObjects = new ArrayList<>();
         for (int i = 0; i < topPlayers.length(); i++) {
             try {
                 parsedObjects.add((JSONObject) topPlayers.get(i));
-            } catch (JSONException jsonException) {
+            } catch (final JSONException jsonException) {
                 jsonException.printStackTrace();
             }
         }
@@ -142,7 +142,7 @@ public class ActiveGameImpl implements ActiveGame {
         players.addAll(parsedObjects.stream().map(o -> {
             try {
                 return new Player(o.getInt("Points"), o.getString("Name"));
-            } catch (JSONException jsonException) {
+            } catch (final JSONException jsonException) {
                 jsonException.printStackTrace();
             }
             return null;

@@ -40,7 +40,7 @@ public class PracticeSelectorController extends AbstractSelectorController {
     @Override
     protected void generateQuestionsAndProgress() {
         practiceModel.setCategories(selectedCategories);
-        Question question = practiceModel.getRandomQuestion();
+        final Question question = practiceModel.getRandomQuestion();
         practiceModel.activateQuestion(question);
         sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
     }

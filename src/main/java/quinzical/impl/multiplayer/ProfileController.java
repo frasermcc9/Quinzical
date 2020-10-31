@@ -100,9 +100,9 @@ public class ProfileController extends AbstractAlertController {
                 return;
             }
 
-            ResponseBody responseBody = response.body();
+            final ResponseBody responseBody = response.body();
             assert responseBody != null;
-            JSONObject object = new JSONObject(responseBody.string());
+            final JSONObject object = new JSONObject(responseBody.string());
 
             final String name = object.getString("name");
             final int xp = object.getInt("xp");
@@ -120,7 +120,7 @@ public class ProfileController extends AbstractAlertController {
                 barXp.setProgress((double) xpThrough / outOf);
             });
 
-        } catch (IOException | JSONException e) {
+        } catch (final IOException | JSONException e) {
             e.printStackTrace();
         }
     }

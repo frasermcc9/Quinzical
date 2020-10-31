@@ -57,7 +57,7 @@ public class EndController extends AbstractSceneController {
     @Override
     protected void onLoad() {
         coinBox.setVisible(false);
-        int earnings = gameModel.getEarnings();
+        final int earnings = gameModel.getEarnings();
         animateLabel(earnings);
         gameModel.getUserData().incrementCoins(earnings / 100);
         ((Label) coinBox.getChildren().get(0)).setText("You Made " + earnings / 100 + " Coins!");
@@ -70,14 +70,14 @@ public class EndController extends AbstractSceneController {
      */
     private void animateLabel(final int animateUpTo) {
         final int increment = animateUpTo / 100;
-        AnimationTimer timer = new AnimationTimer() {
+        final AnimationTimer timer = new AnimationTimer() {
             private int currentValue = 0;
 
             /**
              * Called each frame. Update the label with an incremented amount.
              */
             @Override
-            public void handle(long timestamp) {
+            public void handle(final long timestamp) {
                 currentValue += increment;
                 lblMoney.setText(currentValue + "");
                 if (currentValue == animateUpTo) {
@@ -87,7 +87,7 @@ public class EndController extends AbstractSceneController {
             }
 
             private void runCoinAnimation() {
-                ScaleTransition st = new ScaleTransition(Duration.seconds(1));
+                final ScaleTransition st = new ScaleTransition(Duration.seconds(1));
                 st.setFromX(0);
                 st.setFromY(0);
                 st.setToX(0.9);
@@ -96,7 +96,7 @@ public class EndController extends AbstractSceneController {
 
                 st.setInterpolator(new Interpolator() {
                     @Override
-                    protected double curve(double t) {
+                    protected double curve(final double t) {
                         return -1.76 * (Math.pow(t, 3)) + 0.931 * (Math.pow(t, 2)) + 1.785 * t;
                     }
                 });

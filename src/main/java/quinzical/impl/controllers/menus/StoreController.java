@@ -66,20 +66,20 @@ public class StoreController extends AbstractSceneController {
      */
     private void loadShop() {
         // Setup showing how much currency the user has
-        UserData userData = gameModel.getUserData();
+        final UserData userData = gameModel.getUserData();
         coinLabel.setText(userData.getCoins() + "x Coins");
 
         // These are the items to be sold
-        int[] costs = new int[]{150, 25, 150, 100, 50, 25};
-        Theme[] themes = new Theme[]{Theme.LAKE, Theme.MIST, Theme.SNOW, Theme.SHEEP, Theme.CAVE, Theme.DESERT};
+        final int[] costs = new int[]{150, 25, 150, 100, 50, 25};
+        final Theme[] themes = new Theme[]{Theme.LAKE, Theme.MIST, Theme.SNOW, Theme.SHEEP, Theme.CAVE, Theme.DESERT};
 
-        List<Parent> toAdd = new ArrayList<>();
+        final List<Parent> toAdd = new ArrayList<>();
 
         for (int i = 0; i < costs.length; i++) {
             try {
-                FxmlInfo<StoreItem<Theme>> fxmlInfo = FxmlInfo.loadFXML("components/store-item", injector);
-                Parent p = fxmlInfo.getParent();
-                StoreItem<Theme> storeItem = fxmlInfo.getController();
+                final FxmlInfo<StoreItem<Theme>> fxmlInfo = FxmlInfo.loadFXML("components/store-item", injector);
+                final Parent p = fxmlInfo.getParent();
+                final StoreItem<Theme> storeItem = fxmlInfo.getController();
                 storeItem.setData(costs[i], themes[i], "Theme", themes[i].name());
                 if (userData.getUnlockedThemes().contains(themes[i])) {
                     storeItem.disableBuy();
@@ -93,7 +93,7 @@ public class StoreController extends AbstractSceneController {
                 }
                 toAdd.add(p);
 
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }

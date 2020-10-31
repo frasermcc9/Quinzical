@@ -39,19 +39,19 @@ public class TileController {
     @FXML
     private Label lblMarker;
 
-    private static String colourFromInt(int i) {
+    private static String colourFromInt(final int i) {
         return Integer.toHexString(i).substring(0, 6);
     }
 
-    private void setHeaderColourFromString(String anything) {
-        String hex = colourFromInt(anything.hashCode());
-        Color base = Color.web(hex);
-        double hue = base.getHue();
-        double sat = 0.8;
-        double val = 0.9;
-        Color enhanced = Color.hsb(hue, sat, val);
+    private void setHeaderColourFromString(final String anything) {
+        final String hex = colourFromInt(anything.hashCode());
+        final Color base = Color.web(hex);
+        final double hue = base.getHue();
+        final double sat = 0.8;
+        final double val = 0.9;
+        final Color enhanced = Color.hsb(hue, sat, val);
 
-        String newHex = String.format("#%02X%02X%02X",
+        final String newHex = String.format("#%02X%02X%02X",
             (int) (enhanced.getRed() * 255),
             (int) (enhanced.getGreen() * 255),
             (int) (enhanced.getBlue() * 255));
@@ -59,7 +59,7 @@ public class TileController {
         header.setStyle("-fx-background-color: " + newHex);
     }
 
-    public TileController setContent(String content, String ratio) {
+    public TileController setContent(final String content, final String ratio) {
         contentLabel.setText(content);
         setHeaderColourFromString(content);
 
