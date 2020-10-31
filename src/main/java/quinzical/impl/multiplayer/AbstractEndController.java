@@ -37,17 +37,17 @@ public abstract class AbstractEndController extends AbstractSceneController {
     private JFXTreeTableView<Player> tablePlayers;
 
     protected final void onLoad() {
-        JFXTreeTableColumn<Player, String> playerCol = new JFXTreeTableColumn<>("Player Name");
-        JFXTreeTableColumn<Player, String> pointsCol = new JFXTreeTableColumn<>("Points");
+        final JFXTreeTableColumn<Player, String> playerCol = new JFXTreeTableColumn<>("Player Name");
+        final JFXTreeTableColumn<Player, String> pointsCol = new JFXTreeTableColumn<>("Points");
 
-        ObservableList<Player> players = activeGame.getPlayers();
+        final ObservableList<Player> players = activeGame.getPlayers();
 
         Platform.runLater(() -> {
             playerCol.setCellValueFactory(v -> v.getValue().getValue().nameProperty());
             pointsCol.setCellValueFactory(v -> v.getValue().getValue().scoreProperty());
             tablePlayers.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 
-            TreeItem<Player> root = new RecursiveTreeItem<>(players, RecursiveTreeObject::getChildren);
+            final TreeItem<Player> root = new RecursiveTreeItem<>(players, RecursiveTreeObject::getChildren);
             tablePlayers.setRoot(root);
             tablePlayers.setShowRoot(false);
             tablePlayers.getColumns().setAll(playerCol, pointsCol);

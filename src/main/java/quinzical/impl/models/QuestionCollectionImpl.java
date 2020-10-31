@@ -44,7 +44,7 @@ public class QuestionCollectionImpl implements QuestionCollection {
      * On construction, deserialize the question database.
      */
     @Inject
-    public QuestionCollectionImpl(ObjectReaderStrategyFactory objectReaderStrategyFactory) {
+    public QuestionCollectionImpl(final ObjectReaderStrategyFactory objectReaderStrategyFactory) {
         this.objectReaderStrategyFactory = objectReaderStrategyFactory;
         regenerateQuestionsFromDisk(true);
     }
@@ -53,24 +53,24 @@ public class QuestionCollectionImpl implements QuestionCollection {
      * Returns a copy of the question map.
      */
     @Override
-    public Map<String, List<Question>> getQuestions() {
+    public final Map<String, List<Question>> getQuestions() {
         return new LinkedHashMap<>(this.questionMap);
     }
 
     @Override
-    public void regenerateQuestionsFromDisk() {
+    public final void regenerateQuestionsFromDisk() {
         regenerateQuestionsFromDisk(false);
     }
 
     @Override
-    public void regenerateQuestionsFromDisk(boolean silent) {
+    public final void regenerateQuestionsFromDisk(final boolean silent) {
         try {
-            ObjectReaderStrategy<Map<String, List<Question>>> strategy =
+            final ObjectReaderStrategy<Map<String, List<Question>>> strategy =
                 objectReaderStrategyFactory.createObjectReader();
-            Map<String, List<Question>> tempMap = strategy.readObject(System.getProperty("user.dir") + "/data" +
+            final Map<String, List<Question>> tempMap = strategy.readObject(System.getProperty("user.dir") + "/data" +
                 "/question.qdb");
 
-            Map<String, List<Question>> filteredMap = new LinkedHashMap<>();
+            final Map<String, List<Question>> filteredMap = new LinkedHashMap<>();
 
             tempMap
                 .keySet()
@@ -79,20 +79,20 @@ public class QuestionCollectionImpl implements QuestionCollection {
                 .forEach(k -> filteredMap.put(k, tempMap.get(k)));
 
             if (filteredMap.size() < 5 && !silent) {
-                boolean result = this.showAlert();
+                final boolean result = this.showAlert();
                 if (!result) return;
             }
 
             questionMap = filteredMap;
 
-        } catch (IOException | ClassNotFoundException i) {
+        } catch (final IOException | ClassNotFoundException i) {
             System.out.println("Error: " + i.getMessage());
         }
         assert questionMap != null;
     }
 
     private boolean showAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Pressing cancel will abort all question loading. Press ok " +
+        final Alert alert = new Alert(Alert.AlertType.WARNING, "Pressing cancel will abort all question loading. Press ok " +
             "to load the current question set.", ButtonType.OK,
             ButtonType.CANCEL);
         alert.setTitle("Warning: Invalid Question Set Loaded");

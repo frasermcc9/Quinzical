@@ -25,7 +25,7 @@ public interface XpClass {
      * @param x the cumulative xp of the player
      * @return the level that the player would be
      */
-    static int inverseExpFunction(int x) {
+    static int inverseExpFunction(final int x) {
         for (int i = 0; ; i++) {
             if (expFunction(i) > x) {
                 return Math.max(i - 1, 0);
@@ -39,7 +39,7 @@ public interface XpClass {
      * @param x the level
      * @return the cumulative xp to reach this level
      */
-    static int expFunction(int x) {
+    static int expFunction(final int x) {
         return DoubleMath.roundToInt(50000 * Math.pow(1.05, x) - 48000, RoundingMode.HALF_UP);
     }
 

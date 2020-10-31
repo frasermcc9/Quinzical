@@ -7,16 +7,16 @@ public class Player extends RecursiveTreeObject<Player> {
     private final SimpleStringProperty score;
     private final SimpleStringProperty name;
 
-    public Player(int score, String name) {
+    public Player(final int score, final String name) {
         this.score = new SimpleStringProperty(score + "");
         this.name = new SimpleStringProperty(name);
     }
 
-    public SimpleStringProperty scoreProperty() {
+    public final SimpleStringProperty scoreProperty() {
         return score;
     }
 
-    public SimpleStringProperty nameProperty() {
+    public final SimpleStringProperty nameProperty() {
         return name;
     }
 }

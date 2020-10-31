@@ -60,7 +60,7 @@ public class GameTypeSelectController extends AbstractSceneController {
      * Returns the screen to the intro menu when the back button is pressed
      */
     @FXML
-    void btnBackPress() {
+    final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -69,7 +69,7 @@ public class GameTypeSelectController extends AbstractSceneController {
      * 
      * @param visible whether to turn the indicator on or off
      */
-    private void setProgressVisible(boolean visible) {
+    private void setProgressVisible(final boolean visible) {
         progressIndicator.setVisible(visible);
         lblProgress.setVisible(visible);
     }
@@ -79,19 +79,19 @@ public class GameTypeSelectController extends AbstractSceneController {
      * the elements of the scene depending on the fact.
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
         btnPlay.setDisable(true);
         setFunctions();
 
-        Glow glow = new Glow(100);
+        final Glow glow = new Glow(100);
 
         final int startPoint = 0;
         final int endPoint;
 
         if (!gameModel.isInternationalUnlocked()) {
             endPoint = 2;
-            StackPane international = (StackPane) imageContainer.getChildren().get(2);
+            final StackPane international = (StackPane) imageContainer.getChildren().get(2);
             createScaleAnimation(international, 100, 0.9);
             adjustBrightness(international.getChildren().get(0), 100, -0.8);
         } else {
@@ -101,7 +101,7 @@ public class GameTypeSelectController extends AbstractSceneController {
 
         for (int i = startPoint; i < endPoint; i++) {
             final int idx = i;
-            Node image = imageContainer.getChildren().get(idx);
+            final Node image = imageContainer.getChildren().get(idx);
             image.setOnMouseEntered(e -> image.setEffect(glow));
             image.setOnMouseExited(e -> image.setEffect(null));
             image.setOnMouseClicked(e -> disableImagesExcept(idx, startPoint, endPoint));
@@ -116,9 +116,9 @@ public class GameTypeSelectController extends AbstractSceneController {
      * @param start the start of the range of images to disable
      * @param end the end of the range of images to disable
      */
-    private void disableImagesExcept(int i, int start, int end) {
+    private void disableImagesExcept(final int i, final int start, final int end) {
         for (int j = start; j < end; j++) {
-            Node image = imageContainer.getChildren().get(j);
+            final Node image = imageContainer.getChildren().get(j);
             if (j == i) {
                 createScaleAnimation(image, 400, 1.1);
                 btnPlay.setDisable(false);
@@ -143,7 +143,7 @@ public class GameTypeSelectController extends AbstractSceneController {
      */
     private void loadInternational() {
         setProgressVisible(true);
-        Task<Void> task = new Task<>() {
+        final Task<Void> task = new Task<>() {
             @Override
             protected Void call() {
                 gameModel.generateInternationalQuestions();
@@ -155,7 +155,7 @@ public class GameTypeSelectController extends AbstractSceneController {
                 Platform.runLater(() -> sceneHandler.setActiveScene(GameScene.GAME));
             }
         };
-        Thread thread = new Thread(task);
+        final Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
     }

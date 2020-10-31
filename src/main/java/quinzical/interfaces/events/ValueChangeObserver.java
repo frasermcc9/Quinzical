@@ -18,6 +18,7 @@ package quinzical.interfaces.events;
  * Functional interface with no arguments. Fired when the users earnings are changed.
  */
 @FunctionalInterface
+@Deprecated(since = "1.1")
 public interface ValueChangeObserver {
     void updateValue();
 }

@@ -50,9 +50,9 @@ public class CreateAccountController extends AbstractAlertController {
     private JFXPasswordField txtConfirm;
 
     @FXML
-    void btnCreate() {
-        String username = txtName.getText().trim();
-        String password = txtPassword.getText();
+    final void btnCreate() {
+        final String username = txtName.getText().trim();
+        final String password = txtPassword.getText();
         if (username.isBlank()) txtName.setPromptText("Please give a valid username");
         if (password.isBlank()) txtPassword.setPromptText("Please give a valid password.");
         if (!password.equals(txtConfirm.getText())) {
@@ -64,7 +64,7 @@ public class CreateAccountController extends AbstractAlertController {
 
         final OkHttpClient client = new OkHttpClient();
 
-        RequestBody requestBody = new FormBody.Builder()
+        final RequestBody requestBody = new FormBody.Builder()
             .addEncoded("username", username)
             .addEncoded("password", password)
             .build();
@@ -74,10 +74,10 @@ public class CreateAccountController extends AbstractAlertController {
             .post(requestBody)
             .build();
 
-        Runnable runnable = () -> {
+        final Runnable runnable = () -> {
             try {
-                Response response = client.newCall(request).execute();
-                int code = response.code();
+                final Response response = client.newCall(request).execute();
+                final int code = response.code();
 
                 switch (code) {
                     case 200:
@@ -88,32 +88,32 @@ public class CreateAccountController extends AbstractAlertController {
                     case 403:
                         String responseMessage = "Unknown Error";
                         if (response.body() != null) {
-                            String message = response.body().string();
-                            JSONObject obj = new JSONObject(message);
+                            final String message = response.body().string();
+                            final JSONObject obj = new JSONObject(message);
                             responseMessage = obj.getString("message");
                         }
                         createAlert("Error Creating Account", responseMessage);
                         break;
                 }
 
-            } catch (IOException | JSONException e) {
+            } catch (final IOException | JSONException e) {
                 e.printStackTrace();
             } finally {
                 Platform.runLater(() -> setProgressVisible(false));
             }
         };
 
-        Thread thread = new Thread(runnable);
+        final Thread thread = new Thread(runnable);
         thread.start();
     }
 
     @FXML
-    void btnQuitClick() {
+    final void btnQuitClick() {
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
     }
 

@@ -31,10 +31,10 @@ public class Solution implements Serializable {
      * 
      * @param solutions - an array containing the variants to the solution 
      */
-    public Solution(String[] solutions) {
+    public Solution(final String[] solutions) {
         for (String s : solutions) {
-            s = s.trim();
-            variants.add(s);
+            String trim = s.trim();
+            variants.add(trim);
         }
     }
 
@@ -43,17 +43,17 @@ public class Solution implements Serializable {
      *
      * @param solutions - A list containing the variants to the solution 
      */
-    public Solution(List<String> solutions) {
+    public Solution(final List<String> solutions) {
         for (String s : solutions) {
-            s = s.trim();
-            variants.add(s);
+            String trim = s.trim();
+            variants.add(trim);
         }
     }
 
     /**
      * Gets the a copy of the variants of this solution object.
      */
-    public List<String> getVariants() {
+    public final List<String> getVariants() {
         return new ArrayList<>(variants);
     }
 }

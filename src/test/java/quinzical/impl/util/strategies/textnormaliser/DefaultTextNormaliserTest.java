@@ -10,23 +10,23 @@ public class DefaultTextNormaliserTest {
     private final TextNormaliserStrategyFactory textNormaliserFactory = new TextNormaliserStrategyFactory();
 
     @Test
-    public void TestNormalizeInput1() {
-        String str = "Māori";
-        String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
+    public final void TestNormalizeInput1() {
+        final String str = "Māori";
+        final String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
         assertEquals("māori", newStr);
     }
 
     @Test
-    public void TestNormalizeInput2() {
-        String str = "Katipō";
-        String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
+    public final void TestNormalizeInput2() {
+        final String str = "Katipō";
+        final String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
         assertEquals("katipō", newStr);
     }
 
     @Test
-    public void TestNormalizeInput3() {
-        String str = "Pūhā";
-        String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
+    public final void TestNormalizeInput3() {
+        final String str = "Pūhā";
+        final String newStr = textNormaliserFactory.getTextNormalizer().normaliseText(str);
         assertEquals("pūhā", newStr);
     }
 }

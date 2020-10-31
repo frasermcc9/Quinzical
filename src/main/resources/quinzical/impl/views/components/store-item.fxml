@@ -4,14 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="container" alignment="CENTER" style="-fx-spacing: 25;" stylesheets="@../../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.components.StoreItem">
-   <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-spacing: 25; -fx-background-color: rgba(0,0,0,0.4);" VBox.vgrow="ALWAYS">
-         <children>
-            <Label fx:id="lblType" styleClass="bright-bold-label" text="Theme" />
-            <Label fx:id="lblDescription" styleClass="bright-bold-label" text="LAKE" />
-            <JFXButton fx:id="btnBuy" styleClass="material-button" text="150x Coins" />
-         </children>
-      </VBox>
-   </children>
+<VBox fx:id="container" alignment="CENTER" style="-fx-spacing: 25;" stylesheets="@../../../../css/global.css"
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="quinzical.impl.controllers.components.StoreItem">
+    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0"
+          style="-fx-spacing: 25; -fx-background-color: rgba(0,0,0,0.4);" VBox.vgrow="ALWAYS">
+        <Label fx:id="lblType" styleClass="bright-bold-label" text="Theme"/>
+        <Label fx:id="lblDescription" styleClass="bright-bold-label" text="LAKE"/>
+        <JFXButton fx:id="btnBuy" styleClass="material-button" text="150x Coins"/>
+    </VBox>
 </VBox>

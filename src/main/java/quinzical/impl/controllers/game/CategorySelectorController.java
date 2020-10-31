@@ -37,7 +37,7 @@ public class CategorySelectorController extends AbstractSelectorController {
      * Gets the gameModel
      */
     @Override
-    protected GameModel getModel() {
+    protected final GameModel getModel() {
         return this.gameModel;
     }
 
@@ -46,7 +46,7 @@ public class CategorySelectorController extends AbstractSelectorController {
      * sets the scene to the question board section
      */
     @Override
-    protected void generateQuestionsAndProgress() {
+    protected final void generateQuestionsAndProgress() {
         gameModel.generateGameQuestionSetFromCategories(selectedCategories);
         sceneHandler.setActiveScene(GameScene.GAME);
     }
@@ -56,7 +56,7 @@ public class CategorySelectorController extends AbstractSelectorController {
      * button to disabled if the amount is not 5
      */
     @Override
-    protected void modifyCounterLabel() {
+    protected final void modifyCounterLabel() {
         this.lblSelected.setText("Selected: " + selectedCategories.size() + "/5");
         btnOk.setDisable(selectedCategories.size() != 5);
     }
@@ -65,7 +65,7 @@ public class CategorySelectorController extends AbstractSelectorController {
      * Gets the list of categories that are currently selected
      */
     @Override
-    protected List<String> getSelectedCategories() {
+    protected final List<String> getSelectedCategories() {
         return this.selectedCategories;
     }
 }

@@ -12,49 +12,47 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="background" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #232323;" stylesheets="@../../../css/global.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.game.EndController">
-   <VBox alignment="CENTER" style="-fx-spacing: 20;" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-         <Label alignment="CENTER" prefHeight="182.0" prefWidth="762.0" styleClass="intro-title" stylesheets="@../../../css/title-label.css" text="Congratulations">
+    <VBox alignment="CENTER" style="-fx-spacing: 20;" styleClass="vbox" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label alignment="CENTER" prefHeight="182.0" prefWidth="762.0" styleClass="intro-title"
+               stylesheets="@../../../css/title-label.css" text="Congratulations">
+           <VBox.margin>
+               <Insets bottom="-20.0" top="-40.0"/>
+           </VBox.margin>
+        </Label>
+        <Label text="Points:" textFill="#c9c9c9">
+           <font>
+               <Font name="System Bold" size="40.0"/>
+           </font>
+        </Label>
+        <Label fx:id="lblMoney" alignment="CENTER" prefHeight="78.0" prefWidth="304.0" text="00000"
+               textAlignment="CENTER" textFill="#c9c9c9">
+           <font>
+               <Font name="System Bold" size="71.0"/>
+           </font>
+           <VBox.margin>
+               <Insets top="-40.0"/>
+           </VBox.margin>
+        </Label>
+        <HBox fx:id="coinBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;">
             <VBox.margin>
-               <Insets bottom="-20.0" top="-40.0" />
+                <Insets bottom="20.0"/>
             </VBox.margin>
-         </Label>
-         <Label text="Points:" textFill="#c9c9c9">
-            <font>
-               <Font name="System Bold" size="40.0" />
-            </font>
-         </Label>
-         <Label fx:id="lblMoney" alignment="CENTER" prefHeight="78.0" prefWidth="304.0" text="00000" textAlignment="CENTER" textFill="#c9c9c9">
-            <font>
-               <Font name="System Bold" size="71.0" />
-            </font>
-            <VBox.margin>
-               <Insets top="-40.0" />
-            </VBox.margin>
-         </Label>
-         <HBox fx:id="coinBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;">
-            <children>
-               <Label text="You Made xx Coins!" textFill="#c9c9c9">
-                  <font>
-                     <Font name="System Bold" size="48.0" />
-                  </font>
-               </Label>
-               <ImageView fitHeight="219.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../../../images/coin.png" />
-                  </image>
-                  <HBox.margin>
-                     <Insets />
-                  </HBox.margin>
-               </ImageView>
-            </children>
-            <VBox.margin>
-               <Insets bottom="20.0" />
-            </VBox.margin>
-         </HBox>
-         <JFXButton onAction="#btnDonePress" prefHeight="93.0" prefWidth="329.0" styleClass="material-button" text="Main Menu" />
-      </children>
-   </VBox>
+            <Label text="You Made xx Coins!" textFill="#c9c9c9">
+                <font>
+                    <Font name="System Bold" size="48.0"/>
+                </font>
+            </Label>
+            <ImageView fitHeight="219.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+                <Image url="@../../../images/coin.png"/>
+            </ImageView>
+        </HBox>
+        <JFXButton onAction="#btnDonePress" prefHeight="93.0" prefWidth="329.0" styleClass="material-button"
+                   text="Main Menu"/>
+    </VBox>
      <cursor>
          <Cursor fx:constant="DEFAULT" />
      </cursor>

@@ -25,25 +25,25 @@ public class FxmlInfo<T> {
     private final Parent parent;
     private final T controller;
 
-    public FxmlInfo(Parent p, T controller) {
+    public FxmlInfo(final Parent p, final T controller) {
         this.parent = p;
         this.controller = controller;
     }
 
-    public static <T> FxmlInfo<T> loadFXML(String fxml, Injector injector) throws IOException {
+    public static <T> FxmlInfo<T> loadFXML(final String fxml, final Injector injector) throws IOException {
         final String path = "quinzical/impl/views/" + fxml + ".fxml";
-        FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path));
+        final FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path));
         loader.setControllerFactory(injector::getInstance);
 
         return new FxmlInfo<>(loader.load(), loader.getController());
     }
 
 
-    public Parent getParent() {
+    public final Parent getParent() {
         return parent;
     }
 
-    public T getController() {
+    public final T getController() {
         return controller;
     }
 }

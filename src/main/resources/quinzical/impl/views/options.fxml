@@ -10,230 +10,236 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane-bg" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.menus.OptionsController">
-   <children>
-      <HBox fx:id="hboxContainer" alignment="CENTER_LEFT" prefHeight="720.0" prefWidth="1280.0" style="-fx-spacing: 100;" styleClass="h-box" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="CENTER_RIGHT" prefHeight="720.0" prefWidth="417.0" style="-fx-spacing: 25;">
-               <children>
-                  <Label fx:id="lblTheme" onMouseEntered="#themeHovered" prefHeight="35.0" prefWidth="162.0" styleClass="option-label" text="Theme" />
-                  <Label fx:id="lblAccess" onMouseEntered="#accessHovered" prefHeight="35.0" prefWidth="203.0" styleClass="option-label" text="Accessibility" />
-                  <Label fx:id="lblHelp" onMouseEntered="#helpHovered" prefHeight="35.0" prefWidth="195.0" styleClass="option-label" text="Help" />
-                  <Label fx:id="lblAdvanced" onMouseEntered="#advancedHovered" prefHeight="35.0" prefWidth="216.0" styleClass="option-label" text="Advanced" />
-                  <JFXButton onAction="#btnMenuClick" prefHeight="51.0" prefWidth="167.0" styleClass="material-button" text="Menu">
-                     <VBox.margin>
-                        <Insets bottom="-25.0" top="25.0" />
-                     </VBox.margin></JFXButton>
-               </children>
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane-bg" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="quinzical.impl.controllers.menus.OptionsController">
+    <stylesheets>
+        <URL value="@../../../css/views/options.css"/>
+        <URL value="@../../../css/global.css"/>
+        <URL value="@../../../css/options2.css"/>
+    </stylesheets>
+    <HBox fx:id="hboxContainer" alignment="CENTER_LEFT" prefHeight="720.0" prefWidth="1280.0"
+          style="-fx-spacing: 100;" styleClass="h-box" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER_RIGHT" prefHeight="720.0" prefWidth="417.0" style="-fx-spacing: 25;">
+            <HBox.margin>
+                <Insets right="50.0"/>
+            </HBox.margin>
+            <Label fx:id="lblTheme" onMouseEntered="#themeHovered" prefHeight="35.0" prefWidth="162.0"
+                   styleClass="option-label" text="Theme"/>
+            <Label fx:id="lblAccess" onMouseEntered="#accessHovered" prefHeight="35.0" prefWidth="203.0"
+                   styleClass="option-label" text="Accessibility"/>
+            <Label fx:id="lblHelp" onMouseEntered="#helpHovered" prefHeight="35.0" prefWidth="195.0"
+                   styleClass="option-label" text="Help"/>
+            <Label fx:id="lblAdvanced" onMouseEntered="#advancedHovered" prefHeight="35.0" prefWidth="216.0"
+                   styleClass="option-label" text="Advanced"/>
+            <JFXButton onAction="#btnMenuClick" prefHeight="51.0" prefWidth="167.0" styleClass="material-button"
+                       text="Menu">
+                <VBox.margin>
+                    <Insets bottom="-25.0" top="25.0"/>
+                </VBox.margin>
+            </JFXButton>
+        </VBox>
+        <AnchorPane prefHeight="720.0" prefWidth="776.0">
+            <VBox fx:id="vboxTheme" alignment="CENTER" layoutX="-1.0" maxWidth="600.0" minHeight="410.0"
+                  prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox"
+                  visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="273.0" text="Theme Settings">
+                    <styleClass>
+                        <String fx:value="bright-label"/>
+                        <String fx:value="settings-title"/>
+                    </styleClass>
+                    <VBox.margin>
+                        <Insets bottom="55.0" top="-106.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label styleClass="bright-label" text="Pick Your Theme"/>
+                <ListView fx:id="themeList" prefHeight="351.0" prefWidth="419.0" styleClass="transparent"
+                          stylesheets="@../../../css/list-view.css"/>
             </VBox>
-            <AnchorPane prefHeight="720.0" prefWidth="776.0">
-               <children>
-                  <VBox fx:id="vboxTheme" alignment="CENTER" layoutX="-1.0" maxWidth="600.0" minHeight="410.0" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="273.0" text="Theme Settings">
-                           <styleClass>
-                              <String fx:value="bright-label" />
-                              <String fx:value="settings-title" />
-                           </styleClass>
-                           <VBox.margin>
-                              <Insets bottom="55.0" top="-106.0" />
-                           </VBox.margin>
+            <VBox fx:id="vboxAccess" minHeight="410.0" prefHeight="720.0" prefWidth="621.0"
+                  style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <Label prefHeight="47.0" prefWidth="273.0" text="Voice Settings">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                    <styleClass>
+                        <String fx:value="bright-label"/>
+                        <String fx:value="settings-title"/>
+                    </styleClass>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="248.0" prefWidth="1280.0" style="-fx-spacing: -20;">
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                        <Label styleClass="label-voice" text="Speed">
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
                         </Label>
-                        <Label styleClass="bright-label" text="Pick Your Theme" />
-                        <ListView fx:id="themeList" prefHeight="351.0" prefWidth="419.0" styleClass="transparent" stylesheets="@../../../css/list-view.css" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxAccess" minHeight="410.0" prefHeight="720.0" prefWidth="621.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="273.0" text="Voice Settings">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <styleClass>
-                              <String fx:value="bright-label" />
-                              <String fx:value="settings-title" />
-                           </styleClass>
+                        <Slider fx:id="sliderSpeed" majorTickUnit="125.0" max="300.0" min="50.0"
+                                minorTickCount="5" orientation="VERTICAL" showTickLabels="true"
+                                showTickMarks="true" value="175.0">
+                            <VBox.margin>
+                                <Insets left="20.0"/>
+                            </VBox.margin>
+                            <styleClass>
+                                <String fx:value="voice-slider-label"/>
+                                <String fx:value="slider-vertical"/>
+                            </styleClass>
+                        </Slider>
+                        <JFXButton onAction="#speedDefault" styleClass="material-button-small"
+                                   text="Default"/>
+                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                        <Label prefHeight="37.0" styleClass="label-voice" text="Gap">
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="248.0" prefWidth="1280.0" style="-fx-spacing: -20;">
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
-                                 <children>
-                                    <Label styleClass="label-voice" text="Speed">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </Label>
-                                    <Slider fx:id="sliderSpeed" majorTickUnit="125.0" max="300.0" min="50.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="175.0">
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                       <styleClass>
-                                          <String fx:value="voice-slider-label" />
-                                          <String fx:value="slider-vertical" />
-                                       </styleClass>
-                                    </Slider>
-                                    <JFXButton onAction="#speedDefault" styleClass="material-button-small" text="Default" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
-                                 <children>
-                                    <Label prefHeight="37.0" styleClass="label-voice" text="Gap">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </Label>
-                                    <Slider fx:id="sliderGap" majorTickUnit="20.0" max="80.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true">
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                       <styleClass>
-                                          <String fx:value="voice-slider-label" />
-                                          <String fx:value="slider-vertical" />
-                                       </styleClass>
-                                    </Slider>
-                                    <JFXButton onAction="#gapDefault" styleClass="material-button-small" text="Default" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
-                                 <children>
-                                    <Label prefHeight="30.0" styleClass="label-voice" text="Amplitude">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </Label>
-                                    <Slider fx:id="sliderAmp" majorTickUnit="50.0" max="200.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="100.0">
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                       <styleClass>
-                                          <String fx:value="voice-slider-label" />
-                                          <String fx:value="slider-vertical" />
-                                       </styleClass>
-                                    </Slider>
-                                    <JFXButton onAction="#ampDefault" styleClass="material-button-small" text="Default" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
-                                 <children>
-                                    <Label styleClass="label-voice" text="Pitch">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </Label>
-                                    <Slider fx:id="sliderPitch" majorTickUnit="20.0" max="80.0" minorTickCount="1" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" value="50.0">
-                                       <VBox.margin>
-                                          <Insets left="20.0" />
-                                       </VBox.margin>
-                                       <styleClass>
-                                          <String fx:value="voice-slider-label" />
-                                          <String fx:value="slider-vertical" />
-                                       </styleClass>
-                                    </Slider>
-                                    <JFXButton onAction="#pitchDefault" styleClass="material-button-small" text="Default" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="4.0" prefWidth="177.0" styleClass="label-voice" stylesheets="@../../../css/options.css" text="Sample Voice:" />
-                              <ImageView fitHeight="70.0" fitWidth="60.0" onMouseClicked="#onSampleClick" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../images/play.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="-20.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
-                           <children>
-                              <Label styleClass="label-voice" text="Timer Duration">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <JFXSlider fx:id="sliderTimer" majorTickUnit="20.0" max="45.0" min="5.0" showTickLabels="true" styleClass="jfx-slider-h" value="25.0">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
-                                 </VBox.margin>
-                              </JFXSlider>
-                              <JFXButton onAction="#timerDefault" styleClass="material-button-small" text="Default" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxHelp" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="273.0" text="Help">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <styleClass>
-                              <String fx:value="bright-label" />
-                              <String fx:value="settings-title" />
-                           </styleClass>
+                        <Slider fx:id="sliderGap" majorTickUnit="20.0" max="80.0" minorTickCount="1"
+                                orientation="VERTICAL" showTickLabels="true" showTickMarks="true">
+                            <VBox.margin>
+                                <Insets left="20.0"/>
+                            </VBox.margin>
+                            <styleClass>
+                                <String fx:value="voice-slider-label"/>
+                                <String fx:value="slider-vertical"/>
+                            </styleClass>
+                        </Slider>
+                        <JFXButton onAction="#gapDefault" styleClass="material-button-small" text="Default"/>
+                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                        <Label prefHeight="30.0" styleClass="label-voice" text="Amplitude">
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
                         </Label>
-                        <ScrollPane fx:id="helpScrollPane" hbarPolicy="NEVER" prefHeight="394.0" prefWidth="478.0" styleClass="help-box">
-                          <content>
-                              <VBox fx:id="vboxHelpList" alignment="TOP_CENTER" prefHeight="195.0" prefWidth="476.0" style="-fx-spacing: 5;" />
-                          </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxHelpPage" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label fx:id="helpTitle" alignment="CENTER" prefHeight="47.0" prefWidth="448.0" text="Loading a New Question Set" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <styleClass>
-                              <String fx:value="bright-label" />
-                              <String fx:value="settings-title" />
-                           </styleClass>
+                        <Slider fx:id="sliderAmp" majorTickUnit="50.0" max="200.0" minorTickCount="1"
+                                orientation="VERTICAL" showTickLabels="true" showTickMarks="true"
+                                value="100.0">
+                            <VBox.margin>
+                                <Insets left="20.0"/>
+                            </VBox.margin>
+                            <styleClass>
+                                <String fx:value="voice-slider-label"/>
+                                <String fx:value="slider-vertical"/>
+                            </styleClass>
+                        </Slider>
+                        <JFXButton onAction="#ampDefault" styleClass="material-button-small" text="Default"/>
+                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-spacing: 10;">
+                        <Label styleClass="label-voice" text="Pitch">
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
                         </Label>
-                        <Label fx:id="helpContent" prefWidth="418.0" styleClass="help-text" text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;" wrapText="true" />
-                        <Label onMouseClicked="#onHelpReturnClick" text="Return" textFill="WHITE" underline="true">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxAdvanced" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;" styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="273.0" text="Advanced Settings">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <styleClass>
-                              <String fx:value="bright-label" />
-                              <String fx:value="settings-title" />
-                           </styleClass>
-                        </Label>
-                        <JFXButton minWidth="300.0" onAction="#btnLoadNewQuestionSet" styleClass="material-button" text="Load New Question Set" />
-                        <JFXButton minWidth="300.0" onAction="#btnResetLocalData" styleClass="material-button" text="Reset Local Data" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
-      <StackPane fx:id="dialogRoot" mouseTransparent="true" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-   </children>
-   <stylesheets>
-      <URL value="@../../../css/views/options.css" />
-      <URL value="@../../../css/global.css" />
-      <URL value="@../../../css/options2.css" />
-   </stylesheets>
+                        <Slider fx:id="sliderPitch" majorTickUnit="20.0" max="80.0" minorTickCount="1"
+                                orientation="VERTICAL" showTickLabels="true" showTickMarks="true"
+                                value="50.0">
+                            <VBox.margin>
+                                <Insets left="20.0"/>
+                            </VBox.margin>
+                            <styleClass>
+                                <String fx:value="voice-slider-label"/>
+                                <String fx:value="slider-vertical"/>
+                            </styleClass>
+                        </Slider>
+                        <JFXButton onAction="#pitchDefault" styleClass="material-button-small"
+                                   text="Default"/>
+                    </VBox>
+                </HBox>
+                <VBox alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="-20.0"/>
+                    </VBox.margin>
+                    <Label alignment="CENTER" prefHeight="4.0" prefWidth="177.0" styleClass="label-voice"
+                           stylesheets="@../../../css/options.css" text="Sample Voice:"/>
+                    <ImageView fitHeight="70.0" fitWidth="60.0" onMouseClicked="#onSampleClick"
+                               pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                        <Image url="@../../../images/play.png"/>
+                    </ImageView>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
+                    <Label styleClass="label-voice" text="Timer Duration">
+                        <font>
+                            <Font size="24.0"/>
+                        </font>
+                    </Label>
+                    <JFXSlider fx:id="sliderTimer" majorTickUnit="20.0" max="45.0" min="5.0"
+                               showTickLabels="true" styleClass="jfx-slider-h" value="25.0">
+                        <VBox.margin>
+                            <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+                        </VBox.margin>
+                    </JFXSlider>
+                    <JFXButton onAction="#timerDefault" styleClass="material-button-small" text="Default"/>
+                </VBox>
+            </VBox>
+            <VBox fx:id="vboxHelp" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;"
+                  styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <Label prefHeight="47.0" prefWidth="273.0" text="Help">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                    <styleClass>
+                        <String fx:value="bright-label"/>
+                        <String fx:value="settings-title"/>
+                    </styleClass>
+                </Label>
+                <ScrollPane fx:id="helpScrollPane" hbarPolicy="NEVER" prefHeight="394.0" prefWidth="478.0"
+                            styleClass="help-box">
+                    <VBox fx:id="vboxHelpList" alignment="TOP_CENTER" prefHeight="195.0" prefWidth="476.0"
+                          style="-fx-spacing: 5;"/>
+                </ScrollPane>
+            </VBox>
+            <VBox fx:id="vboxHelpPage" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;"
+                  styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <Label fx:id="helpTitle" alignment="CENTER" prefHeight="47.0" prefWidth="448.0"
+                       text="Loading a New Question Set" textAlignment="CENTER">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                    <styleClass>
+                        <String fx:value="bright-label"/>
+                        <String fx:value="settings-title"/>
+                    </styleClass>
+                </Label>
+                <Label fx:id="helpContent" prefWidth="418.0" styleClass="help-text"
+                       text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;"
+                       wrapText="true"/>
+                <Label onMouseClicked="#onHelpReturnClick" text="Return" textFill="WHITE" underline="true">
+                    <font>
+                        <Font size="23.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Label>
+            </VBox>
+            <VBox fx:id="vboxAdvanced" prefHeight="720.0" prefWidth="480.0" style="-fx-opacity: 0;"
+                  styleClass="side-vbox" visible="false" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <Label prefHeight="47.0" prefWidth="273.0" text="Advanced Settings">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                    <styleClass>
+                        <String fx:value="bright-label"/>
+                        <String fx:value="settings-title"/>
+                    </styleClass>
+                </Label>
+                <JFXButton minWidth="300.0" onAction="#btnLoadNewQuestionSet" styleClass="material-button"
+                           text="Load New Question Set"/>
+                <JFXButton minWidth="300.0" onAction="#btnResetLocalData" styleClass="material-button"
+                           text="Reset Local Data"/>
+            </VBox>
+        </AnchorPane>
+    </HBox>
+    <StackPane fx:id="dialogRoot" mouseTransparent="true" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0"
+               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0"/>
 </AnchorPane>

@@ -34,7 +34,7 @@ public class ActiveGameImpl implements ActiveGame {
     private int mostRecentPoints;
     private int duration;
 
-    public ActiveGame reset() {
+    public final ActiveGame reset() {
         this.players = observableArrayList();
         this.points = 0;
         currentQuestion = new Question(null, null);
@@ -42,16 +42,16 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
-    public int getQuestionDuration() {
+    public final int getQuestionDuration() {
         return this.duration;
     }
 
     @Override
-    public void setData(Object[] socketObjectData) {
-        String solution = (String) socketObjectData[0];
-        Integer points = (Integer) socketObjectData[1];
+    public final void setData(final Object[] socketObjectData) {
+        final String solution = (String) socketObjectData[0];
+        final Integer points = (Integer) socketObjectData[1];
         updateUsersFromSocket((JSONArray) socketObjectData[2]);
-        Integer mostRecentPoints = (Integer) socketObjectData[3];
+        final Integer mostRecentPoints = (Integer) socketObjectData[3];
 
         this.points = points;
         this.mostRecentPoints = mostRecentPoints;
@@ -60,8 +60,8 @@ public class ActiveGameImpl implements ActiveGame {
 
 
     @Override
-    public void init(int duration) {
-        Socket socket = socketModel.getSocket();
+    public final void init(final int duration) {
+        final Socket socket = socketModel.getSocket();
 
         socket.on("newQuestion", (objects -> {
             currentQuestion = new Question((String) objects[0], (String) objects[1]);
@@ -88,12 +88,12 @@ public class ActiveGameImpl implements ActiveGame {
 
 
     @Override
-    public int getPoints() {
+    public final int getPoints() {
         return points;
     }
 
     @Override
-    public String getGivenSolution() {
+    public final String getGivenSolution() {
         if (currentQuestion == null) {
             return "Error getting your answer.";
         }
@@ -101,13 +101,13 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
-    public void setGivenSolution(String givenSolution) {
+    public final void setGivenSolution(final String givenSolution) {
         this.currentQuestion.setGivenSolution(givenSolution);
 
     }
 
     @Override
-    public String getTrueSolution() {
+    public final String getTrueSolution() {
         if (currentQuestion == null) {
             return "Error getting answer.";
         }
@@ -115,26 +115,26 @@ public class ActiveGameImpl implements ActiveGame {
     }
 
     @Override
-    public ObservableList<Player> getPlayers() {
+    public final ObservableList<Player> getPlayers() {
         return players;
     }
 
     @Override
-    public String getQuestion() {
+    public final String getQuestion() {
         return currentQuestion.getQuestion();
     }
 
     @Override
-    public String getPrompt() {
+    public final String getPrompt() {
         return currentQuestion.getPrompt();
     }
 
-    private void updateUsersFromSocket(JSONArray topPlayers) {
-        List<JSONObject> parsedObjects = new ArrayList<>();
+    private void updateUsersFromSocket(final JSONArray topPlayers) {
+        final List<JSONObject> parsedObjects = new ArrayList<>();
         for (int i = 0; i < topPlayers.length(); i++) {
             try {
                 parsedObjects.add((JSONObject) topPlayers.get(i));
-            } catch (JSONException jsonException) {
+            } catch (final JSONException jsonException) {
                 jsonException.printStackTrace();
             }
         }
@@ -142,14 +142,14 @@ public class ActiveGameImpl implements ActiveGame {
         players.addAll(parsedObjects.stream().map(o -> {
             try {
                 return new Player(o.getInt("Points"), o.getString("Name"));
-            } catch (JSONException jsonException) {
+            } catch (final JSONException jsonException) {
                 jsonException.printStackTrace();
             }
             return null;
         }).collect(Collectors.toList()));
     }
 
-    public int getMostRecentPoints() {
+    public final int getMostRecentPoints() {
         return mostRecentPoints;
     }
 }

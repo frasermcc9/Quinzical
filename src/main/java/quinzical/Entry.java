@@ -45,9 +45,9 @@ public class Entry extends Application {
      * @return - the scene created by loading the FXML file
      * @throws IOException - thrown if the file does not exist
      */
-    private Scene loadFXML(String fxml) throws IOException {
+    private Scene loadFXML(final String fxml) throws IOException {
         final String path = "quinzical/impl/views/";
-        FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path + fxml + ".fxml"));
+        final FXMLLoader loader = new FXMLLoader(Entry.class.getClassLoader().getResource(path + fxml + ".fxml"));
         loader.setControllerFactory(injector::getInstance);
         return loader.load();
     }
@@ -56,14 +56,14 @@ public class Entry extends Application {
      * Sets up all the scenes for the application as well as attempt to save the game when the application is closed.
      */
     @Override
-    public void start(Stage stage) throws IOException, ClassNotFoundException {
+    public final void start(final Stage stage) {
 
         // Create the injection container
         injector = Guice.createInjector(new MainModule());
-        SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
+        final SceneHandler sceneHandler = injector.getInstance(SceneHandler.class);
 
         //Apply settings
-        PersistentSettings persistentSettings = injector.getInstance(PersistentSettings.class);
+        final PersistentSettings persistentSettings = injector.getInstance(PersistentSettings.class);
         persistentSettings.loadSettingsFromDisk().applySettings();
 
         // Set the active scene to the intro
@@ -82,12 +82,12 @@ public class Entry extends Application {
         stage.getIcons().add(new Image(Entry.class.getResourceAsStream("APP_ICON_TWO.png")));
 
         stage.setOnCloseRequest(e -> {
-            GameModelSaver model = injector.getInstance(GameModelSaver.class);
+            final GameModelSaver model = injector.getInstance(GameModelSaver.class);
             Platform.runLater(() -> {
                 try {
                     model.saveGame();
                     System.exit(0);
-                } catch (IOException ioException) {
+                } catch (final IOException ioException) {
                     ioException.printStackTrace();
                 }
             });

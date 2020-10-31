@@ -41,38 +41,38 @@ public class MenuController extends AbstractSceneController {
     private Label lblName;
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         lblName.setText(socketModel.getName());
     }
 
     @FXML
-    void btnBrowse(ActionEvent event) {
+    final void btnBrowse(final ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.MULTI_BROWSE);
     }
 
     @FXML
-    void btnHost(ActionEvent event) {
+    final void btnHost(final ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.MULTI_HOST);
     }
 
     @FXML
-    void btnJoin() {
-        Socket socket = socketModel.getSocket();
-        String name = socketModel.getName();
-        String code = txtCode.getText().toUpperCase();
+    final void btnJoin() {
+        final Socket socket = socketModel.getSocket();
+        final String name = socketModel.getName();
+        final String code = txtCode.getText().toUpperCase();
         socket.emit("joinGameRequest", name, code);
         socket.once("joinGameNotification", (arg) -> {
             if (arg[0].equals(false)) {
                 txtCode.setPromptText(arg[1] + "");
                 txtCode.setText("");
             } else {
-                JSONArray jsonArray = (JSONArray) arg[1];
-                MultiplayerGame mg = MultiplayerGame.getInstance();
+                final JSONArray jsonArray = (JSONArray) arg[1];
+                final MultiplayerGame mg = MultiplayerGame.getInstance();
                 mg.setCode(code);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     try {
                         mg.addPlayer((String) jsonArray.get(i));
-                    } catch (JSONException e) {
+                    } catch (final JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -82,18 +82,18 @@ public class MenuController extends AbstractSceneController {
     }
 
     @FXML
-    void btnProfile(ActionEvent event) {
+    final void btnProfile(final ActionEvent event) {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_PROFILE)).start();
     }
     
     @FXML
-    void btnLeaderboard(ActionEvent event) {
+    final void btnLeaderboard(final ActionEvent event) {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_LEADERBOARD)).start();
     }
 
 
     @FXML
-    void btnQuit(ActionEvent event) {
+    final void btnQuit(final ActionEvent event) {
         Platform.runLater(() -> socketModel.destroy());
         sceneHandler.setActiveScene(GameScene.MULTI_INTRO);
     }

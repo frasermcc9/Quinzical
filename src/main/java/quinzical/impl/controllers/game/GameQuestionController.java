@@ -62,7 +62,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * @return - the gameModel that this controller uses
      */
     @Override
-    protected QuinzicalModel getGameModel() {
+    protected final QuinzicalModel getGameModel() {
         return this.gameModel;
     }
 
@@ -73,7 +73,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * @param prompt - the prompt for the current question to be set in the label
      */
     @Override
-    protected void setPrompts(String hint, String prompt) {
+    protected final void setPrompts(final String hint, final String prompt) {
         this.lblPrompt.setText(prompt);
     }
 
@@ -81,7 +81,7 @@ public class GameQuestionController extends AbstractQuestionController {
 
 
     @Override
-    protected void onPassClicked() {
+    protected final void onPassClicked() {
         onSubmitClicked();
     }
 
@@ -89,7 +89,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * submits the currently inputted text as an answer to the question
      */
     @FXML
-    protected void onSubmitClicked() {
+    protected final void onSubmitClicked() {
         awaitingAnswer = false;
         if (timeline != null) {
             timeline.stop();
@@ -100,10 +100,10 @@ public class GameQuestionController extends AbstractQuestionController {
         textAreas.forEach(a -> a.setEffect(null));
         textAreas.forEach(textArea -> textArea.setEditable(false));
 
-        GameQuestion question = gameModel.getActiveQuestion();
-        List<Solution> solutions = question.getSolutionsCopy();
+        final GameQuestion question = gameModel.getActiveQuestion();
+        final List<Solution> solutions = question.getSolutionsCopy();
 
-        List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
+        final List<Boolean> corrects = questionVerifierFactory.getQuestionVerifier(VerifierType.FILL_SOLUTION)
             .verifySolutions(solutions, textAreas);
         final boolean allCorrect = corrects.stream().allMatch(a -> a);
         if (allCorrect) {
@@ -130,7 +130,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Makes it so that when a question is initially set as active, it will be set as incorrectly answered.
      */
     @Override
-    protected void onQuestionLoad() {
+    protected final void onQuestionLoad() {
         awaitingAnswer = true;
         lblCounter.setText(Math.round(gameModel.getTimerValue()) + "");
         timerProgressBar.setProgress(1);
@@ -139,12 +139,12 @@ public class GameQuestionController extends AbstractQuestionController {
     }
 
     @Override
-    protected void initialSpeak(String question) {
+    protected final void initialSpeak(final String question) {
         speaker.speak(question, this::startTimer);
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         refreshButtonState();
         super.refresh();
     }
@@ -152,7 +152,7 @@ public class GameQuestionController extends AbstractQuestionController {
     /**
      * Handles the return to the main game scene.
      */
-    private void handleReturnToCategories(ActionEvent e) {
+    private void handleReturnToCategories(final ActionEvent e) {
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
@@ -165,13 +165,13 @@ public class GameQuestionController extends AbstractQuestionController {
      *
      * @param question - The current active question.
      */
-    private void handleNextQuestion(GameQuestion question) {
+    private void handleNextQuestion(final GameQuestion question) {
         if (gameModel.numberOfQuestionsRemaining() == 0) {
             handleCompletion();
             return;
         }
 
-        GameQuestion next = gameModel.getNextActiveQuestion(question);
+        final GameQuestion next = gameModel.getNextActiveQuestion(question);
         if (next == null) {
             sceneHandler.setActiveScene(GameScene.GAME);
         } else {
@@ -192,7 +192,7 @@ public class GameQuestionController extends AbstractQuestionController {
      * Starts the timer for the question answering
      */
     private void startTimer() {
-        ColorAdjust ca = new ColorAdjust();
+        final ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
         if (!awaitingAnswer) return;

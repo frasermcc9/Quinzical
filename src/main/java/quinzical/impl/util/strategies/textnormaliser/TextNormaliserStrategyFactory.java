@@ -29,7 +29,7 @@ public class TextNormaliserStrategyFactory implements TextNormaliserFactory {
      * Gets a TextNormalizer to be used.
      */
     @Override
-    public TextNormaliserStrategy getTextNormalizer() {
+    public final TextNormaliserStrategy getTextNormalizer() {
         return new MacronRequiredNormaliser();
     }
 }
@@ -39,7 +39,7 @@ public class TextNormaliserStrategyFactory implements TextNormaliserFactory {
  */
 class DefaultTextNormaliser implements TextNormaliserStrategy {
     @Override
-    public String normaliseText(String input) {
+    public final String normaliseText(final String input) {
         return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("\\p{M}", "").trim().toLowerCase().replaceFirst("^the", "").trim();
     }
 }
@@ -50,7 +50,7 @@ class DefaultTextNormaliser implements TextNormaliserStrategy {
  */
 class MacronRequiredNormaliser implements TextNormaliserStrategy {
     @Override
-    public String normaliseText(String input) {
+    public final String normaliseText(final String input) {
         return input.toLowerCase().replaceFirst("^the", "").trim();
     }
 }

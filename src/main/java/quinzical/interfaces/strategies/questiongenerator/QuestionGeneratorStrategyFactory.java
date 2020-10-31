@@ -22,13 +22,39 @@ import java.util.List;
  */
 public interface QuestionGeneratorStrategyFactory {
 
+    /**
+     * Create a question set for a normal local game, from installed questions
+     *
+     * @return a question generator strategy conforming to the above behaviour.
+     */
     QuestionGeneratorStrategy createGameQuestionStrategy();
 
+    /**
+     * Create a question set for a practice game, from installed questions.
+     *
+     * @return a question generator strategy conforming to the above behaviour.
+     */
     QuestionGeneratorStrategy createPracticeQuestionStrategy();
 
+    /**
+     * Create a question set for a normal local game, from an array of given categories.
+     *
+     * @return a question generator strategy conforming to the above behaviour.
+     */
     QuestionGeneratorStrategy createSelectedCategoryStrategy(String[] categories);
 
+    /**
+     * Create a question set for a normal local game, from a list of given categories.
+     *
+     * @return a question generator strategy conforming to the above behaviour.
+     */
     QuestionGeneratorStrategy createSelectedCategoryStrategy(List<String> categories);
 
+    /**
+     * Create a question set for an international game. Slow method should be called asynchronously (not on main
+     * thread).
+     *
+     * @return a question generator strategy conforming to the above behaviour.
+     */
     QuestionGeneratorStrategy createInternationalQuestionStrategy();
 }

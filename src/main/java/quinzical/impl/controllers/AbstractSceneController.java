@@ -49,8 +49,8 @@ public abstract class AbstractSceneController {
      * @param ms The time for the animation to play over
      * @param toSize The final size of the node after the animation
      */
-    protected static void createScaleAnimation(Node node, int ms, double toSize) {
-        ScaleTransition st = new ScaleTransition(Duration.millis(ms));
+    protected static void createScaleAnimation(final Node node, final int ms, final double toSize) {
+        final ScaleTransition st = new ScaleTransition(Duration.millis(ms));
         st.setNode(node);
         st.setFromX(node.getScaleX());
         st.setFromY(node.getScaleY());
@@ -67,8 +67,8 @@ public abstract class AbstractSceneController {
      * @param ms The time that the brightness change will occur over
      * @param toLevel The final brightness of the node at the end of the time
      */
-    protected static void adjustBrightness(Node node, int ms, double toLevel) {
-        ColorAdjust ca = new ColorAdjust();
+    protected static void adjustBrightness(final Node node, final int ms, final double toLevel) {
+        final ColorAdjust ca = new ColorAdjust();
         node.setEffect(ca);
         new Timeline(
             new KeyFrame(
@@ -82,7 +82,7 @@ public abstract class AbstractSceneController {
         ).playFromStart();
     }
 
-    protected static void createAnimation(int ms, double toLevel, Property<Number> property) {
+    protected static void createAnimation(final int ms, final double toLevel, final Property<Number> property) {
         new Timeline(
             new KeyFrame(
                 Duration.ZERO,
@@ -119,7 +119,7 @@ public abstract class AbstractSceneController {
      * @param node    The node to request focus on
      * @param retries Maximum number of times to try request focus before stopping
      */
-    protected void focusRequester(Node node, int retries) {
+    protected final void focusRequester(final Node node, final int retries) {
         if (retries == 0) return;
         Platform.runLater(() -> {
             if (!node.isFocused()) {
@@ -129,10 +129,10 @@ public abstract class AbstractSceneController {
         });
     }
 
-    protected void usePassedData(String passedInfo) {
+    protected void usePassedData(final String passedInfo) {
     }
 
-    public void passData(String data) {
+    public final void passData(final String data) {
         this.passedInfo = data;
         usePassedData(passedInfo);
     }

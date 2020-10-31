@@ -22,7 +22,7 @@ import static quinzical.interfaces.multiplayer.XpClass.inverseExpFunction;
 
 public class XpClassFactoryImpl implements XpClassFactory {
     @Override
-    public XpClass createXp(int xp) {
+    public final XpClass createXp(final int xp) {
         return new XpClassImpl(xp);
     }
 }
@@ -31,30 +31,30 @@ public class XpClassFactoryImpl implements XpClassFactory {
 class XpClassImpl implements XpClass {
     private final int xp;
 
-    public XpClassImpl(int xp) {
+    public XpClassImpl(final int xp) {
         this.xp = xp;
     }
 
     @Override
-    public int getLevel() {
+    public final int getLevel() {
         return inverseExpFunction(xp);
     }
 
     @Override
-    public int xpRemainingInLevel() {
+    public final int xpRemainingInLevel() {
         return expFunction(getLevel() + 1) - xp;
     }
 
     @Override
-    public int xpDeltaBetweenLevels() {
-        int level = getLevel();
-        int next = expFunction(level + 1);
-        int current = expFunction(level);
+    public final int xpDeltaBetweenLevels() {
+        final int level = getLevel();
+        final int next = expFunction(level + 1);
+        final int current = expFunction(level);
         return next - current;
     }
 
     @Override
-    public int xpThroughLevel() {
+    public final int xpThroughLevel() {
         return Math.max(0, this.xp - expFunction(getLevel()));
     }
 }

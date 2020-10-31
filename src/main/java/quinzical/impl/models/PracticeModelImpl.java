@@ -31,7 +31,7 @@ public class PracticeModelImpl extends AbstractGameModel implements PracticeMode
     private List<String> categories;
 
     @Override
-    public void setCategories(List<String> categories) {
+    public final void setCategories(final List<String> categories) {
         this.categories = categories;
     }
 
@@ -42,15 +42,15 @@ public class PracticeModelImpl extends AbstractGameModel implements PracticeMode
      * @return - A random question from the given category.
      */
     @Override
-    public Question getRandomQuestion(String category) {
-        List<GameQuestion> questions =
+    public final Question getRandomQuestion(final String category) {
+        final List<GameQuestion> questions =
             questionGeneratorStrategyFactory.createPracticeQuestionStrategy().generateQuestions().get(category);
         return questions.get((int) (Math.random() * questions.size()));
     }
 
     @Override
-    public Question getRandomQuestion() {
-        String selected = categories.get((int) Math.floor(Math.random() * categories.size()));
+    public final Question getRandomQuestion() {
+        final String selected = categories.get((int) Math.floor(Math.random() * categories.size()));
         return getRandomQuestion(selected);
     }
 
@@ -61,7 +61,7 @@ public class PracticeModelImpl extends AbstractGameModel implements PracticeMode
      * @param question - The question to be set as the active question.
      */
     @Override
-    public void activateQuestion(Question question) {
+    public final void activateQuestion(final Question question) {
         activeQuestion = new GameQuestion(question);
         fireActiveQuestionUpdate();
     }

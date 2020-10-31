@@ -13,34 +13,34 @@ public class SocketModelImpl implements SocketModel {
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     @Override
-    public SocketModel setName(String name) {
+    public final SocketModel setName(final String name) {
         this.name = name;
         return this;
     }
 
     @Override
-    public Socket getSocket() {
+    public final Socket getSocket() {
         return socket;
     }
 
     @Override
-    public SocketModel setSocket(Socket socket) {
+    public final SocketModel setSocket(final Socket socket) {
         this.socket = socket;
         return this;
     }
 
     @Override
-    public void connect() {
+    public final void connect() {
         this.socket.connect();
     }
 
     @Override
-    public void destroy() {
+    public final void destroy() {
         this.socket.off();
         this.socket.disconnect();
         this.socket = null;

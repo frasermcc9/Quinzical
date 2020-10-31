@@ -34,13 +34,13 @@ public class GameEndController extends AbstractEndController {
     private ActiveGame activeGame;
 
     @Override
-    protected void initializeComponents() {
-        int points = activeGame.getPoints();
+    protected final void initializeComponents() {
+        final int points = activeGame.getPoints();
         lblPoints.setText("You Finished With " + points + " Points!");
     }
 
     @FXML
-    void onHomeClick(ActionEvent event) {
+    final void onHomeClick(final ActionEvent event) {
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 

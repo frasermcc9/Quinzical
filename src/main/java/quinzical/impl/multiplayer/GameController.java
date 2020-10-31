@@ -33,9 +33,6 @@ import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.interfaces.multiplayer.ActiveGame;
 import quinzical.interfaces.multiplayer.SocketModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameController extends AbstractSceneController {
 
     @Inject
@@ -62,7 +59,7 @@ public class GameController extends AbstractSceneController {
     private Timeline timelineCountdown;
 
     @FXML
-    void onSubmitClick() {
+    final void onSubmitClick() {
         timeline.stop();
         timelineCountdown.stop();
 
@@ -80,7 +77,7 @@ public class GameController extends AbstractSceneController {
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         startAnimations();
         initMacronButtons();
         
@@ -94,7 +91,7 @@ public class GameController extends AbstractSceneController {
     }
 
     private void startAnimations() {
-        ColorAdjust ca = new ColorAdjust();
+        final ColorAdjust ca = new ColorAdjust();
         ca.setHue(0);
         timerProgressBar.setEffect(ca);
         timeline = new Timeline(
@@ -122,11 +119,11 @@ public class GameController extends AbstractSceneController {
         timelineCountdown.playFromStart();
     }
 
-    private void onKeyPress(KeyEvent e) {
+    private void onKeyPress(final KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             if (e.getSource() instanceof JFXTextArea) {
-                JFXTextArea ta = (JFXTextArea) e.getSource();
-                String text = ta.getText().trim();
+                final JFXTextArea ta = (JFXTextArea) e.getSource();
+                final String text = ta.getText().trim();
                 ta.setText(text);
                 onSubmitClick();
             }
@@ -134,11 +131,11 @@ public class GameController extends AbstractSceneController {
         }
     }
 
-    private void focusFixer(Boolean isFocused, JFXTextArea field) {
+    private void focusFixer(final Boolean isFocused, final JFXTextArea field) {
         if (isFocused) {
             field.setEffect(null);
         } else {
-            ColorAdjust colorFixer = new ColorAdjust();
+            final ColorAdjust colorFixer = new ColorAdjust();
             colorFixer.setBrightness(1);
             field.setEffect(colorFixer);
         }
@@ -156,7 +153,7 @@ public class GameController extends AbstractSceneController {
     }
 
     @FXML
-    void onSubmitted(ActionEvent event) {
+    final void onSubmitted(final ActionEvent event) {
         btnSubmit.fire();
     }
 }

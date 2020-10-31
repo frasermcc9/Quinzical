@@ -26,17 +26,17 @@ import java.util.concurrent.ExecutionException;
 
 public class TimerContextImplTest {
     @Test
-    public void TestFunctionIsExecutedEventually() throws ExecutionException, InterruptedException {
+    public final void TestFunctionIsExecutedEventually() throws ExecutionException, InterruptedException {
 
-        Injector injector = Guice.createInjector(new AbstractModule() {
+        final Injector injector = Guice.createInjector(new AbstractModule() {
             @Override
             protected void configure() {
                 bind(TimerContext.class).to(TimerContextImpl.class);
             }
         });
 
-        TimerContext timerContext = injector.getInstance(TimerContext.class);
-        CompletableFuture<String> future = new CompletableFuture<>();
+        final TimerContext timerContext = injector.getInstance(TimerContext.class);
+        final CompletableFuture<String> future = new CompletableFuture<>();
         timerContext.createTimer(TimerType.DEFAULT).setTimeout(() -> future.complete("Success"), 100);
 
         Assert.assertEquals("Success", future.get());

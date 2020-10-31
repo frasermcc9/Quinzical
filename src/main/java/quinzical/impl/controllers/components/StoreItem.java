@@ -25,15 +25,16 @@ public class StoreItem<ItemType> {
     private int cost;
     private ItemType purchase;
 
-    public int getCost() {
+    public final int getCost() {
         return cost;
     }
 
-    public ItemType getPurchase() {
+    public final ItemType getPurchase() {
         return purchase;
     }
 
-    public void setData(int cost, ItemType purchase, String typeName, String itemDescription) {
+    public final void setData(final int cost, final ItemType purchase, final String typeName,
+                              final String itemDescription) {
         this.cost = cost;
         this.purchase = purchase;
 
@@ -50,18 +51,18 @@ public class StoreItem<ItemType> {
         }
     }
 
-    public void disableBuy() {
+    public final void disableBuy() {
         this.btnBuy.setDisable(true);
     }
 
-    public void setBuyAction(Runnable runnable) {
+    public final void setBuyAction(final Runnable runnable) {
         btnBuy.setOnAction(a -> {
             runnable.run();
             gameModel.getUserData().incrementCoins(-cost);
         });
     }
 
-    public void overrideButtonText(String text) {
+    public final void overrideButtonText(final String text) {
         btnBuy.setText(text);
     }
 

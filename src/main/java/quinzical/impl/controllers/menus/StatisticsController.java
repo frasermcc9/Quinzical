@@ -82,7 +82,7 @@ public class StatisticsController extends AbstractSceneController {
      * Creates the the statistics visualisation when the scene is loaded
      */
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         Platform.runLater(() -> {
             createChart();
             createMostAnsweredTable();
@@ -94,11 +94,11 @@ public class StatisticsController extends AbstractSceneController {
      * Creates a list of data to be used in the pie chart
      */
     private ObservableList<PieChart.Data> createAnswerData() {
-        int correct = gameModel.getUserData().getCorrect();
-        int incorrect = gameModel.getUserData().getIncorrect();
+        final int correct = gameModel.getUserData().getCorrect();
+        final int incorrect = gameModel.getUserData().getIncorrect();
 
-        PieChart.Data correctData = new PieChart.Data("Correct (" + correct + ")", correct);
-        PieChart.Data incorrectData = new PieChart.Data("Incorrect (" + incorrect + ")", incorrect);
+        final PieChart.Data correctData = new PieChart.Data("Correct (" + correct + ")", correct);
+        final PieChart.Data incorrectData = new PieChart.Data("Incorrect (" + incorrect + ")", incorrect);
 
         return observableArrayList(correctData, incorrectData);
     }
@@ -107,9 +107,9 @@ public class StatisticsController extends AbstractSceneController {
      * Sets up the table for the most answered question data
      */
     private void createMostAnsweredTable() {
-        ObservableList<String> categories =
+        final ObservableList<String> categories =
             observableArrayList(gameModel.getUserData().getAnalytics().getMostAnsweredCategories());
-        ObservableList<String> answered =
+        final ObservableList<String> answered =
             observableArrayList(gameModel.getUserData().getAnalytics().getQuestionsAnsweredByCategory(categories));
 
         createNameValueTable(tableMostAnswered, colMostAnsweredName, colMostAnsweredNumber, categories,
@@ -120,9 +120,9 @@ public class StatisticsController extends AbstractSceneController {
      * Sets up the table for the most challenging questions data
      */
     private void createMostChallengingTable() {
-        ObservableList<String> categories =
+        final ObservableList<String> categories =
             observableArrayList(gameModel.getUserData().getAnalytics().getMostChallengingCategories());
-        ObservableList<String> answered =
+        final ObservableList<String> answered =
             observableArrayList(gameModel.getUserData().getAnalytics().getCorrectRatiosOfCategories(categories));
 
         createNameValueTable(tableMostChallenging, colMostChallengingName, colMostChallengingNumber, categories,
@@ -132,9 +132,9 @@ public class StatisticsController extends AbstractSceneController {
     /**
      * Creates a table using the inputted data
      */
-    private void createNameValueTable(TableView<NameValuePair> table, TableColumn<NameValuePair, String> names,
-                                      TableColumn<NameValuePair, String> values, ObservableList<String> nameList,
-                                      ObservableList<String> valueList) {
+    private void createNameValueTable(final TableView<NameValuePair> table, final TableColumn<NameValuePair, String> names,
+                                      final TableColumn<NameValuePair, String> values, final ObservableList<String> nameList,
+                                      final ObservableList<String> valueList) {
         names.setCellValueFactory(v -> v.getValue().nameProperty());
         values.setCellValueFactory(v -> v.getValue().valueProperty());
         table.setItems(observableArrayList(
@@ -151,7 +151,7 @@ public class StatisticsController extends AbstractSceneController {
      * @param node The node that the animation is for
      * @return The animation for the given node
      */
-    private ScaleTransition createScaleAnimation(Node node) {
+    private ScaleTransition createScaleAnimation(final Node node) {
         final ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(Duration.seconds(0.7));
         scaleTransition.setNode(node);
@@ -161,7 +161,7 @@ public class StatisticsController extends AbstractSceneController {
         scaleTransition.setToY(1.1);
         scaleTransition.setInterpolator(new Interpolator() {
             @Override
-            protected double curve(double t) {
+            protected double curve(final double t) {
                 return -1.76 * (Math.pow(t, 3)) + 0.931 * (Math.pow(t, 2)) + 1.785 * t;
             }
         });
@@ -173,7 +173,7 @@ public class StatisticsController extends AbstractSceneController {
      */
     private void createChart() {
         pieRatio.setData(createAnswerData());
-        ScaleTransition scaleTransition = createScaleAnimation(pieRatio);
+        final ScaleTransition scaleTransition = createScaleAnimation(pieRatio);
         pieRatio.getStylesheets().add(Objects.requireNonNull(Entry.class.getClassLoader().getResource("css/statistics" +
             ".css")).toExternalForm());
         pieRatio.applyCss();
@@ -185,16 +185,16 @@ public class StatisticsController extends AbstractSceneController {
         setChartStateOne(false);
     }
     
-    private void setChartStateOne(boolean reloadData) {
+    private void setChartStateOne(final boolean reloadData) {
         if (reloadData)
             pieRatio.setData(createAnswerData());
-        Node correct = pieRatio.getData().get(0).getNode();
-        Node wrong = pieRatio.getData().get(1).getNode();
+        final Node correct = pieRatio.getData().get(0).getNode();
+        final Node wrong = pieRatio.getData().get(1).getNode();
         correct.setOnMouseClicked(a -> setChartStateCorrect());
         wrong.setOnMouseClicked(a -> setChartStateIncorrect());
 
         pieRatio.getData().forEach(data -> {
-            Node node = data.getNode();
+            final Node node = data.getNode();
             node.setCursor(Cursor.HAND);
             node.setOnMouseEntered(a -> {
                 node.setEffect(new Glow());
@@ -236,29 +236,29 @@ public class StatisticsController extends AbstractSceneController {
     }
 
     @FXML
-    void resetChartClick() {
+    final void resetChartClick() {
         btnChartReset.setDisable(true);
         setChartStateOne();
     }
 
     private ObservableList<PieChart.Data> wrongChartData() {
-        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForIncorrectAnswers();
+        final List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForIncorrectAnswers();
         return createSecondaryChartData(data);
     }
 
     private ObservableList<PieChart.Data> rightChartData() {
-        List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForCorrectAnswers();
+        final List<Pair<String, Integer>> data = gameModel.getUserData().getAnalytics().getPairsForCorrectAnswers();
         return createSecondaryChartData(data);
     }
 
-    private ObservableList<PieChart.Data> createSecondaryChartData(List<Pair<String, Integer>> data) {
-        var list = observableArrayList(
+    private ObservableList<PieChart.Data> createSecondaryChartData(final List<Pair<String, Integer>> data) {
+        final var list = observableArrayList(
             data.stream()
                 .limit(8)
                 .map(d -> new PieChart.Data(d.getKey() + " (" + d.getValue() + ")", d.getValue()))
                 .collect(Collectors.toList()));
 
-        var other = data.stream()
+        final var other = data.stream()
             .skip(8)
             .reduce(0, (total, current) -> total + current.getValue(), Integer::sum);
 
@@ -270,7 +270,7 @@ public class StatisticsController extends AbstractSceneController {
      * Returns the scene back to the main menu
      */
     @FXML
-    void btnBackPress() {
+    final void btnBackPress() {
         sceneHandler.setActiveScene(GameScene.INTRO);
     }
 
@@ -278,37 +278,37 @@ public class StatisticsController extends AbstractSceneController {
         private final SimpleStringProperty name;
         private final SimpleStringProperty value;
 
-        public NameValuePair(String name, double value) {
+        public NameValuePair(final String name, final double value) {
             this.name = new SimpleStringProperty(name);
             this.value = new SimpleStringProperty(value + "");
         }
 
-        public NameValuePair(String name, String value) {
+        public NameValuePair(final String name, final String value) {
             this.name = new SimpleStringProperty(name);
             this.value = new SimpleStringProperty(value);
         }
 
-        public String getName() {
+        public final String getName() {
             return name.get();
         }
 
-        public void setName(String name) {
+        public final void setName(final String name) {
             this.name.set(name);
         }
 
-        public SimpleStringProperty nameProperty() {
+        public final SimpleStringProperty nameProperty() {
             return name;
         }
 
-        public String getValue() {
+        public final String getValue() {
             return value.get();
         }
 
-        public void setValue(int value) {
+        public final void setValue(final int value) {
             this.value.set(value + "");
         }
 
-        public SimpleStringProperty valueProperty() {
+        public final SimpleStringProperty valueProperty() {
             return value;
         }
     }

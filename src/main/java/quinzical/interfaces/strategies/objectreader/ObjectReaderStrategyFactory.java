@@ -14,8 +14,10 @@
 
 package quinzical.interfaces.strategies.objectreader;
 
+import quinzical.impl.util.strategies.objectreader.ObjectReaderStrategyFactoryImpl;
+
 /**
- * Interface for ObjectReaderStrategyFactoryImpl which handles the creation of an ObjectReaderStrategy.
+ * Interface for {@link ObjectReaderStrategyFactoryImpl} which handles the creation of an ObjectReaderStrategy.
  */
 public interface ObjectReaderStrategyFactory {
     <T> ObjectReaderStrategy<T> createObjectReader();

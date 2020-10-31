@@ -45,11 +45,11 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
 
     private double timer = 25;
 
-    public PersistentSettings loadSettingsFromDisk() {
-        ObjectReaderStrategy<PersistentSettings> strategy = objectReaderStrategyFactory.createObjectReader();
+    public final PersistentSettings loadSettingsFromDisk() {
+        final ObjectReaderStrategy<PersistentSettings> strategy = objectReaderStrategyFactory.createObjectReader();
 
         try {
-            PersistentSettings settings = strategy.readObject(System.getProperty("user.dir") + "/data/preferences.qdb");
+            final PersistentSettings settings = strategy.readObject(System.getProperty("user.dir") + "/data/preferences.qdb");
 
             theme = settings.getTheme();
             gap = settings.getGap();
@@ -57,14 +57,14 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
             amp = settings.getAmp();
             pitch = settings.getPitch();
             timer = settings.getTimer();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             //dont really care if this happens. It will just use default settings.
         }
 
         return this;
     }
 
-    public void applySettings() {
+    public final void applySettings() {
         this.gameModel.setTimerValue(timer);
 
         this.speakerMutator.setGap(gap);
@@ -75,7 +75,7 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
         this.sceneHandler.fireBackgroundChange(theme);
     }
 
-    public PersistentSettings loadSettingsFromGame() {
+    public final PersistentSettings loadSettingsFromGame() {
         timer = gameModel.getTimerValue();
 
         gap = speakerMutator.getGap();
@@ -89,62 +89,62 @@ public class PersistentSettingsImpl implements Serializable, PersistentSettings 
     }
 
     @Override
-    public Theme getTheme() {
+    public final Theme getTheme() {
         return theme;
     }
 
     @Override
-    public void setTheme(Theme theme) {
+    public final void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
     @Override
-    public int getGap() {
+    public final int getGap() {
         return gap;
     }
 
     @Override
-    public void setGap(int gap) {
+    public final void setGap(final int gap) {
         this.gap = gap;
     }
 
     @Override
-    public int getSpeed() {
+    public final int getSpeed() {
         return speed;
     }
 
     @Override
-    public void setSpeed(int speed) {
+    public final void setSpeed(final int speed) {
         this.speed = speed;
     }
 
     @Override
-    public int getAmp() {
+    public final int getAmp() {
         return amp;
     }
 
     @Override
-    public void setAmp(int amp) {
+    public final void setAmp(final int amp) {
         this.amp = amp;
     }
 
     @Override
-    public int getPitch() {
+    public final int getPitch() {
         return pitch;
     }
 
     @Override
-    public void setPitch(int pitch) {
+    public final void setPitch(final int pitch) {
         this.pitch = pitch;
     }
 
     @Override
-    public double getTimer() {
+    public final double getTimer() {
         return timer;
     }
 
     @Override
-    public void setTimer(double timer) {
+    public final void setTimer(final double timer) {
         this.timer = timer;
     }
 }

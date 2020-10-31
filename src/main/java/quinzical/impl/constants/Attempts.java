@@ -25,7 +25,7 @@ public enum Attempts {
 
     private final String message;
 
-    Attempts(String message) {
+    Attempts(final String message) {
         this.message = message;
     }
 

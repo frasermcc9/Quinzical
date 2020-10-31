@@ -48,7 +48,7 @@ public class IntroControllerTest {
     private Injector injector;
 
     @Before
-    public void setup() {
+    public final void setup() {
         MockitoAnnotations.initMocks(this);
 
         injector = Guice.createInjector(new AbstractModule() {
@@ -63,37 +63,37 @@ public class IntroControllerTest {
     }
 
     @Test
-    public void TestBtnLoadGamePress() {
+    public final void TestBtnLoadGamePress() {
         introController.btnLoadGamePress();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.GAME);
     }
 
     @Test
-    public void TestBtnNewGamePress() {
+    public final void TestBtnNewGamePress() {
         injector.getInstance(IntroController.class).btnNewGamePress();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.GAME_TYPE_SELECT);
     }
 
     @Test
-    public void TestBtnOptionsPress() {
+    public final void TestBtnOptionsPress() {
         injector.getInstance(IntroController.class).btnOptionsPress();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.OPTIONS);
     }
 
     @Test
-    public void TestBtnAchievementsClick() {
+    public final void TestBtnAchievementsClick() {
         injector.getInstance(IntroController.class).btnAchievementsClick();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.STORE);
     }
 
     @Test
-    public void TestBtnStatisticsClick() {
+    public final void TestBtnStatisticsClick() {
         injector.getInstance(IntroController.class).btnStatisticsClick();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.STATISTICS);
     }
 
     @Test
-    public void TestBtnOnlineClick() {
+    public final void TestBtnOnlineClick() {
         injector.getInstance(IntroController.class).btnOnlineClick();
         verify(sceneHandler, timeout(100)).setActiveScene(GameScene.MULTI_INTRO);
     }

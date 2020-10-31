@@ -6,7 +6,7 @@ public class GameSettings {
     public int maxPlayers;
     public boolean isGamePublic;
 
-    public GameSettings(int questions, int timePerQuestion, int maxPlayers, boolean isGamePublic) {
+    public GameSettings(final int questions, final int timePerQuestion, final int maxPlayers, final boolean isGamePublic) {
         this.questions = questions;
         this.timePerQuestion = timePerQuestion;
         this.maxPlayers = maxPlayers;

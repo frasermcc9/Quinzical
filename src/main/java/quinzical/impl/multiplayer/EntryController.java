@@ -47,7 +47,7 @@ public class EntryController extends AbstractAlertController {
     @FXML
     private JFXPasswordField txtPassword;
 
-    private static void createValidator(String message, TextField textField) {
+    private static void createValidator(final String message, final TextField textField) {
         textField.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
                 if (textField.getText().isBlank()) {
@@ -55,7 +55,7 @@ public class EntryController extends AbstractAlertController {
                     textField.getStyleClass().add("invalid-field");
                 }
             } else {
-                ColorAdjust ca = new ColorAdjust();
+                final ColorAdjust ca = new ColorAdjust();
                 ca.setBrightness(1);
                 textField.setEffect(ca);
                 textField.getStyleClass().remove("invalid-field");
@@ -64,13 +64,13 @@ public class EntryController extends AbstractAlertController {
     }
 
     @FXML
-    void btnConnect() throws URISyntaxException, IllegalAccessException, NoSuchFieldException, JSONException {
+    final void btnConnect() throws URISyntaxException, IllegalAccessException, NoSuchFieldException, JSONException {
 
-        Socket socket = IO.socket(socketUrl);
+        final Socket socket = IO.socket(socketUrl);
         socketModel.setName(txtName.getText()).setSocket(socket);
         setProgressVisible(true);
 
-        Object login = Util.asJson(new Login(txtName.getText(), txtPassword.getText()));
+        final Object login = Util.asJson(new Login(txtName.getText(), txtPassword.getText()));
 
         socket.once("connect", (_1) -> {
             socket.emit("authentication", login);
@@ -91,7 +91,7 @@ public class EntryController extends AbstractAlertController {
                 Platform.runLater(() -> setProgressVisible(false));
                 createAlert("Could not Connect", "Could not connect to the online service. Most often this error " +
                     "message is fixed by trying to reconnect immediately.");
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
@@ -100,12 +100,12 @@ public class EntryController extends AbstractAlertController {
     }
 
     @FXML
-    void btnAccount() {
+    final void btnAccount() {
         sceneHandler.setActiveScene(GameScene.MULTI_ACCOUNT);
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         setProgressVisible(false);
         createValidator("Username cannot be blank", txtName);
         createValidator("Password cannot be blank", txtPassword);
@@ -113,7 +113,7 @@ public class EntryController extends AbstractAlertController {
 
 
     @FXML
-    void btnQuitClick() {
+    final void btnQuitClick() {
         if (socketModel.getSocket() != null)
             socketModel.destroy();
         sceneHandler.setActiveScene(GameScene.INTRO);
@@ -123,7 +123,7 @@ public class EntryController extends AbstractAlertController {
         public final String username;
         public final String password;
 
-        public Login(String username, String password) {
+        public Login(final String username, final String password) {
             this.username = username;
             this.password = password;
         }

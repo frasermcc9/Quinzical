@@ -6,14 +6,14 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 
 public class Util {
-    public static JSONObject asJson(Object o) throws NoSuchFieldException, IllegalAccessException, JSONException {
-        Field[] fields = o.getClass().getDeclaredFields();
+    public static JSONObject asJson(final Object o) throws NoSuchFieldException, IllegalAccessException, JSONException {
+        final Field[] fields = o.getClass().getDeclaredFields();
 
-        JSONObject object = new JSONObject();
+        final JSONObject object = new JSONObject();
 
-        for (Field field : fields) {
-            Object extracted = o.getClass().getDeclaredField(field.getName()).get(o);
-            String name = field.getName();
+        for (final Field field : fields) {
+            final Object extracted = o.getClass().getDeclaredField(field.getName()).get(o);
+            final String name = field.getName();
             object.put(name, extracted.toString());
         }
 

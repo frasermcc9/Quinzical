@@ -54,19 +54,19 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
      * @param textNormaliserFactory - A text normaliser to trim any unnecessary info from the text
      * @return - the list of corrects, showing which text areas are right and which are wrong.
      */
-    static List<Boolean> checkCorrectness(List<Solution> solutions, List<JFXTextArea> textAreas,
-                                          TextNormaliserFactory textNormaliserFactory) {
+    static List<Boolean> checkCorrectness(final List<Solution> solutions, final List<JFXTextArea> textAreas,
+                                          final TextNormaliserFactory textNormaliserFactory) {
 
-        TextNormaliserStrategy textNormaliserStrategy = textNormaliserFactory.getTextNormalizer();
+        final TextNormaliserStrategy textNormaliserStrategy = textNormaliserFactory.getTextNormalizer();
 
-        List<Boolean> corrects = new ArrayList<>();
+        final List<Boolean> corrects = new ArrayList<>();
 
-        for (JFXTextArea textArea : textAreas) {
-            String submission = textNormaliserStrategy.normaliseText(textArea.getText());
+        for (final JFXTextArea textArea : textAreas) {
+            final String submission = textNormaliserStrategy.normaliseText(textArea.getText());
             boolean solutionFound = false;
-            for (Solution solution : solutions) {
-                List<String> variants = solution.getVariants();
-                Optional<String> found =
+            for (final Solution solution : solutions) {
+                final List<String> variants = solution.getVariants();
+                final Optional<String> found =
                     variants.stream().filter(v -> textNormaliserStrategy.normaliseText(v).equals(submission)).findAny();
                 if (found.isPresent()) {
                     solutions.remove(solution);
@@ -92,7 +92,7 @@ public class QuestionVerifierFactoryImpl implements QuestionVerifierFactory {
      * @return - A verifier of the requested type.
      */
     @Override
-    public QuestionVerifierStrategy getQuestionVerifier(VerifierType type) {
+    public final QuestionVerifierStrategy getQuestionVerifier(final VerifierType type) {
         switch (type) {
             case FILL_SOLUTION:
                 return questionVerifierStrategyProvider.get();
@@ -128,18 +128,18 @@ class DefaultQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(List<Solution> solutions, List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
-        List<Solution> solutionCopy = new ArrayList<>(solutions);
+        final List<Solution> solutionCopy = new ArrayList<>(solutions);
 
-        List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutionCopy, textAreas,
+        final List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutionCopy, textAreas,
             textNormaliserFactory);
 
         for (int i = 0; i < corrects.size(); i++) {
             if (!corrects.get(i)) {
-                JFXTextArea textArea = textAreas.get(i);
+                final JFXTextArea textArea = textAreas.get(i);
                 textArea.getStyleClass().add("answer-field-wrong");
-                String sln = solutionCopy.remove(0).getVariants().get(0);
+                final String sln = solutionCopy.remove(0).getVariants().get(0);
                 if (sln != null) {
                     textArea.setText(sln);
                     textArea.positionCaret(textArea.getText().length() + 1);
@@ -167,14 +167,14 @@ class PracticeQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(List<Solution> solutions, List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
-        List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutions, textAreas,
+        final List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutions, textAreas,
             textNormaliserFactory);
 
         for (int i = 0; i < corrects.size(); i++) {
             if (!corrects.get(i)) {
-                JFXTextArea textArea = textAreas.get(i);
+                final JFXTextArea textArea = textAreas.get(i);
                 textArea.getStyleClass().add("answer-field-wrong");
                 textArea.positionCaret(textArea.getText().length());
             }
@@ -202,18 +202,18 @@ class HintQuestionVerifier implements QuestionVerifierStrategy {
      * @return - A list of whether or not each text area is correct
      */
     @Override
-    public List<Boolean> verifySolutions(List<Solution> solutions, List<JFXTextArea> textAreas) {
+    public final List<Boolean> verifySolutions(final List<Solution> solutions, final List<JFXTextArea> textAreas) {
 
-        List<Solution> solutionCopy = new ArrayList<>(solutions);
+        final List<Solution> solutionCopy = new ArrayList<>(solutions);
 
-        List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutions, textAreas,
+        final List<Boolean> corrects = QuestionVerifierFactoryImpl.checkCorrectness(solutions, textAreas,
             textNormaliserFactory);
 
         for (int i = 0; i < corrects.size(); i++) {
             if (!corrects.get(i)) {
-                JFXTextArea textArea = textAreas.get(i);
+                final JFXTextArea textArea = textAreas.get(i);
                 textArea.getStyleClass().set(1, "answer-field-wrong");
-                String sln = solutionCopy.remove(0).getVariants().get(0);
+                final String sln = solutionCopy.remove(0).getVariants().get(0);
                 if (sln != null) {
                     textArea.setText(sln.substring(0, 1));
                     textArea.positionCaret(1);

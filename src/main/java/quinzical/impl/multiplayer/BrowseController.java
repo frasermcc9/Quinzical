@@ -47,15 +47,15 @@ public class BrowseController extends AbstractAlertController {
     private JFXTreeTableView<GameData> tableBrowse;
 
     @FXML
-    void btnCancel() {
+    final void btnCancel() {
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML
-    void btnOk() {
-        GameData gameData = tableBrowse.getSelectionModel().getSelectedItem().getValue();
+    final void btnOk() {
+        final GameData gameData = tableBrowse.getSelectionModel().getSelectedItem().getValue();
 
-        Socket socket = socketModel.getSocket();
+        final Socket socket = socketModel.getSocket();
 
         socket.emit("joinGameRequest", socketModel.getName(), gameData.getCode());
         socket.once("joinGameNotification", (arg) -> {
@@ -63,13 +63,13 @@ public class BrowseController extends AbstractAlertController {
                 createAlert("Unable to Join Game", "You were unable to join the game.");
 
             } else {
-                JSONArray jsonArray = (JSONArray) arg[1];
-                MultiplayerGame mg = MultiplayerGame.getInstance();
+                final JSONArray jsonArray = (JSONArray) arg[1];
+                final MultiplayerGame mg = MultiplayerGame.getInstance();
                 mg.setCode(gameData.getCode());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     try {
                         mg.addPlayer((String) jsonArray.get(i));
-                    } catch (JSONException e) {
+                    } catch (final JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -81,15 +81,15 @@ public class BrowseController extends AbstractAlertController {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onLoad() {
+    protected final void onLoad() {
 
-        JFXTreeTableColumn<GameData, String> hostCol = new JFXTreeTableColumn<>("Host");
-        JFXTreeTableColumn<GameData, String> playersCol = new JFXTreeTableColumn<>("Players");
-        JFXTreeTableColumn<GameData, String> questionsCol = new JFXTreeTableColumn<>("Questions");
-        JFXTreeTableColumn<GameData, String> timeCol = new JFXTreeTableColumn<>("Time to Answer");
-        JFXTreeTableColumn<GameData, String> codeCol = new JFXTreeTableColumn<>("Code");
+        final JFXTreeTableColumn<GameData, String> hostCol = new JFXTreeTableColumn<>("Host");
+        final JFXTreeTableColumn<GameData, String> playersCol = new JFXTreeTableColumn<>("Players");
+        final JFXTreeTableColumn<GameData, String> questionsCol = new JFXTreeTableColumn<>("Questions");
+        final JFXTreeTableColumn<GameData, String> timeCol = new JFXTreeTableColumn<>("Time to Answer");
+        final JFXTreeTableColumn<GameData, String> codeCol = new JFXTreeTableColumn<>("Code");
 
-        ObservableList<GameData> list = observableArrayList();
+        final ObservableList<GameData> list = observableArrayList();
 
         Platform.runLater(() -> {
             hostCol.setCellValueFactory(v -> v.getValue().getValue().hostProperty());
@@ -100,34 +100,34 @@ public class BrowseController extends AbstractAlertController {
 
             tableBrowse.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 
-            TreeItem<GameData> root = new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren);
+            final TreeItem<GameData> root = new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren);
             tableBrowse.setRoot(root);
             tableBrowse.setShowRoot(false);
             tableBrowse.getColumns().setAll(hostCol, playersCol, questionsCol, timeCol, codeCol);
         });
 
-        Socket socket = socketModel.getSocket();
+        final Socket socket = socketModel.getSocket();
 
         socket.emit("browseGames");
         socket.once("browseGameDataLoaded", (args) -> {
-            JSONArray array = ((JSONArray) args[0]);
-            int size = array.length();
+            final JSONArray array = ((JSONArray) args[0]);
+            final int size = array.length();
             for (int i = 0; i < size; i++) {
                 try {
-                    JSONObject a = array.getJSONObject(i);
-                    String code = a.getString("code");
-                    String host = a.getString("host");
-                    String questions = a.getString("questions");
-                    String currentPlayers = a.getString("currentPlayers");
-                    String maxPlayers = a.getString("maxPlayers");
-                    String timePerQuestion = a.getString("timePerQuestion");
+                    final JSONObject a = array.getJSONObject(i);
+                    final String code = a.getString("code");
+                    final String host = a.getString("host");
+                    final String questions = a.getString("questions");
+                    final String currentPlayers = a.getString("currentPlayers");
+                    final String maxPlayers = a.getString("maxPlayers");
+                    final String timePerQuestion = a.getString("timePerQuestion");
 
-                    GameData gameData = new GameData(host, currentPlayers + "/" + maxPlayers, questions,
+                    final GameData gameData = new GameData(host, currentPlayers + "/" + maxPlayers, questions,
                         timePerQuestion, code);
 
                     list.add(gameData);
 
-                } catch (JSONException e) {
+                } catch (final JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -143,7 +143,7 @@ public class BrowseController extends AbstractAlertController {
         private final SimpleStringProperty time;
         private final SimpleStringProperty code;
 
-        public GameData(String host, String players, String questions, String time, String code) {
+        public GameData(final String host, final String players, final String questions, final String time, final String code) {
             this.host = new SimpleStringProperty(host);
             this.players = new SimpleStringProperty(players);
             this.questions = new SimpleStringProperty(questions);
@@ -151,63 +151,63 @@ public class BrowseController extends AbstractAlertController {
             this.code = new SimpleStringProperty(code);
         }
 
-        public String getHost() {
+        public final String getHost() {
             return host.get();
         }
 
-        public void setHost(String host) {
+        public final void setHost(final String host) {
             this.host.set(host);
         }
 
-        public SimpleStringProperty hostProperty() {
+        public final SimpleStringProperty hostProperty() {
             return host;
         }
 
-        public String getPlayers() {
+        public final String getPlayers() {
             return players.get();
         }
 
-        public void setPlayers(String players) {
+        public final void setPlayers(final String players) {
             this.players.set(players);
         }
 
-        public SimpleStringProperty playersProperty() {
+        public final SimpleStringProperty playersProperty() {
             return players;
         }
 
-        public String getQuestions() {
+        public final String getQuestions() {
             return questions.get();
         }
 
-        public void setQuestions(String questions) {
+        public final void setQuestions(final String questions) {
             this.questions.set(questions);
         }
 
-        public SimpleStringProperty questionsProperty() {
+        public final SimpleStringProperty questionsProperty() {
             return questions;
         }
 
-        public String getTime() {
+        public final String getTime() {
             return time.get();
         }
 
-        public void setTime(String time) {
+        public final void setTime(final String time) {
             this.time.set(time);
         }
 
-        public SimpleStringProperty timeProperty() {
+        public final SimpleStringProperty timeProperty() {
             return time;
         }
 
-        public String getCode() {
+        public final String getCode() {
             return code.get();
         }
 
-        public void setCode(String code) {
+        public final void setCode(final String code) {
             this.code.set(code);
         }
 
-        public SimpleStringProperty codeProperty() {
+        public final SimpleStringProperty codeProperty() {
             return code;
         }
     }

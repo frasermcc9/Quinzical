@@ -38,9 +38,9 @@ public class PracticeSelectorController extends AbstractSelectorController {
     private PracticeModel practiceModel;
 
     @Override
-    protected void generateQuestionsAndProgress() {
+    protected final void generateQuestionsAndProgress() {
         practiceModel.setCategories(selectedCategories);
-        Question question = practiceModel.getRandomQuestion();
+        final Question question = practiceModel.getRandomQuestion();
         practiceModel.activateQuestion(question);
         sceneHandler.setActiveScene(GameScene.PRACTICE_QUESTION);
     }
@@ -49,12 +49,12 @@ public class PracticeSelectorController extends AbstractSelectorController {
      * Gets the list of currently selected categories
      */
     @Override
-    protected List<String> getSelectedCategories() {
+    protected final List<String> getSelectedCategories() {
         return this.selectedCategories;
     }
 
     @Override
-    protected GameModel getModel() {
+    protected final GameModel getModel() {
         return this.gameModel;
     }
 
@@ -62,7 +62,7 @@ public class PracticeSelectorController extends AbstractSelectorController {
      * Updates the counter for the total selected categories
      */
     @Override
-    protected void modifyCounterLabel() {
+    protected final void modifyCounterLabel() {
         this.lblSelected.setText("Selected: " + selectedCategories.size());
         btnOk.setDisable(selectedCategories.size() < 1);
     }

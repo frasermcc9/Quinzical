@@ -35,43 +35,43 @@ import java.util.Map;
  */
 public class Serializer {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         //JFileChooser fileChooser = new JFileChooser();
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        File file = fileChooser.showOpenDialog(null);
+        final File file = fileChooser.showOpenDialog(null);
 
         if (file == null) return;
 
         try {
-            Map<String, List<Question>> M = new HashMap<>();
+            final Map<String, List<Question>> M = new HashMap<>();
             String activeCategory = "";
 
-            List<String> lines;
+            final List<String> lines;
 
             lines = Files.readAllLines(Paths.get(file.getPath()), StandardCharsets.UTF_8);
 
 
             for (String line : lines) {
-                line = line.trim();
-                if (!line.matches("^.*\\|.*\\|.*$")) {
-                    activeCategory = line;
+                String trim = line.trim();
+                if (!trim.matches("^.*\\|.*\\|.*$")) {
+                    activeCategory = trim;
                     M.put(activeCategory, new ArrayList<>());
                     continue;
                 }
-                String[] parts = line.split("\\|");
-                String hint = parts[0].trim();
-                String prompt = parts[1].trim();
+                final String[] parts = trim.split("\\|");
+                final String hint = parts[0].trim();
+                final String prompt = parts[1].trim();
 
-                Question q = new Question(activeCategory, hint, prompt);
+                final Question q = new Question(activeCategory, hint, prompt);
 
-                String solutions = parts[2].trim();
+                final String solutions = parts[2].trim();
 
-                String[] slnList = solutions.split(",");
-                for (String sln : slnList) {
-                    String[] variants = sln.split("/");
+                final String[] slnList = solutions.split(",");
+                for (final String sln : slnList) {
+                    final String[] variants = sln.split("/");
                     q.addSolution(variants);
                 }
 
@@ -79,18 +79,18 @@ public class Serializer {
 
             }
 
-            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/question.qdb");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            final FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/data/question.qdb");
+            final ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(M);
             out.close();
             fileOut.close();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             showAlert();
         }
     }
 
     private static void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "Please check the file and try again.",
+        final Alert alert = new Alert(Alert.AlertType.ERROR, "Please check the file and try again.",
             ButtonType.OK, ButtonType.CANCEL);
         alert.setTitle("Invalid Question Set Loaded");
         alert.setHeaderText("This file does not appear to be a valid Quinzical Data Format.");

@@ -7,32 +7,32 @@ public class Question {
     private String solution;
     private String givenSolution;
 
-    public Question(String question, String prompt) {
+    public Question(final String question, final String prompt) {
         this.question = question;
         this.prompt = prompt;
     }
 
-    public String getQuestion() {
+    public final String getQuestion() {
         return question;
     }
 
-    public String getPrompt() {
+    public final String getPrompt() {
         return prompt;
     }
 
-    public String getGivenSolution() {
+    public final String getGivenSolution() {
         return givenSolution;
     }
 
-    public void setGivenSolution(String givenSolution) {
+    public final void setGivenSolution(final String givenSolution) {
         this.givenSolution = givenSolution;
     }
 
-    public String getSolution() {
+    public final String getSolution() {
         return solution;
     }
 
-    public void setSolution(String solution) {
+    public final void setSolution(final String solution) {
         this.solution = solution;
     }
 }

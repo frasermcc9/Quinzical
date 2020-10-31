@@ -52,12 +52,12 @@ public class GameController extends AbstractSceneController {
     private Label txtHeading;
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         paneHeader.getChildren().stream().filter(b -> b instanceof Button).map(b -> (Button) b).forEach(buttons::add);
     }
 
     @Override
-    protected void refresh() {
+    protected final void refresh() {
         this.refreshBoard();
         this.refreshValue();
     }
@@ -79,17 +79,17 @@ public class GameController extends AbstractSceneController {
 
         setOverlay(Overlay.CATEGORY);
 
-        Map<String, List<GameQuestion>> model = gameModel.getBoardQuestions();
-        List<String> keys = new ArrayList<>(model.keySet());
+        final Map<String, List<GameQuestion>> model = gameModel.getBoardQuestions();
+        final List<String> keys = new ArrayList<>(model.keySet());
 
         for (int i = 0; i < buttons.size(); i++) {
-            Button btn = buttons.get(i);
+            final Button btn = buttons.get(i);
 
             btn.getStyleClass().clear();
             btn.getStyleClass().add("material-button");
 
-            String category = keys.get(i);
-            int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
+            final String category = keys.get(i);
+            final int answeredCount = model.get(category).stream().reduce(0, (sub, el) -> sub + (el.isAnswered() ? 1 : 0),
                 Integer::sum);
 
             btn.setText(category + " - " + answeredCount + "/5");
@@ -101,15 +101,15 @@ public class GameController extends AbstractSceneController {
     /**
      * Called when a category is selected. Sets the buttons and handlers to change to the question scene.
      */
-    private void loadQuestions(List<GameQuestion> questions) {
+    private void loadQuestions(final List<GameQuestion> questions) {
 
         btnMenu.setOnAction(event -> refreshBoard());
 
         setOverlay(Overlay.QUESTION);
 
         for (int i = 0; i < buttons.size(); i++) {
-            Button btn = buttons.get(i);
-            GameQuestion q = questions.get(i);
+            final Button btn = buttons.get(i);
+            final GameQuestion q = questions.get(i);
 
             if (q.isAnswered()) {
                 btn.getStyleClass().clear();
@@ -132,7 +132,7 @@ public class GameController extends AbstractSceneController {
      *
      * @param gameQuestion the question to be set as the active one.
      */
-    private void activateQuestion(GameQuestion gameQuestion) {
+    private void activateQuestion(final GameQuestion gameQuestion) {
         gameModel.activateQuestion(gameQuestion);
         new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME_QUESTION)).start();
     }
@@ -142,7 +142,7 @@ public class GameController extends AbstractSceneController {
      *
      * @param o the overlay to be set (what top text should be active)
      */
-    private void setOverlay(Overlay o) {
+    private void setOverlay(final Overlay o) {
         switch (o) {
             case CATEGORY:
                 txtHeading.setText("Select a Category");

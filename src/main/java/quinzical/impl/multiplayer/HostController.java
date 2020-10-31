@@ -61,15 +61,15 @@ public class HostController extends AbstractSceneController {
     private JFXCheckBox chkPublic;
 
     @FXML
-    void btnCancel(ActionEvent event) throws IOException {
+    final void btnCancel(final ActionEvent event) throws IOException {
         sceneHandler.setActiveScene(GameScene.MULTI_MENU);
     }
 
     @FXML
-    void btnStart(ActionEvent event) throws IllegalAccessException, NoSuchFieldException, JSONException {
+    final void btnStart(final ActionEvent event) throws IllegalAccessException, NoSuchFieldException, JSONException {
 
-        Socket socket = socketModel.getSocket();
-        String name = socketModel.getName();
+        final Socket socket = socketModel.getSocket();
+        final String name = socketModel.getName();
 
         int questions = parseToInt(txtQuestions);
         if (questions == 0) questions = 10;
@@ -78,7 +78,7 @@ public class HostController extends AbstractSceneController {
         int maxPlayers = parseToInt(txtPlayers);
         if (maxPlayers == 0) maxPlayers = 2;
 
-        boolean isPublic = chkPublic.selectedProperty().get();
+        final boolean isPublic = chkPublic.selectedProperty().get();
 
         socket.once("gameHostGiven", (code) -> {
             MultiplayerGame.getInstance().setCode((String) code[0]);
@@ -88,11 +88,11 @@ public class HostController extends AbstractSceneController {
         socket.emit("hostGameRequest", name, Util.asJson(new GameSettings(questions, time, maxPlayers, isPublic)));
     }
 
-    private int parseToInt(Label textField) {
-        String text = textField.getText();
+    private int parseToInt(final Label textField) {
+        final String text = textField.getText();
         try {
             return Integer.parseInt(text);
-        } catch (NumberFormatException numberFormatException) {
+        } catch (final NumberFormatException numberFormatException) {
             return 0;
         }
     }
@@ -103,48 +103,48 @@ public class HostController extends AbstractSceneController {
     }
 
     @FXML
-    void playersDec(ActionEvent event) {
-        int val = parseToInt(txtPlayers) - 1;
+    final void playersDec(final ActionEvent event) {
+        final int val = parseToInt(txtPlayers) - 1;
         txtPlayers.setText(val + "");
         checkValues(val, 2, 10, pDec, pInc);
     }
 
     @FXML
-    void playersInc(ActionEvent event) {
-        int val = parseToInt(txtPlayers) + 1;
+    final void playersInc(final ActionEvent event) {
+        final int val = parseToInt(txtPlayers) + 1;
         txtPlayers.setText(val + "");
         checkValues(val, 2, 10, pDec, pInc);
     }
 
     @FXML
-    void questionDec(ActionEvent event) {
-        int val = parseToInt(txtQuestions) - 1;
+    final void questionDec(final ActionEvent event) {
+        final int val = parseToInt(txtQuestions) - 1;
         txtQuestions.setText(val + "");
         checkValues(val, 2, 25, qDec, qInc);
     }
 
     @FXML
-    void questionInc(ActionEvent event) {
-        int val = parseToInt(txtQuestions) + 1;
+    final void questionInc(final ActionEvent event) {
+        final int val = parseToInt(txtQuestions) + 1;
         txtQuestions.setText(val + "");
         checkValues(val, 2, 25, qDec, qInc);
     }
 
     @FXML
-    void timeDec(ActionEvent event) {
-        int val = parseToInt(txtTime) - 1;
+    final void timeDec(final ActionEvent event) {
+        final int val = parseToInt(txtTime) - 1;
         txtTime.setText(val + "");
         checkValues(val, 5, 30, aDec, aInc);
     }
 
     @FXML
-    void timeInc(ActionEvent event) {
-        int val = parseToInt(txtTime) + 1;
+    final void timeInc(final ActionEvent event) {
+        final int val = parseToInt(txtTime) + 1;
         txtTime.setText(val + "");
         checkValues(val, 5, 30, aDec, aInc);
     }
 
-    private void checkValues(int val, int min, int max, Button btnDec, Button btnInc) {
+    private void checkValues(final int val, final int min, final int max, final Button btnDec, final Button btnInc) {
         btnDec.setDisable(val == min);
         btnInc.setDisable(val == max);
     }

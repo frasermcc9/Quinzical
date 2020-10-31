@@ -15,12 +15,8 @@
 package quinzical.impl.controllers.menus;
 
 import com.google.inject.Inject;
-import javafx.animation.Animation;
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.interfaces.models.GameModelSaver;
@@ -50,7 +46,7 @@ public class IntroController extends AbstractSceneController {
      * Sets the active scene to the main game scene where you select categories and questions from.
      */
     @FXML
-    void btnLoadGamePress() {
+    final void btnLoadGamePress() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME)).start();
     }
 
@@ -58,7 +54,7 @@ public class IntroController extends AbstractSceneController {
      * When the play button is clicked, change the scene to the main game board and fire the refresh board event.
      */
     @FXML
-    void btnNewGamePress() {
+    final void btnNewGamePress() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.GAME_TYPE_SELECT)).start();
     }
 
@@ -66,7 +62,7 @@ public class IntroController extends AbstractSceneController {
      * When the options button is clicked, change the scene to the options screen
      */
     @FXML
-    void btnOptionsPress() {
+    final void btnOptionsPress() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.OPTIONS)).start();
     }
 
@@ -74,7 +70,7 @@ public class IntroController extends AbstractSceneController {
      * Sets the current scene to the store page
      */
     @FXML
-    void btnAchievementsClick() {
+    final void btnAchievementsClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.STORE)).start();
 
     }
@@ -83,7 +79,7 @@ public class IntroController extends AbstractSceneController {
      * Sets the current scene to the statistics view
      */
     @FXML
-    void btnStatisticsClick() {
+    final void btnStatisticsClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.STATISTICS)).start();
     }
 
@@ -91,12 +87,12 @@ public class IntroController extends AbstractSceneController {
      * Sets the current scene to the online view
      */
     @FXML
-    void btnOnlineClick() {
+    final void btnOnlineClick() {
         new Thread(() -> sceneHandler.setActiveScene(GameScene.MULTI_INTRO)).start();
     }
 
     @Override
-    protected void onLoad() {
+    protected final void onLoad() {
         handleLoadGameButton();
     }
 
@@ -114,7 +110,7 @@ public class IntroController extends AbstractSceneController {
             return;
         }
 
-        UserData saveData;
+        final UserData saveData;
         try {
             saveData = objectReader.<UserData>createObjectReader().readObject(System.getProperty("user.dir") + "/data" +
                 "/save.qdb");
@@ -127,7 +123,7 @@ public class IntroController extends AbstractSceneController {
                 btnLoadGame.setDisable(true);
             }
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (final IOException | ClassNotFoundException e) {
             //if no game data is found
             btnLoadGame.setDisable(true);
         }
