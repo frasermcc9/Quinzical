@@ -29,7 +29,6 @@ import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.components.TileController;
 import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.impl.multiplayer.models.MultiplayerGame;
-import quinzical.impl.multiplayer.models.SocketModelImpl;
 import quinzical.interfaces.multiplayer.SocketModel;
 import quinzical.interfaces.multiplayer.XpClass;
 import quinzical.interfaces.multiplayer.XpClassFactory;

@@ -33,9 +33,6 @@ import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.interfaces.multiplayer.ActiveGame;
 import quinzical.interfaces.multiplayer.SocketModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameController extends AbstractSceneController {
 
     @Inject

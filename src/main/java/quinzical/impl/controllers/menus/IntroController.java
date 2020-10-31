@@ -15,12 +15,8 @@
 package quinzical.impl.controllers.menus;
 
 import com.google.inject.Inject;
-import javafx.animation.Animation;
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
 import quinzical.impl.constants.GameScene;
 import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.interfaces.models.GameModelSaver;

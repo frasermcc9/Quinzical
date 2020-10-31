@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import quinzical.impl.constants.GameScene;
-import quinzical.impl.controllers.AbstractSceneController;
 import quinzical.impl.controllers.components.TileController;
 import quinzical.impl.models.structures.FxmlInfo;
 import quinzical.interfaces.models.GameModel;
