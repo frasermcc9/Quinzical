@@ -29,6 +29,7 @@ import quinzical.interfaces.models.PracticeModel;
 import quinzical.interfaces.models.QuinzicalModel;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for the practice question scene
@@ -91,6 +92,10 @@ public class PracticeQuestionController extends AbstractQuestionController {
                     .verifySolutions(solutions, textAreas);
                 if (corrects.contains(false)) {
                     lblAttempts.setText(Attempts.ATTEMPT_4.getMessage());
+                    speaker.speak("The correct answer was " +
+                        solutions.stream()
+                            .map(s -> s.getVariants().get(0))
+                            .collect(Collectors.joining(" ")));
                 }
                 prepForNewQuestion();
                 break;
