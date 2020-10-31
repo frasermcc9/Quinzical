@@ -1,0 +1,30 @@
+Addition
+What is 2+2|What is|4/four
+What is 4+2|What is|6/six
+What is 6+3|What is|9/nine
+What is 1+2|What is|3/three
+What is 10+12|What is|24/twentyfour/twenty four
+Subtraction
+What is 6-3|What is|3/three
+What is 9-10|What is|-1/negative 1/negative one
+What is 8-8|What is|0/zero/nill
+What is 100-50|What is|50/fifty
+What is 25-12|What is|13/thirteen
+Multiplication
+What is 2x2|What is|4/four
+What is 3x2|What is|6/six
+What is 3x3|What is|9/nine
+What is 1x3|What is|3/three
+What is 12x2|What is|24/twentyfour/twenty four
+Division
+What is 16/4|What is|4/four
+What is 18/3|What is|6/six
+What is 10/4|What is|2.5/two point five/two.five
+What is 15/5|What is|3/three
+What is 30/3|What is|10/ten
+Powers
+What is 2^2|What is|4/four
+What is 4^3|What is|64/sixty four/sixtyfour
+What is 3^2|What is|9/nine
+What is 8^2|What is|64/sixty four/sixtyfour
+What is 12^2|What is|144
