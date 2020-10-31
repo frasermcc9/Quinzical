@@ -17,7 +17,6 @@ package quinzical.interfaces.events;
  * Functional interface with no arguments. Is fired when a question is activated.
  */
 @FunctionalInterface
-@Deprecated(since = "1.1")
 public interface ActiveQuestionObserver {
     void fireActiveQuestion();
 }
