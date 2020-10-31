@@ -18,23 +18,24 @@ JavaFX and ESpeak are required to run this application.
 game when exiting the application. In this case, load game will load that game. If the button is greyed out, Quinzical
 could not find the last loaded game.
 
-- **Practice Mode**<br>This will launch the practice module of the game. Here you can choose any category that has been
-loaded, and the game will serve random questions from this category. You will have multiple attempts and be given
-additional hints for questions.
+- **Play Online**<br>This will launch the online multiplayer allowing you to play Quinzical accross the internet with
+your friends!
+
+- **Store**<br>This is where you can buy more themes for Quinzical.
+
+- **Statistics**<br>This will show you your current Quinzical Statistics.
 
 - **Options**<br>Here you can adjust the settings for the Text-To-Speech system, as well as set the theme of the game.
-
-- **Load New Questions**<br>See [the section on loading custom questions](#loading-custom-questions)
+ Other settings such as loading new questions are also present.
 
 ## Compiling from Source
 
 Download the source code, then use Maven to compile. The command `mvn clean compile assembly:single` will create the
-needed `.jar` file in the target directory.
+needed `.jar` file in the target directory. A `data` directory should be present at the same directory level as the jar file.
 
 ## Loading Custom Questions
 
-Use the button in the main screen to load a custom question set. This will open a file selector where you can pick
-a text file in the same format as the one in the data folder to load a new question set, namely:
+Use the button in the advanced section of the settings' menu to load a custom question set. This will open a file selector where you can pick a text file in the same format as the one in the data folder to load a new question set, namely:
 
 ```text
 Category Name
@@ -60,7 +61,8 @@ specifications.
 
 - Fraser McCallum
 - Braden Palmer
+- Catherine Watson
 - Nasser (thanks for the initial commit)
 - Haytham Galal (font designer)
 - [Pixabay](https://pixabay.com/photos/search/new%20zealand/) for the theme images.
-
+- Contributors to all used packages and libraries
