@@ -31,6 +31,9 @@ import quinzical.interfaces.strategies.questiongenerator.QuestionGeneratorStrate
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * Factory for generating strategies that pull question sets from the database.
@@ -237,39 +240,62 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
                 JSONObject object = (JSONObject) array.get(i);
                 bindings.add(new CategoryNumberBinding() {
                     @Override
-                    public String name() throws JSONException {
-                        return object.get("title").toString();
+                    public String name() {
+                        try {
+                            return object.get("title").toString();
+                        } catch (JSONException jsonException) {
+                            return null;
+                        }
                     }
 
                     @Override
-                    public String id() throws JSONException {
-                        return object.get("id").toString();
+                    public String id() {
+                        try {
+                            return object.get("id").toString();
+                        } catch (JSONException jsonException) {
+                            return null;
+                        }
                     }
                 });
             }
 
-            // Iterate through the 5 categories.
-            // Make an api request for each category, and get 5 clues from it.
-            for (CategoryNumberBinding binding : bindings) {
+            //Get 5 categories from API
+            List<String> data = bindings.stream().map(b -> {
+                try {
+                    return requestQuestions(b.id()).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }).collect(Collectors.toList());
+
+            // For each category
+            for (int j = 0; j < bindings.size(); j++) {
+                CategoryNumberBinding binding = bindings.get(j);
+                String clues = data.get(j);
+
                 List<GameQuestion> gameQuestions = new ArrayList<>(5);
                 questions.put(binding.name(), gameQuestions);
-                String clues = run("https://jservice.io/api/clues?category=" + binding.id()).string();
-                JSONArray clueArray = new JSONArray(clues);
 
+                // Convert json array to normal java list
+                JSONArray clueArray = new JSONArray(clues);
                 List<JSONObject> jsonObjects = new ArrayList<>();
                 for (int i = 0; i < clueArray.length(); i++) {
-                    jsonObjects.add((JSONObject) clueArray.get(i));
+                    jsonObjects.add(clueArray.getJSONObject(i));
                 }
                 Collections.shuffle(jsonObjects);
 
-                // Add the clues to the question map.
+                // Add five clues to the question map
                 for (int i = 0; i < 5; i++) {
+                    String sln = removeArtifacts(jsonObjects.get(i).getString("answer"));
+                    String question = removeArtifacts(jsonObjects.get(i).getString("question"));
+
                     GameQuestion gameQuestion = new GameQuestion(
                         new Question(
                             binding.name(),
-                            jsonObjects.get(i).get("question").toString().replace("\\", ""),
+                            question,
                             "What is"
-                        ).addSolution(new String[]{jsonObjects.get(i).get("answer").toString().replace("\\", "")})
+                        ).addSolution(new String[]{sln})
                     );
                     gameQuestion.setValue((i + 1) * 100);
                     if (i == 0) {
@@ -302,12 +328,29 @@ class InternationalQuestionGeneratorStrategy implements QuestionGeneratorStrateg
         return response.body();
     }
 
+    private CompletableFuture<String> requestQuestions(String id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return run("https://jservice.io/api/clues?category=" + id).string();
+            } catch (IOException e) {
+                return null;
+            }
+        });
+    }
+
+    private String removeArtifacts(String fromApi) {
+        fromApi = fromApi.replaceAll("\\\\", ""); //remove backslashes
+        fromApi = fromApi.replaceAll("<.>", ""); //remove html opening tags
+        fromApi = fromApi.replaceAll("<..>", ""); //remove html closing tags
+        return fromApi;
+    }
+
     /**
      * Data interface for pairs of category names to their id in the api.
      */
     private interface CategoryNumberBinding {
-        String name() throws JSONException;
+        String name();
 
-        String id() throws JSONException;
+        String id();
     }
 }
